@@ -1,0 +1,2 @@
+- Refaire la navigation en l'air (trop chaotique)
+- Reétudier le BOIDS (pas assez d'attacration entre les membres du BOIDS)
