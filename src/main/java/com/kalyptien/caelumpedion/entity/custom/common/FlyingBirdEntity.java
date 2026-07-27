@@ -1,6 +1,6 @@
 package com.kalyptien.caelumpedion.entity.custom.common;
 
-import com.kalyptien.caelumpedion.entity.ai.FlightPathNavigatorNoSpin;
+import com.kalyptien.caelumpedion.entity.ai.FlightPathNavigator;
 import com.kalyptien.caelumpedion.entity.ai.FlyingMoveController;
 import com.kalyptien.caelumpedion.entity.ai.WalkingMoveController;
 import com.kalyptien.caelumpedion.entity.ai.goal.BirdFlyGoal;
@@ -13,7 +13,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
@@ -45,8 +44,6 @@ public abstract class FlyingBirdEntity extends Animal {
 
     protected boolean isIdlingAnim = false;
 
-    protected boolean IsWalkingAnim = false;
-
     // Enum var
 
     AquaticBirdType aquaticBirdType = AquaticBirdType.NONE;
@@ -62,8 +59,13 @@ public abstract class FlyingBirdEntity extends Animal {
 
     protected boolean isLandNavigator;
 
-    protected float flightPitch = 0;
-    protected float flightRoll = 0;
+    private float flightPitch = 0;
+    private float prevFlightPitch = 0;
+    private float flightRoll = 0;
+    private float prevFlightRoll = 0;
+
+    private float flyProgress;
+    private float prevFlyProgress;
 
     public FlyingBirdEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -97,7 +99,7 @@ public abstract class FlyingBirdEntity extends Animal {
             this.isLandNavigator = true;
         } else {
             this.moveControl = new FlyingMoveController(this);
-            this.navigation = new FlightPathNavigatorNoSpin(this, level(), 1.0F);
+            this.navigation = new FlightPathNavigator(this, level(), 1.0F);
             this.isLandNavigator = false;
         }
     }
@@ -107,6 +109,17 @@ public abstract class FlyingBirdEntity extends Animal {
     @Override
     public void tick(){
         super.tick();
+
+        prevFlyProgress = flyProgress;
+        prevFlightPitch = flightPitch;
+        prevFlightRoll = flightRoll;
+
+        if (isFlying() && flyProgress < 5F) {
+            flyProgress++;
+        }
+        if (!isFlying() && flyProgress > 0F) {
+            flyProgress--;
+        }
 
         if (!level().isClientSide) {
             if (this.isFlying()) {
@@ -123,7 +136,9 @@ public abstract class FlyingBirdEntity extends Animal {
             }
         }
 
-        tickRotation((float) this.getDeltaMovement().y * 2 * -(float) (180F / (float) Math.PI));
+        if(this.isFlying()){
+            tickRotation((float) this.getDeltaMovement().y * 2 * -(float) (180F / (float) Math.PI));
+        }
 
         this.setupAnimationStates();
     }
@@ -275,12 +290,16 @@ public abstract class FlyingBirdEntity extends Animal {
         isIdlingAnim = idlingAnim;
     }
 
-    public boolean isWalkingAnim() {
-        return IsWalkingAnim;
+    public float getFlightPitch(float partialTick) {
+        return (prevFlightPitch + (flightPitch - prevFlightPitch) * partialTick);
     }
 
-    public void setWalkingAnim(boolean walkingAnim) {
-        IsWalkingAnim = walkingAnim;
+    public float getFlightRoll(float partialTick) {
+        return (prevFlightRoll + (flightRoll - prevFlightRoll) * partialTick);
+    }
+
+    public float getFlyProgress(float partialTick) {
+        return (prevFlyProgress + (flyProgress - prevFlyProgress) * partialTick) * 0.2F;
     }
 
     //SaveData

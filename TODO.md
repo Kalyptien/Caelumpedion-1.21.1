@@ -1,2 +1,5 @@
-- Refaire la navigation en l'air (trop chaotique)
-- Reétudier le BOIDS (pas assez d'attacration entre les membres du BOIDS)
+- BOIDS
+- Vol de panique
+- Intégrations de fils
+- Vol plus facile vers des zones hautes / barrières / fils pour les petits/moyens oiseaux
+- Intégrations des chants pour chaques oiseaux (Passeriforme)

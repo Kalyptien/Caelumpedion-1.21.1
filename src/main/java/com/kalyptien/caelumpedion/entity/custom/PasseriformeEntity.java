@@ -32,9 +32,11 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
         super(entityType, level);
         this.setFlyingBirdType(FlyingBirdType.SHORT_FlYER);
         this.setAquaticBirdType(AquaticBirdType.NONE);
+        this.setBOIDBirdType(BOIDType.SWARM);
         this.flyRange = 50;
         this.flyHeight = 20;
-        this.flySpeed = 1f;
+        this.flySpeed = 3f;
+        this.maxSchoolSize = 50;
     }
 
     public static AttributeSupplier.Builder createAttributes() {

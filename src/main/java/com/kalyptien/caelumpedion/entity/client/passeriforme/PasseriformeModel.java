@@ -108,14 +108,18 @@ public class PasseriformeModel<T extends PasseriformeEntity> extends Hierarchica
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
+
         this.applyHeadRotation(netHeadYaw, headPitch);
 
+        //GLOBAL ANIMATION
+
+        //> WALK
         if(entity.onGround() && !entity.isFlying()){
             this.animateWalk(PasseriformeAnimation.PASSERIFORME_WALK, limbSwing, limbSwingAmount, 2f, 2f);
         }
 
         if(entity.isFlying()){
-            //FLY
+            //> FLY
 
             //TODO : Voir pourquoi le changement de style de vol ne se fait pas. Le code est déjà présent dans le BirdFlyGoal.
 
@@ -130,9 +134,17 @@ public class PasseriformeModel<T extends PasseriformeEntity> extends Hierarchica
             if(entity.isLandingAnim()){
                 this.animateWalk(PasseriformeAnimation.PASSERIFORME_LAND, limbSwing, limbSwingAmount, 5f, 5f);
             }*/
+
+            float partialTick = ageInTicks - entity.tickCount;
+            float flyProgress = entity.getFlyProgress(partialTick);
+            float rollAmount = entity.getFlightRoll(partialTick) / 57.295776F * flyProgress;
+            float pitchAmount = entity.getFlightPitch(partialTick) / 57.295776F * flyProgress;
+
+            passeriforme.xRot += pitchAmount;
+            passeriforme.zRot += rollAmount;
         }
 
-        //IDLE
+        //> IDLE
         this.animate(entity.idlePickAnimationState, PasseriformeAnimation.PASSERIFORME_IDLE_PICK, ageInTicks, 1f);
         this.animate(entity.idleLookAnimationState, PasseriformeAnimation.PASSERIFORME_IDLE_LOOK, ageInTicks, 1f);
     }

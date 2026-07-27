@@ -2,6 +2,7 @@ package com.kalyptien.caelumpedion.entity.ai.goal;
 
 import com.kalyptien.caelumpedion.entity.ai.FlyingMoveController;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
+import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.ClipContext;
@@ -26,7 +27,13 @@ public class PrepareFlyGoal extends Goal {
     public boolean canUse() {
 
         if(bird.getAquaticBirdType() == FlyingBirdEntity.AquaticBirdType.NONE && bird.isInWaterOrBubble()){
-            return  true;
+            return true;
+        }
+
+        if(bird instanceof SocialFlyingBirdEntity){
+            if(((SocialFlyingBirdEntity) bird).isFollower()){
+                return false;
+            }
         }
 
         if (
@@ -92,8 +99,8 @@ public class PrepareFlyGoal extends Goal {
             height = bird.getFlyHeight();
         }
 
-        double finalX = ((range * seedPercent) * 2) - (range + (Nth(seed, 1)));
-        double finalZ = ((range * seedPercent) * 2) - (range + (Nth(seed, 2)));
+        double finalX = ((range * seedPercent) * 2) - (range + (Nth(seed, 1)))  * randomSign();
+        double finalZ = ((range * seedPercent) * 2) - (range + (Nth(seed, 2)))  * randomSign();
 
         //Generate the final position
         Vec3 finalDestination = bird.position().add(finalX,0,finalZ);
@@ -132,9 +139,9 @@ public class PrepareFlyGoal extends Goal {
         for (int i = 0; i < numberOfMiddleDestination; i++) {
 
             Vec3 middleDestination = bird.position().add(
-                    (stepX * i) - (range + (Nth(seed, 1))),
+                    ((stepX * i) - Nth(seed, 1)) * randomSign(),
                     0,
-                    (stepZ * i) - (range + (Nth(seed, 2))));
+                    ((stepZ * i) - Nth(seed, 2)) * randomSign());
 
             Vec3 middleGround = groundPosition(middleDestination);
 
@@ -166,6 +173,10 @@ public class PrepareFlyGoal extends Goal {
             return ((int)number / java.lang.Math.pow(10, index)) % 10;
         }
         return number;
+    }
+
+    public int randomSign() {
+        return bird.getRandom().nextBoolean() ? -1 : 1;
     }
 
     protected static enum FlyType {

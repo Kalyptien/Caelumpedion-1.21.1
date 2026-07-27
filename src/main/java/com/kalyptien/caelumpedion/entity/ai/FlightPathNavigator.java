@@ -6,14 +6,14 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-public class FlightPathNavigatorNoSpin extends FlyingPathNavigation {
+public class FlightPathNavigator extends FlyingPathNavigation {
     private float distancemodifier = 0.75F;
 
-    public FlightPathNavigatorNoSpin(Mob entitylivingIn, Level worldIn) {
+    public FlightPathNavigator(Mob entitylivingIn, Level worldIn) {
         super(entitylivingIn, worldIn);
     }
 
-    public FlightPathNavigatorNoSpin(Mob entitylivingIn, Level worldIn, float distancemodifier) {
+    public FlightPathNavigator(Mob entitylivingIn, Level worldIn, float distancemodifier) {
         super(entitylivingIn, worldIn);
         this.distancemodifier = distancemodifier;
     }
