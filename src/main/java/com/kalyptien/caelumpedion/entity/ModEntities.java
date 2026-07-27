@@ -17,7 +17,7 @@ public class ModEntities {
     public static final Supplier<EntityType<PasseriformeEntity>> PASSERIFORME =
             ENTITY_TYPES.register("passeriforme", () -> {
                 return EntityType.Builder.of(PasseriformeEntity::new, MobCategory.CREATURE)
-                        .sized(0.6f, 0.6f).build("kiwi");
+                        .sized(0.4f, 0.4f).build("passeriforme");
             });
 
 

@@ -9,9 +9,7 @@ import java.util.EnumSet;
 public class BirdFlyGoal extends Goal {
 
     private FlyingBirdEntity entity;
-    private double x;
-    private double y;
-    private double z;
+    private Vec3 destination;
 
     public BirdFlyGoal(FlyingBirdEntity entity) {
         this.setFlags(EnumSet.of(Flag.MOVE));
@@ -26,36 +24,45 @@ public class BirdFlyGoal extends Goal {
 
         if(entity.isFlying() && entity.getNextNavigationArray().isEmpty()){
             entity.setFlying(false);
+            return false;
         }
 
         Vec3 target = entity.getNextNavigationArray().isEmpty() ? null : entity.getNextNavigationArray().getFirst();
         if (target == null) {
             return false;
         } else {
-            this.x = target.x;
-            this.y = target.y;
-            this.z = target.z;
+            this.destination = new Vec3(target.x, target.y, target.z);
             return true;
         }
     }
 
     public void start() {
         this.entity.setFlying(true);
-        entity.getNavigation().moveTo(this.x, this.y, this.z, entity.getFlySpeed());
+        entity.getNavigation().moveTo(destination.x, destination.y, destination.z, entity.getFlySpeed());
+
+        entity.resetAnimations();
+
+        if(entity.getEyePosition().y >= destination.y){
+            entity.setPlaningAnim(true);
+        }
+        else{
+            entity.setFlyingAnim(true);
+        }
     }
 
     public void tick() {
-        if (entity.isFlying() && entity.onGround() && entity.getTimeFlying() > 40) {
-            entity.setFlying(false);
+        if(entity.getNextNavigationArray().size() == 1 && entity.getEyePosition().closerThan(destination, 3, 3)){
+            entity.resetAnimations();
+            entity.setLandingAnim(true);
         }
     }
 
     public boolean canContinueToUse() {
-        return entity.isFlying() && !entity.getNavigation().isDone() && entity.getGroundedFor() <= 0;
+        return entity.isFlying() && !entity.getNavigation().isDone();
     }
 
     public void stop() {
-        entity.removeNextNavigationArray();
+        entity.clearNextNavigationArray();
 
         if(entity.getNextNavigationArray().isEmpty()){
             entity.setFlying(false);

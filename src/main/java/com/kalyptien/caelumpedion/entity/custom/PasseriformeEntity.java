@@ -26,15 +26,21 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
     public final AnimationState idleLookAnimationState = new AnimationState();
 
     private int idleAnimationTimeout = 0;
+    private int idleAnimationTimein = 0;
 
     public PasseriformeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
+        this.setFlyingBirdType(FlyingBirdType.SHORT_FlYER);
+        this.setAquaticBirdType(AquaticBirdType.NONE);
+        this.flyRange = 50;
+        this.flyHeight = 20;
+        this.flySpeed = 1f;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 6d)
-                .add(Attributes.MOVEMENT_SPEED, 0.20D)
+                .add(Attributes.MOVEMENT_SPEED, 0.15D)
                 .add(Attributes.ARMOR, 0d)
                 .add(Attributes.FOLLOW_RANGE, 12D);
     }
@@ -42,13 +48,8 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(1 ,new WaterAvoidingRandomFlyingGoal(this, 1.0));
-        this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1.0));
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
+        this.goalSelector.addGoal(1 ,new WaterAvoidingRandomFlyingGoal(this, 2.0));
+        this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 2.0));
     }
 
     // ANIM
@@ -58,7 +59,9 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
 
         if(!this.isFlying()){
             if(this.idleAnimationTimeout <= 0) {
-                if(!this.idleLookAnimationState.isStarted() || !this.idlePickAnimationState.isStarted()){
+                if(this.onGround() && this.isLandNavigator){
+
+                    this.resetAnimations();
 
                     if(Math.random() >= 0.5){
                         this.idleLookAnimationState.start(this.tickCount);
@@ -67,41 +70,54 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
                         this.idlePickAnimationState.start(this.tickCount);
                     }
 
-                    this.idleAnimationTimeout = (int)Math.round(500 * Math.random());
+                    this.isIdlingAnim = true;
+                    this.idleAnimationTimein = 0;
+                    this.idleAnimationTimeout = (int)Math.round(500 * Math.random()) + 100;
+
+                    this.getNavigation().stop();
+                    this.getMoveControl().setWantedPosition(this.getX(), this.getY(), this.getZ(), 0.0);
+
                     this.gameEvent(GameEvent.ENTITY_ACTION);
                 }
             } else {
-
-                if(this.idleLookAnimationState.isStarted()) {
-                    this.idleLookAnimationState.stop();
-                }
-                if(this.idlePickAnimationState.isStarted()){
-                    this.idlePickAnimationState.stop();
-                }
-
                 --this.idleAnimationTimeout;
+                this.idleAnimationTimein++;
+
+                if(this.idleAnimationTimein >= 200){
+                    this.idleAnimationTimein = 0;
+                    this.isIdlingAnim = false;
+                    this.resetAnimations();
+                }
+
             }
         }
 
         if(isFlying()){
+            this.resetAnimations();
+        }
+    }
 
-            if(this.idleLookAnimationState.isStarted()) {
-                this.idleLookAnimationState.stop();
-            }
-            if(this.idlePickAnimationState.isStarted()){
-                this.idlePickAnimationState.stop();
-            }
+    public void resetAnimations(){
+        super.resetAnimations();
+
+        if(this.idleLookAnimationState.isStarted()) {
+            this.isIdlingAnim = false;
+            this.idleLookAnimationState.stop();
+        }
+        if(this.idlePickAnimationState.isStarted()){
+            this.isIdlingAnim = false;
+            this.idlePickAnimationState.stop();
         }
     }
 
     //Getter / Setter
 
-    public int getDataVariant() {
+    public int getIdVariant() {
         return this.entityData.get(VARIANT);
     }
 
     public PasseriformeVariant getVariant() {
-        return PasseriformeVariant.byId(this.getDataVariant());
+        return PasseriformeVariant.byId(this.getIdVariant());
     }
 
     public void setVariant(PasseriformeVariant variant) {
@@ -130,7 +146,7 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
         LophophanesCristatus(4),
         PasserDomesticus(5),
         PeriparusAter(6),
-        PhoenicurusOchruros(7),;
+        PhoenicurusOchruros(7);
 
         private static final PasseriformeVariant[] BY_ID = Arrays.stream(values()).sorted(
                 Comparator.comparingInt(PasseriformeVariant::getId)).toArray(PasseriformeVariant[]::new);

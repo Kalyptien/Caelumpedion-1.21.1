@@ -15,7 +15,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
@@ -24,11 +23,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public abstract class FlyingBirdEntity extends Animal {
@@ -37,11 +37,7 @@ public abstract class FlyingBirdEntity extends Animal {
     protected static final EntityDataAccessor<Boolean> FLYING =
             SynchedEntityData.defineId(FlyingBirdEntity.class, EntityDataSerializers.BOOLEAN);
 
-    public final AnimationState flyAnimationState = new AnimationState();
-    public final AnimationState planeAnimationState = new AnimationState();
-    public final AnimationState landAnimationState = new AnimationState();
-
-    public final AnimationState walkAnimationState = new AnimationState();
+    //Anim Boolean
 
     protected boolean isFlyingAnim = false;
     protected boolean isPlaningAnim = false;
@@ -51,23 +47,23 @@ public abstract class FlyingBirdEntity extends Animal {
 
     protected boolean IsWalkingAnim = false;
 
+    // Enum var
+
+    AquaticBirdType aquaticBirdType = AquaticBirdType.NONE;
+    FlyingBirdType flyingBirdType = FlyingBirdType.WALKER;
+
+    //Flying Var
+
     protected List<Vec3> nextNavigationArray = new ArrayList<Vec3>();
 
-    protected float flySpeed = 4f;
-
-    protected int longFlyHeight = 30;
-    protected int longFlyRange = 100;
-
-    protected int shortFlyHeight = 10;
-    protected int shortFlyRange = 10;
+    protected float flySpeed = 2f;
+    protected int flyHeight = 50;
+    protected int flyRange = 100;
 
     protected boolean isLandNavigator;
 
     protected float flightPitch = 0;
     protected float flightRoll = 0;
-
-    protected int timeFlying = 0;
-    protected int groundedFor = 0;
 
     public FlyingBirdEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -87,14 +83,10 @@ public abstract class FlyingBirdEntity extends Animal {
 
         this.goalSelector.addGoal(1, new FloatGoal(this));
 
-        this.goalSelector.addGoal(2, new PrepareFlyGoal(this, true));
-
-        //3
-
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 24.0F));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 32.0F));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 
-        this.goalSelector.addGoal(5, new PrepareFlyGoal(this, false));
+        this.goalSelector.addGoal(5, new PrepareFlyGoal(this));
 
     }
 
@@ -118,27 +110,22 @@ public abstract class FlyingBirdEntity extends Animal {
 
         if (!level().isClientSide) {
             if (this.isFlying()) {
-                timeFlying++;
                 this.setNoGravity(true);
                 if (this.isLandNavigator) {
                     switchNavigator(false);
                 }
-                if (groundedFor > 0) {
-                    this.setFlying(false);
-                }
             } else {
-                timeFlying = 0;
                 this.setNoGravity(false);
                 if (!this.isLandNavigator) {
+                    this.clearNextNavigationArray();
                     switchNavigator(true);
                 }
             }
         }
-        if (groundedFor > 0) {
-            groundedFor--;
-        }
 
         tickRotation((float) this.getDeltaMovement().y * 2 * -(float) (180F / (float) Math.PI));
+
+        this.setupAnimationStates();
     }
 
     private void tickRotation(float yMov) {
@@ -164,63 +151,22 @@ public abstract class FlyingBirdEntity extends Animal {
         flightRoll = Mth.clamp(flightRoll, -60, 60);
     }
 
+    protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+    }
+
     //Animation
 
     protected void setupAnimationStates() {
+    }
 
-        if(!this.isFlying()){
-            if(this.isWalkingAnim()){
-                this.walkAnimationState.start(this.tickCount);
-            }
-            else{
-                if(this.walkAnimationState.isStarted()) {
-                    this.walkAnimationState.stop();
-                }
-            }
-        }
+    public void resetAnimations(){
+        this.setFlyingAnim(false);
+        this.setPlaningAnim(false);
+        this.setLandingAnim(false);
+    }
 
-        if(this.isFlying()){
-
-            if(this.isFlyingAnim){
-                this.flyAnimationState.start(this.tickCount);
-            }
-            else{
-                if(this.flyAnimationState.isStarted()) {
-                    this.flyAnimationState.stop();
-                }
-            }
-
-            if(this.isPlaningAnim){
-                this.planeAnimationState.start(this.tickCount);
-            }
-            else{
-                if(this.planeAnimationState.isStarted()) {
-                    this.planeAnimationState.stop();
-                }
-            }
-
-            if(this.isLandingAnim){
-                this.landAnimationState.start(this.tickCount);
-            }
-            else{
-                if(this.landAnimationState.isStarted()) {
-                    this.landAnimationState.stop();
-                }
-            }
-        }
-        else{
-            if(this.flyAnimationState.isStarted()) {
-                this.flyAnimationState.stop();
-            }
-
-            if(this.planeAnimationState.isStarted()) {
-                this.planeAnimationState.stop();
-            }
-
-            if(this.landAnimationState.isStarted()) {
-                this.landAnimationState.stop();
-            }
-        }
+    public boolean canMove() {
+        return !this.isIdlingAnim();
     }
 
     //Food/Breed
@@ -238,10 +184,7 @@ public abstract class FlyingBirdEntity extends Animal {
 
     //Getter / Setter
 
-    public abstract int getDataVariant();
-
-    protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
-    }
+    public abstract int getIdVariant();
 
     public List<Vec3> getNextNavigationArray() {
         return nextNavigationArray;
@@ -251,7 +194,7 @@ public abstract class FlyingBirdEntity extends Animal {
         this.nextNavigationArray.add(vector);
     }
 
-    public void removeNextNavigationArray(){
+    public void clearNextNavigationArray(){
         if(!this.nextNavigationArray.isEmpty())
             this.nextNavigationArray.removeFirst();
     }
@@ -264,32 +207,40 @@ public abstract class FlyingBirdEntity extends Animal {
         this.entityData.set(FLYING, flying);
     }
 
+    public FlyingBirdType getFlyingBirdType() {
+        return this.flyingBirdType;
+    }
+
+    public int getIdFlyingBirdType() {
+        return this.flyingBirdType.getId();
+    }
+
+    public void setFlyingBirdType(FlyingBirdType flyingBirdType) {
+        this.flyingBirdType = flyingBirdType;
+    }
+
+    public AquaticBirdType getAquaticBirdType() {
+        return this.aquaticBirdType;
+    }
+
+    public int getIdAquaticBirdType() {
+        return this.aquaticBirdType.getId();
+    }
+
+    public void setAquaticBirdType(AquaticBirdType aquaticBirdType) {
+        this.aquaticBirdType = aquaticBirdType;
+    }
+
     public float getFlySpeed() {
         return flySpeed;
     }
 
-    public int getLongFlyHeight() {
-        return longFlyHeight;
+    public int getFlyHeight() {
+        return flyHeight;
     }
 
-    public int getLongFlyRange() {
-        return longFlyRange;
-    }
-
-    public int getShortFlyHeight() {
-        return shortFlyHeight;
-    }
-
-    public int getShortFlyRange() {
-        return shortFlyRange;
-    }
-
-    public int getTimeFlying() {
-        return timeFlying;
-    }
-
-    public int getGroundedFor() {
-        return groundedFor;
+    public int getFlyRange() {
+        return flyRange;
     }
 
     public boolean isFlyingAnim() {
@@ -337,7 +288,7 @@ public abstract class FlyingBirdEntity extends Animal {
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putInt("Variant", this.getDataVariant());
+        compound.putInt("Variant", this.getIdVariant());
         compound.putBoolean("Flying", this.isFlying());
     }
 
@@ -346,5 +297,51 @@ public abstract class FlyingBirdEntity extends Animal {
         super.readAdditionalSaveData(compound);
         this.entityData.set(VARIANT, compound.getInt("Variant"));
         this.entityData.set(FLYING, compound.getBoolean("Flying"));
+    }
+
+    //Enum
+
+    public static enum FlyingBirdType {
+        WALKER(0),
+        SHORT_FlYER(1),
+        LONG_FLYER(2);
+
+        private static final FlyingBirdType[] BY_ID = Arrays.stream(values()).sorted(
+                Comparator.comparingInt(FlyingBirdType::getId)).toArray(FlyingBirdType[]::new);
+        private final int id;
+
+        FlyingBirdType(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public static FlyingBirdType byId(int id) {
+            return BY_ID[id % BY_ID.length];
+        }
+    }
+
+    public static enum AquaticBirdType {
+        NONE(0),
+        TALL(1),
+        FULL(2);
+
+        private static final AquaticBirdType[] BY_ID = Arrays.stream(values()).sorted(
+                Comparator.comparingInt(AquaticBirdType::getId)).toArray(AquaticBirdType[]::new);
+        private final int id;
+
+        AquaticBirdType(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public static AquaticBirdType byId(int id) {
+            return BY_ID[id % BY_ID.length];
+        }
     }
 }

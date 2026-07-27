@@ -36,7 +36,7 @@ public class PasseriformeRenderer extends MobRenderer<PasseriformeEntity, Passer
             });
 
     public PasseriformeRenderer(EntityRendererProvider.Context context) {
-        super(context, new PasseriformeModel<>(context.bakeLayer(PasseriformeModel.LAYER_LOCATION)), 0.1f);
+        super(context, new PasseriformeModel<>(context.bakeLayer(PasseriformeModel.LAYER_LOCATION)), 0.25f);
     }
 
     @Override

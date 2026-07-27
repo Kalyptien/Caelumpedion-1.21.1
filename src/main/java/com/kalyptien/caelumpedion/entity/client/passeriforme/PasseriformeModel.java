@@ -110,24 +110,39 @@ public class PasseriformeModel<T extends PasseriformeEntity> extends Hierarchica
         this.root().getAllParts().forEach(ModelPart::resetPose);
         this.applyHeadRotation(netHeadYaw, headPitch);
 
-        this.animate(entity.walkAnimationState, PasseriformeAnimation.PASSERIFORME_WALK, ageInTicks, 1f);
+        if(entity.onGround() && !entity.isFlying()){
+            this.animateWalk(PasseriformeAnimation.PASSERIFORME_WALK, limbSwing, limbSwingAmount, 2f, 2f);
+        }
+
+        if(entity.isFlying()){
+            //FLY
+
+            //TODO : Voir pourquoi le changement de style de vol ne se fait pas. Le code est déjà présent dans le BirdFlyGoal.
+
+            //if(entity.isFlyingAnim()){
+                this.animateWalk(PasseriformeAnimation.PASSERIFORME_FLY, limbSwing, limbSwingAmount, 5f, 5f);
+            //}
+
+            /*if(entity.isPlaningAnim()){
+                this.animateWalk(PasseriformeAnimation.PASSERIFORME_PLANE, limbSwing, limbSwingAmount, 5f, 5f);
+            }
+
+            if(entity.isLandingAnim()){
+                this.animateWalk(PasseriformeAnimation.PASSERIFORME_LAND, limbSwing, limbSwingAmount, 5f, 5f);
+            }*/
+        }
 
         //IDLE
         this.animate(entity.idlePickAnimationState, PasseriformeAnimation.PASSERIFORME_IDLE_PICK, ageInTicks, 1f);
         this.animate(entity.idleLookAnimationState, PasseriformeAnimation.PASSERIFORME_IDLE_LOOK, ageInTicks, 1f);
-
-        //FLY
-        this.animate(entity.flyAnimationState, PasseriformeAnimation.PASSERIFORME_FLY, ageInTicks, 1f);
-        this.animate(entity.planeAnimationState, PasseriformeAnimation.PASSERIFORME_PLANE, ageInTicks, 1f);
-        this.animate(entity.landAnimationState, PasseriformeAnimation.PASSERIFORME_LAND, ageInTicks, 1f);
     }
 
     private void applyHeadRotation(float headYaw, float headPitch) {
-        headYaw = Mth.clamp(headYaw, -30f, 30f);
-        headPitch = Mth.clamp(headPitch, -25f, 45);
+        headYaw = Mth.clamp(headYaw, -90f, 90f);
+        headPitch = Mth.clamp(headPitch, -45f, 45);
 
-        this.head.yRot = headYaw * ((float)Math.PI / 180f);
-        this.head.xRot = headPitch *  ((float)Math.PI / 180f);
+        this.head.yRot = headYaw * ((float)Math.PI / 260f);
+        this.head.xRot = headPitch *  ((float)Math.PI / 260f);
     }
 
     @Override
