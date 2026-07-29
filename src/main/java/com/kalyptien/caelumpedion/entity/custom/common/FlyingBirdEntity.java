@@ -3,16 +3,20 @@ package com.kalyptien.caelumpedion.entity.custom.common;
 import com.kalyptien.caelumpedion.entity.ai.FlightPathNavigator;
 import com.kalyptien.caelumpedion.entity.ai.FlyingMoveController;
 import com.kalyptien.caelumpedion.entity.ai.WalkingMoveController;
-import com.kalyptien.caelumpedion.entity.ai.goal.BirdFlyGoal;
-import com.kalyptien.caelumpedion.entity.ai.goal.PrepareFlyGoal;
+import com.kalyptien.caelumpedion.entity.ai.goal.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
@@ -22,6 +26,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,25 +36,53 @@ import java.util.Comparator;
 import java.util.List;
 
 public abstract class FlyingBirdEntity extends Animal {
+
+    //Global var
+
+    protected int viewRange = 32;
+
+    //Variant var
+
     protected static final EntityDataAccessor<Integer> VARIANT =
             SynchedEntityData.defineId(FlyingBirdEntity.class, EntityDataSerializers.INT);
-    protected static final EntityDataAccessor<Boolean> FLYING =
-            SynchedEntityData.defineId(FlyingBirdEntity.class, EntityDataSerializers.BOOLEAN);
 
-    //Anim Boolean
+    //Anim var
 
     protected boolean isFlyingAnim = false;
     protected boolean isPlaningAnim = false;
     protected boolean isLandingAnim = false;
 
     protected boolean isIdlingAnim = false;
+    protected boolean isEatingAnim = false;
 
-    // Enum var
+    public final AnimationState eatAnimationState = new AnimationState();
+    public final AnimationState idleLookAnimationState = new AnimationState();
+
+    protected int idleAnimationTimeout = 0;
+    protected int idleAnimationTimein = 0;
+
+    //Enum var
 
     AquaticBirdType aquaticBirdType = AquaticBirdType.NONE;
     FlyingBirdType flyingBirdType = FlyingBirdType.WALKER;
+    StressBirdType stressBirdType = StressBirdType.RUNNER;
+
+    //Stress Var
+
+    protected static final EntityDataAccessor<Integer> INITIAL_STRESS =
+            SynchedEntityData.defineId(FlyingBirdEntity.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Integer> CURRENT_STRESS =
+            SynchedEntityData.defineId(FlyingBirdEntity.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Boolean> PANIC_MODE =
+            SynchedEntityData.defineId(FlyingBirdEntity.class, EntityDataSerializers.BOOLEAN);
+
+    protected int stressStep = 1;
+    protected boolean needToFlyAway = false;
 
     //Flying Var
+
+    protected static final EntityDataAccessor<Boolean> FLYING =
+            SynchedEntityData.defineId(FlyingBirdEntity.class, EntityDataSerializers.BOOLEAN);
 
     protected List<Vec3> nextNavigationArray = new ArrayList<Vec3>();
 
@@ -77,19 +110,26 @@ public abstract class FlyingBirdEntity extends Animal {
         super.defineSynchedData(builder);
         builder.define(VARIANT, 0);
         builder.define(FLYING, false);
+        builder.define(INITIAL_STRESS, 0);
+        builder.define(CURRENT_STRESS, 0);
+        builder.define(PANIC_MODE, false);
     }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new BirdFlyGoal(this));
+        this.goalSelector.addGoal(0, new PrepareFlyGoal(this));
+        this.goalSelector.addGoal(0, new BirdPanicGoal(this));
+        this.goalSelector.addGoal(0, new BirdPlayerNerbyGoal(this));
 
         this.goalSelector.addGoal(1, new FloatGoal(this));
 
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 32.0F));
+        // TODO : L'oiseau s'approche de sa nourriture préféré afin de s'en nourrir + animation
+
+        this.goalSelector.addGoal(4, new BirdTemptGoal(this, 1.2, this::isFood, false));
+
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, this.viewRange));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-
-        this.goalSelector.addGoal(5, new PrepareFlyGoal(this));
-
     }
 
     private void switchNavigator(boolean onLand) {
@@ -172,12 +212,66 @@ public abstract class FlyingBirdEntity extends Animal {
     //Animation
 
     protected void setupAnimationStates() {
+        if(!this.isFlying()){
+            if(this.idleAnimationTimeout <= 0) {
+                if(this.onGround() && this.isLandNavigator){
+
+                    this.resetAnimations();
+
+                    if(Math.random() >= 0.5){
+                        this.idleLookAnimationState.start(this.tickCount);
+                    }
+                    else{
+                        this.eatAnimationState.start(this.tickCount);
+                    }
+
+                    this.isIdlingAnim = true;
+                    this.idleAnimationTimein = 0;
+                    this.idleAnimationTimeout = (int)Math.round(500 * Math.random()) + 100;
+
+                    this.lessCurrentStress(1);
+
+                    this.getNavigation().stop();
+                    this.getMoveControl().setWantedPosition(this.getX(), this.getY(), this.getZ(), 0.0);
+
+                    this.gameEvent(GameEvent.ENTITY_ACTION);
+                }
+            } else {
+                --this.idleAnimationTimeout;
+                this.idleAnimationTimein++;
+
+                if(this.idleAnimationTimein >= 200){
+                    this.idleAnimationTimein = 0;
+                    this.isIdlingAnim = false;
+                    this.resetAnimations();
+                }
+
+            }
+        }
+
+        if(isFlying()){
+            if(this.idleLookAnimationState.isStarted()) {
+                this.isIdlingAnim = false;
+                this.idleLookAnimationState.stop();
+            }
+            if(this.eatAnimationState.isStarted()){
+                this.isIdlingAnim = false;
+                this.isEatingAnim = false;
+                this.eatAnimationState.stop();
+            }
+        }
     }
 
     public void resetAnimations(){
-        this.setFlyingAnim(false);
-        this.setPlaningAnim(false);
-        this.setLandingAnim(false);
+        if(this.idleLookAnimationState.isStarted()) {
+            this.isIdlingAnim = false;
+            this.idleLookAnimationState.stop();
+        }
+        if(this.eatAnimationState.isStarted()){
+            this.isIdlingAnim = false;
+            this.isEatingAnim = false;
+            this.eatAnimationState.stop();
+        }
     }
 
     public boolean canMove() {
@@ -188,13 +282,50 @@ public abstract class FlyingBirdEntity extends Animal {
 
     @Override
     public boolean isFood(ItemStack itemStack) {
-        return itemStack.is(Items.WHEAT_SEEDS);
+        return itemStack.is(Items.WHEAT_SEEDS) || itemStack.is(Items.BEETROOT_SEEDS)
+                || itemStack.is(Items.MELON_SEEDS) || itemStack.is(Items.PUMPKIN_SEEDS)
+                || itemStack.is(Items.TORCHFLOWER_SEEDS);
     }
+
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack itemstack = player.getItemInHand(hand);
+        if (this.isFood(itemstack)) {
+            if (!this.level().isClientSide) {
+                this.usePlayerItem(player, hand, itemstack);
+                this.addParticlesAroundSelf(ParticleTypes.HEART);
+
+                this.lessInitialStress(2);
+                this.lessCurrentStress(2);
+
+                return InteractionResult.SUCCESS;
+            }
+
+            if (this.level().isClientSide) {
+                return InteractionResult.CONSUME;
+            }
+        }
+
+        return super.mobInteract(player, hand);
+    }
+
 
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
         return null;
+    }
+
+    //Misc
+
+    protected void addParticlesAroundSelf(ParticleOptions particleOption) {
+        //TODO : Dont work :c
+        for(int i = 0; i < 5; ++i) {
+            double d0 = this.random.nextGaussian() * 0.02;
+            double d1 = this.random.nextGaussian() * 0.02;
+            double d2 = this.random.nextGaussian() * 0.02;
+            this.level().addParticle(particleOption, this.getRandomX(1.0), this.getRandomY() + 1.0, this.getRandomZ(1.0), d0, d1, d2);
+        }
+
     }
 
     //Getter / Setter
@@ -212,6 +343,10 @@ public abstract class FlyingBirdEntity extends Animal {
     public void clearNextNavigationArray(){
         if(!this.nextNavigationArray.isEmpty())
             this.nextNavigationArray.removeFirst();
+    }
+
+    public void clearAllNavigationArray(){
+            this.nextNavigationArray = new ArrayList<>();
     }
 
     public boolean isFlying() {
@@ -234,6 +369,18 @@ public abstract class FlyingBirdEntity extends Animal {
         this.flyingBirdType = flyingBirdType;
     }
 
+    public StressBirdType getStressBirdType() {
+        return this.stressBirdType;
+    }
+
+    public int getIdStressBirdType() {
+        return this.stressBirdType.getId();
+    }
+
+    public void setStressBirdType(StressBirdType stressBirdType) {
+        this.stressBirdType = stressBirdType;
+    }
+
     public AquaticBirdType getAquaticBirdType() {
         return this.aquaticBirdType;
     }
@@ -244,6 +391,76 @@ public abstract class FlyingBirdEntity extends Animal {
 
     public void setAquaticBirdType(AquaticBirdType aquaticBirdType) {
         this.aquaticBirdType = aquaticBirdType;
+    }
+
+    public int getInitialStress() {
+        return this.entityData.get(INITIAL_STRESS);
+    }
+
+    public void setInitialStress(int initialStress) {
+        this.entityData.set(INITIAL_STRESS, initialStress);
+    }
+
+    public void addInitialStress(int value){
+        this.setInitialStress(this.getInitialStress() + value);
+
+        if(this.getCurrentStress() < this.getInitialStress()){
+            this.setCurrentStress(this.getInitialStress());
+        }
+    }
+
+    public void lessInitialStress(int value){
+        if(this.getInitialStress() - value < 0){
+            this.setInitialStress(0);
+        }
+        else{
+            this.setInitialStress(this.getInitialStress() - value);
+        }
+    }
+
+    public int getCurrentStress() {
+        return this.entityData.get(CURRENT_STRESS);
+    }
+
+    public void setCurrentStress(int currentStress) {
+        this.entityData.set(CURRENT_STRESS, currentStress);
+    }
+
+    public void addCurrentStress(int value){
+        this.setCurrentStress(this.getCurrentStress() + (this.stressStep * value));
+
+        if(this.getCurrentStress() >= 100){
+            this.setPanicMode(true);
+        }
+    }
+
+    public void lessCurrentStress(int value){
+        if(this.getCurrentStress() - value < this.getInitialStress()){
+            this.setCurrentStress(this.getInitialStress());
+        }
+        else{
+            this.setCurrentStress(this.getCurrentStress() - value);
+        }
+
+        if(this.getCurrentStress() < 100){
+            this.setPanicMode(false);
+        }
+    }
+
+    public boolean isPanicMode() {
+        return this.entityData.get(PANIC_MODE);
+    }
+
+    public void setPanicMode(boolean panicMode) {
+        this.entityData.set(PANIC_MODE, panicMode);
+    }
+
+    public boolean isNeedToFlyAway() {
+        return needToFlyAway;
+    }
+
+    public void setNeedToFlyAway(boolean needToFlyAway) {
+        this.needToFlyAway = needToFlyAway;
     }
 
     public float getFlySpeed() {
@@ -290,6 +507,14 @@ public abstract class FlyingBirdEntity extends Animal {
         isIdlingAnim = idlingAnim;
     }
 
+    public boolean isEatingAnim() {
+        return isEatingAnim;
+    }
+
+    public void setEatingAnim(boolean eatingAnim) {
+        isEatingAnim = eatingAnim;
+    }
+
     public float getFlightPitch(float partialTick) {
         return (prevFlightPitch + (flightPitch - prevFlightPitch) * partialTick);
     }
@@ -302,6 +527,14 @@ public abstract class FlyingBirdEntity extends Animal {
         return (prevFlyProgress + (flyProgress - prevFlyProgress) * partialTick) * 0.2F;
     }
 
+    public int getViewRange() {
+        return viewRange;
+    }
+
+    public void setViewRange(int viewRange) {
+        this.viewRange = viewRange;
+    }
+
     //SaveData
 
     @Override
@@ -309,6 +542,9 @@ public abstract class FlyingBirdEntity extends Animal {
         super.addAdditionalSaveData(compound);
         compound.putInt("Variant", this.getIdVariant());
         compound.putBoolean("Flying", this.isFlying());
+        compound.putInt("Initial_Stress", this.getInitialStress());
+        compound.putInt("Current_Stress", this.getInitialStress());
+        compound.putBoolean("Panic_Mode", this.isPanicMode());
     }
 
     @Override
@@ -316,6 +552,9 @@ public abstract class FlyingBirdEntity extends Animal {
         super.readAdditionalSaveData(compound);
         this.entityData.set(VARIANT, compound.getInt("Variant"));
         this.entityData.set(FLYING, compound.getBoolean("Flying"));
+        this.entityData.set(INITIAL_STRESS, compound.getInt("Initial_Stress"));
+        this.entityData.set(CURRENT_STRESS, compound.getInt("Current_Stress"));
+        this.entityData.set(PANIC_MODE, compound.getBoolean("Panic_Mode"));
     }
 
     //Enum
@@ -362,5 +601,26 @@ public abstract class FlyingBirdEntity extends Animal {
         public static AquaticBirdType byId(int id) {
             return BY_ID[id % BY_ID.length];
         }
+    }
+
+        public static enum StressBirdType {
+            RUNNER(0),
+            FIGHTER(1);
+
+            private static final StressBirdType[] BY_ID = Arrays.stream(values()).sorted(
+                    Comparator.comparingInt(StressBirdType::getId)).toArray(StressBirdType[]::new);
+            private final int id;
+
+            StressBirdType(int id) {
+                this.id = id;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public static StressBirdType byId(int id) {
+                return BY_ID[id % BY_ID.length];
+            }
     }
 }

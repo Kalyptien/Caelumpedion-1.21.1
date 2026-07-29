@@ -15,24 +15,32 @@ public class BirdBOIDFlyGoal extends Goal {
     public final float alignmentInfluence= 0.5f;
     public final float cohesionInfluence = 0.15f;
 
+    private int timeoutBeforeFlying;
+
     private final SocialFlyingBirdEntity socialBird;
 
     public BirdBOIDFlyGoal(SocialFlyingBirdEntity bird) {
         this.setFlags(EnumSet.of(Flag.MOVE));
         this.socialBird = bird;
+        timeoutBeforeFlying = (int)Math.round(200 * Math.random());
     }
 
     @Override
     public boolean canUse() {
 
         if (
-                socialBird.isVehicle() || socialBird.isPassenger() || socialBird.hasFollowers()
+            socialBird.isVehicle() || socialBird.isPassenger() || socialBird.hasFollowers()
         ) {
             return false;
         }
 
         if(socialBird.isFollower() && socialBird.leader.isFlying()){
-            return true;
+            if(timeoutBeforeFlying <= 0){
+                return true;
+            }
+            else{
+                timeoutBeforeFlying--;
+            }
         }
 
         return false;
@@ -68,11 +76,12 @@ public class BirdBOIDFlyGoal extends Goal {
     @Override
     public void stop() {
         socialBird.setFlying(false);
+        this.timeoutBeforeFlying = (int)Math.round(50 * Math.random());
     }
 
     private void shareFollowPath(){
 
-        //Follow the leader, but keep the initial distance with it
+        //Follow the leader, but keep distance with it
 
         int seed = socialBird.getRandom().nextInt(100);
 
@@ -97,7 +106,7 @@ public class BirdBOIDFlyGoal extends Goal {
         Vec3 followerDelta = socialBird.getEyePosition().vectorTo(socialBird.leader.getNextNavigationArray().getFirst());
 
         followerDestination = new Vec3(followerDestination.x + (followerDelta.x * influenceFromTheLeader)
-                , followerDestination.y + (followerDelta.y * influenceFromTheLeader)
+                , followerDestination.y + (followerDelta.y * influenceFromTheLeader * 0.5)
                 , followerDestination.z + (followerDelta.z * influenceFromTheLeader));
 
         socialBird.getNavigation().moveTo(followerDestination.x + ((Nth(seed, 1)) * randomSign()),
@@ -126,7 +135,7 @@ public class BirdBOIDFlyGoal extends Goal {
     }
 
     private void shareFormationPath(){
-        // TODO : Formation en triangle
+        // TODO : Formation en V
     }
 
     //shareSwarmPath => BOID functions

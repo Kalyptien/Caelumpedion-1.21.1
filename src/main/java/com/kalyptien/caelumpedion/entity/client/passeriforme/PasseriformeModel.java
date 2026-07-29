@@ -11,7 +11,6 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 
 public class PasseriformeModel<T extends PasseriformeEntity> extends HierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "passeriforme"), "main");
@@ -121,7 +120,7 @@ public class PasseriformeModel<T extends PasseriformeEntity> extends Hierarchica
         if(entity.isFlying()){
             //> FLY
 
-            //TODO : Voir pourquoi le changement de style de vol ne se fait pas. Le code est déjà présent dans le BirdFlyGoal.
+            //TODO : Voir pourquoi le changement de style de vol ne se fait pas.
 
             //if(entity.isFlyingAnim()){
                 this.animateWalk(PasseriformeAnimation.PASSERIFORME_FLY, limbSwing, limbSwingAmount, 5f, 5f);
@@ -145,7 +144,7 @@ public class PasseriformeModel<T extends PasseriformeEntity> extends Hierarchica
         }
 
         //> IDLE
-        this.animate(entity.idlePickAnimationState, PasseriformeAnimation.PASSERIFORME_IDLE_PICK, ageInTicks, 1f);
+        this.animate(entity.eatAnimationState, PasseriformeAnimation.PASSERIFORME_PICK, ageInTicks, 1f);
         this.animate(entity.idleLookAnimationState, PasseriformeAnimation.PASSERIFORME_IDLE_LOOK, ageInTicks, 1f);
     }
 

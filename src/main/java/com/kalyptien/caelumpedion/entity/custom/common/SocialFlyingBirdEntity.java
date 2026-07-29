@@ -110,6 +110,16 @@ public abstract class SocialFlyingBirdEntity extends FlyingBirdEntity {
         this.boidType = boidType;
     }
 
+    //Getter/Setter
+
+    public void setNeedToFlyAway(boolean needToFlyAway) {
+        super.setNeedToFlyAway(needToFlyAway);
+
+        if(leader != null && !leader.isNeedToFlyAway()){
+            leader.setNeedToFlyAway(true);
+        }
+    }
+
     //Enum
 
     public static enum BOIDType {

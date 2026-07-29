@@ -16,7 +16,6 @@ public class PrepareFlyGoal extends Goal {
 
     private FlyingBirdEntity bird;
 
-    private double longFlyChance = 0.0;
 
     public PrepareFlyGoal(FlyingBirdEntity entity) {
         this.setFlags(EnumSet.of(Flag.MOVE));
@@ -39,11 +38,17 @@ public class PrepareFlyGoal extends Goal {
         if (
                 bird.isVehicle()
                 || bird.isPassenger()
-                || bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.WALKER
                 || bird.isFlying()
                 || !bird.getNextNavigationArray().isEmpty()
-                || (!bird.isFlying() && bird.getRandom().nextInt(100) != 0)
         ) {
+            return false;
+        }
+
+        if(bird.isNeedToFlyAway() || bird.isPanicMode()){
+            return true;
+        }
+
+        if(!bird.isFlying() && bird.getRandom().nextInt(2000) != 0){
             return false;
         }
 
@@ -52,17 +57,6 @@ public class PrepareFlyGoal extends Goal {
 
     @Override
     public void start() {
-
-        if(bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.SHORT_FlYER){
-            longFlyChance = 0.75;
-        }
-        else if (bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.LONG_FLYER){
-            longFlyChance = 0.15;
-        }
-        else if (bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.WALKER){
-            longFlyChance = 1.0;
-        }
-
         bird.clearNextNavigationArray();
         this.createFlyPath();
     }
@@ -78,25 +72,49 @@ public class PrepareFlyGoal extends Goal {
         int range;
         int height;
 
-        int numberOfMiddleDestination;
+        double numberOfMiddleDestination;
 
         double stepX;
         double stepZ;
+
+        double longFlyChance = 0.0;
 
         FlyType flyType;
 
         int seed = bird.getRandom().nextInt(100);
         double seedPercent = seed /100.0;
 
-        if(seedPercent < longFlyChance){
-            flyType = FlyType.SHORT;
-            range = bird.getFlyRange() / 4;
-            height = bird.getFlyHeight() / 4;
-        }
-        else {
-            flyType = FlyType.LONG;
-            range = bird.getFlyRange();
-            height = bird.getFlyHeight();
+        //TODO : Gestion du vol de migration
+
+        if(bird.getCurrentStress() >= 100 && bird.getStressBirdType() == FlyingBirdEntity.StressBirdType.RUNNER){
+            flyType = FlyType.PANIC;
+            range = bird.getFlyRange() * 2;
+            height = bird.getFlyHeight() * 2;
+        }else{
+            if(bird.isNeedToFlyAway()){
+                flyType = FlyType.LONG;
+                range = bird.getFlyRange();
+                height = bird.getFlyHeight();
+            }
+            else{
+                if(bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.SHORT_FlYER){
+                    longFlyChance = 0.75;
+                }
+                else if (bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.LONG_FLYER){
+                    longFlyChance = 0.15;
+                }
+
+                if(seedPercent < longFlyChance){
+                    flyType = FlyType.SHORT;
+                    range = bird.getFlyRange() / 4;
+                    height = bird.getFlyHeight() / 4;
+                }
+                else {
+                    flyType = FlyType.LONG;
+                    range = bird.getFlyRange();
+                    height = bird.getFlyHeight();
+                }
+            }
         }
 
         double finalX = ((range * seedPercent) * 2) - (range + (Nth(seed, 1)))  * randomSign();
@@ -145,7 +163,13 @@ public class PrepareFlyGoal extends Goal {
 
             Vec3 middleGround = groundPosition(middleDestination);
 
-            double y = Math.sin((Math.PI / numberOfMiddleDestination) * i) * height + middleGround.y;
+            double y;
+            if(flyType == FlyType.PANIC){
+                y = Math.log(((Math.exp(1) / numberOfMiddleDestination)) * (i + 1)) * height + middleGround.y;
+            }
+            else {
+                y = Math.sin((Math.PI / numberOfMiddleDestination) * i) * height + middleGround.y;
+            }
 
             this.bird.addNextNavigationArray(new Vec3(middleDestination.x, y, middleDestination.z));
         }

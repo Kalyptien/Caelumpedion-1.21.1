@@ -1,7 +1,6 @@
 package com.kalyptien.caelumpedion.entity.client.passeriforme;
 
 import net.minecraft.client.animation.AnimationChannel;
-import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
@@ -69,7 +68,7 @@ public class PasseriformeAnimation {
             ))
             .build();
 
-    public static final AnimationDefinition PASSERIFORME_IDLE_PICK = AnimationDefinition.Builder.withLength(2.5833F)
+    public static final AnimationDefinition PASSERIFORME_PICK = AnimationDefinition.Builder.withLength(2.5833F)
             .addAnimation("head", new AnimationChannel(AnimationChannel.Targets.ROTATION,
 			new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
             new Keyframe(0.0833F, KeyframeAnimations.degreeVec(60.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
