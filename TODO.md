@@ -1,7 +1,7 @@
 
 STRESS : 
 
-- Check if bouffer autour = Stress - + animation
+- Check if bouffer autour = Stress - + animation => KO
 
 IMPORTANT
 
@@ -22,5 +22,7 @@ BLOCS :
 
 AUTRES :
 
+- Changement de style de vol des oiseaux
+- Les oiseaux bougent pendant l'idle animation
 - Intégrations des chants pour chaques oiseaux (Passeriforme)
 - Intégration du monde de stress "combatant" (pour les aigles par exemple)

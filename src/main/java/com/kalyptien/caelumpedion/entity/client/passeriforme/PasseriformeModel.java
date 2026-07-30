@@ -17,38 +17,16 @@ public class PasseriformeModel<T extends PasseriformeEntity> extends Hierarchica
 
     private final ModelPart passeriforme;
     private final ModelPart body;
-    private final ModelPart wingL;
-    private final ModelPart wingR;
-    private final ModelPart mainBody;
     private final ModelPart LegL;
-    private final ModelPart BackLegL;
-    private final ModelPart FrontLegL;
-    private final ModelPart MiddleLegL;
     private final ModelPart LegR;
-    private final ModelPart BackLegR;
-    private final ModelPart FrontLegR;
-    private final ModelPart MiddleLegR;
-    private final ModelPart Tail;
     private final ModelPart head;
-    private final ModelPart mainHead;
     private final ModelPart Beck;
     public PasseriformeModel(ModelPart root) {
         this.passeriforme = root.getChild("passeriforme");
         this.body = this.passeriforme.getChild("body");
-        this.wingL = this.body.getChild("wingL");
-        this.wingR = this.body.getChild("wingR");
-        this.mainBody = this.body.getChild("mainBody");
         this.LegL = this.body.getChild("LegL");
-        this.BackLegL = this.LegL.getChild("BackLegL");
-        this.FrontLegL = this.LegL.getChild("FrontLegL");
-        this.MiddleLegL = this.LegL.getChild("MiddleLegL");
         this.LegR = this.body.getChild("LegR");
-        this.BackLegR = this.LegR.getChild("BackLegR");
-        this.FrontLegR = this.LegR.getChild("FrontLegR");
-        this.MiddleLegR = this.LegR.getChild("MiddleLegR");
-        this.Tail = this.body.getChild("Tail");
         this.head = this.passeriforme.getChild("head");
-        this.mainHead = this.head.getChild("mainHead");
         this.Beck = this.head.getChild("Beck");
     }
 

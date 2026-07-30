@@ -5,9 +5,11 @@ import com.kalyptien.caelumpedion.entity.ai.FlyingMoveController;
 import com.kalyptien.caelumpedion.entity.ai.WalkingMoveController;
 import com.kalyptien.caelumpedion.entity.ai.goal.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -18,9 +20,11 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -28,12 +32,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public abstract class FlyingBirdEntity extends Animal {
 
@@ -60,6 +66,9 @@ public abstract class FlyingBirdEntity extends Animal {
 
     protected int idleAnimationTimeout = 0;
     protected int idleAnimationTimein = 0;
+
+    protected int eatAnimationTimeout = 0;
+    protected int eatAnimationTimein = 0;
 
     //Enum var
 
@@ -124,7 +133,7 @@ public abstract class FlyingBirdEntity extends Animal {
 
         this.goalSelector.addGoal(1, new FloatGoal(this));
 
-        // TODO : L'oiseau s'approche de sa nourriture préféré afin de s'en nourrir + animation
+        //this.goalSelector.addGoal(2, new BirdFoodNerbyGoal(this));
 
         this.goalSelector.addGoal(4, new BirdTemptGoal(this, 1.2, this::isFood, false));
 
@@ -213,7 +222,7 @@ public abstract class FlyingBirdEntity extends Animal {
 
     protected void setupAnimationStates() {
         if(!this.isFlying()){
-            if(this.idleAnimationTimeout <= 0) {
+            if(this.idleAnimationTimeout <= 0 && !this.isEatingAnim) {
                 if(this.onGround() && this.isLandNavigator){
 
                     this.resetAnimations();
@@ -247,6 +256,38 @@ public abstract class FlyingBirdEntity extends Animal {
                 }
 
             }
+
+            if(!this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty() && !this.isIdlingAnim){
+                if(this.onGround() && this.isLandNavigator){
+
+                    this.resetAnimations();
+
+                    this.eatAnimationState.start(this.tickCount);
+
+                    this.isEatingAnim = true;
+                    this.eatAnimationTimein = 0;
+
+                    this.lessCurrentStress(1);
+
+                    this.getNavigation().stop();
+                    this.getMoveControl().setWantedPosition(this.getX(), this.getY(), this.getZ(), 0.0);
+
+                    this.gameEvent(GameEvent.ENTITY_ACTION);
+                }
+            }
+            else{
+                this.eatAnimationTimein++;
+
+                if(this.eatAnimationTimein >= 200){
+                    this.eatAnimationTimein = 0;
+                    this.isIdlingAnim = false;
+                    this.resetAnimations();
+
+                    this.lessCurrentStress(1);
+                    this.lessInitialStress(1);
+                    this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+                }
+            }
         }
 
         if(isFlying()){
@@ -275,16 +316,14 @@ public abstract class FlyingBirdEntity extends Animal {
     }
 
     public boolean canMove() {
-        return !this.isIdlingAnim();
+        return !this.isIdlingAnim() && !this.isEatingAnim();
     }
 
     //Food/Breed
 
     @Override
     public boolean isFood(ItemStack itemStack) {
-        return itemStack.is(Items.WHEAT_SEEDS) || itemStack.is(Items.BEETROOT_SEEDS)
-                || itemStack.is(Items.MELON_SEEDS) || itemStack.is(Items.PUMPKIN_SEEDS)
-                || itemStack.is(Items.TORCHFLOWER_SEEDS);
+        return itemStack.is(Tags.Items.SEEDS);
     }
 
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
@@ -294,8 +333,8 @@ public abstract class FlyingBirdEntity extends Animal {
                 this.usePlayerItem(player, hand, itemstack);
                 this.addParticlesAroundSelf(ParticleTypes.HEART);
 
-                this.lessInitialStress(2);
-                this.lessCurrentStress(2);
+                this.lessInitialStress(1);
+                this.lessCurrentStress(1);
 
                 return InteractionResult.SUCCESS;
             }
@@ -313,6 +352,45 @@ public abstract class FlyingBirdEntity extends Animal {
     @Override
     public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
         return null;
+    }
+
+    @Override
+    public void pickUpItem(ItemEntity itemEntity) {
+        ItemStack itemstack = itemEntity.getItem();
+        if (this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
+            int i = itemstack.getCount();
+            if (i > 1) {
+                this.dropItemStack(itemstack.split(i - 1));
+            }
+
+            this.onItemPickup(itemEntity);
+            this.setItemSlot(EquipmentSlot.MAINHAND, itemstack.split(1));
+            this.setGuaranteedDrop(EquipmentSlot.MAINHAND);
+            this.take(itemEntity, itemstack.getCount());
+            itemEntity.discard();
+        }
+    }
+
+    public void dropItemStack(ItemStack stack) {
+        ItemEntity itementity = new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), stack);
+        this.level().addFreshEntity(itementity);
+    }
+
+    @Override
+    protected void dropEquipment() {
+        super.dropEquipment();
+        ItemStack itemstack = this.getItemBySlot(EquipmentSlot.MAINHAND);
+        if (!itemstack.isEmpty()) {
+            this.spawnAtLocation(itemstack);
+            this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+        }
+
+    }
+
+    @Override
+    public boolean canTakeItem(ItemStack itemstack) {
+        EquipmentSlot equipmentslot = this.getEquipmentSlotForItem(itemstack);
+        return !this.getItemBySlot(equipmentslot).isEmpty() ? false : equipmentslot == EquipmentSlot.MAINHAND && super.canTakeItem(itemstack);
     }
 
     //Misc

@@ -14,7 +14,7 @@ public class ModItems {
     // MISC
 
     public static final DeferredItem<Item> PASSERIFORME_SPAWN_EGG = ITEMS.register("passeriforme_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.PASSERIFORME, 0xdfff12, 0x6efc58,
+            () -> new DeferredSpawnEggItem(ModEntities.PASSERIFORME, 0x453517, 0xcca152,
                     new Item.Properties()));
 
     public static void register(IEventBus eventBus) {

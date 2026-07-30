@@ -4,6 +4,7 @@ import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import com.mojang.datafixers.DataFixUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 
@@ -28,14 +29,21 @@ public class BirdPanicGoal extends PanicGoal {
     }
 
     public void start() {
+
+        if (!bird.canMove()) {
+            bird.resetAnimations();
+        }
+
         this.bird.addCurrentStress(5);
         this.bird.setPanicMode(true);
         this.bird.setNeedToFlyAway(true);
+        this.bird.dropItemStack(bird.getItemBySlot(EquipmentSlot.MAINHAND));
 
         List<? extends FlyingBirdEntity> list = this.bird.level().getEntitiesOfClass(this.bird.getClass(), this.bird.getBoundingBox().inflate(bird.getViewRange(), bird.getViewRange(), bird.getViewRange()));
         for (int i = 0; i < list.size(); i++) {
             list.get(i).addCurrentStress(2);
             list.get(i).setNeedToFlyAway(true);
+            this.bird.dropItemStack(bird.getItemBySlot(EquipmentSlot.MAINHAND));
         }
     }
 

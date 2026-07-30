@@ -43,7 +43,6 @@ public class BirdPlayerNerbyGoal extends Goal {
     }
 
     public void start() {
-
         for (int i = 0; i < list.size(); i++) {
             if(list.get(i).isCrouching()){
                 this.playerIsSneaking = true;

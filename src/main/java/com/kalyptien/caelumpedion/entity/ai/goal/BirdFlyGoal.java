@@ -37,6 +37,10 @@ public class BirdFlyGoal extends Goal {
     }
 
     public void start() {
+        if (!bird.canMove()) {
+            bird.resetAnimations();
+        }
+
         this.bird.setFlying(true);
         bird.getNavigation().moveTo(destination.x, destination.y, destination.z, bird.getFlySpeed());
     }
