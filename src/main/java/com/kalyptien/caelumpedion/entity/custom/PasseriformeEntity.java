@@ -24,17 +24,17 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
 
     public PasseriformeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
+
         this.setFlyingBirdType(FlyingBirdType.SHORT_FlYER);
         this.setAquaticBirdType(AquaticBirdType.NONE);
         this.setBOIDBirdType(BOIDType.FOLLOW);
+        this.setFlyPathType(FlyPathType.CHAOS);
 
         this.flyRange = 50;
         this.flyHeight = 20;
-        this.flySpeed = 3f;
+        this.flySpeed = 4f;
 
         this.viewRange = 16;
-
-        this.stressStep = 5;
 
         this.maxSchoolSize = 10;
     }
@@ -78,10 +78,6 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
             PasseriformeVariant variant = Util.getRandom(PasseriformeVariant.values(), this.random);
             this.setVariant(variant);
         }
-
-        //Stress
-        this.setInitialStress((int) (Math.round(20 * Math.random()) + 50));
-        this.setCurrentStress(this.getInitialStress() + (int) (Math.round(10 * Math.random())));
 
         return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
     }

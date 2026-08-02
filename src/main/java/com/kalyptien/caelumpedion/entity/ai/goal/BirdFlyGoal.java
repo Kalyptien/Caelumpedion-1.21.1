@@ -1,6 +1,7 @@
 package com.kalyptien.caelumpedion.entity.ai.goal;
 
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
+import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.Vec3;
 
@@ -10,6 +11,7 @@ public class BirdFlyGoal extends Goal {
 
     private FlyingBirdEntity bird;
     private Vec3 destination;
+    double speedModifier = 0;
 
     public BirdFlyGoal(FlyingBirdEntity entity) {
         this.setFlags(EnumSet.of(Flag.MOVE));
@@ -23,8 +25,14 @@ public class BirdFlyGoal extends Goal {
         }
 
         if(bird.isFlying() && bird.getNextNavigationArray().isEmpty()){
-            bird.setFlying(false);
-            return false;
+            this.destination = new Vec3(bird.getX(), 0, bird.getZ());
+            return true;
+        }
+
+        if(bird instanceof SocialFlyingBirdEntity){
+            if(((SocialFlyingBirdEntity) bird).isFollower() && !bird.getNextNavigationArray().isEmpty()){
+                ((SocialFlyingBirdEntity) bird).stopFollowing();
+            }
         }
 
         Vec3 target = bird.getNextNavigationArray().isEmpty() ? null : bird.getNextNavigationArray().getFirst();
@@ -41,8 +49,19 @@ public class BirdFlyGoal extends Goal {
             bird.resetAnimations();
         }
 
+        if(this.bird.getEyePosition().y > destination.y){
+            speedModifier += (bird.getFlySpeed()/4.0f) * (destination.distanceToSqr(destination.x, destination.y, destination.z) / 100);
+        }
+        else{
+            speedModifier += -(bird.getFlySpeed()/4.0f) * ((destination.distanceToSqr(destination.x, destination.y, destination.z) / 100) * 2);
+        }
+
+        if(speedModifier < 0){
+            speedModifier = 0;
+        }
+
         this.bird.setFlying(true);
-        bird.getNavigation().moveTo(destination.x, destination.y, destination.z, bird.getFlySpeed());
+        bird.getNavigation().moveTo(destination.x, destination.y, destination.z, bird.getFlySpeed() + speedModifier);
     }
 
     public void tick() {
@@ -56,7 +75,7 @@ public class BirdFlyGoal extends Goal {
         bird.clearNextNavigationArray();
 
         if(bird.getNextNavigationArray().isEmpty()){
-            bird.lessCurrentStress(1);
+            this.speedModifier = 0;
             bird.setNeedToFlyAway(false);
             bird.setFlying(false);
         }

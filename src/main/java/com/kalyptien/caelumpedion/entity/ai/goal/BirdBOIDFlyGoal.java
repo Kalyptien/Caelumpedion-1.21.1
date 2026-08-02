@@ -98,8 +98,7 @@ public class BirdBOIDFlyGoal extends Goal {
             followerDestination = socialBird.position().add(leaderDelta.x,leaderDelta.y,leaderDelta.z);
         }
 
-        float distanceFromLeader = socialBird.distanceTo(socialBird.leader);
-        double influenceFromTheLeader = (distanceFromLeader / 100);
+        float influenceFromTheLeader = socialBird.distanceTo(socialBird.leader) / 100;
 
         double speed = socialBird.getFlySpeed() + (socialBird.getFlySpeed() * influenceFromTheLeader);
 
@@ -119,8 +118,7 @@ public class BirdBOIDFlyGoal extends Goal {
 
         Vec3 delta = socialBird.getEyePosition().vectorTo(socialBird.leader.getEyePosition());
 
-        float distanceFromLeader = socialBird.distanceTo(socialBird.leader);
-        double influenceFromTheLeader = (distanceFromLeader / 100);
+        float influenceFromTheLeader = socialBird.distanceTo(socialBird.leader) / 100;
 
         double speed = socialBird.getFlySpeed() + (socialBird.getFlySpeed() * influenceFromTheLeader);
 

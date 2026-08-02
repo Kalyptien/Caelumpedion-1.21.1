@@ -18,7 +18,7 @@ public class BirdTemptGoal extends TemptGoal {
 
     public boolean canUse() {
 
-        if (bird.getCurrentStress() > 50 || bird.isFlying()){
+        if (bird.isFlying()){
             return false;
         }
 

@@ -24,34 +24,43 @@ public class BirdPanicGoal extends PanicGoal {
         if (!this.shouldPanic()) {
             return false;
         } else {
-            return true;
+            return this.findRandomPosition();
         }
     }
 
     public void start() {
+        super.start();
 
         if (!bird.canMove()) {
             bird.resetAnimations();
         }
 
-        this.bird.addCurrentStress(5);
-        this.bird.setPanicMode(true);
-        this.bird.setNeedToFlyAway(true);
-        this.bird.dropItemStack(bird.getItemBySlot(EquipmentSlot.MAINHAND));
+        if(bird.getStressBirdType() == FlyingBirdEntity.StressBirdType.RUNNER){
+            this.bird.setNeedToFlyAway(true);
+        }
+
+        if(!bird.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()){
+            this.bird.dropEquipment();
+        }
 
         List<? extends FlyingBirdEntity> list = this.bird.level().getEntitiesOfClass(this.bird.getClass(), this.bird.getBoundingBox().inflate(bird.getViewRange(), bird.getViewRange(), bird.getViewRange()));
         for (int i = 0; i < list.size(); i++) {
-            list.get(i).addCurrentStress(2);
-            list.get(i).setNeedToFlyAway(true);
-            this.bird.dropItemStack(bird.getItemBySlot(EquipmentSlot.MAINHAND));
+
+            if (!list.get(i).canMove()) {
+                list.get(i).resetAnimations();
+            }
+
+            if(bird.getStressBirdType() == FlyingBirdEntity.StressBirdType.RUNNER){
+                list.get(i).setNeedToFlyAway(true);
+            }
+
+            if(!list.get(i).getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()){
+                list.get(i).dropEquipment();
+            }
         }
     }
 
-    public void stop() {
-
-    }
-
     public boolean canContinueToUse() {
-        return false;
+        return super.canContinueToUse() && !bird.isFlying();
     }
 }

@@ -20,5 +20,9 @@ public class WalkingMoveController  extends MoveControl {
         if (this.bird.canMove()) {
             super.tick();
         }
+        else {
+            bird.getNavigation().stop();
+            this.setWantedPosition(bird.getX(), bird.getY(), bird.getZ(), 0.0);
+        }
     }
 }

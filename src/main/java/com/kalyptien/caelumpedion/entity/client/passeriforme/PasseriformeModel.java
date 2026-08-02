@@ -1,9 +1,12 @@
 package com.kalyptien.caelumpedion.entity.client.passeriforme;
 
+import com.google.common.collect.ImmutableList;
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.custom.PasseriformeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
+import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -11,8 +14,9 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.HumanoidArm;
 
-public class PasseriformeModel<T extends PasseriformeEntity> extends HierarchicalModel<T> {
+public class PasseriformeModel<T extends PasseriformeEntity> extends HierarchicalModel<T> implements ArmedModel {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "passeriforme"), "main");
 
     private final ModelPart passeriforme;
@@ -97,20 +101,7 @@ public class PasseriformeModel<T extends PasseriformeEntity> extends Hierarchica
 
         if(entity.isFlying()){
             //> FLY
-
-            //TODO : Voir pourquoi le changement de style de vol ne se fait pas.
-
-            //if(entity.isFlyingAnim()){
-                this.animateWalk(PasseriformeAnimation.PASSERIFORME_FLY, limbSwing, limbSwingAmount, 5f, 5f);
-            //}
-
-            /*if(entity.isPlaningAnim()){
-                this.animateWalk(PasseriformeAnimation.PASSERIFORME_PLANE, limbSwing, limbSwingAmount, 5f, 5f);
-            }
-
-            if(entity.isLandingAnim()){
-                this.animateWalk(PasseriformeAnimation.PASSERIFORME_LAND, limbSwing, limbSwingAmount, 5f, 5f);
-            }*/
+            this.animateWalk(PasseriformeAnimation.PASSERIFORME_FLY, limbSwing, limbSwingAmount, 5f, 5f);
 
             float partialTick = ageInTicks - entity.tickCount;
             float flyProgress = entity.getFlyProgress(partialTick);
@@ -132,6 +123,16 @@ public class PasseriformeModel<T extends PasseriformeEntity> extends Hierarchica
 
         this.head.yRot = headYaw * ((float)Math.PI / 260f);
         this.head.xRot = headPitch *  ((float)Math.PI / 260f);
+    }
+
+    @Override
+    public void translateToHand(HumanoidArm side, PoseStack poseStack) {
+        this.passeriforme.translateAndRotate(poseStack);
+        this.head.translateAndRotate(poseStack);
+        this.body.translateAndRotate(poseStack);
+
+        poseStack.scale(0.3F, 0.3F, 0.3F);
+        poseStack.translate(0.0F, 0.05F, 0.0F);
     }
 
     @Override

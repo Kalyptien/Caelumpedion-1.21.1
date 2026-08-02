@@ -5,6 +5,7 @@ import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -16,6 +17,19 @@ public class PrepareFlyGoal extends Goal {
 
     private FlyingBirdEntity bird;
 
+    //Setup
+    int range;
+    int height;
+
+    double numberOfMiddleDestination;
+
+    double stepX;
+    double stepZ;
+
+    FlyType flyType;
+
+    int seed ;
+    double seedPercent;
 
     public PrepareFlyGoal(FlyingBirdEntity entity) {
         this.setFlags(EnumSet.of(Flag.MOVE));
@@ -44,11 +58,15 @@ public class PrepareFlyGoal extends Goal {
             return false;
         }
 
-        if(bird.isNeedToFlyAway() || bird.isPanicMode()){
+        if(bird.isNeedToFlyAway()){
             return true;
         }
 
-        if(!bird.isFlying() && bird.getRandom().nextInt(2000) != 0){
+        if(bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.WALKER && bird.getRandom().nextInt(3000) != 0){
+            return false;
+        }
+
+        if(!bird.isFlying() && bird.getRandom().nextInt(1500) != 0){
             return false;
         }
 
@@ -68,106 +86,103 @@ public class PrepareFlyGoal extends Goal {
 
     private void createFlyPath() {
 
-        //Setup
-        int range;
-        int height;
-
-        double numberOfMiddleDestination;
-
-        double stepX;
-        double stepZ;
-
-        double longFlyChance = 0.0;
-
-        FlyType flyType;
-
         int seed = bird.getRandom().nextInt(100);
-        double seedPercent = seed /100.0;
+        this.seedPercent = seed/100.0f;
 
-        //TODO : Gestion du vol de migration
-
-        if(bird.getCurrentStress() >= 100 && bird.getStressBirdType() == FlyingBirdEntity.StressBirdType.RUNNER){
-            flyType = FlyType.PANIC;
+        if(this.bird.isOnMigration()){
+            this.flyType = FlyType.MIGRATION;
+            range = bird.getFlyRange() * 5;
+            height = bird.getFlyHeight() * 5;
+        }
+        else if(this.bird.isNeedToFlyAway()){
+            this.flyType = FlyType.PANIC;
             range = bird.getFlyRange() * 2;
             height = bird.getFlyHeight() * 2;
-        }else{
-            if(bird.isNeedToFlyAway()){
-                flyType = FlyType.LONG;
+        }
+        else{
+            double longFlyChance = 0.0;
+
+            if(bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.SHORT_FlYER){
+                longFlyChance = 0.75;
+            }
+            else if (bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.LONG_FLYER){
+                longFlyChance = 0.15;
+            }
+
+            if((seed/100.0f) < longFlyChance){
+                this.flyType = FlyType.SHORT;
+                range = bird.getFlyRange() / 4;
+                height = bird.getFlyHeight() / 4;
+            }
+            else {
+                this.flyType = FlyType.LONG;
                 range = bird.getFlyRange();
                 height = bird.getFlyHeight();
             }
-            else{
-                if(bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.SHORT_FlYER){
-                    longFlyChance = 0.75;
-                }
-                else if (bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.LONG_FLYER){
-                    longFlyChance = 0.15;
-                }
-
-                if(seedPercent < longFlyChance){
-                    flyType = FlyType.SHORT;
-                    range = bird.getFlyRange() / 4;
-                    height = bird.getFlyHeight() / 4;
-                }
-                else {
-                    flyType = FlyType.LONG;
-                    range = bird.getFlyRange();
-                    height = bird.getFlyHeight();
-                }
-            }
         }
 
-        double finalX = ((range * seedPercent) * 2) - (range + (Nth(seed, 1)))  * randomSign();
-        double finalZ = ((range * seedPercent) * 2) - (range + (Nth(seed, 2)))  * randomSign();
+        double finalX;
+        double finalZ;
+
+        if(flyType == FlyType.SHORT){
+            finalX = ((range * seedPercent) * 2) - ((range + (Nth(seed, 1)))  * randomSign()) + ((range/10.0f) * randomSign());
+            finalZ = ((range * seedPercent) * 2) - ((range + (Nth(seed, 2)))  * randomSign()) + ((range/10.0f) * randomSign());
+        }
+        else{
+            finalX = ((range * seedPercent) * 2) - ((range + (Nth(seed, 1)))  * randomSign()) + ((range/2.0f) * randomSign());
+            finalZ = ((range * seedPercent) * 2) - ((range + (Nth(seed, 2)))  * randomSign()) + ((range/2.0f) * randomSign());
+        }
 
         //Generate the final position
         Vec3 finalDestination = bird.position().add(finalX,0,finalZ);
-
         Vec3 finalGround = groundPosition(finalDestination);
 
-        // Check if water is below the final position
-        boolean tooMuchWaterFinalDestination = false;
-        if(bird.getAquaticBirdType() != FlyingBirdEntity.AquaticBirdType.FULL){
-            BlockPos.MutableBlockPos aquaticGround = new BlockPos.MutableBlockPos();
-
-            aquaticGround.set(finalDestination.x, finalGround.y - 1, finalDestination.z);
-            if(!bird.level().getBlockState(aquaticGround).isSolid() && bird.getAquaticBirdType() == FlyingBirdEntity.AquaticBirdType.NONE){
-                tooMuchWaterFinalDestination = true;
-            }
-
-            aquaticGround.set(finalDestination.x, finalGround.y - 2, finalDestination.z);
-            if(!bird.level().getBlockState(aquaticGround).isSolid() && bird.getAquaticBirdType() == FlyingBirdEntity.AquaticBirdType.TALL){
-                tooMuchWaterFinalDestination = true;
-            }
-        }
-
-        if(tooMuchWaterFinalDestination){
-            finalDestination = new Vec3(finalDestination.x - finalX, finalGround.y, finalDestination.z - finalZ);
-        }
-        else{
-            finalDestination = new Vec3(finalDestination.x, finalGround.y, finalDestination.z);
-        }
+        finalDestination = new Vec3(finalDestination.x, finalGround.y, finalDestination.z);
 
         //Generate in between positions
 
-        numberOfMiddleDestination = seed % 6;
+        if(flyType == FlyType.MIGRATION){
+            numberOfMiddleDestination = seed % 12;
+        }
+        else{
+            numberOfMiddleDestination = seed % 6;
+        }
+
         stepX = finalX /numberOfMiddleDestination;
         stepZ = finalZ / numberOfMiddleDestination;
 
         for (int i = 0; i < numberOfMiddleDestination; i++) {
 
-            Vec3 middleDestination = bird.position().add(
-                    ((stepX * i) - Nth(seed, 1)) * randomSign(),
-                    0,
-                    ((stepZ * i) - Nth(seed, 2)) * randomSign());
+            Vec3 middleDestination;
+            if(bird.getFlyPathType() == FlyingBirdEntity.FlyPathType.CHAOS && (flyType == FlyType.SHORT || flyType == FlyType.PANIC) ){
+                 middleDestination = bird.position().add(
+                        ((stepX * i) - Nth(seed, 1)) * randomSign(),
+                        0,
+                        ((stepZ * i) - Nth(seed, 2)) * randomSign());
+            }
+            else{
+                middleDestination = bird.position().add(
+                        stepX * i,
+                        0,
+                        stepZ * i);
+            }
 
             Vec3 middleGround = groundPosition(middleDestination);
 
             double y;
-            if(flyType == FlyType.PANIC){
-                y = Math.log(((Math.exp(1) / numberOfMiddleDestination)) * (i + 1)) * height + middleGround.y;
+            if(flyType == FlyType.MIGRATION){
+                y = height;
             }
-            else {
+            else if(flyType == FlyType.PANIC && bird.getFlyPathType() == FlyingBirdEntity.FlyPathType.CHAOS){
+                y = Math.sin((bird.getRandom().nextInt(5) / numberOfMiddleDestination) * i) * height + middleGround.y;
+            } else if (bird.getFlyPathType() == FlyingBirdEntity.FlyPathType.NEAR_GROUND && seedPercent < 0.5) {
+                if(i >= numberOfMiddleDestination/4){
+                    y = Math.sin((Math.PI / numberOfMiddleDestination) * i) * height + middleGround.y;
+                }
+                else{
+                    y = (height/4) + middleGround.y;
+                }
+            } else {
                 y = Math.sin((Math.PI / numberOfMiddleDestination) * i) * height + middleGround.y;
             }
 
@@ -176,6 +191,8 @@ public class PrepareFlyGoal extends Goal {
 
         this.bird.addNextNavigationArray(finalDestination);
     }
+
+    //Utils
 
     public Vec3 groundPosition(Vec3 airPosition) {
         BlockPos.MutableBlockPos ground = new BlockPos.MutableBlockPos();
