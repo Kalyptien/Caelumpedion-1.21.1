@@ -5,22 +5,25 @@ IMPORTANT :
 
 VOL :
 
-- Si touche du verre = continue de bloquer contre ?
+- Si touche du verre = continue de bloquer contre (?)
+- Vol en V
+- BOIS : Uniquement ceux qui ont la mm variante
 
 BLOCS :
 
-- Redo Bird Feeder texture
-- Drop Bird Feeder
-- Craft Bird Feeder
 - Multitexture Bird Feeder (?)
 
-AUTRES :
+OISEAUX :
 
-- Permettre aux oiseaux d'aller se nourrir aux Feeders
 - Rendre les oiseaux tamable (rare)
 - Les oiseaux bougent pendant l'idle animation => ca arrive toujours, possiblement lié aux différences entre client et serveur
 - Intégrations des chants pour chaques oiseaux (Passeriforme)
 - Intégration du monde de stress "combatant" (pour les aigles par exemple)
+
+- Ajouter hirondel
+- Ajouter aigle
+- Ajouter canard
+- Ajouter grue
 
 =====
 
@@ -28,6 +31,4 @@ AUTRES :
 A VERIFIER :
 
 - Changement des styles de vol des oiseaux
-
-- Mangoire a oiseau
 

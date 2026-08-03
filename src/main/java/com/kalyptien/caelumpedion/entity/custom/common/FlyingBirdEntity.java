@@ -1,5 +1,6 @@
 package com.kalyptien.caelumpedion.entity.custom.common;
 
+import com.kalyptien.caelumpedion.block.entity.BirdFeederBlockEntity;
 import com.kalyptien.caelumpedion.entity.ai.FlightPathNavigator;
 import com.kalyptien.caelumpedion.entity.ai.FlyingMoveController;
 import com.kalyptien.caelumpedion.entity.ai.WalkingMoveController;
@@ -340,6 +341,22 @@ public abstract class FlyingBirdEntity extends Animal {
             this.setGuaranteedDrop(EquipmentSlot.MAINHAND);
             this.take(itemEntity, itemstack.getCount());
             itemEntity.discard();
+        }
+    }
+
+    public void pickUpItemFromFeeder(BirdFeederBlockEntity feederBlock, int slot) {
+        ItemStack itemstack = feederBlock.inventory.getStackInSlot(slot);
+        if (this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
+            int i = itemstack.getCount();
+            if (i > 1) {
+                feederBlock.inventory.setStackInSlot(slot, itemstack.split(i - 1));
+            }
+            else{
+                feederBlock.inventory.setStackInSlot(slot, ItemStack.EMPTY);
+            }
+
+            this.setItemSlot(EquipmentSlot.MAINHAND, itemstack.split(1));
+            this.setGuaranteedDrop(EquipmentSlot.MAINHAND);
         }
     }
 
