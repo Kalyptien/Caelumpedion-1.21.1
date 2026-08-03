@@ -1,14 +1,20 @@
 package com.kalyptien.caelumpedion;
 
+import com.kalyptien.caelumpedion.block.ModBlocks;
+import com.kalyptien.caelumpedion.block.entity.ModBlockEntities;
+import com.kalyptien.caelumpedion.block.entity.renderer.BirdFeederBlockEntityRenderer;
 import com.kalyptien.caelumpedion.entity.ModEntities;
 import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeRenderer;
 import com.kalyptien.caelumpedion.item.ModCreativeModTabs;
 import com.kalyptien.caelumpedion.item.ModItems;
+import com.kalyptien.caelumpedion.screen.ModMenuTypes;
+import com.kalyptien.caelumpedion.screen.custom.BirdFeederScreen;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.*;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import org.slf4j.Logger;
@@ -50,8 +56,12 @@ public class CaelumpedionMod {
         ModCreativeModTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
-
+        ModBlocks.register(modEventBus);
         ModEntities.register(modEventBus);
+
+        ModBlockEntities.register(modEventBus);
+
+        ModMenuTypes.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
     }
@@ -77,6 +87,16 @@ public class CaelumpedionMod {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.PASSERIFORME.get(), PasseriformeRenderer::new);
+        }
+
+        @SubscribeEvent
+        public static void registerScreens(RegisterMenuScreensEvent event) {
+            event.register(ModMenuTypes.BIRD_FEEDER_MENU.get(), BirdFeederScreen::new);
+        }
+
+        @SubscribeEvent
+        public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerBlockEntityRenderer(ModBlockEntities.BIRD_FEEDER_BE.get(), BirdFeederBlockEntityRenderer::new);
         }
     }
 }

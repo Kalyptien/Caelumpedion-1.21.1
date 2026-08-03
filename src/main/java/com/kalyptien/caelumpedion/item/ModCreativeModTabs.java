@@ -1,6 +1,7 @@
 package com.kalyptien.caelumpedion.item;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
+import com.kalyptien.caelumpedion.block.ModBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -20,6 +21,7 @@ public class ModCreativeModTabs {
                     .title(Component.translatable("creativetab.caelumpedion.mod_tab"))
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModItems.PASSERIFORME_SPAWN_EGG.get());
+                        output.accept(ModBlocks.BIRD_FEEDER.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

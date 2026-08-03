@@ -7,11 +7,20 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CaveVines;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.SweetBerryBushBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.Tags;
 
 import java.util.EnumSet;
+import java.util.List;
+import java.util.function.Predicate;
 
 public class PrepareFlyGoal extends Goal {
 
@@ -93,8 +102,11 @@ public class PrepareFlyGoal extends Goal {
             this.flyType = FlyType.MIGRATION;
             range = bird.getFlyRange() * 5;
             height = bird.getFlyHeight() * 5;
-        }
-        else if(this.bird.isNeedToFlyAway()){
+        } else if (bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.WALKER) {
+            this.flyType = FlyType.SHORT;
+            range = bird.getFlyRange() / 4;
+            height = bird.getFlyHeight() / 4;
+        } else if(this.bird.isNeedToFlyAway()){
             this.flyType = FlyType.PANIC;
             range = bird.getFlyRange() * 2;
             height = bird.getFlyHeight() * 2;
@@ -109,7 +121,7 @@ public class PrepareFlyGoal extends Goal {
                 longFlyChance = 0.15;
             }
 
-            if((seed/100.0f) < longFlyChance){
+            if(seedPercent < longFlyChance){
                 this.flyType = FlyType.SHORT;
                 range = bird.getFlyRange() / 4;
                 height = bird.getFlyHeight() / 4;
@@ -161,10 +173,7 @@ public class PrepareFlyGoal extends Goal {
                         ((stepZ * i) - Nth(seed, 2)) * randomSign());
             }
             else{
-                middleDestination = bird.position().add(
-                        stepX * i,
-                        0,
-                        stepZ * i);
+                middleDestination = bird.position().add(stepX * i, 0, stepZ * i);
             }
 
             Vec3 middleGround = groundPosition(middleDestination);

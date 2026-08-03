@@ -1,5 +1,7 @@
 {
   "creativetab.caelumpedion.mod_tab": "Caelumpedion",
 
-  "item.caelumpedion.passeriforme_spawn_egg": "Passeriforme Spawn Egg"
+  "item.caelumpedion.passeriforme_spawn_egg": "Passeriforme Spawn Egg",
+
+  "block.caelumpedion.bird_feeder": "Bird Feeder"
 }
