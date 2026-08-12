@@ -85,29 +85,39 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
     // Variant
 
     public static enum PasseriformeVariant {
-        CardinalisCardinalis(0),
-        CyanistesCaeruleus(1),
-        CyanocittaCristata(2),
-        ErithacusRubecula(3),
-        LophophanesCristatus(4),
-        PasserDomesticus(5),
-        PeriparusAter(6),
-        PhoenicurusOchruros(7);
+        CardinalisCardinalis(0, "cardinalis_cardinalis"),
+        CyanistesCaeruleus(1, "cyanistes_caeruleus"),
+        CyanocittaCristata(2, "cyanocitta_cristata"),
+        ErithacusRubecula(3, "erithacus_rubecula"),
+        LophophanesCristatus(4, "lophophanes_cristatus"),
+        PasserDomesticus(5, "passer_domesticus"),
+        PeriparusAter(6, "periparus_ater"),
+        PhoenicurusOchruros(7, "phoenicurus_ochruros");
 
         private static final PasseriformeVariant[] BY_ID = Arrays.stream(values()).sorted(
                 Comparator.comparingInt(PasseriformeVariant::getId)).toArray(PasseriformeVariant[]::new);
         private final int id;
+        private final String fileName;
 
-        PasseriformeVariant(int id) {
+        PasseriformeVariant(int id, String fileName) {
             this.id = id;
+            this.fileName = fileName;
         }
 
         public int getId() {
             return id;
         }
 
+        public String getFileName(){
+            return fileName;
+        }
+
         public static PasseriformeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
+        }
+
+        public static int lenght(){
+            return BY_ID.length;
         }
     }
 }

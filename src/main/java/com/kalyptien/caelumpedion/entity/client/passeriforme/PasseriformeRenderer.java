@@ -17,22 +17,11 @@ public class PasseriformeRenderer extends MobRenderer<PasseriformeEntity, Passer
 
     private static final Map<PasseriformeEntity.PasseriformeVariant, ResourceLocation> LOCATION_BY_VARIANT =
             Util.make(Maps.newEnumMap(PasseriformeEntity.PasseriformeVariant.class), map -> {
-                map.put(PasseriformeEntity.PasseriformeVariant.CardinalisCardinalis,
-                        ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "textures/entity/passeriforme/cardinalis_cardinalis.png"));
-                map.put(PasseriformeEntity.PasseriformeVariant.CyanistesCaeruleus,
-                        ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "textures/entity/passeriforme/cyanistes_caeruleus.png"));
-                map.put(PasseriformeEntity.PasseriformeVariant.CyanocittaCristata,
-                        ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "textures/entity/passeriforme/cyanocitta_cristata.png"));
-                map.put(PasseriformeEntity.PasseriformeVariant.ErithacusRubecula,
-                        ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "textures/entity/passeriforme/erithacus_rubecula.png"));
-                map.put(PasseriformeEntity.PasseriformeVariant.LophophanesCristatus,
-                        ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "textures/entity/passeriforme/lophophanes_cristatus.png"));
-                map.put(PasseriformeEntity.PasseriformeVariant.PasserDomesticus,
-                        ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "textures/entity/passeriforme/passer_domesticus.png"));
-                map.put(PasseriformeEntity.PasseriformeVariant.PeriparusAter,
-                        ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "textures/entity/passeriforme/periparus_ater.png"));
-                map.put(PasseriformeEntity.PasseriformeVariant.PhoenicurusOchruros,
-                        ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "textures/entity/passeriforme/phoenicurus_ochruros.png"));
+                for (int i = 0; i < PasseriformeEntity.PasseriformeVariant.lenght(); i++) {
+                    PasseriformeEntity.PasseriformeVariant currentVariant = PasseriformeEntity.PasseriformeVariant.byId(i);
+                    map.put(currentVariant,
+                            ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "textures/entity/passeriforme/" + currentVariant.getFileName() + ".png"));
+                }
 
             });
 

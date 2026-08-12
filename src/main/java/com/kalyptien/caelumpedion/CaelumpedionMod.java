@@ -4,6 +4,7 @@ import com.kalyptien.caelumpedion.block.ModBlocks;
 import com.kalyptien.caelumpedion.block.entity.ModBlockEntities;
 import com.kalyptien.caelumpedion.block.entity.renderer.BirdFeederBlockEntityRenderer;
 import com.kalyptien.caelumpedion.entity.ModEntities;
+import com.kalyptien.caelumpedion.entity.client.anatidae.AnatidaeRenderer;
 import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeRenderer;
 import com.kalyptien.caelumpedion.item.ModCreativeModTabs;
 import com.kalyptien.caelumpedion.item.ModItems;
@@ -87,6 +88,7 @@ public class CaelumpedionMod {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.PASSERIFORME.get(), PasseriformeRenderer::new);
+            EntityRenderers.register(ModEntities.ANATIDAE.get(), AnatidaeRenderer::new);
         }
 
         @SubscribeEvent

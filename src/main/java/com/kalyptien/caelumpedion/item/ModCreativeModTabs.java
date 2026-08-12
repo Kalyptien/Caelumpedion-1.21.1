@@ -21,6 +21,8 @@ public class ModCreativeModTabs {
                     .title(Component.translatable("creativetab.caelumpedion.mod_tab"))
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModItems.PASSERIFORME_SPAWN_EGG.get());
+                        output.accept(ModItems.ANATIDAE_SPAWN_EGG.get());
+                        
                         output.accept(ModBlocks.BIRD_FEEDER.get());
                     }).build());
 

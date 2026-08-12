@@ -17,6 +17,10 @@ public class ModItems {
             () -> new DeferredSpawnEggItem(ModEntities.PASSERIFORME, 0x453517, 0xcca152,
                     new Item.Properties()));
 
+    public static final DeferredItem<Item> ANATIDAE_SPAWN_EGG = ITEMS.register("anatidae_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.ANATIDAE, 0xc7c7c7, 0x876c44,
+                    new Item.Properties()));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
