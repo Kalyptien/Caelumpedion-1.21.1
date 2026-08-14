@@ -50,8 +50,8 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(1 ,new WaterAvoidingRandomFlyingGoal(this, 2.0));
-        this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 2.0));
+        this.goalSelector.addGoal(5 ,new WaterAvoidingRandomFlyingGoal(this, 2.0));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 2.0));
     }
 
     //Getter / Setter

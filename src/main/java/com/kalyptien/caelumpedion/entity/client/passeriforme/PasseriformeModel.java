@@ -1,11 +1,9 @@
 package com.kalyptien.caelumpedion.entity.client.passeriforme;
 
-import com.google.common.collect.ImmutableList;
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.custom.PasseriformeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -114,7 +112,7 @@ public class PasseriformeModel<T extends PasseriformeEntity> extends Hierarchica
 
         //> IDLE
         this.animate(entity.eatAnimationState, PasseriformeAnimation.PASSERIFORME_PICK, ageInTicks, 1f);
-        this.animate(entity.idleLookAnimationState, PasseriformeAnimation.PASSERIFORME_IDLE_LOOK, ageInTicks, 1f);
+        this.animate(entity.idleAnimationState, PasseriformeAnimation.PASSERIFORME_IDLE_LOOK, ageInTicks, 1f);
     }
 
     private void applyHeadRotation(float headYaw, float headPitch) {

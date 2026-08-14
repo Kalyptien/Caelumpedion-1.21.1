@@ -8,6 +8,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.animal.Animal;
@@ -42,7 +43,7 @@ public class AnatidaeEntity extends SocialFlyingBirdEntity {
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 12d)
-                .add(Attributes.MOVEMENT_SPEED, 0.10D)
+                .add(Attributes.MOVEMENT_SPEED, 0.15D)
                 .add(Attributes.ARMOR, 0d)
                 .add(Attributes.FOLLOW_RANGE, 12D);
     }
@@ -50,6 +51,7 @@ public class AnatidaeEntity extends SocialFlyingBirdEntity {
     @Override
     protected void registerGoals() {
         super.registerGoals();
+        this.goalSelector.removeGoal(new FloatGoal(this));
     }
 
     //Food
@@ -94,15 +96,18 @@ public class AnatidaeEntity extends SocialFlyingBirdEntity {
         AnasPlatyrhynchos(0, "anas_platyrhynchos", 1f),
         CairinaMoschata(1, "cairina_moschata", 1f),
         AnasErythrorhyncha(2, "anas_erythrorhyncha", 1f),
+        PhantasiaParvusAlbus(3,"phantasia_parvus_albus", 0.7f),
+
         // Goose
         BrantaHutchinsii(50, "branta_hutchinsii", 1.3f),
         AnserAnser(51, "anser_anser", 1.3f),
-        AnserCaerulescens(52, "anser_caerulescens", 1.3f),
-        AnserCanagicus(53, "anser_canagicus", 1.3f),
-        BrantaRuficollis(51, "branta_ruficollis", 1.3f),
+        //AnserCaerulescens(52, "anser_caerulescens", 1.3f),
+        //AnserCanagicus(53, "anser_canagicus", 1.3f),
+        //BrantaRuficollis(51, "branta_ruficollis", 1.3f),
+
         // Swan
         CygnusOlor(100, "cygnus_olor", 1.5f),
-        CygnusBuccinator(101, "cygnus_buccinator", 1.5f),
+        //CygnusBuccinator(101, "cygnus_buccinator", 1.5f),
         CygnusAtratus(102,"cygnus_atratus", 1.5f)
         ;
 

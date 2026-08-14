@@ -55,12 +55,22 @@ public abstract class FlyingBirdEntity extends Animal {
     protected boolean isEatingAnim = false;
 
     public final AnimationState eatAnimationState = new AnimationState();
-    public final AnimationState idleLookAnimationState = new AnimationState();
+    public final AnimationState idleAnimationState = new AnimationState();
 
     protected int idleAnimationTimeout = 0;
     protected int idleAnimationTimein = 0;
 
     protected int eatAnimationTimein = 0;
+
+    //Anim var : Aquatic Bird
+
+    public final AnimationState idleWaterAnimationState = new AnimationState();
+    public final AnimationState inWaterAnimationState = new AnimationState();
+
+    protected boolean isIdlingWaterAnim = false;
+
+    protected int idleWaterAnimationTimeout = 0;
+    protected int idleWaterAnimationTimein = 0;
 
     //Enum var
 
@@ -116,12 +126,13 @@ public abstract class FlyingBirdEntity extends Animal {
         this.goalSelector.addGoal(2, new BirdTemptGoal(this, 1.25, this::isFood, false));
         this.goalSelector.addGoal(2, new BirdFoodNerbyGoal(this));
 
+        this.goalSelector.addGoal(3, new AvoidEntityGoal(this, Player.class, this.viewRange/10.0f, 1.5, 1.5, (entity) -> {
+            return !((Player)entity).isCrouching();
+        }));
+
         this.goalSelector.addGoal(3, new PrepareFlyGoal(this));
         this.goalSelector.addGoal(3, new FloatGoal(this));
 
-        this.goalSelector.addGoal(4, new AvoidEntityGoal(this, Player.class, this.viewRange/10.0f, 1.5, 1.5, (entity) -> {
-            return !((Player)entity).isCrouching();
-        }));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, this.viewRange));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
     }
@@ -136,6 +147,10 @@ public abstract class FlyingBirdEntity extends Animal {
             this.navigation = new FlightPathNavigator(this, level(), 1.0F);
             this.isLandNavigator = false;
         }
+    }
+
+    public boolean canBeLeashed() {
+        return false;
     }
 
     //Tick
@@ -206,94 +221,135 @@ public abstract class FlyingBirdEntity extends Animal {
     //Animation
 
     protected void setupAnimationStates() {
+        //If Not flying
         if(!this.isFlying()){
-            if(this.idleAnimationTimeout <= 0 && !this.isEatingAnim & !this.isIdlingAnim) {
-                if(this.onGround() && this.isLandNavigator){
 
+            //If in water
+            if(this.aquaticBirdType == AquaticBirdType.FULL && this.isInWaterOrBubble()){
+                if(this.idleWaterAnimationTimeout <= 0 && !this.isIdlingWaterAnim){
                     this.resetAnimations();
 
-                    if(Math.random() >= 0.5){
-                        this.idleLookAnimationState.start(this.tickCount);
-                    }
-                    else{
-                        this.eatAnimationState.start(this.tickCount);
-                    }
 
-                    this.isIdlingAnim = true;
-                    this.idleAnimationTimein = 0;
-                    this.idleAnimationTimeout = (int)Math.round(500 * Math.random()) + 500;
+                    this.idleWaterAnimationState.start(this.tickCount);
+
+                    this.isIdlingWaterAnim = true;
+                    this.idleWaterAnimationTimein = 0;
+                    this.idleWaterAnimationTimeout = (int)Math.round(500 * Math.random()) + 500;
 
                     this.gameEvent(GameEvent.ENTITY_ACTION);
                 }
-            } else {
-                --this.idleAnimationTimeout;
+                else{
+                    --this.idleWaterAnimationTimeout;
 
-                if(this.isIdlingAnim){
-                    this.idleAnimationTimein++;
+                    if(this.isIdlingWaterAnim){
+                        this.idleWaterAnimationTimein++;
 
-                    if(this.idleAnimationTimein >= 200){
-                        this.idleAnimationTimein = 0;
-                        this.isIdlingAnim = false;
-                        this.resetAnimations();
+                        if(this.idleWaterAnimationTimein >= 200){
+                            this.idleWaterAnimationTimein = 0;
+                            this.isIdlingWaterAnim = false;
+                            this.resetAnimations();
+                        }
                     }
                 }
-            }
 
-            if(!this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty() && !this.isIdlingAnim && !this.isEatingAnim){
-                if(this.onGround() && this.isLandNavigator){
-
-                    this.resetAnimations();
-
-                    this.eatAnimationState.start(this.tickCount);
-
-                    this.isEatingAnim = true;
-                    this.eatAnimationTimein = 0;
-
-                    this.gameEvent(GameEvent.ENTITY_ACTION);
+                if(!this.isIdlingWaterAnim){
+                    this.inWaterAnimationState.start(this.tickCount);
                 }
             }
+            //If in ground
             else{
-                if(this.isEatingAnim){
-                    this.eatAnimationTimein++;
+                //If can Idle AND not in animation
+                if(this.idleAnimationTimeout <= 0 && !this.isEatingAnim && !this.isIdlingAnim) {
+                    if(this.onGround() && this.isLandNavigator){
 
-                    if(this.eatAnimationTimein >= 80){
-                        this.eatAnimationTimein = 0;
                         this.resetAnimations();
 
-                        if(!this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()){
-                            this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+                        if(Math.random() >= 0.5){
+                            this.idleAnimationState.start(this.tickCount);
+                        }
+                        else{
+                            this.eatAnimationState.start(this.tickCount);
+                        }
+
+                        this.isIdlingAnim = true;
+                        this.idleAnimationTimein = 0;
+                        this.idleAnimationTimeout = (int)Math.round(500 * Math.random()) + 500;
+
+                        this.gameEvent(GameEvent.ENTITY_ACTION);
+                    }
+                } else {
+                    --this.idleAnimationTimeout;
+
+                    if(this.isIdlingAnim){
+                        this.idleAnimationTimein++;
+
+                        if(this.idleAnimationTimein >= 100){
+                            this.idleAnimationTimein = 0;
+                            this.isIdlingAnim = false;
+                            this.resetAnimations();
+                        }
+                    }
+                }
+
+                //If can Eat AND not in animation
+                if(!this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty() && !this.isIdlingAnim && !this.isEatingAnim){
+                    if(this.onGround() && this.isLandNavigator){
+
+                        this.resetAnimations();
+
+                        this.eatAnimationState.start(this.tickCount);
+
+                        this.isEatingAnim = true;
+                        this.eatAnimationTimein = 0;
+
+                        this.gameEvent(GameEvent.ENTITY_ACTION);
+                    }
+                }
+                else{
+                    if(this.isEatingAnim){
+                        this.eatAnimationTimein++;
+
+                        if(this.eatAnimationTimein >= 100){
+                            this.eatAnimationTimein = 0;
+                            this.resetAnimations();
+
+                            if(!this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()){
+                                this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+                            }
                         }
                     }
                 }
             }
         }
         else{
-            if(this.idleLookAnimationState.isStarted()) {
-                this.isIdlingAnim = false;
-                this.idleLookAnimationState.stop();
-            }
-            if(this.eatAnimationState.isStarted()){
-                this.isIdlingAnim = false;
-                this.isEatingAnim = false;
-                this.eatAnimationState.stop();
-            }
+            this.resetAnimations();
         }
     }
 
     public void resetAnimations(){
-        if(this.idleLookAnimationState.isStarted()) {
+        if(this.idleAnimationState.isStarted()) {
             this.isIdlingAnim = false;
-            this.idleLookAnimationState.stop();
+            this.idleAnimationState.stop();
         }
+
+        if(this.idleWaterAnimationState.isStarted()) {
+            this.isIdlingWaterAnim = false;
+            this.idleWaterAnimationState.stop();
+        }
+
         if(this.eatAnimationState.isStarted()){
             this.isIdlingAnim = false;
             this.isEatingAnim = false;
             this.eatAnimationState.stop();
         }
+
+        if(this.inWaterAnimationState.isStarted()) {
+            this.inWaterAnimationState.stop();
+        }
     }
 
     public boolean canMove() {
-        return !this.isIdlingAnim() && !this.isEatingAnim();
+        return !this.isIdlingAnim && !this.isEatingAnim && !this.isIdlingWaterAnim;
     }
 
     //Food/Breed
@@ -485,30 +541,6 @@ public abstract class FlyingBirdEntity extends Animal {
 
     public int getFlyRange() {
         return flyRange;
-    }
-
-    public boolean isFlyingAnim() {
-        return isFlyingAnim;
-    }
-
-    public void setFlyingAnim(boolean flyingAnim) {
-        isFlyingAnim = flyingAnim;
-    }
-
-    public boolean isIdlingAnim() {
-        return isIdlingAnim;
-    }
-
-    public void setIdlingAnim(boolean idlingAnim) {
-        isIdlingAnim = idlingAnim;
-    }
-
-    public boolean isEatingAnim() {
-        return isEatingAnim;
-    }
-
-    public void setEatingAnim(boolean eatingAnim) {
-        isEatingAnim = eatingAnim;
     }
 
     public float getFlightPitch(float partialTick) {

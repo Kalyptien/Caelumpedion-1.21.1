@@ -1,7 +1,6 @@
 package com.kalyptien.caelumpedion.entity.client.anatidae;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
-import com.kalyptien.caelumpedion.entity.client.anatidae.AnatidaeAnimation;
 import com.kalyptien.caelumpedion.entity.custom.AnatidaeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -85,9 +84,13 @@ public class AnatidaeModel<T extends AnatidaeEntity> extends HierarchicalModel<T
             this.animateWalk(AnatidaeAnimation.ANATIDAE_WALK, limbSwing, limbSwingAmount, 2f, 2f);
         }
 
+        if(entity.isInWaterOrBubble() && !entity.isFlying()){
+            this.animateWalk(AnatidaeAnimation.ANATIDAE_SWIM, limbSwing, limbSwingAmount, 2f, 2f);
+        }
+
         if(entity.isFlying()){
             //> FLY
-            this.animateWalk(AnatidaeAnimation.ANATIDAE_FLY, limbSwing, limbSwingAmount, 5f, 5f);
+            this.animateWalk(AnatidaeAnimation.ANATIDAE_FLY, limbSwing, limbSwingAmount, 3f, 3f);
 
             float partialTick = ageInTicks - entity.tickCount;
             float flyProgress = entity.getFlyProgress(partialTick);
@@ -100,7 +103,11 @@ public class AnatidaeModel<T extends AnatidaeEntity> extends HierarchicalModel<T
 
         //> IDLE
         this.animate(entity.eatAnimationState, AnatidaeAnimation.ANATIDAE_EAT, ageInTicks, 1f);
-        this.animate(entity.idleLookAnimationState, AnatidaeAnimation.ANATIDAE_IDLE, ageInTicks, 1f);
+        this.animate(entity.idleAnimationState, AnatidaeAnimation.ANATIDAE_IDLE, ageInTicks, 1f);
+
+        //> IDLE WATER
+        this.animate(entity.idleWaterAnimationState, AnatidaeAnimation.ANATIDAE_DIVE, ageInTicks, 1f);
+        this.animate(entity.inWaterAnimationState, AnatidaeAnimation.ANATIDAE_IN_WATER, ageInTicks, 1f);
     }
 
     private void applyHeadRotation(float headYaw, float headPitch) {

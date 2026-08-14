@@ -24,7 +24,7 @@ public class ModEntities {
     public static final Supplier<EntityType<AnatidaeEntity>> ANATIDAE =
             ENTITY_TYPES.register("anatidae", () -> {
                 return EntityType.Builder.of(AnatidaeEntity::new, MobCategory.CREATURE)
-                        .sized(0.6f, 0.6f).build("anatidae");
+                        .sized(0.6f, 0.7f).build("anatidae");
             });
 
 

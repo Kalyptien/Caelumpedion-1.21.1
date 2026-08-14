@@ -22,8 +22,16 @@ OISEAUX :
 
 - Ajouter hirondel
 - Ajouter aigle
-- Ajouter canard
 - Ajouter grue
+- Ajouter pigeon
+
+CANARD
+- Ils marchent pas
+- Ils flottent pas
+- Verifier le style de vol
+- Vol en V
+- Refaire les animations
+- L'oie noir ne spawn pas 
 
 =====
 
