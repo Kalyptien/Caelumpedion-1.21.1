@@ -131,10 +131,16 @@ public abstract class FlyingBirdEntity extends Animal {
         }));
 
         this.goalSelector.addGoal(3, new PrepareFlyGoal(this));
-        this.goalSelector.addGoal(3, new FloatGoal(this));
 
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, this.viewRange));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+
+        if(this.aquaticBirdType == AquaticBirdType.NONE){
+            this.goalSelector.addGoal(3, new FloatGoal(this));
+
+            this.goalSelector.addGoal(5 ,new WaterAvoidingRandomFlyingGoal(this, 2.0));
+            this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 2.0));
+        }
     }
 
     private void switchNavigator(boolean onLand) {

@@ -19,6 +19,9 @@ public class BirdBOIDFlyGoal extends Goal {
 
     private final SocialFlyingBirdEntity socialBird;
 
+    float influenceFromTheLeader;
+    double speed;
+
     public BirdBOIDFlyGoal(SocialFlyingBirdEntity bird) {
         this.setFlags(EnumSet.of(Flag.MOVE));
         this.socialBird = bird;
@@ -50,6 +53,10 @@ public class BirdBOIDFlyGoal extends Goal {
     public void tick() {
         if(this.canContinueToUse()){
             SocialFlyingBirdEntity.BOIDType boidType = socialBird.getBOIDBirdType();
+
+            influenceFromTheLeader = socialBird.distanceTo(socialBird.leader) / 100;
+
+            speed = socialBird.getFlySpeed() + (socialBird.getFlySpeed() * influenceFromTheLeader);
 
             if(boidType == SocialFlyingBirdEntity.BOIDType.FOLLOW){
                 this.shareFollowPath();
@@ -98,10 +105,6 @@ public class BirdBOIDFlyGoal extends Goal {
             followerDestination = socialBird.position().add(leaderDelta.x,leaderDelta.y,leaderDelta.z);
         }
 
-        float influenceFromTheLeader = socialBird.distanceTo(socialBird.leader) / 100;
-
-        double speed = socialBird.getFlySpeed() + (socialBird.getFlySpeed() * influenceFromTheLeader);
-
         Vec3 followerDelta = socialBird.getEyePosition().vectorTo(socialBird.leader.getNextNavigationArray().getFirst());
 
         followerDestination = new Vec3(followerDestination.x + (followerDelta.x * influenceFromTheLeader)
@@ -118,10 +121,6 @@ public class BirdBOIDFlyGoal extends Goal {
 
         Vec3 delta = socialBird.getEyePosition().vectorTo(socialBird.leader.getEyePosition());
 
-        float influenceFromTheLeader = socialBird.distanceTo(socialBird.leader) / 100;
-
-        double speed = socialBird.getFlySpeed() + (socialBird.getFlySpeed() * influenceFromTheLeader);
-
         Vec3 followerDestination = socialBird.position().add(delta.x, delta.y, delta.z);
 
         followerDestination.add(random());
@@ -133,7 +132,13 @@ public class BirdBOIDFlyGoal extends Goal {
     }
 
     private void shareFormationPath(){
-        // TODO : Formation en V
+        int posInFormation = socialBird.leader.ownSchool.indexOf(socialBird) + 1;
+
+        int sign = posInFormation % 2 == 0 ? 1 : -1;
+
+        Vec3 followerDestination = socialBird.leader.getEyePosition().subtract(sign * 3 * Math.round(posInFormation/2.0), 0, sign * 3 * Math.round(posInFormation/2.0));
+
+        socialBird.getNavigation().moveTo(followerDestination.x, followerDestination.y, followerDestination.z, speed);
     }
 
     //shareSwarmPath => BOID functions

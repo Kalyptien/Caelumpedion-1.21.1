@@ -1,7 +1,7 @@
-package com.kalyptien.caelumpedion.entity.client.anatidae;
+package com.kalyptien.caelumpedion.entity.client.anseriforme;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
-import com.kalyptien.caelumpedion.entity.custom.AnatidaeEntity;
+import com.kalyptien.caelumpedion.entity.custom.AnseriformeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.ArmedModel;
@@ -14,25 +14,25 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
-public class AnatidaeModel<T extends AnatidaeEntity> extends HierarchicalModel<T> implements ArmedModel {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "anatidae"), "main");
+public class AnseriformeModel<T extends AnseriformeEntity> extends HierarchicalModel<T> implements ArmedModel {
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "anseriforme"), "main");
 
-    private final ModelPart anatidae;
+    private final ModelPart anseriforme;
     private final ModelPart body;
     private final ModelPart head;
-    public AnatidaeModel(ModelPart root) {
-        this.anatidae = root.getChild("anatidae");
-        this.body = this.anatidae.getChild("body");
-        this.head = this.anatidae.getChild("head");
+    public AnseriformeModel(ModelPart root) {
+        this.anseriforme = root.getChild("anseriforme");
+        this.body = this.anseriforme.getChild("body");
+        this.head = this.anseriforme.getChild("head");
     }
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition anatidae = partdefinition.addOrReplaceChild("anatidae", CubeListBuilder.create(), PartPose.offset(0.0F, 20.7583F, -1.5417F));
+        PartDefinition anseriforme = partdefinition.addOrReplaceChild("anseriforme", CubeListBuilder.create(), PartPose.offset(0.0F, 20.7583F, -1.5417F));
 
-        PartDefinition body = anatidae.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, -1.7417F, 1.375F));
+        PartDefinition body = anseriforme.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, -1.7417F, 1.375F));
 
         PartDefinition wingR = body.addOrReplaceChild("wingR", CubeListBuilder.create(), PartPose.offset(-2.5F, -3.2167F, -2.8333F));
 
@@ -62,7 +62,7 @@ public class AnatidaeModel<T extends AnatidaeEntity> extends HierarchicalModel<T
 
         PartDefinition Tail = body.addOrReplaceChild("Tail", CubeListBuilder.create().texOffs(21, 0).addBox(-2.5F, 0.0F, 0.0F, 5.0F, 0.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -3.0167F, 4.6667F));
 
-        PartDefinition head = anatidae.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, -3.2583F, -1.4583F));
+        PartDefinition head = anseriforme.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, -3.2583F, -1.4583F));
 
         PartDefinition mainHead = head.addOrReplaceChild("mainHead", CubeListBuilder.create().texOffs(20, 5).addBox(-1.5F, -6.5F, -1.5F, 3.0F, 9.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
@@ -81,33 +81,33 @@ public class AnatidaeModel<T extends AnatidaeEntity> extends HierarchicalModel<T
 
         //> WALK
         if(entity.onGround() && !entity.isFlying()){
-            this.animateWalk(AnatidaeAnimation.ANATIDAE_WALK, limbSwing, limbSwingAmount, 2f, 2f);
+            this.animateWalk(AnseriformeAnimation.ANSERIFORME_WALK, limbSwing, limbSwingAmount, 2f, 2f);
         }
 
         if(entity.isInWaterOrBubble() && !entity.isFlying()){
-            this.animateWalk(AnatidaeAnimation.ANATIDAE_SWIM, limbSwing, limbSwingAmount, 2f, 2f);
+            this.animateWalk(AnseriformeAnimation.ANSERIFORME_SWIM, limbSwing, limbSwingAmount, 2f, 2f);
         }
 
         if(entity.isFlying()){
             //> FLY
-            this.animateWalk(AnatidaeAnimation.ANATIDAE_FLY, limbSwing, limbSwingAmount, 3f, 3f);
+            this.animateWalk(AnseriformeAnimation.ANSERIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
 
             float partialTick = ageInTicks - entity.tickCount;
             float flyProgress = entity.getFlyProgress(partialTick);
             float rollAmount = entity.getFlightRoll(partialTick) / 57.295776F * flyProgress;
             float pitchAmount = entity.getFlightPitch(partialTick) / 57.295776F * flyProgress;
 
-            anatidae.xRot += pitchAmount;
-            anatidae.zRot += rollAmount;
+            anseriforme.xRot += pitchAmount;
+            anseriforme.zRot += rollAmount;
         }
 
         //> IDLE
-        this.animate(entity.eatAnimationState, AnatidaeAnimation.ANATIDAE_EAT, ageInTicks, 1f);
-        this.animate(entity.idleAnimationState, AnatidaeAnimation.ANATIDAE_IDLE, ageInTicks, 1f);
+        this.animate(entity.eatAnimationState, AnseriformeAnimation.ANSERIFORME_EAT, ageInTicks, 1f);
+        this.animate(entity.idleAnimationState, AnseriformeAnimation.ANSERIFORME_IDLE, ageInTicks, 1f);
 
         //> IDLE WATER
-        this.animate(entity.idleWaterAnimationState, AnatidaeAnimation.ANATIDAE_DIVE, ageInTicks, 1f);
-        this.animate(entity.inWaterAnimationState, AnatidaeAnimation.ANATIDAE_IN_WATER, ageInTicks, 1f);
+        this.animate(entity.idleWaterAnimationState, AnseriformeAnimation.ANSERIFORME_DIVE, ageInTicks, 1f);
+        this.animate(entity.inWaterAnimationState, AnseriformeAnimation.ANSERIFORME_IN_WATER, ageInTicks, 1f);
     }
 
     private void applyHeadRotation(float headYaw, float headPitch) {
@@ -120,7 +120,7 @@ public class AnatidaeModel<T extends AnatidaeEntity> extends HierarchicalModel<T
 
     @Override
     public void translateToHand(HumanoidArm side, PoseStack poseStack) {
-        this.anatidae.translateAndRotate(poseStack);
+        this.anseriforme.translateAndRotate(poseStack);
         this.head.translateAndRotate(poseStack);
         this.body.translateAndRotate(poseStack);
 
@@ -130,11 +130,11 @@ public class AnatidaeModel<T extends AnatidaeEntity> extends HierarchicalModel<T
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
-        anatidae.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        anseriforme.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
     }
 
     @Override
     public ModelPart root() {
-        return anatidae;
+        return anseriforme;
     }
 }

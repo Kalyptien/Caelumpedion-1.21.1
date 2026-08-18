@@ -6,7 +6,6 @@ IMPORTANT :
 VOL :
 
 - Si touche du verre = continue de bloquer contre (?)
-- Vol en V
 - BOIS : Uniquement ceux qui ont la mm variante
 
 BLOCS :
@@ -27,11 +26,11 @@ OISEAUX :
 
 CANARD
 - Ils marchent pas
-- Ils flottent pas
 - Verifier le style de vol
 - Vol en V
 - Refaire les animations
 - L'oie noir ne spawn pas 
+- Switch entre la position de nage et de terre pas toujours ok
 
 =====
 
@@ -39,4 +38,5 @@ CANARD
 A VERIFIER :
 
 - Changement des styles de vol des oiseaux
+- Vol en V
 

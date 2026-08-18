@@ -8,9 +8,6 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -21,9 +18,9 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class AnatidaeEntity extends SocialFlyingBirdEntity {
+public class AnseriformeEntity extends SocialFlyingBirdEntity {
 
-    public AnatidaeEntity(EntityType<? extends Animal> entityType, Level level) {
+    public AnseriformeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
         this.setFlyingBirdType(FlyingBirdType.WALKER);
@@ -48,12 +45,6 @@ public class AnatidaeEntity extends SocialFlyingBirdEntity {
                 .add(Attributes.FOLLOW_RANGE, 12D);
     }
 
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
-        this.goalSelector.removeGoal(new FloatGoal(this));
-    }
-
     //Food
 
     @Override
@@ -67,11 +58,11 @@ public class AnatidaeEntity extends SocialFlyingBirdEntity {
         return this.entityData.get(VARIANT);
     }
 
-    public AnatidaeEntity.AnatidaeVariant getVariant() {
-        return AnatidaeEntity.AnatidaeVariant.byId(this.getIdVariant());
+    public AnseriformeEntity.AnseriformeVariant getVariant() {
+        return AnseriformeEntity.AnseriformeVariant.byId(this.getIdVariant());
     }
 
-    public void setVariant(AnatidaeEntity.AnatidaeVariant variant) {
+    public void setVariant(AnseriformeEntity.AnseriformeVariant variant) {
         this.entityData.set(VARIANT, variant.getId());
     }
 
@@ -82,7 +73,7 @@ public class AnatidaeEntity extends SocialFlyingBirdEntity {
                                         MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
         //Variants
         if(spawnType == MobSpawnType.SPAWN_EGG){
-            AnatidaeEntity.AnatidaeVariant variant = Util.getRandom(AnatidaeEntity.AnatidaeVariant.values(), this.random);
+            AnseriformeEntity.AnseriformeVariant variant = Util.getRandom(AnseriformeEntity.AnseriformeVariant.values(), this.random);
             this.setVariant(variant);
         }
 
@@ -91,7 +82,7 @@ public class AnatidaeEntity extends SocialFlyingBirdEntity {
 
     // Variant
 
-    public static enum AnatidaeVariant {
+    public static enum AnseriformeVariant {
         // Duck
         AnasPlatyrhynchos(0, "anas_platyrhynchos", 1f),
         CairinaMoschata(1, "cairina_moschata", 1f),
@@ -99,25 +90,25 @@ public class AnatidaeEntity extends SocialFlyingBirdEntity {
         PhantasiaParvusAlbus(3,"phantasia_parvus_albus", 0.7f),
 
         // Goose
-        BrantaHutchinsii(50, "branta_hutchinsii", 1.3f),
-        AnserAnser(51, "anser_anser", 1.3f),
-        //AnserCaerulescens(52, "anser_caerulescens", 1.3f),
-        //AnserCanagicus(53, "anser_canagicus", 1.3f),
-        //BrantaRuficollis(51, "branta_ruficollis", 1.3f),
+        BrantaHutchinsii(4, "branta_hutchinsii", 1.3f),
+        AnserAnser(5, "anser_anser", 1.3f),
+        //AnserCaerulescens(6, "anser_caerulescens", 1.3f),
+        //AnserCanagicus(7, "anser_canagicus", 1.3f),
+        //BrantaRuficollis(8, "branta_ruficollis", 1.3f),
 
         // Swan
-        CygnusOlor(100, "cygnus_olor", 1.5f),
-        //CygnusBuccinator(101, "cygnus_buccinator", 1.5f),
-        CygnusAtratus(102,"cygnus_atratus", 1.5f)
+        CygnusOlor(6, "cygnus_olor", 1.5f),
+        //CygnusBuccinator(10, "cygnus_buccinator", 1.5f),
+        CygnusAtratus(7,"cygnus_atratus", 1.5f)
         ;
 
-        private static final AnatidaeEntity.AnatidaeVariant[] BY_ID = Arrays.stream(values()).sorted(
-                Comparator.comparingInt(AnatidaeEntity.AnatidaeVariant::getId)).toArray(AnatidaeEntity.AnatidaeVariant[]::new);
+        private static final AnseriformeEntity.AnseriformeVariant[] BY_ID = Arrays.stream(values()).sorted(
+                Comparator.comparingInt(AnseriformeEntity.AnseriformeVariant::getId)).toArray(AnseriformeEntity.AnseriformeVariant[]::new);
         private final int id;
         private final String fileName;
         private final float sizeModifier;
 
-        AnatidaeVariant(int id, String fileName, float sizeModifier) {
+        AnseriformeVariant(int id, String fileName, float sizeModifier) {
             this.id = id;
             this.fileName = fileName;
             this.sizeModifier = sizeModifier;
@@ -135,7 +126,7 @@ public class AnatidaeEntity extends SocialFlyingBirdEntity {
             return sizeModifier;
         }
 
-        public static AnatidaeEntity.AnatidaeVariant byId(int id) {
+        public static AnseriformeEntity.AnseriformeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
         }
 

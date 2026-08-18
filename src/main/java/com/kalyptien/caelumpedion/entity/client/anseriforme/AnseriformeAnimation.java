@@ -1,12 +1,12 @@
-package com.kalyptien.caelumpedion.entity.client.anatidae;
+package com.kalyptien.caelumpedion.entity.client.anseriforme;
 
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
 
-public class AnatidaeAnimation {
-    public static final AnimationDefinition ANATIDAE_FLY = AnimationDefinition.Builder.withLength(0.3333F).looping()
+public class AnseriformeAnimation {
+    public static final AnimationDefinition ANSERIFORME_FLY = AnimationDefinition.Builder.withLength(0.3333F).looping()
             .addAnimation("LegL", new AnimationChannel(AnimationChannel.Targets.ROTATION,
                     new Keyframe(0.0F, KeyframeAnimations.degreeVec(88.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM)
             ))
@@ -66,7 +66,7 @@ public class AnatidaeAnimation {
             ))
             .build();
 
-    public static final AnimationDefinition ANATIDAE_IDLE = AnimationDefinition.Builder.withLength(0.9167F)
+    public static final AnimationDefinition ANSERIFORME_IDLE = AnimationDefinition.Builder.withLength(0.9167F)
             .addAnimation("mainBody", new AnimationChannel(AnimationChannel.Targets.ROTATION,
                     new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
                     new Keyframe(0.0833F, KeyframeAnimations.degreeVec(-22.5F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
@@ -139,7 +139,7 @@ public class AnatidaeAnimation {
             ))
             .build();
 
-    public static final AnimationDefinition ANATIDAE_EAT = AnimationDefinition.Builder.withLength(1.0F)
+    public static final AnimationDefinition ANSERIFORME_EAT = AnimationDefinition.Builder.withLength(1.0F)
             .addAnimation("mainBody", new AnimationChannel(AnimationChannel.Targets.ROTATION,
                     new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
                     new Keyframe(0.0833F, KeyframeAnimations.degreeVec(22.5F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
@@ -220,7 +220,7 @@ public class AnatidaeAnimation {
             ))
             .build();
 
-    public static final AnimationDefinition ANATIDAE_WALK = AnimationDefinition.Builder.withLength(0.3333F).looping()
+    public static final AnimationDefinition ANSERIFORME_WALK = AnimationDefinition.Builder.withLength(0.3333F).looping()
             .addAnimation("mainBody", new AnimationChannel(AnimationChannel.Targets.ROTATION,
                     new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
                     new Keyframe(0.0833F, KeyframeAnimations.degreeVec(1.7538F, -9.8466F, -10.151F), AnimationChannel.Interpolations.CATMULLROM),
@@ -352,7 +352,7 @@ public class AnatidaeAnimation {
             ))
             .build();
 
-    public static final AnimationDefinition ANATIDAE_IN_WATER = AnimationDefinition.Builder.withLength(0.0F).looping()
+    public static final AnimationDefinition ANSERIFORME_IN_WATER = AnimationDefinition.Builder.withLength(0.0F).looping()
             .addAnimation("anatidae", new AnimationChannel(AnimationChannel.Targets.POSITION,
                     new Keyframe(0.0F, KeyframeAnimations.posVec(0.0F, -5.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
             ))
@@ -391,7 +391,7 @@ public class AnatidaeAnimation {
             ))
             .build();
 
-    public static final AnimationDefinition ANATIDAE_SWIM = AnimationDefinition.Builder.withLength(0.25F).looping()
+    public static final AnimationDefinition ANSERIFORME_SWIM = AnimationDefinition.Builder.withLength(0.25F).looping()
             .addAnimation("anatidae", new AnimationChannel(AnimationChannel.Targets.POSITION,
                     new Keyframe(0.0F, KeyframeAnimations.posVec(0.0F, -5.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
             ))
@@ -446,7 +446,7 @@ public class AnatidaeAnimation {
             ))
             .build();
 
-    public static final AnimationDefinition ANATIDAE_DIVE = AnimationDefinition.Builder.withLength(1.0F)
+    public static final AnimationDefinition ANSERIFORME_DIVE = AnimationDefinition.Builder.withLength(1.0F)
             .addAnimation("anatidae", new AnimationChannel(AnimationChannel.Targets.POSITION,
                     new Keyframe(0.0F, KeyframeAnimations.posVec(0.0F, -5.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
             ))

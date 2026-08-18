@@ -47,13 +47,6 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
                 .add(Attributes.FOLLOW_RANGE, 12D);
     }
 
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
-        this.goalSelector.addGoal(5 ,new WaterAvoidingRandomFlyingGoal(this, 2.0));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 2.0));
-    }
-
     //Getter / Setter
 
     public int getIdVariant() {

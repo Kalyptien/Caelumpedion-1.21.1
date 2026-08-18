@@ -71,11 +71,9 @@ public class PrepareFlyGoal extends Goal {
             return true;
         }
 
-        if(bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.WALKER && bird.getRandom().nextInt(3000) != 0){
+        if(bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.WALKER && bird.getRandom().nextInt(3000) != 0) {
             return false;
-        }
-
-        if(!bird.isFlying() && bird.getRandom().nextInt(1500) != 0){
+        } else if (!bird.isFlying() && bird.getRandom().nextInt(1500) != 0) {
             return false;
         }
 
@@ -103,7 +101,7 @@ public class PrepareFlyGoal extends Goal {
             range = bird.getFlyRange() * 5;
             height = bird.getFlyHeight() * 5;
         } else if (bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.WALKER) {
-            this.flyType = FlyType.SHORT;
+            this.flyType = FlyType.LONG;
             range = bird.getFlyRange() / 4;
             height = bird.getFlyHeight() / 4;
         } else if(this.bird.isNeedToFlyAway()){
