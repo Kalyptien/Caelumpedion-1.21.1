@@ -1,0 +1,44 @@
+package com.kalyptien.caelumpedion.entity.client.accipitriforme;
+
+import com.google.common.collect.Maps;
+import com.kalyptien.caelumpedion.CaelumpedionMod;
+import com.kalyptien.caelumpedion.entity.custom.AccipitriformeEntity;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.Util;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.PlayerItemInHandLayer;
+import net.minecraft.resources.ResourceLocation;
+
+import java.util.Map;
+
+public class AccipitriformeRenderer extends MobRenderer<AccipitriformeEntity, AccipitriformeModel<AccipitriformeEntity>> {
+
+    private static final Map<AccipitriformeEntity.AccipitriformeVariant, ResourceLocation> LOCATION_BY_VARIANT =
+            Util.make(Maps.newEnumMap(AccipitriformeEntity.AccipitriformeVariant.class), map -> {
+                for (int i = 0; i < AccipitriformeEntity.AccipitriformeVariant.lenght(); i++) {
+                    AccipitriformeEntity.AccipitriformeVariant currentVariant = AccipitriformeEntity.AccipitriformeVariant.byId(i);
+                    map.put(currentVariant,
+                            ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "textures/entity/accipitriforme/" + currentVariant.getFileName() + ".png"));
+                }
+
+            });
+
+    public AccipitriformeRenderer(EntityRendererProvider.Context context) {
+        super(context, new AccipitriformeModel<>(context.bakeLayer(AccipitriformeModel.LAYER_LOCATION)), 0.5f);
+    }
+
+    @Override
+    public ResourceLocation getTextureLocation(AccipitriformeEntity entity) {
+        return LOCATION_BY_VARIANT.get(entity.getVariant());
+    }
+
+    @Override
+    public void render(AccipitriformeEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+        poseStack.scale(1, 1, 1);
+        this.model.showTickNeck(entity.getVariant().getThickNeck());
+
+        super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
+    }
+}

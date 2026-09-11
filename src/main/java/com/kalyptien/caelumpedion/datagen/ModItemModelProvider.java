@@ -14,6 +14,10 @@ public class ModItemModelProvider  extends ItemModelProvider {
     @Override
     protected void registerModels() {
         withExistingParent(ModItems.PASSERIFORME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.HIRUNDININAE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.ANSERIFORME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.ACCIPITRIFORME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.RAMPHASTIDAE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.GRUIFORME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     }
 }

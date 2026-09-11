@@ -1,8 +1,12 @@
 package com.kalyptien.caelumpedion.entity;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
+import com.kalyptien.caelumpedion.entity.custom.AccipitriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.AnseriformeEntity;
-import com.kalyptien.caelumpedion.entity.custom.PasseriformeEntity;
+import com.kalyptien.caelumpedion.entity.custom.GruiformeEntity;
+import com.kalyptien.caelumpedion.entity.custom.passeriforme.HirundininaeEntity;
+import com.kalyptien.caelumpedion.entity.custom.passeriforme.PasseriformeEntity;
+import com.kalyptien.caelumpedion.entity.custom.piciforme.RamphastidaeEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -21,10 +25,34 @@ public class ModEntities {
                         .sized(0.4f, 0.4f).build("passeriforme");
             });
 
+    public static final Supplier<EntityType<HirundininaeEntity>> HIRUNDININAE =
+            ENTITY_TYPES.register("hirundininae", () -> {
+                return EntityType.Builder.of(HirundininaeEntity::new, MobCategory.CREATURE)
+                        .sized(0.4f, 0.4f).build("hirundininae");
+            });
+
+    public static final Supplier<EntityType<RamphastidaeEntity>> RAMPHASTIDAE =
+            ENTITY_TYPES.register("ramphastidae", () -> {
+                return EntityType.Builder.of(RamphastidaeEntity::new, MobCategory.CREATURE)
+                        .sized(0.6f, 0.7f).build("ramphastidae");
+            });
+
     public static final Supplier<EntityType<AnseriformeEntity>> ANSERIFORME =
             ENTITY_TYPES.register("anseriforme", () -> {
                 return EntityType.Builder.of(AnseriformeEntity::new, MobCategory.CREATURE)
                         .sized(0.6f, 0.7f).build("anseriforme");
+            });
+
+    public static final Supplier<EntityType<AccipitriformeEntity>> ACCIPITRIFORME =
+            ENTITY_TYPES.register("accipitriforme", () -> {
+                return EntityType.Builder.of(AccipitriformeEntity::new, MobCategory.CREATURE)
+                        .sized(0.9f, 1f).build("accipitriforme");
+            });
+
+    public static final Supplier<EntityType<GruiformeEntity>> GRUIFORME =
+            ENTITY_TYPES.register("gruiforme", () -> {
+                return EntityType.Builder.of(GruiformeEntity::new, MobCategory.CREATURE)
+                        .sized(0.6f, 1.7f).build("gruiforme");
             });
 
 

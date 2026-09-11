@@ -1,4 +1,4 @@
-package com.kalyptien.caelumpedion.entity.ai.goal;
+package com.kalyptien.caelumpedion.entity.ai.goal.boidGoal;
 
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import com.mojang.datafixers.DataFixUtils;
@@ -10,16 +10,9 @@ import java.util.function.Predicate;
 
 public class OrganizeBOIDGoal extends Goal {
     private final SocialFlyingBirdEntity socialBird;
-    private static final int INTERVAL_TICKS = 200;
-    private int nextStartTick;
 
     public OrganizeBOIDGoal(SocialFlyingBirdEntity SocialBirdEntity) {
         this.socialBird = SocialBirdEntity;
-        this.nextStartTick = this.nextStartTick(SocialBirdEntity);
-    }
-
-    protected int nextStartTick(SocialFlyingBirdEntity abstractSchoolingSocialBird) {
-        return FollowFlockLeaderGoal.reducedTickDelay(INTERVAL_TICKS + abstractSchoolingSocialBird.getRandom().nextInt(INTERVAL_TICKS) % 30);
     }
 
     @Override
@@ -28,13 +21,6 @@ public class OrganizeBOIDGoal extends Goal {
 
         if (this.socialBird.isFollower()) return true;
 
-        if (this.nextStartTick > 0) {
-            --this.nextStartTick;
-            return false;
-        }
-
-        this.nextStartTick = this.nextStartTick(this.socialBird);
-        //TODO : Ajouter qu'ils ne se school qu'avec des oiseaux de la même variante
         Predicate<SocialFlyingBirdEntity> predicate = abstractSchoolingSocialBird -> (abstractSchoolingSocialBird.canBeFollowed() || !abstractSchoolingSocialBird.isFollower());
         List<? extends SocialFlyingBirdEntity> list = this.socialBird.level().getEntitiesOfClass(this.socialBird.getClass(), this.socialBird.getBoundingBox().inflate(socialBird.getViewRange(), socialBird.getViewRange(), socialBird.getViewRange()), predicate);
         SocialFlyingBirdEntity abstractSchoolingSocialBird2 = DataFixUtils.orElse(list.stream().filter(SocialFlyingBirdEntity::canBeFollowed).findAny(), this.socialBird);

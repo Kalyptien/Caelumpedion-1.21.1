@@ -2,13 +2,12 @@ package com.kalyptien.caelumpedion.entity.client.passeriforme;
 
 import com.google.common.collect.Maps;
 import com.kalyptien.caelumpedion.CaelumpedionMod;
-import com.kalyptien.caelumpedion.entity.custom.PasseriformeEntity;
+import com.kalyptien.caelumpedion.entity.custom.passeriforme.PasseriformeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.layers.PlayerItemInHandLayer;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Map;
@@ -27,7 +26,6 @@ public class PasseriformeRenderer extends MobRenderer<PasseriformeEntity, Passer
 
     public PasseriformeRenderer(EntityRendererProvider.Context context) {
         super(context, new PasseriformeModel<>(context.bakeLayer(PasseriformeModel.LAYER_LOCATION)), 0.25f);
-        this.addLayer(new PlayerItemInHandLayer(this, context.getItemInHandRenderer()));
     }
 
     @Override

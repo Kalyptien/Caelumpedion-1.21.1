@@ -4,28 +4,19 @@ import com.kalyptien.caelumpedion.block.ModBlocks;
 import com.kalyptien.caelumpedion.block.entity.BirdFeederBlockEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.village.poi.PoiManager;
-import net.minecraft.world.entity.ai.village.poi.PoiRecord;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CaveVines;
-import net.minecraft.world.level.block.SweetBerryBushBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class BirdFoodNerbyGoal extends Goal {
 
@@ -48,7 +39,7 @@ public class BirdFoodNerbyGoal extends Goal {
         if (!bird.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
             return false;
         } else {
-            if (!bird.canMove()) {
+            if (!bird.inAnimation()) {
                 return false;
             } else if (bird.getRandom().nextInt(reducedTickDelay(1000)) != 0) {
                 return false;
@@ -89,6 +80,11 @@ public class BirdFoodNerbyGoal extends Goal {
         }
     }
 
+    @Override
+    public boolean canContinueToUse() {
+        return itemToFollow != null || blockPosToFollow != null;
+    }
+
     public void tick() {
 
         ItemStack itemstack = bird.getItemBySlot(EquipmentSlot.MAINHAND);
@@ -96,10 +92,12 @@ public class BirdFoodNerbyGoal extends Goal {
         if (itemstack.isEmpty()) {
 
             if(itemToFollow != null && bird.distanceTo(itemToFollow) <= 1.0f){
-                bird.pickUpItem(itemToFollow);
+                //TODO : bird.pickUpItem(itemToFollow);
+                itemToFollow = null;
             }
             else if(blockPosToFollow != null && bird.distanceToSqr(blockPosToFollow.getX(), blockPosToFollow.getY(), blockPosToFollow.getZ()) <= 1.0f) {
-                bird.pickUpItemFromFeeder((BirdFeederBlockEntity) bird.level().getBlockEntity(blockPosToFollow), slotToPickup);
+                //TODO : bird.pickUpItemFromFeeder((BirdFeederBlockEntity) bird.level().getBlockEntity(blockPosToFollow), slotToPickup);
+                blockPosToFollow = null;
             }
             else {
                 if(itemToFollow != null){

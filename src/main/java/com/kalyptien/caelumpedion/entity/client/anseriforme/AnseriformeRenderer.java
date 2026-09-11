@@ -27,7 +27,6 @@ public class AnseriformeRenderer extends MobRenderer<AnseriformeEntity, Anserifo
 
     public AnseriformeRenderer(EntityRendererProvider.Context context) {
         super(context, new AnseriformeModel<>(context.bakeLayer(AnseriformeModel.LAYER_LOCATION)), 0.25f);
-        this.addLayer(new PlayerItemInHandLayer(this, context.getItemInHandRenderer()));
     }
 
     @Override

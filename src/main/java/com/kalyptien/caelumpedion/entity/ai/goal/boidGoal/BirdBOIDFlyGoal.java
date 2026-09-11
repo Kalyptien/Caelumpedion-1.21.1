@@ -1,4 +1,4 @@
-package com.kalyptien.caelumpedion.entity.ai.goal;
+package com.kalyptien.caelumpedion.entity.ai.goal.boidGoal;
 
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import net.minecraft.core.BlockPos;
@@ -25,7 +25,7 @@ public class BirdBOIDFlyGoal extends Goal {
     public BirdBOIDFlyGoal(SocialFlyingBirdEntity bird) {
         this.setFlags(EnumSet.of(Flag.MOVE));
         this.socialBird = bird;
-        timeoutBeforeFlying = (int)Math.round(200 * Math.random());
+        timeoutBeforeFlying = (int)Math.round(500 * Math.random());
     }
 
     @Override
@@ -56,7 +56,7 @@ public class BirdBOIDFlyGoal extends Goal {
 
             influenceFromTheLeader = socialBird.distanceTo(socialBird.leader) / 100;
 
-            speed = socialBird.getFlySpeed() + (socialBird.getFlySpeed() * influenceFromTheLeader);
+            speed = socialBird.getFlySpeed() + (socialBird.getFlySpeed() * influenceFromTheLeader * 0.5);
 
             if(boidType == SocialFlyingBirdEntity.BOIDType.FOLLOW){
                 this.shareFollowPath();
@@ -77,43 +77,35 @@ public class BirdBOIDFlyGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return socialBird.isFollower() && socialBird.leader.isFlying() && !socialBird.leader.getNextNavigationArray().isEmpty();
+        return socialBird.isFollower() && socialBird.leader.isFlying() && socialBird.leader.getNavigation().getTargetPos() != null;
     }
 
     @Override
     public void stop() {
         socialBird.setFlying(false);
-        this.timeoutBeforeFlying = (int)Math.round(50 * Math.random());
+        socialBird.setNeedToFlyAway(false);
+        this.timeoutBeforeFlying = (int)Math.round(500 * Math.random());
     }
 
     private void shareFollowPath(){
 
         //Follow the leader, but keep distance with it
 
-        int seed = socialBird.getRandom().nextInt(100);
+        BlockPos leaderDestinationBlockPos = socialBird.leader.getNavigation().getTargetPos();
 
-        Vec3 leaderDelta = socialBird.leader.getEyePosition().vectorTo(socialBird.leader.getNextNavigationArray().getFirst());
+        if(leaderDestinationBlockPos != null){
+            Vec3 leaderDelta = socialBird.leader.getEyePosition().vectorTo(leaderDestinationBlockPos.getCenter());
 
-        Vec3 followerDestination;
-        if(socialBird.leader.getNextNavigationArray().size() == 1){
-            followerDestination = socialBird.position().add(leaderDelta.x,0,leaderDelta.z);
-            Vec3 ground = groundPosition(followerDestination);
+            Vec3 followerDelta = socialBird.getEyePosition().vectorTo(leaderDestinationBlockPos.getCenter());
 
-            followerDestination = new Vec3(followerDestination.x, ground.y, followerDestination.z);
+            Vec3 followerDestination = socialBird.position().add(
+                    leaderDelta.x + (followerDelta.x * influenceFromTheLeader * 0.5)
+                    ,leaderDelta.y + (followerDelta.y * influenceFromTheLeader * 0.5)
+                    ,leaderDelta.z + (followerDelta.z * influenceFromTheLeader  * 0.5)
+            );
+
+            socialBird.getNavigation().moveTo(followerDestination.x, followerDestination.y, followerDestination.z, speed);
         }
-        else{
-            followerDestination = socialBird.position().add(leaderDelta.x,leaderDelta.y,leaderDelta.z);
-        }
-
-        Vec3 followerDelta = socialBird.getEyePosition().vectorTo(socialBird.leader.getNextNavigationArray().getFirst());
-
-        followerDestination = new Vec3(followerDestination.x + (followerDelta.x * influenceFromTheLeader)
-                , followerDestination.y + (followerDelta.y * influenceFromTheLeader * 0.5)
-                , followerDestination.z + (followerDelta.z * influenceFromTheLeader));
-
-        socialBird.getNavigation().moveTo(followerDestination.x + ((Nth(seed, 1)) * randomSign()),
-                followerDestination.y  + ((Nth(seed, 1)) * randomSign()),
-                followerDestination.z + ((Nth(seed, 2)) * randomSign()), speed);
     }
 
     private void shareSwarmPath(){
@@ -220,16 +212,11 @@ public class BirdBOIDFlyGoal extends Goal {
     public Vec3 groundPosition(Vec3 airPosition) {
         BlockPos.MutableBlockPos ground = new BlockPos.MutableBlockPos();
         ground.set(airPosition.x, airPosition.y, airPosition.z);
-        boolean flag = false;
-        while (ground.getY() < socialBird.level().getMaxBuildHeight() && !socialBird.level().getBlockState(ground).isSolid() && socialBird.level().getFluidState(ground).isEmpty()){
-            ground.move(0, 1, 0);
-            flag = true;
-        }
         ground.move(0, -1, 0);
         while (ground.getY() > socialBird.level().getMinBuildHeight() && !socialBird.level().getBlockState(ground).isSolid() && socialBird.level().getFluidState(ground).isEmpty()) {
             ground.move(0, -1, 0);
         }
-        return Vec3.atCenterOf(flag ? ground.above() : ground.below());
+        return Vec3.atCenterOf(ground.below());
     }
 
     private double Nth ( int number, int index ) {

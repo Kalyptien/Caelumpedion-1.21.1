@@ -26,13 +26,11 @@ public class AnseriformeEntity extends SocialFlyingBirdEntity {
         this.setFlyingBirdType(FlyingBirdType.WALKER);
         this.setAquaticBirdType(AquaticBirdType.FULL);
         this.setBOIDBirdType(BOIDType.FORMATION);
-        this.setFlyPathType(FlyPathType.NEAR_GROUND);
+        this.setFlyPathType(FlyPathType.NORMAL);
+        this.setStressBirdType(StressBirdType.RUNNER);
 
         this.flyRange = 150;
         this.flyHeight = 40;
-        this.flySpeed = 3f;
-
-        this.viewRange = 16;
 
         this.maxSchoolSize = 10;
     }
@@ -40,9 +38,10 @@ public class AnseriformeEntity extends SocialFlyingBirdEntity {
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 12d)
-                .add(Attributes.MOVEMENT_SPEED, 0.15D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
+                .add(Attributes.FLYING_SPEED, 3.0D)
                 .add(Attributes.ARMOR, 0d)
-                .add(Attributes.FOLLOW_RANGE, 12D);
+                .add(Attributes.FOLLOW_RANGE, 16D);
     }
 
     //Food
@@ -84,22 +83,21 @@ public class AnseriformeEntity extends SocialFlyingBirdEntity {
 
     public static enum AnseriformeVariant {
         // Duck
-        AnasPlatyrhynchos(0, "anas_platyrhynchos", 1f),
-        CairinaMoschata(1, "cairina_moschata", 1f),
-        AnasErythrorhyncha(2, "anas_erythrorhyncha", 1f),
-        PhantasiaParvusAlbus(3,"phantasia_parvus_albus", 0.7f),
+        AnasErythrorhyncha(0, "anas_erythrorhyncha", 1f),
+        AnasPlatyrhynchos(1, "anas_platyrhynchos", 1f),
+        CairinaMoschata(2, "cairina_moschata", 1f),
 
         // Goose
+        AnserAnser(3, "anser_anser", 1.3f),
+        //AnserCaerulescens(x, "anser_caerulescens", 1.3f),
+        //AnserCanagicus(x, "anser_canagicus", 1.3f),
         BrantaHutchinsii(4, "branta_hutchinsii", 1.3f),
-        AnserAnser(5, "anser_anser", 1.3f),
-        //AnserCaerulescens(6, "anser_caerulescens", 1.3f),
-        //AnserCanagicus(7, "anser_canagicus", 1.3f),
-        //BrantaRuficollis(8, "branta_ruficollis", 1.3f),
+        //BrantaRuficollis(x, "branta_ruficollis", 1.3f),
 
         // Swan
+        CygnusAtratus(5,"cygnus_atratus", 1.5f),
         CygnusOlor(6, "cygnus_olor", 1.5f),
-        //CygnusBuccinator(10, "cygnus_buccinator", 1.5f),
-        CygnusAtratus(7,"cygnus_atratus", 1.5f)
+        //CygnusBuccinator(x, "cygnus_buccinator", 1.5f),
         ;
 
         private static final AnseriformeEntity.AnseriformeVariant[] BY_ID = Arrays.stream(values()).sorted(

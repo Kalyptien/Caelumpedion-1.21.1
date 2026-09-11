@@ -1,9 +1,7 @@
 package com.kalyptien.caelumpedion.entity.custom.common;
 
-import com.kalyptien.caelumpedion.block.entity.BirdFeederBlockEntity;
 import com.kalyptien.caelumpedion.entity.ai.FlightPathNavigator;
 import com.kalyptien.caelumpedion.entity.ai.FlyingMoveController;
-import com.kalyptien.caelumpedion.entity.ai.WalkingMoveController;
 import com.kalyptien.caelumpedion.entity.ai.goal.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -11,17 +9,16 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -38,18 +35,12 @@ import java.util.List;
 
 public abstract class FlyingBirdEntity extends Animal {
 
-    //Global var
-
-    protected int viewRange = 32;
-
     //Variant var
 
     protected static final EntityDataAccessor<Integer> VARIANT =
             SynchedEntityData.defineId(FlyingBirdEntity.class, EntityDataSerializers.INT);
 
     //Anim var
-
-    protected boolean isFlyingAnim = false;
 
     protected boolean isIdlingAnim = false;
     protected boolean isEatingAnim = false;
@@ -63,14 +54,6 @@ public abstract class FlyingBirdEntity extends Animal {
     protected int eatAnimationTimein = 0;
 
     //Anim var : Aquatic Bird
-
-    public final AnimationState idleWaterAnimationState = new AnimationState();
-    public final AnimationState inWaterAnimationState = new AnimationState();
-
-    protected boolean isIdlingWaterAnim = false;
-
-    protected int idleWaterAnimationTimeout = 0;
-    protected int idleWaterAnimationTimein = 0;
 
     //Enum var
 
@@ -86,9 +69,6 @@ public abstract class FlyingBirdEntity extends Animal {
     protected static final EntityDataAccessor<Boolean> ON_MIGRATION =
             SynchedEntityData.defineId(FlyingBirdEntity.class, EntityDataSerializers.BOOLEAN);
 
-    protected List<Vec3> nextNavigationArray = new ArrayList<Vec3>();
-
-    protected float flySpeed = 2f;
     protected int flyHeight = 50;
     protected int flyRange = 100;
 
@@ -119,33 +99,29 @@ public abstract class FlyingBirdEntity extends Animal {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new BirdFlyGoal(this));
+        this.goalSelector.addGoal(0, new BirdFloatGoal(this));
 
-        this.goalSelector.addGoal(1, new BirdPanicGoal(this));
+        this.goalSelector.addGoal(1, new BirdPanicGoal(this, 2.0, (bird) -> {
+            return ((FlyingBirdEntity) bird).getIdStressBirdType() == StressBirdType.RUNNER.id ? DamageTypeTags.PANIC_CAUSES : DamageTypeTags.PANIC_ENVIRONMENTAL_CAUSES;
+        }));
 
-        this.goalSelector.addGoal(2, new BirdTemptGoal(this, 1.25, this::isFood, false));
-        this.goalSelector.addGoal(2, new BirdFoodNerbyGoal(this));
+        this.goalSelector.addGoal(3, new BirdTemptGoal(this, 2.0f, this::isFood, false));
 
-        this.goalSelector.addGoal(3, new AvoidEntityGoal(this, Player.class, this.viewRange/10.0f, 1.5, 1.5, (entity) -> {
+        this.goalSelector.addGoal(6, new BirdAvoidEntityGoal(this, Player.class, this.getViewRange(), 2.0f, 4.0f, (entity) -> {
             return !((Player)entity).isCrouching();
         }));
 
-        this.goalSelector.addGoal(3, new PrepareFlyGoal(this));
+        this.goalSelector.addGoal(8, new BirdRandomStrollGoal(this, 1.0));
+        this.goalSelector.addGoal(8, new BirdRandomFlyingGoal(this, 1.0));
 
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, this.viewRange));
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, this.getViewRange()));
+        this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
 
-        if(this.aquaticBirdType == AquaticBirdType.NONE){
-            this.goalSelector.addGoal(3, new FloatGoal(this));
-
-            this.goalSelector.addGoal(5 ,new WaterAvoidingRandomFlyingGoal(this, 2.0));
-            this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 2.0));
-        }
     }
 
     private void switchNavigator(boolean onLand) {
         if (onLand) {
-            this.moveControl = new WalkingMoveController(this);
+            this.moveControl = new MoveControl(this);
             this.navigation = new GroundPathNavigation(this, level());
             this.isLandNavigator = true;
         } else {
@@ -155,8 +131,14 @@ public abstract class FlyingBirdEntity extends Animal {
         }
     }
 
+    //Misc
+
     public boolean canBeLeashed() {
         return false;
+    }
+
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return distanceToClosestPlayer >= 100 && this.tickCount > 2400;
     }
 
     //Tick
@@ -185,7 +167,6 @@ public abstract class FlyingBirdEntity extends Animal {
             } else {
                 this.setNoGravity(false);
                 if (!this.isLandNavigator) {
-                    this.clearNextNavigationArray();
                     switchNavigator(true);
                 }
             }
@@ -229,100 +210,33 @@ public abstract class FlyingBirdEntity extends Animal {
     protected void setupAnimationStates() {
         //If Not flying
         if(!this.isFlying()){
-
-            //If in water
-            if(this.aquaticBirdType == AquaticBirdType.FULL && this.isInWaterOrBubble()){
-                if(this.idleWaterAnimationTimeout <= 0 && !this.isIdlingWaterAnim){
+            if(this.idleAnimationTimeout <= 0 && !this.isEatingAnim && !this.isIdlingAnim) {
+                if(this.onGround() && this.isLandNavigator){
                     this.resetAnimations();
 
+                    if(Math.random() >= 0.5){
+                        this.idleAnimationState.start(this.tickCount);
+                    }
+                    else{
+                        this.eatAnimationState.start(this.tickCount);
+                    }
 
-                    this.idleWaterAnimationState.start(this.tickCount);
-
-                    this.isIdlingWaterAnim = true;
-                    this.idleWaterAnimationTimein = 0;
-                    this.idleWaterAnimationTimeout = (int)Math.round(500 * Math.random()) + 500;
+                    this.isIdlingAnim = true;
+                    this.idleAnimationTimein = 0;
+                    this.idleAnimationTimeout = (int)Math.round(500 * Math.random()) + 500;
 
                     this.gameEvent(GameEvent.ENTITY_ACTION);
                 }
-                else{
-                    --this.idleWaterAnimationTimeout;
+            } else {
+                --this.idleAnimationTimeout;
 
-                    if(this.isIdlingWaterAnim){
-                        this.idleWaterAnimationTimein++;
+                if(this.isIdlingAnim){
+                    this.idleAnimationTimein++;
 
-                        if(this.idleWaterAnimationTimein >= 200){
-                            this.idleWaterAnimationTimein = 0;
-                            this.isIdlingWaterAnim = false;
-                            this.resetAnimations();
-                        }
-                    }
-                }
-
-                if(!this.isIdlingWaterAnim){
-                    this.inWaterAnimationState.start(this.tickCount);
-                }
-            }
-            //If in ground
-            else{
-                //If can Idle AND not in animation
-                if(this.idleAnimationTimeout <= 0 && !this.isEatingAnim && !this.isIdlingAnim) {
-                    if(this.onGround() && this.isLandNavigator){
-
-                        this.resetAnimations();
-
-                        if(Math.random() >= 0.5){
-                            this.idleAnimationState.start(this.tickCount);
-                        }
-                        else{
-                            this.eatAnimationState.start(this.tickCount);
-                        }
-
-                        this.isIdlingAnim = true;
+                    if(this.idleAnimationTimein >= 100){
                         this.idleAnimationTimein = 0;
-                        this.idleAnimationTimeout = (int)Math.round(500 * Math.random()) + 500;
-
-                        this.gameEvent(GameEvent.ENTITY_ACTION);
-                    }
-                } else {
-                    --this.idleAnimationTimeout;
-
-                    if(this.isIdlingAnim){
-                        this.idleAnimationTimein++;
-
-                        if(this.idleAnimationTimein >= 100){
-                            this.idleAnimationTimein = 0;
-                            this.isIdlingAnim = false;
-                            this.resetAnimations();
-                        }
-                    }
-                }
-
-                //If can Eat AND not in animation
-                if(!this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty() && !this.isIdlingAnim && !this.isEatingAnim){
-                    if(this.onGround() && this.isLandNavigator){
-
+                        this.isIdlingAnim = false;
                         this.resetAnimations();
-
-                        this.eatAnimationState.start(this.tickCount);
-
-                        this.isEatingAnim = true;
-                        this.eatAnimationTimein = 0;
-
-                        this.gameEvent(GameEvent.ENTITY_ACTION);
-                    }
-                }
-                else{
-                    if(this.isEatingAnim){
-                        this.eatAnimationTimein++;
-
-                        if(this.eatAnimationTimein >= 100){
-                            this.eatAnimationTimein = 0;
-                            this.resetAnimations();
-
-                            if(!this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()){
-                                this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-                            }
-                        }
                     }
                 }
             }
@@ -338,24 +252,15 @@ public abstract class FlyingBirdEntity extends Animal {
             this.idleAnimationState.stop();
         }
 
-        if(this.idleWaterAnimationState.isStarted()) {
-            this.isIdlingWaterAnim = false;
-            this.idleWaterAnimationState.stop();
-        }
-
         if(this.eatAnimationState.isStarted()){
             this.isIdlingAnim = false;
             this.isEatingAnim = false;
             this.eatAnimationState.stop();
         }
-
-        if(this.inWaterAnimationState.isStarted()) {
-            this.inWaterAnimationState.stop();
-        }
     }
 
-    public boolean canMove() {
-        return !this.isIdlingAnim && !this.isEatingAnim && !this.isIdlingWaterAnim;
+    public boolean inAnimation() {
+        return !this.isIdlingAnim && !this.isEatingAnim;
     }
 
     //Food/Breed
@@ -365,105 +270,15 @@ public abstract class FlyingBirdEntity extends Animal {
         return itemStack.is(Tags.Items.SEEDS);
     }
 
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        ItemStack itemstack = player.getItemInHand(hand);
-        if (this.isFood(itemstack)) {
-            if (!this.level().isClientSide) {
-                this.usePlayerItem(player, hand, itemstack);
-
-                return InteractionResult.SUCCESS;
-            }
-
-            if (this.level().isClientSide) {
-                return InteractionResult.CONSUME;
-            }
-        }
-
-        return super.mobInteract(player, hand);
-    }
-
-
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
         return null;
     }
 
-    @Override
-    public void pickUpItem(ItemEntity itemEntity) {
-        ItemStack itemstack = itemEntity.getItem();
-        if (this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
-            int i = itemstack.getCount();
-            if (i > 1) {
-                this.dropItemStack(itemstack.split(i - 1));
-            }
-
-            this.onItemPickup(itemEntity);
-            this.setItemSlot(EquipmentSlot.MAINHAND, itemstack.split(1));
-            this.setGuaranteedDrop(EquipmentSlot.MAINHAND);
-            this.take(itemEntity, itemstack.getCount());
-            itemEntity.discard();
-        }
-    }
-
-    public void pickUpItemFromFeeder(BirdFeederBlockEntity feederBlock, int slot) {
-        ItemStack itemstack = feederBlock.inventory.getStackInSlot(slot);
-        if (this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
-            int i = itemstack.getCount();
-            if (i > 1) {
-                feederBlock.inventory.setStackInSlot(slot, itemstack.split(i - 1));
-            }
-            else{
-                feederBlock.inventory.setStackInSlot(slot, ItemStack.EMPTY);
-            }
-
-            this.setItemSlot(EquipmentSlot.MAINHAND, itemstack.split(1));
-            this.setGuaranteedDrop(EquipmentSlot.MAINHAND);
-        }
-    }
-
-    protected void dropItemStack(ItemStack stack) {
-        ItemEntity itementity = new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), stack);
-        this.level().addFreshEntity(itementity);
-    }
-
-    @Override
-    public void dropEquipment() {
-        super.dropEquipment();
-        ItemStack itemstack = this.getItemBySlot(EquipmentSlot.MAINHAND);
-        if (!itemstack.isEmpty()) {
-            this.spawnAtLocation(itemstack);
-            this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-        }
-
-    }
-
-    @Override
-    public boolean canTakeItem(ItemStack itemstack) {
-        EquipmentSlot equipmentslot = this.getEquipmentSlotForItem(itemstack);
-        return !this.getItemBySlot(equipmentslot).isEmpty() ? false : equipmentslot == EquipmentSlot.MAINHAND && super.canTakeItem(itemstack);
-    }
-
     //Getter / Setter
 
     public abstract int getIdVariant();
-
-    public List<Vec3> getNextNavigationArray() {
-        return nextNavigationArray;
-    }
-
-    public void addNextNavigationArray(Vec3 vector){
-        this.nextNavigationArray.add(vector);
-    }
-
-    public void clearNextNavigationArray(){
-        if(!this.nextNavigationArray.isEmpty())
-            this.nextNavigationArray.removeFirst();
-    }
-
-    public void clearAllNavigationArray(){
-            this.nextNavigationArray = new ArrayList<>();
-    }
 
     public boolean isFlying() {
         return this.entityData.get(FLYING);
@@ -537,8 +352,16 @@ public abstract class FlyingBirdEntity extends Animal {
         this.needToFlyAway = needToFlyAway;
     }
 
-    public float getFlySpeed() {
-        return flySpeed;
+    public double getFlySpeed() {
+        return this.getAttributeValue(Attributes.FLYING_SPEED);
+    }
+
+    public double getGroundSpeed() {
+        return this.getAttributeValue(Attributes.MOVEMENT_SPEED);
+    }
+
+    public double getFollowRange(){
+        return this.getAttributeValue(Attributes.FOLLOW_RANGE);
     }
 
     public int getFlyHeight() {
@@ -562,11 +385,7 @@ public abstract class FlyingBirdEntity extends Animal {
     }
 
     public int getViewRange() {
-        return viewRange;
-    }
-
-    public void setViewRange(int viewRange) {
-        this.viewRange = viewRange;
+        return (int) this.getAttributeValue(Attributes.FOLLOW_RANGE);
     }
 
     //SaveData

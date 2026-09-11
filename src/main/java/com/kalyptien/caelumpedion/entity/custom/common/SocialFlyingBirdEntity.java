@@ -1,7 +1,7 @@
 package com.kalyptien.caelumpedion.entity.custom.common;
 
-import com.kalyptien.caelumpedion.entity.ai.goal.OrganizeBOIDGoal;
-import com.kalyptien.caelumpedion.entity.ai.goal.BirdBOIDFlyGoal;
+import com.kalyptien.caelumpedion.entity.ai.goal.boidGoal.OrganizeBOIDGoal;
+import com.kalyptien.caelumpedion.entity.ai.goal.boidGoal.BirdBOIDFlyGoal;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
@@ -21,8 +21,6 @@ public abstract class SocialFlyingBirdEntity extends FlyingBirdEntity {
 
     protected int maxSchoolSize = 25;
 
-    private boolean hadShareIsNextDestinations = false;
-
     public SocialFlyingBirdEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
     }
@@ -30,8 +28,8 @@ public abstract class SocialFlyingBirdEntity extends FlyingBirdEntity {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(0, new BirdBOIDFlyGoal(this));
-        this.goalSelector.addGoal(1, new OrganizeBOIDGoal(this));
+        this.goalSelector.addGoal(2, new BirdBOIDFlyGoal(this));
+        this.goalSelector.addGoal(8, new OrganizeBOIDGoal(this));
     }
 
     //Tick
@@ -87,15 +85,7 @@ public abstract class SocialFlyingBirdEntity extends FlyingBirdEntity {
     }
 
     public boolean inRangeOfLeader() {
-        return Math.sqrt(this.distanceToSqr(this.leader)) <= 30;
-    }
-
-    public boolean hadShareIsNextDestinations() {
-        return hadShareIsNextDestinations;
-    }
-
-    public void setHadShareIsNextDestinations(boolean hadShareIsNextDestinations) {
-        this.hadShareIsNextDestinations = hadShareIsNextDestinations;
+        return Math.sqrt(this.distanceToSqr(this.leader)) <= this.getViewRange() * 1.5;
     }
 
     public BOIDType getBOIDBirdType() {
@@ -115,8 +105,8 @@ public abstract class SocialFlyingBirdEntity extends FlyingBirdEntity {
     public void setNeedToFlyAway(boolean needToFlyAway) {
         super.setNeedToFlyAway(needToFlyAway);
 
-        if(leader != null && !leader.isNeedToFlyAway()){
-            leader.setNeedToFlyAway(true);
+        if(this.leader != null && !this.leader.isNeedToFlyAway() && needToFlyAway){
+            this.leader.setNeedToFlyAway(needToFlyAway);
         }
     }
 

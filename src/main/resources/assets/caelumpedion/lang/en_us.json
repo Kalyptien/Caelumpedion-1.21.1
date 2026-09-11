@@ -2,6 +2,29 @@
   "creativetab.caelumpedion.mod_tab": "Caelumpedion",
 
   "item.caelumpedion.passeriforme_spawn_egg": "Passeriforme Spawn Egg",
+  "tooltip.caelumpedion.passeriforme_spawn_egg.tooltip": "§8Sparrow, Jay, Cardinal, ...§r",
+
+  "item.caelumpedion.hirundininae_spawn_egg": "Passeriforme > Hirundininae Spawn Egg",
+  "tooltip.caelumpedion.hirundininae_spawn_egg.tooltip": "§8Swallow§r",
+
+  "item.caelumpedion.anseriforme_spawn_egg": "Anseriforme Spawn Egg",
+  "tooltip.caelumpedion.anseriforme_spawn_egg.tooltip": "§8Duck, Goose & Swan§r",
+
+  "item.caelumpedion.accipitriforme_spawn_egg": "Accipitriforme Spawn Egg",
+  "tooltip.caelumpedion.accipitriforme_spawn_egg.tooltip": "§8Eagle & Vultur§r",
+
+  "item.caelumpedion.ramphastidae_spawn_egg": "Piciforme > Ramphastidae Spawn Egg",
+  "tooltip.caelumpedion.ramphastidae_spawn_egg.tooltip": "§8Toucan§r",
+
+  "item.caelumpedion.gruiforme_spawn_egg": "Gruiforme Spawn Egg",
+  "tooltip.caelumpedion.gruiforme_spawn_egg.tooltip": "§8Crane§r",
+
+  "entity.mccourse.passeriforme": "Passeriforme",
+  "entity.mccourse.hirundininae": "Hirundininae",
+  "entity.mccourse.anseriforme": "Anseriforme",
+  "entity.mccourse.accipitriforme": "Accipitriforme",
+  "entity.mccourse.ramphastidae": "Ramphastidae",
+  "entity.mccourse.gruiforme": "Gruiforme",
 
   "block.caelumpedion.bird_feeder": "Bird Feeder"
 }

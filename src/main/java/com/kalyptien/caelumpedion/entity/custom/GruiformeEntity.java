@@ -3,48 +3,43 @@ package com.kalyptien.caelumpedion.entity.custom;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import net.minecraft.Util;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.gameevent.GameEvent;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class PasseriformeEntity extends SocialFlyingBirdEntity {
+public class GruiformeEntity extends SocialFlyingBirdEntity {
 
-    public PasseriformeEntity(EntityType<? extends Animal> entityType, Level level) {
+    public GruiformeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
-        this.setFlyingBirdType(FlyingBirdType.SHORT_FlYER);
-        this.setAquaticBirdType(AquaticBirdType.NONE);
-        this.setBOIDBirdType(BOIDType.FOLLOW);
-        this.setFlyPathType(FlyPathType.CHAOS);
+        this.setFlyingBirdType(FlyingBirdType.WALKER);
+        this.setAquaticBirdType(AquaticBirdType.TALL);
+        this.setStressBirdType(StressBirdType.FIGHTER);
+        this.setBOIDBirdType(BOIDType.FORMATION);
+        this.setFlyPathType(FlyPathType.NEAR_GROUND);
 
-        this.flyRange = 50;
-        this.flyHeight = 20;
-        this.flySpeed = 4f;
+        this.flyRange = 200;
+        this.flyHeight = 60;
 
-        this.viewRange = 16;
-
-        this.maxSchoolSize = 10;
+        this.maxSchoolSize = 5;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 6d)
+                .add(Attributes.MAX_HEALTH, 18d)
                 .add(Attributes.MOVEMENT_SPEED, 0.15D)
+                .add(Attributes.FLYING_SPEED, 3.0D)
                 .add(Attributes.ARMOR, 0d)
-                .add(Attributes.FOLLOW_RANGE, 12D);
+                .add(Attributes.FOLLOW_RANGE, 16D);
     }
 
     //Getter / Setter
@@ -53,11 +48,11 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
         return this.entityData.get(VARIANT);
     }
 
-    public PasseriformeVariant getVariant() {
-        return PasseriformeVariant.byId(this.getIdVariant());
+    public GruiformeVariant getVariant() {
+        return GruiformeVariant.byId(this.getIdVariant());
     }
 
-    public void setVariant(PasseriformeVariant variant) {
+    public void setVariant(GruiformeVariant variant) {
         this.entityData.set(VARIANT, variant.getId());
     }
 
@@ -68,7 +63,7 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
                                         MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
         //Variants
         if(spawnType == MobSpawnType.SPAWN_EGG){
-            PasseriformeVariant variant = Util.getRandom(PasseriformeVariant.values(), this.random);
+            GruiformeVariant variant = Util.getRandom(GruiformeVariant.values(), this.random);
             this.setVariant(variant);
         }
 
@@ -77,22 +72,16 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
 
     // Variant
 
-    public static enum PasseriformeVariant {
-        CardinalisCardinalis(0, "cardinalis_cardinalis"),
-        CyanistesCaeruleus(1, "cyanistes_caeruleus"),
-        CyanocittaCristata(2, "cyanocitta_cristata"),
-        ErithacusRubecula(3, "erithacus_rubecula"),
-        LophophanesCristatus(4, "lophophanes_cristatus"),
-        PasserDomesticus(5, "passer_domesticus"),
-        PeriparusAter(6, "periparus_ater"),
-        PhoenicurusOchruros(7, "phoenicurus_ochruros");
+    public static enum GruiformeVariant {
+        GrusJaponensis(0, "grus_japonensis"),
+        ;
 
-        private static final PasseriformeVariant[] BY_ID = Arrays.stream(values()).sorted(
-                Comparator.comparingInt(PasseriformeVariant::getId)).toArray(PasseriformeVariant[]::new);
+        private static final GruiformeVariant[] BY_ID = Arrays.stream(values()).sorted(
+                Comparator.comparingInt(GruiformeVariant::getId)).toArray(GruiformeVariant[]::new);
         private final int id;
         private final String fileName;
 
-        PasseriformeVariant(int id, String fileName) {
+        GruiformeVariant(int id, String fileName) {
             this.id = id;
             this.fileName = fileName;
         }
@@ -105,7 +94,7 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
             return fileName;
         }
 
-        public static PasseriformeVariant byId(int id) {
+        public static GruiformeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
         }
 
