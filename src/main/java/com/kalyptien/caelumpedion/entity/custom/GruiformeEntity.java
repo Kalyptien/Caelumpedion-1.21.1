@@ -1,22 +1,41 @@
 package com.kalyptien.caelumpedion.entity.custom;
 
+import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import net.minecraft.Util;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.UUID;
 
-public class GruiformeEntity extends SocialFlyingBirdEntity {
+public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMob {
+
+    //Anger Var
+
+    private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME =
+            SynchedEntityData.defineId(GruiformeEntity.class, EntityDataSerializers.INT);;
+    private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);;
+    @javax.annotation.Nullable
+    private UUID persistentAngerTarget;
 
     public GruiformeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -38,8 +57,32 @@ public class GruiformeEntity extends SocialFlyingBirdEntity {
                 .add(Attributes.MAX_HEALTH, 18d)
                 .add(Attributes.MOVEMENT_SPEED, 0.15D)
                 .add(Attributes.FLYING_SPEED, 3.0D)
-                .add(Attributes.ARMOR, 0d)
+                .add(Attributes.ATTACK_DAMAGE, 2.5d)
+                .add(Attributes.ARMOR, 1d)
                 .add(Attributes.FOLLOW_RANGE, 16D);
+    }
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        //Goal
+
+        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.5, true));
+
+        // Target
+
+        this.targetSelector.addGoal(3, new HurtByTargetGoal(this, new Class[0]));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false,
+                (target) -> {
+                    return this.isAngryAt((LivingEntity) target);
+                }));
+        this.targetSelector.addGoal(5, new ResetUniversalAngerTargetGoal<>(this, false));
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_REMAINING_ANGER_TIME, 0);
     }
 
     //Getter / Setter
@@ -68,6 +111,56 @@ public class GruiformeEntity extends SocialFlyingBirdEntity {
         }
 
         return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+    }
+
+    //ANGER
+
+    public int getRemainingPersistentAngerTime() {
+        return (Integer)this.entityData.get(DATA_REMAINING_ANGER_TIME);
+    }
+
+    public void setRemainingPersistentAngerTime(int time) {
+        this.entityData.set(DATA_REMAINING_ANGER_TIME, time);
+    }
+
+    public void startPersistentAngerTimer() {
+        this.setRemainingPersistentAngerTime(this.PERSISTENT_ANGER_TIME.sample(this.random));
+    }
+
+    @javax.annotation.Nullable
+    public UUID getPersistentAngerTarget() {
+        return this.persistentAngerTarget;
+    }
+
+    public void setPersistentAngerTarget(@javax.annotation.Nullable UUID target) {
+        this.persistentAngerTarget = target;
+    }
+
+    @Override
+    public boolean canAttack(LivingEntity target) {
+        return super.canAttack(target) && !this.isFlying();
+    }
+
+    public int getAngerTime() {
+        return this.entityData.get(DATA_REMAINING_ANGER_TIME);
+    }
+
+    public void setAngerTime(int time) {
+        this.entityData.set(DATA_REMAINING_ANGER_TIME, time);
+    }
+
+    //Data
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        this.addPersistentAngerSaveData(compound);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        this.readPersistentAngerSaveData(this.level(), compound);
     }
 
     // Variant

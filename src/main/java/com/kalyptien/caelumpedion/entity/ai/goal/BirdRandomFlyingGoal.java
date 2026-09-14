@@ -199,7 +199,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
 
         //Generate in between positions
 
-        numberOfMiddleDestination = bird.getRandom().nextInt(3) + 1;
+        numberOfMiddleDestination = bird.getRandom().nextInt(2) + 1;
 
         stepX = finalX /numberOfMiddleDestination;
         stepZ = finalZ / numberOfMiddleDestination;

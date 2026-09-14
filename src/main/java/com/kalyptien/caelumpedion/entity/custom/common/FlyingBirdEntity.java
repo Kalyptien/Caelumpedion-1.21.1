@@ -11,9 +11,9 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
@@ -24,14 +24,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public abstract class FlyingBirdEntity extends Animal {
 
@@ -99,24 +95,25 @@ public abstract class FlyingBirdEntity extends Animal {
 
     @Override
     protected void registerGoals() {
+        // Goal
         this.goalSelector.addGoal(0, new BirdFloatGoal(this));
 
-        this.goalSelector.addGoal(1, new BirdPanicGoal(this, 2.0, (bird) -> {
+        this.goalSelector.addGoal(1, new BirdPanicGoal(this, 2.0f, (bird) -> {
             return ((FlyingBirdEntity) bird).getIdStressBirdType() == StressBirdType.RUNNER.id ? DamageTypeTags.PANIC_CAUSES : DamageTypeTags.PANIC_ENVIRONMENTAL_CAUSES;
         }));
 
-        this.goalSelector.addGoal(3, new BirdTemptGoal(this, 2.0f, this::isFood, false));
 
-        this.goalSelector.addGoal(6, new BirdAvoidEntityGoal(this, Player.class, this.getViewRange(), 2.0f, 4.0f, (entity) -> {
+        this.goalSelector.addGoal(5, new BirdTemptGoal(this, 1.5f, this::isFood, false));
+
+        /*this.goalSelector.addGoal(6, new BirdAvoidEntityGoal(this, Player.class, this.getViewRange(), 1.0f, 2.0f, (entity) -> {
             return !((Player)entity).isCrouching();
-        }));
+        }));*/
 
         this.goalSelector.addGoal(8, new BirdRandomStrollGoal(this, 1.0));
         this.goalSelector.addGoal(8, new BirdRandomFlyingGoal(this, 1.0));
 
         this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, this.getViewRange()));
         this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
-
     }
 
     private void switchNavigator(boolean onLand) {

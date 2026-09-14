@@ -138,7 +138,7 @@ public class GruiformeModel<T extends GruiformeEntity> extends HierarchicalModel
         if(entity.onGround() && !entity.isFlying()){
             double currentSpeed = this.getCurrentBirdSpeed(entity);
 
-            if(currentSpeed >= (entity.getAttributeValue(Attributes.MOVEMENT_SPEED) - (entity.getAttributeValue(Attributes.MOVEMENT_SPEED)/4))){
+            if(currentSpeed >= (entity.getAttributeValue(Attributes.MOVEMENT_SPEED))){
                 this.animateWalk(GruiformeAnimation.GRUIFORME_RUN, limbSwing, limbSwingAmount, 2f, 2f);
             }
             else{
