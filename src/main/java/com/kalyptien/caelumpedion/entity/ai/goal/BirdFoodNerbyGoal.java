@@ -36,7 +36,7 @@ public class BirdFoodNerbyGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (!bird.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
+        /*if (!bird.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
             return false;
         } else {
             if (!bird.inAnimation()) {
@@ -77,7 +77,9 @@ public class BirdFoodNerbyGoal extends Goal {
 
                 return false;
             }
-        }
+        }*/
+
+        return false;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.kalyptien.caelumpedion.entity.client.gruiforme;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
+import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
 import com.kalyptien.caelumpedion.entity.custom.GruiformeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -14,27 +15,13 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
 
-public class GruiformeModel<T extends GruiformeEntity> extends HierarchicalModel<T> {
+public class GruiformeModel<T extends GruiformeEntity> extends FlyingBirdHierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "gruiforme"), "main");
-
-    private final ModelPart gruiforme;
-    private final ModelPart body;
-    private final ModelPart head;
-
-    private final ModelPart wingR;
-    private final ModelPart normalWingR;
-    private final ModelPart flyingWingR;
-    private final ModelPart wingL;
-    private final ModelPart normalWingL;
-    private final ModelPart flyingWingL;
-    private final ModelPart tail;
-    private final ModelPart flyingTail;
-    private final ModelPart normalTail;
     
     public GruiformeModel(ModelPart root) {
-        this.gruiforme = root.getChild("gruiforme");
-        this.body = this.gruiforme.getChild("body");
-        this.head = this.gruiforme.getChild("head");
+        this.root = root.getChild("gruiforme");
+        this.body = this.root.getChild("body");
+        this.head = this.root.getChild("head");
         
         this.wingR = this.body.getChild("wingR");
         this.normalWingR = this.wingR.getChild("normalWingR");
@@ -124,76 +111,26 @@ public class GruiformeModel<T extends GruiformeEntity> extends HierarchicalModel
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
-    @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.root().getAllParts().forEach(ModelPart::resetPose);
+    protected void setupWalkAnimation(float limbSwing, float limbSwingAmount){
+        this.animateWalk(GruiformeAnimation.GRUIFORME_WALK, limbSwing, limbSwingAmount, 2f, 10f);
+    }
 
-        this.applyHeadRotation(netHeadYaw, headPitch);
+    protected void setupRunAnimation(float limbSwing, float limbSwingAmount){
+        this.animateWalk(GruiformeAnimation.GRUIFORME_RUN, limbSwing, limbSwingAmount, 2f, 2f);
+    }
 
-        //GLOBAL ANIMATION
-
-        this.showFlyingPart(entity.isFlying());
-
-        //> WALK
-        if(entity.onGround() && !entity.isFlying()){
-            double currentSpeed = this.getCurrentBirdSpeed(entity);
-
-            if(currentSpeed >= (entity.getAttributeValue(Attributes.MOVEMENT_SPEED))){
-                this.animateWalk(GruiformeAnimation.GRUIFORME_RUN, limbSwing, limbSwingAmount, 2f, 2f);
-            }
-            else{
-                this.animateWalk(GruiformeAnimation.GRUIFORME_WALK, limbSwing, limbSwingAmount, 2f, 10f);
-            }
-        }
-
-        if(entity.isFlying()){
-            //> FLY
-            this.animateWalk(GruiformeAnimation.GRUIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
-
-            float partialTick = ageInTicks - entity.tickCount;
-            float flyProgress = entity.getFlyProgress(partialTick);
-            float rollAmount = entity.getFlightRoll(partialTick) / 57.295776F * flyProgress;
-            float pitchAmount = entity.getFlightPitch(partialTick) / 57.295776F * flyProgress;
-
-            gruiforme.xRot += pitchAmount;
-            gruiforme.zRot += rollAmount;
-        }
-
-        //> IDLE
-        this.animate(entity.eatAnimationState, GruiformeAnimation.GRUIFORME_EAT, ageInTicks, 1f);
+    protected void setupIdleAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
         this.animate(entity.idleAnimationState, GruiformeAnimation.GRUIFORME_IDLE, ageInTicks, 1f);
     }
 
-    private void applyHeadRotation(float headYaw, float headPitch) {
-        headYaw = Mth.clamp(headYaw, -90f, 90f);
-        headPitch = Mth.clamp(headPitch, -45f, 45);
-
-        this.head.yRot = headYaw * ((float)Math.PI / 260f);
-        this.head.xRot = headPitch *  ((float)Math.PI / 260f);
+    protected void setupEatAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
+        this.animate(entity.eatAnimationState, GruiformeAnimation.GRUIFORME_EAT, ageInTicks, 1f);
     }
 
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
-        gruiforme.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+    protected void setupFlyAnimation(float limbSwing, float limbSwingAmount){
+        this.animateWalk(GruiformeAnimation.GRUIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
-    @Override
-    public ModelPart root() {
-        return gruiforme;
-    }
-
-    private void showFlyingPart(boolean show){
-            this.normalTail.visible = !show;
-            this.normalWingL.visible = !show;
-            this.normalWingR.visible = !show;
-
-            this.flyingTail.visible = show;
-            this.flyingWingL.visible = show;
-            this.flyingWingR.visible = show;
-    }
-
-    private double getCurrentBirdSpeed(T entity){
-        Vec3 delta = entity.getDeltaMovement();
-        return Math.sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
+    protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
     }
 }

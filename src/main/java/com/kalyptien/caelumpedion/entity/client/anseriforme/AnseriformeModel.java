@@ -1,6 +1,7 @@
 package com.kalyptien.caelumpedion.entity.client.anseriforme;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
+import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
 import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeAnimation;
 import com.kalyptien.caelumpedion.entity.custom.AnseriformeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -17,27 +18,13 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
 
-public class AnseriformeModel<T extends AnseriformeEntity> extends HierarchicalModel<T> {
+public class AnseriformeModel<T extends AnseriformeEntity> extends FlyingBirdHierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "anseriforme"), "main");
-
-    private final ModelPart anseriforme;
-    private final ModelPart body;
-    private final ModelPart head;
-
-    private final ModelPart wingR;
-    private final ModelPart normalWingR;
-    private final ModelPart flyingWingR;
-    private final ModelPart wingL;
-    private final ModelPart normalWingL;
-    private final ModelPart flyingWingL;
-    private final ModelPart tail;
-    private final ModelPart flyingTail;
-    private final ModelPart normalTail;
     
     public AnseriformeModel(ModelPart root) {
-        this.anseriforme = root.getChild("anseriforme");
-        this.body = this.anseriforme.getChild("body");
-        this.head = this.anseriforme.getChild("head");
+        this.root = root.getChild("anseriforme");
+        this.body = this.root.getChild("body");
+        this.head = this.root.getChild("head");
         
         this.wingR = this.body.getChild("wingR");
         this.normalWingR = this.wingR.getChild("normalWingR");
@@ -107,76 +94,26 @@ public class AnseriformeModel<T extends AnseriformeEntity> extends HierarchicalM
         return LayerDefinition.create(meshdefinition, 32, 32);
     }
 
-    @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.root().getAllParts().forEach(ModelPart::resetPose);
+    protected void setupWalkAnimation(float limbSwing, float limbSwingAmount){
+        this.animateWalk(AnseriformeAnimation.ANSERIFORME_WALK, limbSwing, limbSwingAmount, 2f, 10f);
+    }
 
-        this.applyHeadRotation(netHeadYaw, headPitch);
+    protected void setupRunAnimation(float limbSwing, float limbSwingAmount){
+        this.animateWalk(AnseriformeAnimation.ANSERIFORME_RUN, limbSwing, limbSwingAmount, 2f, 2f);
+    }
 
-        //GLOBAL ANIMATION
-
-        this.showFlyingPart(entity.isFlying());
-
-        //> WALK
-        if(entity.onGround() && !entity.isFlying()){
-            double currentSpeed = this.getCurrentBirdSpeed(entity);
-
-            if(currentSpeed >= (entity.getAttributeValue(Attributes.MOVEMENT_SPEED) - (entity.getAttributeValue(Attributes.MOVEMENT_SPEED)/4))){
-                this.animateWalk(AnseriformeAnimation.ANSERIFORME_RUN, limbSwing, limbSwingAmount, 2f, 2f);
-            }
-            else{
-                this.animateWalk(AnseriformeAnimation.ANSERIFORME_WALK, limbSwing, limbSwingAmount, 2f, 2f);
-            }
-        }
-
-        if(entity.isFlying()){
-            //> FLY
-            this.animateWalk(AnseriformeAnimation.ANSERIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
-
-            float partialTick = ageInTicks - entity.tickCount;
-            float flyProgress = entity.getFlyProgress(partialTick);
-            float rollAmount = entity.getFlightRoll(partialTick) / 57.295776F * flyProgress;
-            float pitchAmount = entity.getFlightPitch(partialTick) / 57.295776F * flyProgress;
-
-            anseriforme.xRot += pitchAmount;
-            anseriforme.zRot += rollAmount;
-        }
-
-        //> IDLE
-        this.animate(entity.eatAnimationState, AnseriformeAnimation.ANSERIFORME_EAT, ageInTicks, 1f);
+    protected void setupIdleAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
         this.animate(entity.idleAnimationState, AnseriformeAnimation.ANSERIFORME_IDLE, ageInTicks, 1f);
     }
 
-    private void applyHeadRotation(float headYaw, float headPitch) {
-        headYaw = Mth.clamp(headYaw, -90f, 90f);
-        headPitch = Mth.clamp(headPitch, -45f, 45);
-
-        this.head.yRot = headYaw * ((float)Math.PI / 260f);
-        this.head.xRot = headPitch *  ((float)Math.PI / 260f);
+    protected void setupEatAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
+        this.animate(entity.eatAnimationState, AnseriformeAnimation.ANSERIFORME_EAT, ageInTicks, 1f);
     }
 
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
-        anseriforme.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+    protected void setupFlyAnimation(float limbSwing, float limbSwingAmount){
+        this.animateWalk(AnseriformeAnimation.ANSERIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
-    @Override
-    public ModelPart root() {
-        return anseriforme;
-    }
-
-    private void showFlyingPart(boolean show){
-            this.normalTail.visible = !show;
-            this.normalWingL.visible = !show;
-            this.normalWingR.visible = !show;
-
-            this.flyingTail.visible = show;
-            this.flyingWingL.visible = show;
-            this.flyingWingR.visible = show;
-    }
-
-    private double getCurrentBirdSpeed(T entity){
-        Vec3 delta = entity.getDeltaMovement();
-        return Math.sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
+    protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
     }
 }

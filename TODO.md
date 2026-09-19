@@ -4,7 +4,7 @@ OISEAUX :
 
 - Rendre les oiseaux tamable (rare)
 - Intégrations des chants pour chaques oiseaux
-- Run animation
+- Changement de la vu des oiseaux en fonction de la météo (?)
 
 VOL :
 
@@ -18,42 +18,23 @@ IMPORTANT :
 CANARD
 
 - Vol en V
-- Déplacement dans l'eau
+- Peche
 
 AIGLE
-- Mode fighter
-- Cercle dans le ciel
 - Refaire le modele / texture / animation
-
-TOUCAN
 
 GRUE
 - Idle Animation
-- Semi-Aquatic
 - Peche
 
-HIRONDEL
-- Vol en cercle
+AJOUTS :
 
-OISEAUX :
-
-- Intégrations des chants pour chaques oiseaux
-
-- Ajouter hirondel
 - Ajouter buse
-- Ajouter grue
 - Ajouter pigeon
 - Ajouter Pic vert
 - Ajouter cygogne
 - Ajouter chouette
 - Ajouter Engoulevent
-- Ajouter Toucan
 
 =====
-
-
-A VERIFIER :
-
-- Changement des styles de vol des oiseaux
-- Vol en V
 

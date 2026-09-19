@@ -5,11 +5,11 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.phys.Vec3;
 
-public class FlyingMoveController extends MoveControl {
+public class FlyMoveController extends MoveControl {
 
     private final Mob parentEntity;
 
-    public FlyingMoveController(Mob mob) {
+    public FlyMoveController(Mob mob) {
         super(mob);
         this.parentEntity = mob;
     }

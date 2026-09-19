@@ -1,9 +1,11 @@
 package com.kalyptien.caelumpedion.entity.ai.goal;
 
+import com.kalyptien.caelumpedion.entity.custom.common.CircleAroundFlyingMob;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
+import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
@@ -29,9 +31,6 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
 
     protected FlyType flyType;
 
-    protected int seed ;
-    protected double seedPercent;
-
     public BirdRandomFlyingGoal(FlyingBirdEntity bird, double speed) {
         super(bird, speed);
         this.bird = bird;
@@ -40,6 +39,8 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
 
     public boolean canUse() {
         if (this.bird.hasControllingPassenger()) {
+            return false;
+        } else if(this.bird instanceof CircleAroundFlyingMob mob && mob.isCyclingAround()){
             return false;
         } else if(this.bird.isFlying()){
             return false;
@@ -75,9 +76,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     }
 
     public void start() {
-        if (!bird.inAnimation()) {
-            bird.resetAnimations();
-        }
+        this.bird.resetAnimations();
 
         this.bird.setFlying(true);
         this.bird.getNavigation().moveTo(this.wantedX, this.wantedY, this.wantedZ, this.bird.getFlySpeed() + this.speedModifier);
@@ -85,7 +84,6 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
 
     @Override
     public void tick() {
-
         //Get next destination if needed
         if(bird.getNavigation().isDone()){
             if(!this.destinationNodeArray.isEmpty()) this.destinationNodeArray.removeFirst();
@@ -101,16 +99,9 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
         }
 
         //Dynamic speed
-        int sign = this.bird.getEyePosition().y > wantedY ? -1 : 1;
-        this.speedModifier += (bird.getFlySpeed()/2.0f) * (this.bird.getEyePosition().distanceToSqr(wantedX, this.wantedY, this.wantedZ) / 100) * sign;
-
-
-        if(speedModifier < 0){
-            speedModifier = 0;
-        }
-        else if (speedModifier > this.bird.getSpeed()){
-            speedModifier = this.bird.getSpeed();
-        }
+        int sign = this.bird.getEyePosition().y < wantedY ? -1 : 1;
+        double speedPercent = Math.min(1, Math.abs((this.bird.getEyePosition().y - this.wantedY) / 100.0f));
+        this.speedModifier = (bird.getFlySpeed()/1.1f) * speedPercent * sign;
 
         //Go to
         this.bird.getNavigation().moveTo(this.wantedX, this.wantedY, this.wantedZ, this.bird.getFlySpeed() + this.speedModifier);
@@ -129,9 +120,6 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     protected Vec3 getPosition() {
         this.destinationNodeArray.clear();
 
-        this.seed = bird.getRandom().nextInt(100);
-        this.seedPercent = seed/100.0f;
-
         this.defineFlyType();
         this.defineFlySize();
         this.createFlyPath();
@@ -145,14 +133,14 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
         } else if (bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.WALKER) {
             this.flyType = FlyType.LONG;
         } else if (this.bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.LONG_FLYER) {
-            if(seedPercent <= 0.25){
+            if(this.randomPercent() <= 0.25){
                 this.flyType = FlyType.SHORT;
             }
             else{
                 this.flyType = FlyType.LONG;
             }
         } else if (this.bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.SHORT_FlYER) {
-            if(seedPercent <= 0.25){
+            if(this.randomPercent() <= 0.25){
                 this.flyType = FlyType.LONG;
             }
             else{
@@ -182,10 +170,14 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     }
 
     protected Vec3 getFinalDestination(){
-        double finalX = ((range * seedPercent)) * randomSign();
-        double finalZ = ((range * seedPercent)) * randomSign();
+        Vec3 finalPos = LandRandomPos.getPos(this.bird, range, height);
 
-        return groundPosition(bird.position().add(finalX,0,finalZ));
+        if(finalPos == null){
+            finalPos = new Vec3(((range * (this.randomNumber() / 100))) * randomSign(), 50, ((range * (this.randomNumber() / 100))) * randomSign());
+
+        }
+
+        return groundPosition(finalPos);
     }
 
     protected void createFlyPath() {
@@ -199,7 +191,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
 
         //Generate in between positions
 
-        numberOfMiddleDestination = bird.getRandom().nextInt(2) + 1;
+        numberOfMiddleDestination = bird.getRandom().nextInt(1) + 1;
 
         stepX = finalX /numberOfMiddleDestination;
         stepZ = finalZ / numberOfMiddleDestination;
@@ -242,9 +234,9 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
         double y = (Math.sin((Math.PI / numberOfMiddleDestination) * iteration) * height) + ground;
 
         return new Vec3(
-                destination.x + ((Nth(seed, 1) / 2) * randomSign())
-                , y  + ((Nth(seed, 2) / 2) * randomSign())
-                , destination.z + ((Nth(seed, 1) / 2) * randomSign()));
+                destination.x + this.randomModifier()
+                , y  + this.randomModifier()
+                , destination.z + this.randomModifier());
     }
 
     protected Vec3 generateInBetweenNearGroundDestination(double iteration){
@@ -285,6 +277,18 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
 
     protected int randomSign() {
         return bird.getRandom().nextBoolean() ? -1 : 1;
+    }
+
+    protected double randomNumber(){
+        return bird.getRandom().nextInt(10);
+    }
+
+    protected double randomPercent(){
+        return randomNumber() / 100;
+    }
+
+    protected double randomModifier(){
+        return 5 * (randomNumber()/100) * randomSign();
     }
 
     protected static enum FlyType {

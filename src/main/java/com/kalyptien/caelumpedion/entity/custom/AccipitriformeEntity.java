@@ -1,7 +1,9 @@
 package com.kalyptien.caelumpedion.entity.custom;
 
+import com.kalyptien.caelumpedion.entity.custom.common.CircleAroundFlyingMob;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -17,10 +19,12 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.Nullable;
@@ -28,7 +32,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.UUID;
 
-public class AccipitriformeEntity extends FlyingBirdEntity implements NeutralMob {
+public class AccipitriformeEntity extends FlyingBirdEntity implements NeutralMob, CircleAroundFlyingMob {
 
     //Anger Var
 
@@ -38,13 +42,19 @@ public class AccipitriformeEntity extends FlyingBirdEntity implements NeutralMob
     @javax.annotation.Nullable
     private UUID persistentAngerTarget;
 
+    //Circle Around Var
+
+    Vec3 moveTargetPoint = Vec3.ZERO;
+    BlockPos anchorPoint = BlockPos.ZERO;
+    AttackPhase attackPhase = AttackPhase.CIRCLE;
+    boolean isCyclingAround = false;
+
     public AccipitriformeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
         this.setFlyingBirdType(FlyingBirdType.LONG_FLYER);
         this.setAquaticBirdType(AquaticBirdType.NONE);
         this.setFlyPathType(FlyPathType.NEAR_GROUND);
-        this.setStressBirdType(StressBirdType.FIGHTER);
 
         this.flyRange = 200;
         this.flyHeight = 60;
@@ -53,7 +63,7 @@ public class AccipitriformeEntity extends FlyingBirdEntity implements NeutralMob
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 20d)
-                .add(Attributes.MOVEMENT_SPEED, 0.2D)
+                .add(Attributes.MOVEMENT_SPEED, 0.15D)
                 .add(Attributes.FLYING_SPEED, 3.0D)
                 .add(Attributes.ATTACK_DAMAGE, 5.0d)
                 .add(Attributes.ARMOR, 2d)
@@ -65,15 +75,21 @@ public class AccipitriformeEntity extends FlyingBirdEntity implements NeutralMob
         super.registerGoals();
         //Goal
 
-        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.5, true));
+        this.goalSelector.addGoal(9, new AttackStrategyGoal(this));
+        this.goalSelector.addGoal(9, new CircleAroundFlyingMob.CircleAroundFlyingGoal(this));
 
         // Target
 
-        this.targetSelector.addGoal(3, new HurtByTargetGoal(this, new Class[0]));
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false,
+        this.targetSelector.addGoal(4, new HurtByTargetGoal(this, new Class[0]));
+        this.targetSelector.addGoal(4, new ScavangerNearestAttackableTargetGoal(this, Player.class, 10, true, false,
                 (target) -> {
-                    return this.isAngryAt((LivingEntity) target);
+                    return this.isAngryAt((LivingEntity) target) || ((LivingEntity) target).getHealth() <= 5.0f;
                 }));
+        this.targetSelector.addGoal(4, new ScavangerNearestAttackableTargetGoal(this, Animal.class, 200, true, false,
+                (target) -> {
+                    return ((LivingEntity) target).isBaby() || ((LivingEntity) target).getHealth() <= 5.0f;
+                }));
+
         this.targetSelector.addGoal(5, new ResetUniversalAngerTargetGoal<>(this, false));
     }
 
@@ -102,6 +118,44 @@ public class AccipitriformeEntity extends FlyingBirdEntity implements NeutralMob
 
     public void setVariant(AccipitriformeVariant variant) {
         this.entityData.set(VARIANT, variant.getId());
+    }
+
+    @Override
+    public Vec3 getMoveTargetPoint() {
+        return moveTargetPoint;
+    }
+
+    @Override
+    public void setMoveTargetPoint(Vec3 moveTargetPoint) {
+        this.moveTargetPoint = moveTargetPoint;
+    }
+
+    @Override
+    public BlockPos getAnchorPoint() {
+        return anchorPoint;
+    }
+
+    @Override
+    public void setAnchorPoint(BlockPos anchorPoint) {
+        this.anchorPoint = anchorPoint;
+    }
+
+    @Override
+    public AttackPhase getAttackPhase() {
+        return attackPhase;
+    }
+
+    @Override
+    public void setAttackPhase(AttackPhase attackPhase) {
+        this.attackPhase = attackPhase;
+    }
+
+    public boolean isCyclingAround(){
+        return this.isCyclingAround;
+    }
+
+    public void setCyclingAround(boolean cyclingAround){
+        this.isCyclingAround = cyclingAround;
     }
 
     // SPAWN
@@ -139,11 +193,6 @@ public class AccipitriformeEntity extends FlyingBirdEntity implements NeutralMob
 
     public void setPersistentAngerTarget(@javax.annotation.Nullable UUID target) {
         this.persistentAngerTarget = target;
-    }
-
-    @Override
-    public boolean canAttack(LivingEntity target) {
-        return super.canAttack(target) && !this.isFlying();
     }
 
     public int getAngerTime() {

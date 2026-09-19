@@ -1,6 +1,8 @@
 package com.kalyptien.caelumpedion.entity.client.hirundininae;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
+import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
+import com.kalyptien.caelumpedion.entity.client.gruiforme.GruiformeAnimation;
 import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeAnimation;
 import com.kalyptien.caelumpedion.entity.custom.passeriforme.HirundininaeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -15,21 +17,13 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
 
-public class HirundininaeModel<T extends HirundininaeEntity> extends HierarchicalModel<T> {
+public class HirundininaeModel<T extends HirundininaeEntity> extends FlyingBirdHierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "passeriforme"), "main");
 
-    private final ModelPart passeriforme;
-    private final ModelPart body;
-    private final ModelPart head;
-
-    private final ModelPart tail;
-    private final ModelPart normalTail;
-    private final ModelPart flyingTail;
-
     public HirundininaeModel(ModelPart root) {
-        this.passeriforme = root.getChild("passeriforme");
-        this.body = this.passeriforme.getChild("body");
-        this.head = this.passeriforme.getChild("head");
+        this.root = root.getChild("passeriforme");
+        this.body = this.root.getChild("body");
+        this.head = this.root.getChild("head");
 
         this.tail = this.body.getChild("tail");
         this.normalTail = this.tail.getChild("normalTail");
@@ -103,72 +97,32 @@ public class HirundininaeModel<T extends HirundininaeEntity> extends Hierarchica
         return LayerDefinition.create(meshdefinition, 32, 32);
     }
 
-    @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.root().getAllParts().forEach(ModelPart::resetPose);
+    protected void setupWalkAnimation(float limbSwing, float limbSwingAmount){
+        this.animateWalk(PasseriformeAnimation.PASSERIFORME_WALK, limbSwing, limbSwingAmount, 2f, 10f);
+    }
 
-        this.applyHeadRotation(netHeadYaw, headPitch);
+    protected void setupRunAnimation(float limbSwing, float limbSwingAmount){
+        this.animateWalk(PasseriformeAnimation.PASSERIFORME_RUN, limbSwing, limbSwingAmount, 2f, 2f);
+    }
 
-        //GLOBAL ANIMATION
-
-        this.showFlyingPart(entity.isFlying());
-
-        //> WALK
-        if(entity.onGround() && !entity.isFlying()){
-            double currentSpeed = this.getCurrentBirdSpeed(entity);
-
-            if(currentSpeed >= (entity.getAttributeValue(Attributes.MOVEMENT_SPEED) - (entity.getAttributeValue(Attributes.MOVEMENT_SPEED)/4))){
-                this.animateWalk(PasseriformeAnimation.PASSERIFORME_RUN, limbSwing, limbSwingAmount, 2f, 2f);
-            }
-            else{
-                this.animateWalk(PasseriformeAnimation.PASSERIFORME_WALK, limbSwing, limbSwingAmount, 2f, 2f);
-            }
-        }
-
-        if(entity.isFlying()){
-            //> FLY
-            this.animateWalk(PasseriformeAnimation.PASSERIFORME_FLY, limbSwing, limbSwingAmount, 5f, 5f);
-
-            float partialTick = ageInTicks - entity.tickCount;
-            float flyProgress = entity.getFlyProgress(partialTick);
-            float rollAmount = entity.getFlightRoll(partialTick) / 57.295776F * flyProgress;
-            float pitchAmount = entity.getFlightPitch(partialTick) / 57.295776F * flyProgress;
-
-            passeriforme.xRot += pitchAmount;
-            passeriforme.zRot += rollAmount;
-        }
-
-        //> IDLE
-        this.animate(entity.eatAnimationState, PasseriformeAnimation.PASSERIFORME_EAT, ageInTicks, 1f);
+    protected void setupIdleAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
         this.animate(entity.idleAnimationState, PasseriformeAnimation.PASSERIFORME_IDLE, ageInTicks, 1f);
     }
 
-    private void applyHeadRotation(float headYaw, float headPitch) {
-        headYaw = Mth.clamp(headYaw, -90f, 90f);
-        headPitch = Mth.clamp(headPitch, -45f, 45);
-
-        this.head.yRot = headYaw * ((float)Math.PI / 260f);
-        this.head.xRot = headPitch *  ((float)Math.PI / 260f);
+    protected void setupEatAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
+        this.animate(entity.eatAnimationState, PasseriformeAnimation.PASSERIFORME_EAT, ageInTicks, 1f);
     }
 
-    @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
-        passeriforme.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+    protected void setupFlyAnimation(float limbSwing, float limbSwingAmount){
+        this.animateWalk(PasseriformeAnimation.PASSERIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
-    @Override
-    public ModelPart root() {
-        return passeriforme;
+    protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
     }
 
-    private void showFlyingPart(boolean show){
+    protected void showFlyingPart(boolean show){
         this.normalTail.visible = !show;
 
         this.flyingTail.visible = show;
-    }
-
-    private double getCurrentBirdSpeed(T entity){
-        Vec3 delta = entity.getDeltaMovement();
-        return Math.sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
     }
 }

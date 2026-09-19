@@ -1,7 +1,9 @@
 package com.kalyptien.caelumpedion.entity.custom.passeriforme;
 
+import com.kalyptien.caelumpedion.entity.custom.common.CircleAroundFlyingMob;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -11,19 +13,26 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class HirundininaeEntity extends SocialFlyingBirdEntity {
+public class HirundininaeEntity extends SocialFlyingBirdEntity implements CircleAroundFlyingMob{
+
+    //Circle Around Var
+
+    Vec3 moveTargetPoint = Vec3.ZERO;
+    BlockPos anchorPoint = BlockPos.ZERO;
+    CircleAroundFlyingMob.AttackPhase attackPhase = CircleAroundFlyingMob.AttackPhase.CIRCLE;
+    boolean isCyclingAround = false;
 
     public HirundininaeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
         this.setFlyingBirdType(FlyingBirdType.LONG_FLYER);
         this.setAquaticBirdType(AquaticBirdType.NONE);
-        this.setStressBirdType(StressBirdType.RUNNER);
         this.setBOIDBirdType(BOIDType.SWARM);
         this.setFlyPathType(FlyPathType.CHAOS);
 
@@ -42,6 +51,14 @@ public class HirundininaeEntity extends SocialFlyingBirdEntity {
                 .add(Attributes.FOLLOW_RANGE, 16D);
     }
 
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        //Goal
+
+        this.goalSelector.addGoal(9, new CircleAroundFlyingMob.CircleAroundFlyingGoal(this));
+    }
+
     //Getter / Setter
 
     public int getIdVariant() {
@@ -54,6 +71,44 @@ public class HirundininaeEntity extends SocialFlyingBirdEntity {
 
     public void setVariant(HirundininaeVariant variant) {
         this.entityData.set(VARIANT, variant.getId());
+    }
+
+    @Override
+    public Vec3 getMoveTargetPoint() {
+        return moveTargetPoint;
+    }
+
+    @Override
+    public void setMoveTargetPoint(Vec3 moveTargetPoint) {
+        this.moveTargetPoint = moveTargetPoint;
+    }
+
+    @Override
+    public BlockPos getAnchorPoint() {
+        return anchorPoint;
+    }
+
+    @Override
+    public void setAnchorPoint(BlockPos anchorPoint) {
+        this.anchorPoint = anchorPoint;
+    }
+
+    @Override
+    public CircleAroundFlyingMob.AttackPhase getAttackPhase() {
+        return attackPhase;
+    }
+
+    @Override
+    public void setAttackPhase(CircleAroundFlyingMob.AttackPhase attackPhase) {
+        this.attackPhase = attackPhase;
+    }
+
+    public boolean isCyclingAround(){
+        return this.isCyclingAround;
+    }
+
+    public void setCyclingAround(boolean cyclingAround){
+        this.isCyclingAround = cyclingAround;
     }
 
     // SPAWN

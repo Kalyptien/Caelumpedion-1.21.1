@@ -85,7 +85,7 @@ public abstract class SocialFlyingBirdEntity extends FlyingBirdEntity {
     }
 
     public boolean inRangeOfLeader() {
-        return Math.sqrt(this.distanceToSqr(this.leader)) <= this.getViewRange() * 1.5;
+        return Math.sqrt(this.distanceToSqr(this.leader)) <= (this.getViewRange()*2) * (this.getViewRange()*2);
     }
 
     public BOIDType getBOIDBirdType() {
@@ -106,7 +106,7 @@ public abstract class SocialFlyingBirdEntity extends FlyingBirdEntity {
         super.setNeedToFlyAway(needToFlyAway);
 
         if(this.leader != null && !this.leader.isNeedToFlyAway() && needToFlyAway){
-            this.leader.setNeedToFlyAway(needToFlyAway);
+            this.leader.setNeedToFlyAway(true);
         }
     }
 

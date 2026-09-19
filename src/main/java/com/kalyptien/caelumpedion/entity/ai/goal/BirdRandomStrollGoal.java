@@ -1,6 +1,6 @@
 package com.kalyptien.caelumpedion.entity.ai.goal;
 
-import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
+import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
@@ -13,14 +13,14 @@ public class BirdRandomStrollGoal extends RandomStrollGoal {
     public static final float PROBABILITY = 0.001F;
     protected final float probability;
 
-    private FlyingBirdEntity bird;
+    private BirdEntity bird;
 
-    public BirdRandomStrollGoal(FlyingBirdEntity bird, double speedModifier) {
+    public BirdRandomStrollGoal(BirdEntity bird, double speedModifier) {
         this(bird, speedModifier, 0.001F);
         this.bird = bird;
     }
 
-    public BirdRandomStrollGoal(FlyingBirdEntity bird, double speedModifier, float probability) {
+    public BirdRandomStrollGoal(BirdEntity bird, double speedModifier, float probability) {
         super(bird, speedModifier);
         this.probability = probability;
         this.bird = bird;
@@ -28,7 +28,7 @@ public class BirdRandomStrollGoal extends RandomStrollGoal {
 
     @Nullable
     protected Vec3 getPosition() {
-        if(this.bird.getAquaticBirdType() == FlyingBirdEntity.AquaticBirdType.FULL){
+        if(this.bird.getAquaticBirdType() == BirdEntity.AquaticBirdType.FULL){
             return super.getPosition();
         }
         else{

@@ -9,8 +9,10 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -23,7 +25,6 @@ public class RamphastidaeEntity extends  SocialFlyingBirdEntity{
 
         this.setFlyingBirdType(FlyingBirdType.LONG_FLYER);
         this.setAquaticBirdType(AquaticBirdType.NONE);
-        this.setStressBirdType(StressBirdType.RUNNER);
         this.setBOIDBirdType(BOIDType.FOLLOW);
         this.setFlyPathType(FlyPathType.NORMAL);
 
@@ -40,6 +41,13 @@ public class RamphastidaeEntity extends  SocialFlyingBirdEntity{
                 .add(Attributes.FLYING_SPEED, 3.0D)
                 .add(Attributes.ARMOR, 0d)
                 .add(Attributes.FOLLOW_RANGE, 16D);
+    }
+
+    //Food
+
+    @Override
+    public boolean isFood(ItemStack itemStack) {
+        return super.isFood(itemStack) || itemStack.is(Tags.Items.FOODS_FRUIT) ;
     }
 
     //Getter / Setter

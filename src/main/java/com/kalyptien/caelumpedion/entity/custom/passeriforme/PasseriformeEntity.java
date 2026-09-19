@@ -23,7 +23,6 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
 
         this.setFlyingBirdType(FlyingBirdType.SHORT_FlYER);
         this.setAquaticBirdType(AquaticBirdType.NONE);
-        this.setStressBirdType(StressBirdType.RUNNER);
         this.setBOIDBirdType(BOIDType.FOLLOW);
         this.setFlyPathType(FlyPathType.CHAOS);
 

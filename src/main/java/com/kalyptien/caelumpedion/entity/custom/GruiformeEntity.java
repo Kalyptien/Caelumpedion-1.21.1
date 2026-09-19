@@ -19,8 +19,10 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -42,7 +44,6 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
 
         this.setFlyingBirdType(FlyingBirdType.WALKER);
         this.setAquaticBirdType(AquaticBirdType.TALL);
-        this.setStressBirdType(StressBirdType.FIGHTER);
         this.setBOIDBirdType(BOIDType.FORMATION);
         this.setFlyPathType(FlyPathType.NEAR_GROUND);
 
@@ -71,7 +72,7 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
 
         // Target
 
-        this.targetSelector.addGoal(3, new HurtByTargetGoal(this, new Class[0]));
+        this.targetSelector.addGoal(4, new HurtByTargetGoal(this, new Class[0]));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false,
                 (target) -> {
                     return this.isAngryAt((LivingEntity) target);
@@ -83,6 +84,13 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(DATA_REMAINING_ANGER_TIME, 0);
+    }
+
+    //Food
+
+    @Override
+    public boolean isFood(ItemStack itemStack) {
+        return super.isFood(itemStack) || itemStack.is(Tags.Items.FOODS_RAW_FISH) || itemStack.is(Tags.Items.FOODS_COOKED_FISH);
     }
 
     //Getter / Setter

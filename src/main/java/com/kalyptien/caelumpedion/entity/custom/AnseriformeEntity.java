@@ -45,7 +45,6 @@ public class AnseriformeEntity extends SocialFlyingBirdEntity implements Neutral
         this.setAquaticBirdType(AquaticBirdType.FULL);
         this.setBOIDBirdType(BOIDType.FORMATION);
         this.setFlyPathType(FlyPathType.NORMAL);
-        this.setStressBirdType(StressBirdType.FIGHTER);
 
         this.flyRange = 150;
         this.flyHeight = 40;
@@ -72,7 +71,7 @@ public class AnseriformeEntity extends SocialFlyingBirdEntity implements Neutral
 
         // Target
 
-        this.targetSelector.addGoal(3, new HurtByTargetGoal(this, new Class[0]));
+        this.targetSelector.addGoal(4, new HurtByTargetGoal(this, new Class[0]));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false,
                 (target) -> {
                     return this.isAngryAt((LivingEntity) target);
