@@ -35,9 +35,9 @@ public class AnseriformeRenderer extends MobRenderer<AnseriformeEntity, Anserifo
 
     @Override
     public void render(AnseriformeEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-        poseStack.scale(entity.getVariant().getSizeModifier(),
-                entity.getVariant().getSizeModifier(),
-                entity.getVariant().getSizeModifier());
+        poseStack.scale(entity.getVariant().getSize(),
+                entity.getVariant().getSize(),
+                entity.getVariant().getSize());
 
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }

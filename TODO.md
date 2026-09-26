@@ -3,10 +3,9 @@ V 1.0.0 :
 OISEAUX :
 
 - Intégrations des chants pour chaques oiseaux
-- Refaire les enums
 - Faire le drop
 - Faire le spawn
-- Ajouter le changement de couleur des plumes
+- Iridescente systeme
 - Slow fall + vol en cas de longue chute
 - Can eat
 

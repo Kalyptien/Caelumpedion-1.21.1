@@ -2,7 +2,6 @@ package com.kalyptien.caelumpedion.entity.client.columbiforme;
 
 import com.google.common.collect.Maps;
 import com.kalyptien.caelumpedion.CaelumpedionMod;
-import com.kalyptien.caelumpedion.entity.custom.bird.anseriforme.ColumbiformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.columbiforme.ColumbiformeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.Util;

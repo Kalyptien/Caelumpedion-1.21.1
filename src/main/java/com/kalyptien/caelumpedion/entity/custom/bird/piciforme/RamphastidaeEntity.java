@@ -1,6 +1,9 @@
 package com.kalyptien.caelumpedion.entity.custom.bird.piciforme;
 
+import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
+import com.kalyptien.caelumpedion.util.BiomeRegion;
+import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
@@ -80,18 +83,29 @@ public class RamphastidaeEntity extends  SocialFlyingBirdEntity{
 
     // Variant
 
-    public static enum RamphastidaeVariant {
-        RamphastosToco(0, "ramphastos_toco"),
+    public static enum RamphastidaeVariant implements BirdVariant {
+        RamphastosToco(0, "ramphastos_toco", 1.0f, false, new FeatherColor[]{FeatherColor.Black,FeatherColor.White}, FeatherColor.White, new BiomeRegion[]{BiomeRegion.SouthAmerica}),
         ;
 
         private static final RamphastidaeVariant[] BY_ID = Arrays.stream(values()).sorted(
                 Comparator.comparingInt(RamphastidaeVariant::getId)).toArray(RamphastidaeVariant[]::new);
+
         private final int id;
         private final String fileName;
+        private final float size;
+        private final boolean isIridescent;
+        private final FeatherColor[] featherColor;
+        private final FeatherColor childFeatherColor;
+        private final BiomeRegion[] biomeRegions;
 
-        RamphastidaeVariant(int id, String fileName) {
+        RamphastidaeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, BiomeRegion[] biomeRegions) {
             this.id = id;
             this.fileName = fileName;
+            this.size = size;
+            this.isIridescent = isIridescent;
+            this.featherColor = featherColor;
+            this.childFeatherColor = childFeatherColor;
+            this.biomeRegions = biomeRegions;
         }
 
         public int getId() {
@@ -102,8 +116,45 @@ public class RamphastidaeEntity extends  SocialFlyingBirdEntity{
             return fileName;
         }
 
+        @Override
+        public float getSize() {
+            return size;
+        }
+
+        @Override
+        public boolean isIridescent() {
+            return isIridescent;
+        }
+
+        @Override
+        public FeatherColor[] getFeatherColors() {
+            return featherColor;
+        }
+
+        public FeatherColor getFeatherColor(int id){
+            return this.featherColor[id % this.featherColor.length];
+        }
+
+        @Override
+        public FeatherColor getChildFeatherColor() {
+            return childFeatherColor;
+        }
+
+        @Override
+        public BiomeRegion[] getBiomeRegion() {
+            return biomeRegions;
+        }
+
         public static RamphastidaeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
+        }
+
+        public static RamphastidaeVariant byRegion(BiomeRegion region, int id) {
+            RamphastidaeVariant[] BY_REGION = Arrays.stream(values())
+                    .filter(variant -> Arrays.stream(variant.getBiomeRegion())
+                            .anyMatch(biomeRegion -> biomeRegion == region)).toArray(RamphastidaeVariant[]::new);
+
+            return BY_REGION[id % BY_REGION.length];
         }
 
         public static int lenght(){

@@ -252,7 +252,7 @@ public abstract class BirdEntity extends Animal {
     public interface BirdVariant{
         int getId();
         String getFileName();
-        double getSize();
+        float getSize();
         boolean isIridescent();
         FeatherColor[] getFeatherColors();
         FeatherColor getFeatherColor(int id);

@@ -184,13 +184,13 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
 
         private final int id;
         private final String fileName;
-        private final double size;
+        private final float size;
         private final boolean isIridescent;
         private final FeatherColor[] featherColor;
         private final FeatherColor childFeatherColor;
         private final BiomeRegion[] biomeRegions;
 
-        GruiformeVariant(int id, String fileName, double size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, BiomeRegion[] biomeRegions) {
+        GruiformeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, BiomeRegion[] biomeRegions) {
             this.id = id;
             this.fileName = fileName;
             this.size = size;
@@ -209,7 +209,7 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
         }
 
         @Override
-        public double getSize() {
+        public float getSize() {
             return size;
         }
 
