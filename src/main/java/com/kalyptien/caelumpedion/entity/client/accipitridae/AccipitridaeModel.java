@@ -1,22 +1,15 @@
-package com.kalyptien.caelumpedion.entity.client.accipitriforme;
+package com.kalyptien.caelumpedion.entity.client.accipitridae;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
-import com.kalyptien.caelumpedion.entity.custom.AccipitriformeEntity;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.ArmedModel;
-import net.minecraft.client.model.HierarchicalModel;
+import com.kalyptien.caelumpedion.entity.custom.bird.accipitriforme.AccipitridaeEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.phys.Vec3;
 
-public class AccipitriformeModel<T extends AccipitriformeEntity> extends FlyingBirdHierarchicalModel<T> {
+public class AccipitridaeModel<T extends AccipitridaeEntity> extends FlyingBirdHierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "accipitriforme"), "main");
 
     private final ModelPart neck;
@@ -25,7 +18,7 @@ public class AccipitriformeModel<T extends AccipitriformeEntity> extends FlyingB
 
     private final ModelPart beck;
     
-    public AccipitriformeModel(ModelPart root) {
+    public AccipitridaeModel(ModelPart root) {
         this.root = root.getChild("accipitriforme");
         this.body = this.root.getChild("body");
         this.head = this.root.getChild("head");
@@ -134,29 +127,24 @@ public class AccipitriformeModel<T extends AccipitriformeEntity> extends FlyingB
     }
 
     protected void setupWalkAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(AccipitriformeAnimation.ACCIPITRIFORME_WALK, limbSwing, limbSwingAmount, 2f, 10f);
+        this.animateWalk(AccipitridaeAnimation.ACCIPITRIFORME_WALK, limbSwing, limbSwingAmount, 2f, 10f);
     }
 
     protected void setupRunAnimation(float limbSwing, float limbSwingAmount){
     }
 
     protected void setupIdleAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
-        this.animate(entity.idleAnimationState, AccipitriformeAnimation.ACCIPITRIFORME_IDLE, ageInTicks, 1f);
+        this.animate(entity.idleAnimationState, AccipitridaeAnimation.ACCIPITRIFORME_IDLE, ageInTicks, 1f);
     }
 
     protected void setupEatAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
-        this.animate(entity.eatAnimationState, AccipitriformeAnimation.ACCIPITRIFORME_EAT, ageInTicks, 1f);
+        this.animate(entity.eatAnimationState, AccipitridaeAnimation.ACCIPITRIFORME_EAT, ageInTicks, 1f);
     }
 
     protected void setupFlyAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(AccipitriformeAnimation.ACCIPITRIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
+        this.animateWalk(AccipitridaeAnimation.ACCIPITRIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
     protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
-    }
-
-    public void showTickNeck(boolean thickNeck){
-        this.thinNeck.visible = !thickNeck;
-        this.thickNeck.visible = thickNeck;
     }
 }

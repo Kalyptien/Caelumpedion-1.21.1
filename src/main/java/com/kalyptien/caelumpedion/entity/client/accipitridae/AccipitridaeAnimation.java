@@ -1,11 +1,11 @@
-package com.kalyptien.caelumpedion.entity.client.accipitriforme;
+package com.kalyptien.caelumpedion.entity.client.accipitridae;
 
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
 
-public class AccipitriformeAnimation {
+public class AccipitridaeAnimation {
         public static final AnimationDefinition ACCIPITRIFORME_FLY = AnimationDefinition.Builder.withLength(0.5F).looping()
                 .addAnimation("wingL", new AnimationChannel(AnimationChannel.Targets.ROTATION,
                         new Keyframe(0.0F, KeyframeAnimations.degreeVec(112.5F, 0.0F, 90.0F), AnimationChannel.Interpolations.CATMULLROM),

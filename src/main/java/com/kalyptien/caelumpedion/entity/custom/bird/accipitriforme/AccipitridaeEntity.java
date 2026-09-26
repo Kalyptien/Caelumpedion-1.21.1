@@ -1,7 +1,10 @@
-package com.kalyptien.caelumpedion.entity.custom;
+package com.kalyptien.caelumpedion.entity.custom.bird.accipitriforme;
 
+import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.CircleAroundFlyingMob;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
+import com.kalyptien.caelumpedion.util.BiomeRegion;
+import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -14,12 +17,9 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -32,12 +32,12 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.UUID;
 
-public class AccipitriformeEntity extends FlyingBirdEntity implements NeutralMob, CircleAroundFlyingMob {
+public class AccipitridaeEntity extends FlyingBirdEntity implements NeutralMob, CircleAroundFlyingMob {
 
     //Anger Var
 
     private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME =
-            SynchedEntityData.defineId(AccipitriformeEntity.class, EntityDataSerializers.INT);;
+            SynchedEntityData.defineId(AccipitridaeEntity.class, EntityDataSerializers.INT);;
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);;
     @javax.annotation.Nullable
     private UUID persistentAngerTarget;
@@ -49,7 +49,7 @@ public class AccipitriformeEntity extends FlyingBirdEntity implements NeutralMob
     AttackPhase attackPhase = AttackPhase.CIRCLE;
     boolean isCyclingAround = false;
 
-    public AccipitriformeEntity(EntityType<? extends Animal> entityType, Level level) {
+    public AccipitridaeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
         this.setFlyingBirdType(FlyingBirdType.LONG_FLYER);
@@ -112,11 +112,11 @@ public class AccipitriformeEntity extends FlyingBirdEntity implements NeutralMob
         return this.entityData.get(VARIANT);
     }
 
-    public AccipitriformeVariant getVariant() {
-        return AccipitriformeVariant.byId(this.getIdVariant());
+    public AccipitridaeVariant getVariant() {
+        return AccipitridaeVariant.byId(this.getIdVariant());
     }
 
-    public void setVariant(AccipitriformeVariant variant) {
+    public void setVariant(AccipitridaeVariant variant) {
         this.entityData.set(VARIANT, variant.getId());
     }
 
@@ -165,7 +165,7 @@ public class AccipitriformeEntity extends FlyingBirdEntity implements NeutralMob
                                         MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
         //Variants
         if (spawnType == MobSpawnType.SPAWN_EGG) {
-            AccipitriformeVariant variant = Util.getRandom(AccipitriformeVariant.values(), this.random);
+            AccipitridaeVariant variant = Util.getRandom(AccipitridaeVariant.values(), this.random);
             this.setVariant(variant);
         }
 
@@ -219,39 +219,81 @@ public class AccipitriformeEntity extends FlyingBirdEntity implements NeutralMob
 
     // Variant
 
-    public static enum AccipitriformeVariant {
-        GypaetusBarbatus(0, "gypaetus_barbatus", true),
+    public static enum AccipitridaeVariant implements BirdVariant {
+        GypaetusBarbatus(0, "gypaetus_barbatus", 1.0f, false, new FeatherColor[]{FeatherColor.Red}, FeatherColor.Brown, new BiomeRegion[]{BiomeRegion.Europe, BiomeRegion.Asia, BiomeRegion.NorthAfrica, BiomeRegion.SouthAfrica}),
         ;
 
-        private static final AccipitriformeVariant[] BY_ID = Arrays.stream(values()).sorted(
-                Comparator.comparingInt(AccipitriformeVariant::getId)).toArray(AccipitriformeVariant[]::new);
+        private static final AccipitridaeVariant[] BY_ID = Arrays.stream(values()).sorted(
+                Comparator.comparingInt(AccipitridaeVariant::getId)).toArray(AccipitridaeVariant[]::new);
+
         private final int id;
         private final String fileName;
-        private final boolean thickNeck;
+        private final double size;
+        private final boolean isIridescent;
+        private final FeatherColor[] featherColor;
+        private final FeatherColor childFeatherColor;
+        private final BiomeRegion[] biomeRegions;
 
-        AccipitriformeVariant(int id, String fileName, boolean thickNeck) {
+        AccipitridaeVariant(int id, String fileName, double size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, BiomeRegion[] biomeRegions) {
             this.id = id;
             this.fileName = fileName;
-            this.thickNeck = thickNeck;
+            this.size = size;
+            this.isIridescent = isIridescent;
+            this.featherColor = featherColor;
+            this.childFeatherColor = childFeatherColor;
+            this.biomeRegions = biomeRegions;
         }
 
         public int getId() {
             return id;
         }
 
-        public String getFileName() {
+        public String getFileName(){
             return fileName;
         }
 
-        public boolean getThickNeck() {
-            return thickNeck;
+        @Override
+        public double getSize() {
+            return size;
         }
 
-        public static AccipitriformeVariant byId(int id) {
+        @Override
+        public boolean isIridescent() {
+            return isIridescent;
+        }
+
+        @Override
+        public FeatherColor[] getFeatherColors() {
+            return featherColor;
+        }
+
+        public FeatherColor getFeatherColor(int id){
+            return this.featherColor[id % this.featherColor.length];
+        }
+
+        @Override
+        public FeatherColor getChildFeatherColor() {
+            return childFeatherColor;
+        }
+
+        @Override
+        public BiomeRegion[] getBiomeRegion() {
+            return biomeRegions;
+        }
+
+        public static AccipitridaeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
         }
 
-        public static int lenght() {
+        public static AccipitridaeVariant byRegion(BiomeRegion region, int id) {
+            AccipitridaeVariant[] BY_REGION = Arrays.stream(values())
+                    .filter(variant -> Arrays.stream(variant.getBiomeRegion())
+                            .anyMatch(biomeRegion -> biomeRegion == region)).toArray(AccipitridaeVariant[]::new);
+
+            return BY_REGION[id % BY_REGION.length];
+        }
+
+        public static int lenght(){
             return BY_ID.length;
         }
     }
