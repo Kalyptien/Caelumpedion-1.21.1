@@ -2,7 +2,7 @@ package com.kalyptien.caelumpedion.entity.client.ramphastidae;
 
 import com.google.common.collect.Maps;
 import com.kalyptien.caelumpedion.CaelumpedionMod;
-import com.kalyptien.caelumpedion.entity.custom.piciforme.RamphastidaeEntity;
+import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.MultiBufferSource;

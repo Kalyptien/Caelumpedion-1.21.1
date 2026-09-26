@@ -1,7 +1,9 @@
-package com.kalyptien.caelumpedion.entity.custom;
+package com.kalyptien.caelumpedion.entity.custom.bird.anseriforme;
 
-import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
+import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
+import com.kalyptien.caelumpedion.util.BiomeRegion;
+import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -29,37 +31,37 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.UUID;
 
-public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMob {
+public class AnseriformeEntity extends SocialFlyingBirdEntity implements NeutralMob {
 
     //Anger Var
 
     private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME =
-            SynchedEntityData.defineId(GruiformeEntity.class, EntityDataSerializers.INT);;
+            SynchedEntityData.defineId(AnseriformeEntity.class, EntityDataSerializers.INT);;
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);;
     @javax.annotation.Nullable
     private UUID persistentAngerTarget;
 
-    public GruiformeEntity(EntityType<? extends Animal> entityType, Level level) {
+    public AnseriformeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
         this.setFlyingBirdType(FlyingBirdType.WALKER);
-        this.setAquaticBirdType(AquaticBirdType.TALL);
+        this.setAquaticBirdType(AquaticBirdType.FULL);
         this.setBOIDBirdType(BOIDType.FORMATION);
-        this.setFlyPathType(FlyPathType.NEAR_GROUND);
+        this.setFlyPathType(FlyPathType.NORMAL);
 
-        this.flyRange = 200;
-        this.flyHeight = 60;
+        this.flyRange = 150;
+        this.flyHeight = 40;
 
-        this.maxSchoolSize = 5;
+        this.maxSchoolSize = 10;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 18d)
-                .add(Attributes.MOVEMENT_SPEED, 0.15D)
+                .add(Attributes.MAX_HEALTH, 12d)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.FLYING_SPEED, 3.0D)
-                .add(Attributes.ATTACK_DAMAGE, 2.5d)
-                .add(Attributes.ARMOR, 1d)
+                .add(Attributes.ATTACK_DAMAGE, 1.0d)
+                .add(Attributes.ARMOR, 0d)
                 .add(Attributes.FOLLOW_RANGE, 16D);
     }
 
@@ -99,11 +101,11 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
         return this.entityData.get(VARIANT);
     }
 
-    public GruiformeVariant getVariant() {
-        return GruiformeVariant.byId(this.getIdVariant());
+    public AnseriformeEntity.AnseriformeVariant getVariant() {
+        return AnseriformeEntity.AnseriformeVariant.byId(this.getIdVariant());
     }
 
-    public void setVariant(GruiformeVariant variant) {
+    public void setVariant(AnseriformeEntity.AnseriformeVariant variant) {
         this.entityData.set(VARIANT, variant.getId());
     }
 
@@ -114,7 +116,7 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
                                         MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
         //Variants
         if(spawnType == MobSpawnType.SPAWN_EGG){
-            GruiformeVariant variant = Util.getRandom(GruiformeVariant.values(), this.random);
+            AnseriformeEntity.AnseriformeVariant variant = Util.getRandom(AnseriformeEntity.AnseriformeVariant.values(), this.random);
             this.setVariant(variant);
         }
 
@@ -173,18 +175,44 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
 
     // Variant
 
-    public static enum GruiformeVariant {
-        GrusJaponensis(0, "grus_japonensis"),
+    public static enum AnseriformeVariant implements BirdVariant {
+        // Duck
+        AnasErythrorhyncha(0, "anas_erythrorhyncha", 1.0f, false, new FeatherColor[]{FeatherColor.Brown, FeatherColor.White}, FeatherColor.Brown, new BiomeRegion[]{BiomeRegion.SouthAfrica}),
+        AnasPlatyrhynchos(1, "anas_platyrhynchos", 1.0f, true, new FeatherColor[]{FeatherColor.Gray, FeatherColor.Brown, FeatherColor.Green}, FeatherColor.Yellow, new BiomeRegion[]{BiomeRegion.NorthAmerica, BiomeRegion.Europe, BiomeRegion.NorthAfrica, BiomeRegion.Asia, BiomeRegion.Oceania}),
+        CairinaMoschata(2, "cairina_moschata", 1.0f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new BiomeRegion[]{BiomeRegion.SouthAmerica}),
+
+        // Goose
+        AnserAnser(3, "anser_anser", 1.3f, false, new FeatherColor[]{FeatherColor.LightGray, FeatherColor.Brown}, FeatherColor.Brown, new BiomeRegion[]{BiomeRegion.Europe,BiomeRegion.Asia}),
+        //AnserCaerulescens(x, "anser_caerulescens", 1.3f),
+        //AnserCanagicus(x, "anser_canagicus", 1.3f),
+        BrantaHutchinsii(4, "branta_hutchinsii", 1.3f, false, new FeatherColor[]{FeatherColor.Black,FeatherColor.White, FeatherColor.Brown}, FeatherColor.Brown, new BiomeRegion[]{BiomeRegion.NorthAmerica}),
+        //BrantaRuficollis(x, "branta_ruficollis", 1.3f),
+
+        // Swan
+        CygnusAtratus(5,"cygnus_atratus", 1.5f, false, new FeatherColor[]{FeatherColor.Black}, FeatherColor.White, new BiomeRegion[]{BiomeRegion.Oceania}),
+        CygnusOlor(6, "cygnus_olor", 1.5f, false, new FeatherColor[]{FeatherColor.White}, FeatherColor.White, new BiomeRegion[]{BiomeRegion.Europe, BiomeRegion.Asia}),
+        //CygnusBuccinator(x, "cygnus_buccinator", 1.5f),
         ;
 
-        private static final GruiformeVariant[] BY_ID = Arrays.stream(values()).sorted(
-                Comparator.comparingInt(GruiformeVariant::getId)).toArray(GruiformeVariant[]::new);
+        private static final AnseriformeVariant[] BY_ID = Arrays.stream(values()).sorted(
+                Comparator.comparingInt(AnseriformeVariant::getId)).toArray(AnseriformeVariant[]::new);
+
         private final int id;
         private final String fileName;
+        private final double size;
+        private final boolean isIridescent;
+        private final FeatherColor[] featherColor;
+        private final FeatherColor childFeatherColor;
+        private final BiomeRegion[] biomeRegions;
 
-        GruiformeVariant(int id, String fileName) {
+        AnseriformeVariant(int id, String fileName, double size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, BiomeRegion[] biomeRegions) {
             this.id = id;
             this.fileName = fileName;
+            this.size = size;
+            this.isIridescent = isIridescent;
+            this.featherColor = featherColor;
+            this.childFeatherColor = childFeatherColor;
+            this.biomeRegions = biomeRegions;
         }
 
         public int getId() {
@@ -195,8 +223,45 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
             return fileName;
         }
 
-        public static GruiformeVariant byId(int id) {
+        @Override
+        public double getSize() {
+            return size;
+        }
+
+        @Override
+        public boolean isIridescent() {
+            return isIridescent;
+        }
+
+        @Override
+        public FeatherColor[] getFeatherColors() {
+            return featherColor;
+        }
+
+        public FeatherColor getFeatherColor(int id){
+            return this.featherColor[id % this.featherColor.length];
+        }
+
+        @Override
+        public FeatherColor getChildFeatherColor() {
+            return childFeatherColor;
+        }
+
+        @Override
+        public BiomeRegion[] getBiomeRegion() {
+            return biomeRegions;
+        }
+
+        public static AnseriformeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
+        }
+
+        public static AnseriformeVariant byRegion(BiomeRegion region, int id) {
+            AnseriformeVariant[] BY_REGION = Arrays.stream(values())
+                    .filter(variant -> Arrays.stream(variant.getBiomeRegion())
+                            .anyMatch(biomeRegion -> biomeRegion == region)).toArray(AnseriformeVariant[]::new);
+
+            return BY_REGION[id % BY_REGION.length];
         }
 
         public static int lenght(){

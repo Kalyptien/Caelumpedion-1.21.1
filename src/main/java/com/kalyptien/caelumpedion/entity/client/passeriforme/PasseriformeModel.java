@@ -2,18 +2,12 @@ package com.kalyptien.caelumpedion.entity.client.passeriforme;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
-import com.kalyptien.caelumpedion.entity.custom.passeriforme.PasseriformeEntity;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.HierarchicalModel;
+import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.phys.Vec3;
 
 public class PasseriformeModel<T extends PasseriformeEntity> extends FlyingBirdHierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "passeriforme"), "main");
@@ -74,7 +68,7 @@ public class PasseriformeModel<T extends PasseriformeEntity> extends FlyingBirdH
 
         PartDefinition tail = body.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, 0.3F, 3.0F, 0.3927F, 0.0F, 0.0F));
 
-        PartDefinition normalTail = tail.addOrReplaceChild("normalTail", CubeListBuilder.create().texOffs(-4, 12).addBox(-1.5F, 0.0F, 0.0F, 3.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition normalTail = tail.addOrReplaceChild("normalTail", CubeListBuilder.create().texOffs(-4, 12).addBox(-1.5F, 0.2F, -0.1F, 3.0F, 0.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition flyingTail = tail.addOrReplaceChild("flyingTail", CubeListBuilder.create().texOffs(-5, 16).addBox(-2.5F, 0.0F, 0.0F, 5.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
@@ -109,6 +103,7 @@ public class PasseriformeModel<T extends PasseriformeEntity> extends FlyingBirdH
     }
 
     protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
+        this.animateWalk(PasseriformeAnimation.PASSERIFORME_FALL, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
     protected void showFlyingPart(boolean show){

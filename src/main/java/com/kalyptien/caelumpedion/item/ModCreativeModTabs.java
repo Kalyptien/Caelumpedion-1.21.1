@@ -22,11 +22,14 @@ public class ModCreativeModTabs {
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModItems.PASSERIFORME_SPAWN_EGG.get());
                         output.accept(ModItems.HIRUNDININAE_SPAWN_EGG.get());
+                        output.accept(ModItems.CORVIDAE_SPAWN_EGG.get());
                         output.accept(ModItems.ANSERIFORME_SPAWN_EGG.get());
                         output.accept(ModItems.ACCIPITRIFORME_SPAWN_EGG.get());
                         output.accept(ModItems.RAMPHASTIDAE_SPAWN_EGG.get());
                         output.accept(ModItems.GRUIFORME_SPAWN_EGG.get());
-                        
+                        output.accept(ModItems.TROCHILIDAE_SPAWN_EGG.get());
+                        output.accept(ModItems.COLUMBIFORME_SPAWN_EGG.get());
+
                         output.accept(ModBlocks.BIRD_FEEDER.get());
                     }).build());
 

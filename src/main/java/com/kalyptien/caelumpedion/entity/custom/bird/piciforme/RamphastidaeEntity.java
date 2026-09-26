@@ -1,4 +1,4 @@
-package com.kalyptien.caelumpedion.entity.custom.piciforme;
+package com.kalyptien.caelumpedion.entity.custom.bird.piciforme;
 
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import net.minecraft.Util;

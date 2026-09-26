@@ -2,21 +2,12 @@ package com.kalyptien.caelumpedion.entity.client.anseriforme;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
-import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeAnimation;
-import com.kalyptien.caelumpedion.entity.custom.AnseriformeEntity;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.ArmedModel;
-import net.minecraft.client.model.HierarchicalModel;
+import com.kalyptien.caelumpedion.entity.custom.bird.anseriforme.AnseriformeEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.phys.Vec3;
 
 public class AnseriformeModel<T extends AnseriformeEntity> extends FlyingBirdHierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "anseriforme"), "main");
@@ -115,5 +106,6 @@ public class AnseriformeModel<T extends AnseriformeEntity> extends FlyingBirdHie
     }
 
     protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
+        this.animateWalk(AnseriformeAnimation.ANSERIFORME_FALL, limbSwing, limbSwingAmount, 3f, 3f);
     }
 }

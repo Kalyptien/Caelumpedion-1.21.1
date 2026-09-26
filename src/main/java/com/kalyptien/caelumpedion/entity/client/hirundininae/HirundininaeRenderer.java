@@ -2,7 +2,7 @@ package com.kalyptien.caelumpedion.entity.client.hirundininae;
 
 import com.google.common.collect.Maps;
 import com.kalyptien.caelumpedion.CaelumpedionMod;
-import com.kalyptien.caelumpedion.entity.custom.passeriforme.HirundininaeEntity;
+import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.HirundininaeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.MultiBufferSource;

@@ -1,5 +1,7 @@
-package com.kalyptien.caelumpedion.entity.custom.passeriforme;
+package com.kalyptien.caelumpedion.entity.custom.bird.piciforme;
 
+import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
+import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import net.minecraft.Util;
 import net.minecraft.world.DifficultyInstance;
@@ -16,27 +18,24 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class PasseriformeEntity extends SocialFlyingBirdEntity {
+public class PiciformeEntity extends FlyingBirdEntity {
 
-    public PasseriformeEntity(EntityType<? extends Animal> entityType, Level level) {
+    public PiciformeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
         this.setFlyingBirdType(FlyingBirdType.SHORT_FlYER);
-        this.setAquaticBirdType(AquaticBirdType.NONE);
-        this.setBOIDBirdType(BOIDType.FOLLOW);
-        this.setFlyPathType(FlyPathType.CHAOS);
+        this.setAquaticBirdType(BirdEntity.AquaticBirdType.NONE);
+        this.setFlyPathType(FlyingBirdEntity.FlyPathType.NORMAL);
 
         this.flyRange = 100;
         this.flyHeight = 30;
-
-        this.maxSchoolSize = 5;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 6d)
+                .add(Attributes.MAX_HEALTH, 12d)
                 .add(Attributes.MOVEMENT_SPEED, 0.2D)
-                .add(Attributes.FLYING_SPEED, 4.0D)
+                .add(Attributes.FLYING_SPEED, 3.0D)
                 .add(Attributes.ARMOR, 0d)
                 .add(Attributes.FOLLOW_RANGE, 16D);
     }
@@ -47,11 +46,11 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
         return this.entityData.get(VARIANT);
     }
 
-    public PasseriformeVariant getVariant() {
-        return PasseriformeVariant.byId(this.getIdVariant());
+    public PiciformeVariant getVariant() {
+        return PiciformeVariant.byId(this.getIdVariant());
     }
 
-    public void setVariant(PasseriformeVariant variant) {
+    public void setVariant(PiciformeVariant variant) {
         this.entityData.set(VARIANT, variant.getId());
     }
 
@@ -62,7 +61,7 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
                                         MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
         //Variants
         if(spawnType == MobSpawnType.SPAWN_EGG){
-            PasseriformeVariant variant = Util.getRandom(PasseriformeVariant.values(), this.random);
+            PiciformeVariant variant = Util.getRandom(PiciformeVariant.values(), this.random);
             this.setVariant(variant);
         }
 
@@ -71,23 +70,16 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
 
     // Variant
 
-    public static enum PasseriformeVariant {
-        CardinalisCardinalis(0, "cardinalis_cardinalis"),
-        CyanistesCaeruleus(1, "cyanistes_caeruleus"),
-        CyanocittaCristata(2, "cyanocitta_cristata"),
-        ErithacusRubecula(3, "erithacus_rubecula"),
-        LophophanesCristatus(4, "lophophanes_cristatus"),
-        PasserDomesticus(5, "passer_domesticus"),
-        PeriparusAter(6, "periparus_ater"),
-        PhoenicurusOchruros(7, "phoenicurus_ochruros")
+    public static enum PiciformeVariant {
+        PicusViridis(0, "picus_viridis"),
         ;
 
-        private static final PasseriformeVariant[] BY_ID = Arrays.stream(values()).sorted(
-                Comparator.comparingInt(PasseriformeVariant::getId)).toArray(PasseriformeVariant[]::new);
+        private static final PiciformeVariant[] BY_ID = Arrays.stream(values()).sorted(
+                Comparator.comparingInt(PiciformeVariant::getId)).toArray(PiciformeVariant[]::new);
         private final int id;
         private final String fileName;
 
-        PasseriformeVariant(int id, String fileName) {
+        PiciformeVariant(int id, String fileName) {
             this.id = id;
             this.fileName = fileName;
         }
@@ -100,7 +92,7 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
             return fileName;
         }
 
-        public static PasseriformeVariant byId(int id) {
+        public static PiciformeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
         }
 

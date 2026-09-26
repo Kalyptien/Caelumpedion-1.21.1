@@ -2,18 +2,12 @@ package com.kalyptien.caelumpedion.entity.client.ramphastidae;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
-import com.kalyptien.caelumpedion.entity.custom.piciforme.RamphastidaeEntity;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.HierarchicalModel;
+import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.phys.Vec3;
 
 public class RamphastidaeModel<T extends RamphastidaeEntity> extends FlyingBirdHierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "ramphastidae"), "main");
@@ -120,5 +114,6 @@ public class RamphastidaeModel<T extends RamphastidaeEntity> extends FlyingBirdH
     }
 
     protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
+        this.animateWalk(RamphastidaeAnimation.RAMPHASTIDAE_FALL, limbSwing, limbSwingAmount, 3f, 3f);
     }
 }

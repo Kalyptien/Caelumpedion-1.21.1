@@ -2,13 +2,12 @@ package com.kalyptien.caelumpedion.entity.client.anseriforme;
 
 import com.google.common.collect.Maps;
 import com.kalyptien.caelumpedion.CaelumpedionMod;
-import com.kalyptien.caelumpedion.entity.custom.AnseriformeEntity;
+import com.kalyptien.caelumpedion.entity.custom.bird.anseriforme.AnseriformeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.Util;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.layers.PlayerItemInHandLayer;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Map;

@@ -38,6 +38,16 @@ public class ModItems {
                         }
                     });
 
+    public static final DeferredItem<Item> CORVIDAE_SPAWN_EGG = ITEMS.register("corvidae_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.CORVIDAE, 0x121212, 0x16111c,
+                    new Item.Properties()){
+                @Override
+                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.caelumpedion.corvidae_spawn_egg.tooltip"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+            });
+
     // =====
 
     public static final DeferredItem<Item> ANSERIFORME_SPAWN_EGG = ITEMS.register("anseriforme_spawn_egg",
@@ -82,6 +92,30 @@ public class ModItems {
                 @Override
                 public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
                     tooltipComponents.add(Component.translatable("tooltip.caelumpedion.gruiforme_spawn_egg.tooltip"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+            });
+
+    // =====
+
+    public static final DeferredItem<Item> TROCHILIDAE_SPAWN_EGG = ITEMS.register("trochilidae_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.TROCHILIDAE, 0x34ab32, 0x4770c9,
+                    new Item.Properties()){
+                @Override
+                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.caelumpedion.trochilidae_spawn_egg.tooltip"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+            });
+
+    // =====
+
+    public static final DeferredItem<Item> COLUMBIFORME_SPAWN_EGG = ITEMS.register("columbiforme_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.COLUMBIFORME, 0x636363, 0xad7fa6,
+                    new Item.Properties()){
+                @Override
+                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.caelumpedion.columbiforme_spawn_egg.tooltip"));
                     super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
                 }
             });

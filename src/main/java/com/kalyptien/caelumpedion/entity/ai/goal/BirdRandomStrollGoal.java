@@ -1,6 +1,7 @@
 package com.kalyptien.caelumpedion.entity.ai.goal;
 
 import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
+import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
@@ -24,6 +25,11 @@ public class BirdRandomStrollGoal extends RandomStrollGoal {
         super(bird, speedModifier);
         this.probability = probability;
         this.bird = bird;
+    }
+
+    @Override
+    public boolean canUse() {
+        return !this.bird.isOnAnimation() && (this.bird instanceof FlyingBirdEntity flyingBird ? !flyingBird.isFlying() : true ) && super.canUse();
     }
 
     @Nullable

@@ -1,9 +1,7 @@
 package com.kalyptien.caelumpedion.entity.client;
 
-import com.kalyptien.caelumpedion.entity.client.gruiforme.GruiformeAnimation;
 import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
-import com.kalyptien.caelumpedion.entity.custom.passeriforme.PasseriformeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HierarchicalModel;

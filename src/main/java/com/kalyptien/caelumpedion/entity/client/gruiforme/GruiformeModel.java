@@ -2,18 +2,12 @@ package com.kalyptien.caelumpedion.entity.client.gruiforme;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
-import com.kalyptien.caelumpedion.entity.custom.GruiformeEntity;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.HierarchicalModel;
+import com.kalyptien.caelumpedion.entity.custom.bird.gruiforme.GruiformeEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.phys.Vec3;
 
 public class GruiformeModel<T extends GruiformeEntity> extends FlyingBirdHierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "gruiforme"), "main");
@@ -132,5 +126,6 @@ public class GruiformeModel<T extends GruiformeEntity> extends FlyingBirdHierarc
     }
 
     protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
+        this.animateWalk(GruiformeAnimation.GRUIFORME_FALL, limbSwing, limbSwingAmount, 3f, 3f);
     }
 }

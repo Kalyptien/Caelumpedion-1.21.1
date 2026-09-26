@@ -1,7 +1,9 @@
-package com.kalyptien.caelumpedion.entity.custom.passeriforme;
+package com.kalyptien.caelumpedion.entity.custom.bird.passeriforme;
 
 import com.kalyptien.caelumpedion.entity.custom.common.CircleAroundFlyingMob;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
+import com.kalyptien.caelumpedion.util.BiomeRegion;
+import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.DifficultyInstance;
@@ -127,18 +129,29 @@ public class HirundininaeEntity extends SocialFlyingBirdEntity implements Circle
 
     // Variant
 
-    public static enum HirundininaeVariant {
-        DelichonUrbicum(0, "delichon_urbicum"),
+    public static enum HirundininaeVariant implements BirdVariant {
+        DelichonUrbicum(0, "delichon_urbicum", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new BiomeRegion[]{BiomeRegion.Europe, BiomeRegion.Asia, BiomeRegion.SouthAfrica, BiomeRegion.NorthAfrica}),
         ;
 
         private static final HirundininaeVariant[] BY_ID = Arrays.stream(values()).sorted(
                 Comparator.comparingInt(HirundininaeVariant::getId)).toArray(HirundininaeVariant[]::new);
+
         private final int id;
         private final String fileName;
+        private final double size;
+        private final boolean isIridescent;
+        private final FeatherColor[] featherColor;
+        private final FeatherColor childFeatherColor;
+        private final BiomeRegion[] biomeRegions;
 
-        HirundininaeVariant(int id, String fileName) {
+        HirundininaeVariant(int id, String fileName, double size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, BiomeRegion[] biomeRegions) {
             this.id = id;
             this.fileName = fileName;
+            this.size = size;
+            this.isIridescent = isIridescent;
+            this.featherColor = featherColor;
+            this.childFeatherColor = childFeatherColor;
+            this.biomeRegions = biomeRegions;
         }
 
         public int getId() {
@@ -149,8 +162,45 @@ public class HirundininaeEntity extends SocialFlyingBirdEntity implements Circle
             return fileName;
         }
 
+        @Override
+        public double getSize() {
+            return size;
+        }
+
+        @Override
+        public boolean isIridescent() {
+            return isIridescent;
+        }
+
+        @Override
+        public FeatherColor[] getFeatherColors() {
+            return featherColor;
+        }
+
+        public FeatherColor getFeatherColor(int id){
+            return this.featherColor[id % this.featherColor.length];
+        }
+
+        @Override
+        public FeatherColor getChildFeatherColor() {
+            return childFeatherColor;
+        }
+
+        @Override
+        public BiomeRegion[] getBiomeRegion() {
+            return biomeRegions;
+        }
+
         public static HirundininaeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
+        }
+
+        public static HirundininaeVariant byRegion(BiomeRegion region, int id) {
+            HirundininaeVariant[] BY_REGION = Arrays.stream(values())
+                    .filter(variant -> Arrays.stream(variant.getBiomeRegion())
+                            .anyMatch(biomeRegion -> biomeRegion == region)).toArray(HirundininaeVariant[]::new);
+
+            return BY_REGION[id % BY_REGION.length];
         }
 
         public static int lenght(){

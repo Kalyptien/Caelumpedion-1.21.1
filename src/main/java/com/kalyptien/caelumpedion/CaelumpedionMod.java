@@ -4,12 +4,15 @@ import com.kalyptien.caelumpedion.block.ModBlocks;
 import com.kalyptien.caelumpedion.block.entity.ModBlockEntities;
 import com.kalyptien.caelumpedion.block.entity.renderer.BirdFeederBlockEntityRenderer;
 import com.kalyptien.caelumpedion.entity.ModEntities;
-import com.kalyptien.caelumpedion.entity.client.accipitriforme.AccipitriformeRenderer;
+import com.kalyptien.caelumpedion.entity.client.accipitridae.AccipitridaeRenderer;
 import com.kalyptien.caelumpedion.entity.client.anseriforme.AnseriformeRenderer;
+import com.kalyptien.caelumpedion.entity.client.columbiforme.ColumbiformeRenderer;
+import com.kalyptien.caelumpedion.entity.client.corvidae.CorvidaeRenderer;
 import com.kalyptien.caelumpedion.entity.client.gruiforme.GruiformeRenderer;
 import com.kalyptien.caelumpedion.entity.client.hirundininae.HirundininaeRenderer;
 import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeRenderer;
 import com.kalyptien.caelumpedion.entity.client.ramphastidae.RamphastidaeRenderer;
+import com.kalyptien.caelumpedion.entity.client.trochilidae.TrochilidaeRenderer;
 import com.kalyptien.caelumpedion.item.ModCreativeModTabs;
 import com.kalyptien.caelumpedion.item.ModItems;
 import com.kalyptien.caelumpedion.screen.ModMenuTypes;
@@ -76,10 +79,13 @@ public class CaelumpedionMod {
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.PASSERIFORME.get(), PasseriformeRenderer::new);
             EntityRenderers.register(ModEntities.HIRUNDININAE.get(), HirundininaeRenderer::new);
+            EntityRenderers.register(ModEntities.CORVIDAE.get(), CorvidaeRenderer::new);
             EntityRenderers.register(ModEntities.ANSERIFORME.get(), AnseriformeRenderer::new);
-            EntityRenderers.register(ModEntities.ACCIPITRIFORME.get(), AccipitriformeRenderer::new);
+            EntityRenderers.register(ModEntities.ACCIPITRIFORME.get(), AccipitridaeRenderer::new);
             EntityRenderers.register(ModEntities.RAMPHASTIDAE.get(), RamphastidaeRenderer::new);
             EntityRenderers.register(ModEntities.GRUIFORME.get(), GruiformeRenderer::new);
+            EntityRenderers.register(ModEntities.TROCHILIDAE.get(), TrochilidaeRenderer::new);
+            EntityRenderers.register(ModEntities.COLUMBIFORME.get(), ColumbiformeRenderer::new);
         }
 
         @SubscribeEvent
