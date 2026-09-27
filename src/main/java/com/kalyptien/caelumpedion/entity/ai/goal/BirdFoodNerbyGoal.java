@@ -2,7 +2,7 @@ package com.kalyptien.caelumpedion.entity.ai.goal;
 
 import com.kalyptien.caelumpedion.block.ModBlocks;
 import com.kalyptien.caelumpedion.block.entity.BirdFeederBlockEntity;
-import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
+import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -20,7 +20,7 @@ import java.util.function.Predicate;
 
 public class BirdFoodNerbyGoal extends Goal {
 
-    FlyingBirdEntity bird;
+    BirdEntity bird;
     Predicate<ItemEntity> foodPredicate;
 
     ItemEntity itemToFollow;
@@ -28,7 +28,7 @@ public class BirdFoodNerbyGoal extends Goal {
     int slotToPickup;
 
 
-    public BirdFoodNerbyGoal(FlyingBirdEntity entity) {
+    public BirdFoodNerbyGoal(BirdEntity entity) {
         this.setFlags(EnumSet.of(Flag.MOVE));
         this.bird = entity;
         foodPredicate = item -> (!item.hasPickUpDelay() && item.isAlive() && bird.isFood(item.getItem()));
@@ -36,50 +36,44 @@ public class BirdFoodNerbyGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        /*if (!bird.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
+        if (bird.isOnAnimation()) {
+            return false;
+        } else if (bird.getRandom().nextInt(reducedTickDelay(1000)) != 0) {
             return false;
         } else {
-            if (!bird.inAnimation()) {
-                return false;
-            } else if (bird.getRandom().nextInt(reducedTickDelay(1000)) != 0) {
-                return false;
-            } else {
-                List<ItemEntity> list = bird.level().getEntitiesOfClass(ItemEntity.class, bird.getBoundingBox().inflate(bird.getViewRange(), bird.getViewRange(), bird.getViewRange()), this.foodPredicate);
-                if(!list.isEmpty()){
-                    itemToFollow = list.getFirst();
-                    return true;
-                }
+            List<ItemEntity> list = bird.level().getEntitiesOfClass(ItemEntity.class, bird.getBoundingBox().inflate(bird.getViewRange(), bird.getViewRange(), bird.getViewRange()), this.foodPredicate);
+            if(!list.isEmpty()){
+                itemToFollow = list.getFirst();
+                return true;
+            }
 
-                BlockPos blockPos = findNearbyFeederWithSpace();
+            BlockPos blockPos = findNearbyFeederWithSpace();
 
-                if(blockPos != null){
-                    boolean findAFeederWithFood = false;
-                    BlockEntity blockEntity = bird.level().getBlockEntity(blockPos);
+            if(blockPos != null){
+                boolean findAFeederWithFood = false;
+                BlockEntity blockEntity = bird.level().getBlockEntity(blockPos);
 
-                    if(blockEntity instanceof BirdFeederBlockEntity birdFeeder){
-                        for (int j = 0; j < birdFeeder.inventory.getSlots(); j++) {
-                            if(bird.isFood(birdFeeder.inventory.getStackInSlot(j))){
-                                findAFeederWithFood = true;
-                                this.blockPosToFollow = blockPos;
-                                this.slotToPickup = j;
-                                break;
-                            }
+                if(blockEntity instanceof BirdFeederBlockEntity birdFeeder){
+                    for (int j = 0; j < birdFeeder.inventory.getSlots(); j++) {
+                        if(bird.isFood(birdFeeder.inventory.getStackInSlot(j))){
+                            findAFeederWithFood = true;
+                            this.blockPosToFollow = blockPos;
+                            this.slotToPickup = j;
+                            break;
                         }
                     }
-
-                    if(findAFeederWithFood){
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
                 }
 
-                return false;
+                if(findAFeederWithFood){
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
-        }*/
 
-        return false;
+            return false;
+        }
     }
 
     @Override
@@ -94,31 +88,21 @@ public class BirdFoodNerbyGoal extends Goal {
         if (itemstack.isEmpty()) {
 
             if(itemToFollow != null && bird.distanceTo(itemToFollow) <= 1.0f){
-                //TODO : bird.pickUpItem(itemToFollow);
+                bird.pickUpItemFromGround(itemToFollow);
                 itemToFollow = null;
             }
             else if(blockPosToFollow != null && bird.distanceToSqr(blockPosToFollow.getX(), blockPosToFollow.getY(), blockPosToFollow.getZ()) <= 1.0f) {
-                //TODO : bird.pickUpItemFromFeeder((BirdFeederBlockEntity) bird.level().getBlockEntity(blockPosToFollow), slotToPickup);
+                bird.pickUpItemFromFeeder((BirdFeederBlockEntity) bird.level().getBlockEntity(blockPosToFollow), slotToPickup);
                 blockPosToFollow = null;
             }
             else {
-                if(itemToFollow != null){
-                    bird.getNavigation().moveTo((Entity)itemToFollow, bird.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) + 1f);
-                }
-                else {
-                    bird.getNavigation().moveTo(blockPosToFollow.getX(), blockPosToFollow.getY(), blockPosToFollow.getZ(), bird.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) + 1f);
-                }
+                this.goToFollow();
             }
         }
     }
 
     public void start() {
-        if(itemToFollow != null){
-            bird.getNavigation().moveTo((Entity)itemToFollow, bird.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) + 1f);
-        }
-        else {
-            bird.getNavigation().moveTo(blockPosToFollow.getX(), blockPosToFollow.getY(), blockPosToFollow.getZ(), bird.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) + 1f);
-        }
+        this.goToFollow();
     }
 
     @Override
@@ -148,6 +132,15 @@ public class BirdFoodNerbyGoal extends Goal {
         }
 
         return null;
+    }
+
+    private void goToFollow(){
+        if(itemToFollow != null){
+            bird.getNavigation().moveTo((Entity)itemToFollow, bird.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) + 1f);
+        }
+        else {
+            bird.getNavigation().moveTo(blockPosToFollow.getX(), blockPosToFollow.getY(), blockPosToFollow.getZ(), bird.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) + 1f);
+        }
     }
 
     protected boolean isValidTarget(LevelReader level, BlockPos pos) {

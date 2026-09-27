@@ -7,7 +7,6 @@ OISEAUX :
 - Faire le spawn
 - Iridescente systeme
 - Slow fall + vol en cas de longue chute
-- Can eat
 
 - Plus de textures pour certains oiseaux
 

@@ -19,5 +19,8 @@ public class ModItemModelProvider  extends ItemModelProvider {
         withExistingParent(ModItems.ACCIPITRIFORME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.RAMPHASTIDAE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.GRUIFORME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.COLUMBIFORME_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.CORVIDAE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.TROCHILIDAE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     }
 }

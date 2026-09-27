@@ -1,5 +1,6 @@
 package com.kalyptien.caelumpedion.entity.custom.common;
 
+import com.kalyptien.caelumpedion.block.entity.BirdFeederBlockEntity;
 import com.kalyptien.caelumpedion.entity.ai.BirdGroundPathNavigation;
 import com.kalyptien.caelumpedion.entity.ai.goal.*;
 import com.kalyptien.caelumpedion.util.BiomeRegion;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -42,8 +44,13 @@ public abstract class BirdEntity extends Animal {
     protected static final EntityDataAccessor<Boolean> ON_ANIMATION =
             SynchedEntityData.defineId(BirdEntity.class, EntityDataSerializers.BOOLEAN);
 
+    protected static final EntityDataAccessor<Boolean> NEED_EAT_ANIM =
+            SynchedEntityData.defineId(BirdEntity.class, EntityDataSerializers.BOOLEAN);
+
     private int idleAnimationTimeout = 0;
     private int idleAnimationTimein = 0;
+
+    private int eatAnimationTimein = 0;
 
     public final AnimationState eatAnimationState = new AnimationState();
     public final AnimationState idleAnimationState = new AnimationState();
@@ -68,6 +75,7 @@ public abstract class BirdEntity extends Animal {
         super.defineSynchedData(builder);
         builder.define(VARIANT, 0);
         builder.define(ON_ANIMATION, false);
+        builder.define(NEED_EAT_ANIM, false);
     }
 
     @Override
@@ -81,10 +89,12 @@ public abstract class BirdEntity extends Animal {
 
         this.goalSelector.addGoal(5, new BirdTemptGoal(this, 1.5f, this::isFood, false));
 
+        this.goalSelector.addGoal(6, new BirdFoodNerbyGoal(this));
+
         this.goalSelector.addGoal(8, new BirdRandomStrollGoal(this, 1.0));
 
-        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, this.getViewRange()));
-        this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(10, new BirdLookAtPlayerGoal(this, Player.class, this.getViewRange()));
+        this.goalSelector.addGoal(10, new BirdRandomLookAroundGoal(this));
     }
 
     //Misc
@@ -113,49 +123,69 @@ public abstract class BirdEntity extends Animal {
     //Animation
 
     protected void setupAnimationStates() {
-        if(this.isInWater() && this.aquaticBirdType.getId() == AquaticBirdType.FULL.id){
-            if (this.idleAnimationTimeout <= 0) {
-                this.idleAnimationTimeout = this.random.nextInt(500) + 500;
-                this.idleAnimationTimein = 0;
 
-                double seed = this.random.nextInt(100)/100.0f;
-
-                if(seed > 0.5f){
-                    this.idleInWaterAnimationState.start(this.tickCount);
-                }
-                else{
-                    this.eatInWaterAnimationState.start(this.tickCount);
-                }
-
+        if(this.isNeedEatAnimation()){
+            if(!this.eatAnimationState.isStarted()){
+                this.eatAnimationState.start(this.tickCount);
                 this.setOnAnimation(true);
-            } else {
-                --this.idleAnimationTimeout;
-                ++this.idleAnimationTimein;
+                this.eatAnimationTimein = 0;
+            }
+            else{
+                this.eatAnimationTimein++;
+
+                if(eatAnimationTimein >= 70){
+                    this.resetAnimations();
+                    this.setOnAnimation(false);
+                    this.setNeedEatAnimation(false);
+                }
             }
         }
-        else if (this.onGround()){
-            if (this.idleAnimationTimeout <= 0) {
-                this.idleAnimationTimeout = this.random.nextInt(500) + 500;
-                this.idleAnimationTimein = 0;
+        else{
+            if(this.isInWater() && this.aquaticBirdType.getId() == AquaticBirdType.FULL.id){
+                if (this.idleAnimationTimeout <= 0) {
+                    this.idleAnimationTimeout = this.random.nextInt(500) + 500;
+                    this.idleAnimationTimein = 0;
 
-                double seed = this.random.nextInt(100)/100.0f;
+                    double seed = this.random.nextInt(100)/100.0f;
 
-                if(seed > 0.5f){
-                    this.idleAnimationState.start(this.tickCount);
+                    if(seed > 0.5f){
+                        this.idleInWaterAnimationState.start(this.tickCount);
+                    }
+                    else{
+                        this.eatInWaterAnimationState.start(this.tickCount);
+                    }
+
+                    this.setOnAnimation(true);
+                } else {
+                    --this.idleAnimationTimeout;
+                    ++this.idleAnimationTimein;
                 }
-                else{
-                    this.eatAnimationState.start(this.tickCount);
-                }
-
-                this.setOnAnimation(true);
-            } else {
-                --this.idleAnimationTimeout;
-                ++this.idleAnimationTimein;
             }
-        }
+            else if (this.onGround()){
+                if (this.idleAnimationTimeout <= 0) {
+                    this.idleAnimationTimeout = this.random.nextInt(500) + 500;
+                    this.idleAnimationTimein = 0;
 
-        if(this.idleAnimationTimein >= 100){
-            this.setOnAnimation(false);
+                    double seed = this.random.nextInt(100)/100.0f;
+
+                    if(seed > 0.5f){
+                        this.idleAnimationState.start(this.tickCount);
+                    }
+                    else{
+                        this.eatAnimationState.start(this.tickCount);
+                    }
+
+                    this.setOnAnimation(true);
+                } else {
+                    --this.idleAnimationTimeout;
+                    ++this.idleAnimationTimein;
+                }
+            }
+
+            if(this.idleAnimationTimein >= 70){
+                this.resetAnimations();
+                this.setOnAnimation(false);
+            }
         }
     }
 
@@ -176,8 +206,10 @@ public abstract class BirdEntity extends Animal {
             this.eatInWaterAnimationState.stop();
         }
 
+        this.eatAnimationTimein = 0;
         this.idleAnimationTimein = 0;
         this.setOnAnimation(false);
+        this.setNeedEatAnimation(false);
     }
 
     //Food/Breed
@@ -191,6 +223,27 @@ public abstract class BirdEntity extends Animal {
     @Override
     public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
         return null;
+    }
+
+    public void pickUpItemFromGround(ItemEntity itemEntity) {
+        ItemStack itemstack = itemEntity.getItem();
+        if (!itemstack.isEmpty()) {
+            this.onItemPickup(itemEntity);
+            itemstack.shrink(itemstack.getCount());
+            if (itemstack.isEmpty()) {
+                itemEntity.discard();
+            }
+            this.setNeedEatAnimation(true);
+        }
+    }
+
+    public void pickUpItemFromFeeder(BirdFeederBlockEntity feeder, int slot) {
+        ItemStack itemstack = feeder.inventory.getStackInSlot(slot);
+        if (!itemstack.isEmpty()) {
+            itemstack.shrink(itemstack.getCount());
+            feeder.inventory.setStackInSlot(slot, itemstack);
+            this.setNeedEatAnimation(true);
+        }
     }
 
     //Getter / Setter
@@ -215,6 +268,14 @@ public abstract class BirdEntity extends Animal {
 
     public void setOnAnimation(boolean onAnimation) {
         this.entityData.set(ON_ANIMATION, onAnimation);
+    }
+
+    public boolean isNeedEatAnimation() {
+        return this.entityData.get(NEED_EAT_ANIM);
+    }
+
+    public void setNeedEatAnimation(boolean needEatAnimation) {
+        this.entityData.set(NEED_EAT_ANIM, needEatAnimation);
     }
 
     public double getFlySpeed() {
