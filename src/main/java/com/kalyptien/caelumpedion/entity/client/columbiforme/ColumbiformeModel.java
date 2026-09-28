@@ -2,6 +2,7 @@ package com.kalyptien.caelumpedion.entity.client.columbiforme;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
+import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeAnimation;
 import com.kalyptien.caelumpedion.entity.custom.bird.columbiforme.ColumbiformeEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -112,7 +113,7 @@ public class ColumbiformeModel<T extends ColumbiformeEntity> extends FlyingBirdH
         this.animateWalk(ColumbiformeAnimation.COLUMBIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
-    protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(ColumbiformeAnimation.COLUMBIFORME_FALL, limbSwing, limbSwingAmount, 3f, 3f);
+    protected void setupSlowFallAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
+        this.animate(entity.fallAnimationState, ColumbiformeAnimation.COLUMBIFORME_FALL, ageInTicks, 1f);
     }
 }

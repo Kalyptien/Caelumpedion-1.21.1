@@ -9,12 +9,16 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 
 
 import java.util.*;
@@ -70,6 +74,7 @@ public abstract class FlyingBirdEntity extends BirdEntity {
         super.registerGoals();
 
         // Goal
+
         this.goalSelector.addGoal(9, new BirdRandomFlyingGoal(this, 1.0));
     }
 
@@ -102,6 +107,19 @@ public abstract class FlyingBirdEntity extends BirdEntity {
             return super.shouldRenderAtSqrDistance(distance);
         }
     }
+
+    //AiStep
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+
+        Vec3 vec3 = this.getDeltaMovement();
+        if (!this.onGround() && vec3.y < 0.0 && this.isTooHight(1)) {
+            this.setDeltaMovement(vec3.multiply(1.0, 0.6, 1.0));
+        }
+    }
+
 
     //Tick
 
@@ -163,6 +181,32 @@ public abstract class FlyingBirdEntity extends BirdEntity {
     }
 
     protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+    }
+
+    //Anim
+
+    @Override
+    protected void setupAnimationStates() {
+        super.setupAnimationStates();
+
+        this.fallAnimationState.animateWhen(!this.onGround() && !this.isOnAnimation() && !this.isFlying() && this.isTooHight(1),this.tickCount);
+    }
+
+    public boolean isTooHight(int blockUnderToScan){
+        boolean result = true;
+
+        BlockPos.MutableBlockPos ground = new BlockPos.MutableBlockPos();
+        ground.set(this.getX(), this.getY(), this.getZ());
+
+        for (int i = 0; i < blockUnderToScan; i++) {
+            ground.move(0, -1, 0);
+
+            if(!this.level().getBlockState(ground).isAir()){
+                result = false;
+            }
+        }
+
+        return result;
     }
 
     //Getter / Setter

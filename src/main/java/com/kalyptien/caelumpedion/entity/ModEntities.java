@@ -9,6 +9,7 @@ import com.kalyptien.caelumpedion.entity.custom.bird.apodiforme.TrochilidaeEntit
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.CorvidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.HirundininaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
+import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.PiciformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
@@ -41,6 +42,12 @@ public class ModEntities {
             });
 
     // =====
+
+    public static final Supplier<EntityType<PiciformeEntity>> PICIFORME =
+            ENTITY_TYPES.register("piciforme", () -> {
+                return EntityType.Builder.of(PiciformeEntity::new, MobCategory.CREATURE)
+                        .sized(0.4f, 0.4f).build("piciforme");
+            });
 
     public static final Supplier<EntityType<RamphastidaeEntity>> RAMPHASTIDAE =
             ENTITY_TYPES.register("ramphastidae", () -> {

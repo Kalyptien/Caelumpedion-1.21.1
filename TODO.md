@@ -3,10 +3,9 @@ V 1.0.0 :
 OISEAUX :
 
 - Intégrations des chants pour chaques oiseaux
-- Faire le drop
+- Faire le drop => Drop on hit et Drop on death
 - Faire le spawn
 - Iridescente systeme
-- Slow fall + vol en cas de longue chute
 
 - Plus de textures pour certains oiseaux
 
@@ -14,7 +13,7 @@ VOL :
 
 - BOIS : Uniquement ceux qui ont la mm variante
 - Vol migratoire
-- Revoir si y'a pas moyen de modifier le systeme de vol
+- S'assurer que les piafs replaquent une fois le vol fini
 
 LIVRE
 - Ajouter
@@ -27,6 +26,7 @@ CANARD
 
 AIGLE
 - Refaire le modele / texture / animation
+- S'assruer que les aigles retombent une fois le vol en cercle est fini
 
 GRUE
 - Peche

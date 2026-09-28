@@ -102,8 +102,8 @@ public class PasseriformeModel<T extends PasseriformeEntity> extends FlyingBirdH
         this.animateWalk(PasseriformeAnimation.PASSERIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
-    protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(PasseriformeAnimation.PASSERIFORME_FALL, limbSwing, limbSwingAmount, 3f, 3f);
+    protected void setupSlowFallAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
+        this.animate(entity.fallAnimationState, PasseriformeAnimation.PASSERIFORME_FALL, ageInTicks, 1f);
     }
 
     protected void showFlyingPart(boolean show){

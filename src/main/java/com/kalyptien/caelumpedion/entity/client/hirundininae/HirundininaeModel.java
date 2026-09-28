@@ -110,7 +110,8 @@ public class HirundininaeModel<T extends HirundininaeEntity> extends FlyingBirdH
         this.animateWalk(PasseriformeAnimation.PASSERIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
-    protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
+    protected void setupSlowFallAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
+        this.animate(entity.fallAnimationState, PasseriformeAnimation.PASSERIFORME_FALL, ageInTicks, 1f);
     }
 
     protected void showFlyingPart(boolean show){

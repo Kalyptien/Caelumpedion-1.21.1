@@ -2,6 +2,7 @@ package com.kalyptien.caelumpedion.entity.client.accipitridae;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
+import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeAnimation;
 import com.kalyptien.caelumpedion.entity.custom.bird.accipitriforme.AccipitridaeEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -145,6 +146,6 @@ public class AccipitridaeModel<T extends AccipitridaeEntity> extends FlyingBirdH
         this.animateWalk(AccipitridaeAnimation.ACCIPITRIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
-    protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
+    protected void setupSlowFallAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
     }
 }

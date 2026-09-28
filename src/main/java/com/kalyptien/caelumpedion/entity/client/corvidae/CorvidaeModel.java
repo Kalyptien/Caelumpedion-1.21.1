@@ -2,6 +2,7 @@ package com.kalyptien.caelumpedion.entity.client.corvidae;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
+import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeAnimation;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.CorvidaeEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -112,7 +113,7 @@ public class CorvidaeModel<T extends CorvidaeEntity> extends FlyingBirdHierarchi
         this.animateWalk(CorvidaeAnimation.CORVIDAE_FLY, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
-    protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(CorvidaeAnimation.CORVIDAE_FALL, limbSwing, limbSwingAmount, 3f, 3f);
+    protected void setupSlowFallAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
+        this.animate(entity.fallAnimationState, CorvidaeAnimation.CORVIDAE_FALL, ageInTicks, 1f);
     }
 }

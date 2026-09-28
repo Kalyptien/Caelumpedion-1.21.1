@@ -2,6 +2,8 @@ package com.kalyptien.caelumpedion.item;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.ModEntities;
+import com.kalyptien.caelumpedion.item.custom.FeatherItem;
+import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +18,49 @@ import java.util.List;
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(CaelumpedionMod.MOD_ID);
 
-    // MISC
+    // Color Feathers
+    public static final DeferredItem<Item> LIGHT_GRAY_FEATHER = ITEMS.register("light_gray_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.LightGray));
+    public static final DeferredItem<Item> GRAY_FEATHER = ITEMS.register("gray_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.Gray));
+    public static final DeferredItem<Item> BLACK_FEATHER = ITEMS.register("black_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.Black));
+    public static final DeferredItem<Item> BROWN_FEATHER = ITEMS.register("brown_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.Brown));
+    public static final DeferredItem<Item> RED_FEATHER = ITEMS.register("red_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.Red));
+    public static final DeferredItem<Item> ORANGE_FEATHER = ITEMS.register("orange_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.Orange));
+    public static final DeferredItem<Item> YELLOW_FEATHER = ITEMS.register("yellow_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.Yellow));
+    public static final DeferredItem<Item> LIME_FEATHER = ITEMS.register("lime_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.Lime));
+    public static final DeferredItem<Item> GREEN_FEATHER = ITEMS.register("green_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.Green));
+    public static final DeferredItem<Item> LIGHT_BLUE_FEATHER = ITEMS.register("light_blue_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.LightBlue));
+    public static final DeferredItem<Item> CYAN_FEATHER = ITEMS.register("cyan_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.Cyan));
+    public static final DeferredItem<Item> BLUE_FEATHER = ITEMS.register("blue_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.Blue));
+    public static final DeferredItem<Item> PURPLE_FEATHER = ITEMS.register("purple_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.Purple));
+    public static final DeferredItem<Item> MAGENTA_FEATHER = ITEMS.register("magenta_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.Magenta));
+    public static final DeferredItem<Item> PINK_FEATHER = ITEMS.register("pink_feather",
+            () -> new FeatherItem(new Item.Properties(), FeatherColor.Pink));
+
+    // Special Feathers
+
+    public static final DeferredItem<Item> GLITCH_FEATHER = ITEMS.register("glitch_feather",
+            () -> new Item(new Item.Properties()){
+                @Override
+                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.caelumpedion.glitch_feather.tooltip"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+            });
+    // Spawn eggs
 
     public static final DeferredItem<Item> PASSERIFORME_SPAWN_EGG = ITEMS.register("passeriforme_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.PASSERIFORME, 0x402018, 0xebebeb,
@@ -73,6 +117,16 @@ public class ModItems {
             });
 
     // =====
+
+    public static final DeferredItem<Item> PICIFORME_SPAWN_EGG = ITEMS.register("piciforme_spawn_egg",
+            () -> new DeferredSpawnEggItem(ModEntities.PICIFORME, 0x77cf30, 0xd62822,
+                    new Item.Properties()){
+                @Override
+                public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+                    tooltipComponents.add(Component.translatable("tooltip.caelumpedion.piciforme_spawn_egg.tooltip"));
+                    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+                }
+            });
 
     public static final DeferredItem<Item> RAMPHASTIDAE_SPAWN_EGG = ITEMS.register("ramphastidae_spawn_egg",
             () -> new DeferredSpawnEggItem(ModEntities.RAMPHASTIDAE, 0x141414, 0xe67b25,

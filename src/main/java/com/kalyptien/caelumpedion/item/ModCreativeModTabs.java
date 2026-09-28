@@ -25,10 +25,27 @@ public class ModCreativeModTabs {
                         output.accept(ModItems.CORVIDAE_SPAWN_EGG.get());
                         output.accept(ModItems.ANSERIFORME_SPAWN_EGG.get());
                         output.accept(ModItems.ACCIPITRIFORME_SPAWN_EGG.get());
+                        output.accept(ModItems.PICIFORME_SPAWN_EGG.get());
                         output.accept(ModItems.RAMPHASTIDAE_SPAWN_EGG.get());
                         output.accept(ModItems.GRUIFORME_SPAWN_EGG.get());
                         output.accept(ModItems.TROCHILIDAE_SPAWN_EGG.get());
                         output.accept(ModItems.COLUMBIFORME_SPAWN_EGG.get());
+
+                        output.accept(ModItems.LIGHT_GRAY_FEATHER.get());
+                        output.accept(ModItems.GRAY_FEATHER.get());
+                        output.accept(ModItems.BLACK_FEATHER.get());
+                        output.accept(ModItems.BROWN_FEATHER.get());
+                        output.accept(ModItems.RED_FEATHER.get());
+                        output.accept(ModItems.ORANGE_FEATHER.get());
+                        output.accept(ModItems.YELLOW_FEATHER.get());
+                        output.accept(ModItems.LIME_FEATHER.get());
+                        output.accept(ModItems.GREEN_FEATHER.get());
+                        output.accept(ModItems.LIGHT_BLUE_FEATHER.get());
+                        output.accept(ModItems.CYAN_FEATHER.get());
+                        output.accept(ModItems.BLUE_FEATHER.get());
+                        output.accept(ModItems.PURPLE_FEATHER.get());
+                        output.accept(ModItems.MAGENTA_FEATHER.get());
+                        output.accept(ModItems.PINK_FEATHER.get());
 
                         output.accept(ModBlocks.BIRD_FEEDER.get());
                     }).build());

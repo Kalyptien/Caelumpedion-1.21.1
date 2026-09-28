@@ -2,6 +2,7 @@ package com.kalyptien.caelumpedion.entity.client.piciforme;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
+import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeAnimation;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.CorvidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.PiciformeEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -113,7 +114,7 @@ public class PiciformeModel<T extends PiciformeEntity> extends FlyingBirdHierarc
         this.animateWalk(PiciformeAnimation.PICIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
-    protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(PiciformeAnimation.PICIFORME_FALL, limbSwing, limbSwingAmount, 3f, 3f);
+    protected void setupSlowFallAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
+        this.animate(entity.fallAnimationState, PiciformeAnimation.PICIFORME_FALL, ageInTicks, 1f);
     }
 }

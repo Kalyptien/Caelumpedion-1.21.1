@@ -48,11 +48,11 @@ public class CaelumpedionMod {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
-        ModEntities.register(modEventBus);
-
         ModBlockEntities.register(modEventBus);
 
         ModMenuTypes.register(modEventBus);
+
+        ModEntities.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
     }

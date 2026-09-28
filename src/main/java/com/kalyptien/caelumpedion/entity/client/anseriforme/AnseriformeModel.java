@@ -2,6 +2,7 @@ package com.kalyptien.caelumpedion.entity.client.anseriforme;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
+import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeAnimation;
 import com.kalyptien.caelumpedion.entity.custom.bird.anseriforme.AnseriformeEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -105,7 +106,7 @@ public class AnseriformeModel<T extends AnseriformeEntity> extends FlyingBirdHie
         this.animateWalk(AnseriformeAnimation.ANSERIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
-    protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(AnseriformeAnimation.ANSERIFORME_FALL, limbSwing, limbSwingAmount, 3f, 3f);
+    protected void setupSlowFallAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
+        this.animate(entity.fallAnimationState, AnseriformeAnimation.ANSERIFORME_FALL, ageInTicks, 1f);
     }
 }

@@ -49,6 +49,10 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
                     || !bird.isNeedToFlyAway()
                     || (bird.getIdAquaticBirdType() != FlyingBirdEntity.AquaticBirdType.FULL.getId() && !bird.isInWaterOrBubble())
             ) {
+                if(this.bird.isOnAnimation()){
+                    return false;
+                }
+
                 if (this.bird.getNoActionTime() >= 100) {
                     return false;
                 }
@@ -173,11 +177,11 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
         Vec3 finalPos = LandRandomPos.getPos(this.bird, range, height);
 
         if(finalPos == null){
-            finalPos = new Vec3(((range * (this.randomNumber() / 100))) * randomSign(), 50, ((range * (this.randomNumber() / 100))) * randomSign());
+            finalPos = new Vec3(((range * (this.randomNumber() / 100))) * randomSign(), ((height * (this.randomNumber() / 100))), ((range * (this.randomNumber() / 100))) * randomSign());
 
         }
 
-        return groundPosition(finalPos);
+        return bird.position().add(groundPosition(finalPos));
     }
 
     protected void createFlyPath() {

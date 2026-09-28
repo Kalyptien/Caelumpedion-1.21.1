@@ -3,6 +3,7 @@ package com.kalyptien.caelumpedion.entity.ai.goal;
 import com.kalyptien.caelumpedion.block.ModBlocks;
 import com.kalyptien.caelumpedion.block.entity.BirdFeederBlockEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
+import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -89,10 +90,12 @@ public class BirdFoodNerbyGoal extends Goal {
 
             if(itemToFollow != null && bird.distanceTo(itemToFollow) <= 1.0f){
                 bird.pickUpItemFromGround(itemToFollow);
+                if(bird instanceof FlyingBirdEntity flyingBird && flyingBird.isFlying()) flyingBird.setFlying(false);
                 itemToFollow = null;
             }
             else if(blockPosToFollow != null && bird.distanceToSqr(blockPosToFollow.getX(), blockPosToFollow.getY(), blockPosToFollow.getZ()) <= 1.0f) {
                 bird.pickUpItemFromFeeder((BirdFeederBlockEntity) bird.level().getBlockEntity(blockPosToFollow), slotToPickup);
+                if(bird instanceof FlyingBirdEntity flyingBird && flyingBird.isFlying()) flyingBird.setFlying(false);
                 blockPosToFollow = null;
             }
             else {

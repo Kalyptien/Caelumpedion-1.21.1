@@ -1,19 +1,24 @@
 package com.kalyptien.caelumpedion.entity.custom.common;
 
+import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.block.entity.BirdFeederBlockEntity;
 import com.kalyptien.caelumpedion.entity.ai.BirdGroundPathNavigation;
 import com.kalyptien.caelumpedion.entity.ai.goal.*;
 import com.kalyptien.caelumpedion.util.BiomeRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ColorRGBA;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -22,9 +27,14 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
@@ -54,6 +64,7 @@ public abstract class BirdEntity extends Animal {
 
     public final AnimationState eatAnimationState = new AnimationState();
     public final AnimationState idleAnimationState = new AnimationState();
+    public final AnimationState fallAnimationState = new AnimationState();
 
     //Anim var : Aquatic Bird
 
@@ -64,8 +75,13 @@ public abstract class BirdEntity extends Animal {
 
     FlyingBirdEntity.AquaticBirdType aquaticBirdType = AquaticBirdType.NONE;
 
+    //Global var
+
+    public int featherTime;
+
     public BirdEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
+        this.featherTime = this.random.nextInt(8000) + 8000;
         this.moveControl = new MoveControl(this);
         this.navigation = new BirdGroundPathNavigation(this, level());
     }
@@ -110,6 +126,27 @@ public abstract class BirdEntity extends Animal {
     @Override
     public boolean canStandOnFluid(FluidState fluidState) {
         return this.getIdAquaticBirdType() == FlyingBirdEntity.AquaticBirdType.FULL.getId() ? fluidState.is(FluidTags.WATER) : false;
+    }
+
+    //AiStep
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+
+        if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.featherTime <= 0) {
+            Item item = BuiltInRegistries.ITEM.get(
+                    ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, this.getVariant().getFeatherColor(this.random.nextInt(10)).getFeatherItemId()));
+
+            this.spawnAtLocation(item);
+            this.gameEvent(GameEvent.ENTITY_PLACE);
+            this.featherTime = this.random.nextInt(8000) + 8000;
+        }
+    }
+
+    @Override
+    protected void dropCustomDeathLoot(ServerLevel level, DamageSource damageSource, boolean recentlyHit) {
+        super.dropCustomDeathLoot(level, damageSource, recentlyHit);
     }
 
     //Tick
@@ -198,6 +235,10 @@ public abstract class BirdEntity extends Animal {
             this.eatAnimationState.stop();
         }
 
+        if(this.fallAnimationState.isStarted()){
+            this.fallAnimationState.stop();
+        }
+
         if(this.idleInWaterAnimationState.isStarted()){
             this.idleInWaterAnimationState.stop();
         }
@@ -250,6 +291,8 @@ public abstract class BirdEntity extends Animal {
 
     public abstract int getIdVariant();
 
+    public abstract BirdVariant getVariant();
+
     public FlyingBirdEntity.AquaticBirdType getAquaticBirdType() {
         return this.aquaticBirdType;
     }
@@ -300,12 +343,16 @@ public abstract class BirdEntity extends Animal {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("Variant", this.getIdVariant());
+        compound.putInt("FeatherFallTime", this.featherTime);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.entityData.set(VARIANT, compound.getInt("Variant"));
+        if (compound.contains("FeatherFallTime")) {
+            this.featherTime = compound.getInt("FeatherFallTime");
+        }
     }
 
     //Enum

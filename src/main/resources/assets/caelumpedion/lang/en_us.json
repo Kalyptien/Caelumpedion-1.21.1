@@ -7,11 +7,17 @@
   "item.caelumpedion.hirundininae_spawn_egg": "Passeriforme > Hirundininae Spawn Egg",
   "tooltip.caelumpedion.hirundininae_spawn_egg.tooltip": "§8Swallow§r",
 
+  "item.caelumpedion.corvidae_spawn_egg": "Passeriforme > Corvidae Spawn Egg",
+  "tooltip.caelumpedion.corvidae_spawn_egg.tooltip": "§8Raven, Crow & Magpie§r",
+
   "item.caelumpedion.anseriforme_spawn_egg": "Anseriforme Spawn Egg",
   "tooltip.caelumpedion.anseriforme_spawn_egg.tooltip": "§8Duck, Goose & Swan§r",
 
   "item.caelumpedion.accipitriforme_spawn_egg": "Accipitriforme Spawn Egg",
   "tooltip.caelumpedion.accipitriforme_spawn_egg.tooltip": "§8Eagle & Vultur§r",
+
+  "item.caelumpedion.piciforme_spawn_egg": "Piciforme Spawn Egg",
+  "tooltip.caelumpedion.piciforme_spawn_egg.tooltip": "§8Woodpecker§r",
 
   "item.caelumpedion.ramphastidae_spawn_egg": "Piciforme > Ramphastidae Spawn Egg",
   "tooltip.caelumpedion.ramphastidae_spawn_egg.tooltip": "§8Toucan§r",
@@ -19,12 +25,41 @@
   "item.caelumpedion.gruiforme_spawn_egg": "Gruiforme Spawn Egg",
   "tooltip.caelumpedion.gruiforme_spawn_egg.tooltip": "§8Crane§r",
 
+  "item.caelumpedion.trochilidae_spawn_egg": "Apodiforme > Trochilidae Spawn Egg",
+  "tooltip.caelumpedion.trochilidae_spawn_egg.tooltip": "§8Hummingbird§r",
+
+  "item.caelumpedion.columbiforme_spawn_egg": "Columbiforme Spawn Egg",
+  "tooltip.caelumpedion.columbiforme_spawn_egg.tooltip": "§8Pigeon§r",
+
+  "item.caelumpedion.light_gray_feather": "Light Gray Feather",
+  "item.caelumpedion.gray_feather": "Gray Feather",
+  "item.caelumpedion.black_feather": "Black Feather",
+  "item.caelumpedion.brown_feather": "Brown Feather",
+  "item.caelumpedion.red_feather": "Red Feather",
+  "item.caelumpedion.orange_feather": "Orange Feather",
+  "item.caelumpedion.yellow_feather": "Yellow Feather",
+  "item.caelumpedion.lime_feather": "Lime Feather",
+  "item.caelumpedion.green_feather": "Green Feather",
+  "item.caelumpedion.light_blue_feather": "Light Blue Feather",
+  "item.caelumpedion.cyan_feather": "Cyan Feather",
+  "item.caelumpedion.blue_feather": "Blue Feather",
+  "item.caelumpedion.purple_feather": "Purple Feather",
+  "item.caelumpedion.magenta_feather": "Magenta Feather",
+  "item.caelumpedion.pink_feather": "Pink Feather",
+
+  "item.caelumpedion.glitch_feather": "Glitch Feather",
+  "tooltip.caelumpedion.glitch_feather.tooltip": "§8Oups... It's a bug...§r",
+
   "entity.mccourse.passeriforme": "Passeriforme",
   "entity.mccourse.hirundininae": "Hirundininae",
+  "entity.mccourse.corvidae": "Corvidae",
   "entity.mccourse.anseriforme": "Anseriforme",
   "entity.mccourse.accipitriforme": "Accipitriforme",
+  "entity.mccourse.piciforme": "Piciforme",
   "entity.mccourse.ramphastidae": "Ramphastidae",
   "entity.mccourse.gruiforme": "Gruiforme",
+  "entity.mccourse.trochilidae": "Trochilidae",
+  "entity.mccourse.columbiforme": "Columbiforme",
 
   "block.caelumpedion.bird_feeder": "Bird Feeder"
 }

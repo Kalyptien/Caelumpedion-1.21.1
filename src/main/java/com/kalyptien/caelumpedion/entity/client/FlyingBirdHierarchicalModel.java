@@ -1,6 +1,7 @@
 package com.kalyptien.caelumpedion.entity.client;
 
 import com.kalyptien.caelumpedion.entity.client.gruiforme.GruiformeAnimation;
+import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeAnimation;
 import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import net.minecraft.client.model.HierarchicalModel;
@@ -28,6 +29,8 @@ public class FlyingBirdHierarchicalModel<T extends FlyingBirdEntity> extends Bir
 
         this.showFlyingPart(entity.isFlying());
 
+        this.setupSlowFallAnimation(entity, limbSwing, limbSwingAmount, ageInTicks);
+
         if(entity.isFlying()){
             //> FLY
             this.setupFlyAnimation(limbSwing, limbSwingAmount);
@@ -39,8 +42,6 @@ public class FlyingBirdHierarchicalModel<T extends FlyingBirdEntity> extends Bir
 
             root.xRot += pitchAmount;
             root.zRot += rollAmount;
-        } else if (!entity.isFlying() && !entity.onGround()) {
-            this.setupSlowFallAnimation(limbSwing, limbSwingAmount);
         }
 
     }
@@ -58,6 +59,6 @@ public class FlyingBirdHierarchicalModel<T extends FlyingBirdEntity> extends Bir
     protected void setupFlyAnimation(float limbSwing, float limbSwingAmount){
     }
 
-    protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
+    protected void setupSlowFallAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
     }
 }

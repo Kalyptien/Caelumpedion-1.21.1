@@ -9,6 +9,7 @@ import com.kalyptien.caelumpedion.entity.client.corvidae.CorvidaeModel;
 import com.kalyptien.caelumpedion.entity.client.gruiforme.GruiformeModel;
 import com.kalyptien.caelumpedion.entity.client.hirundininae.HirundininaeModel;
 import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeModel;
+import com.kalyptien.caelumpedion.entity.client.piciforme.PiciformeModel;
 import com.kalyptien.caelumpedion.entity.client.ramphastidae.RamphastidaeModel;
 import com.kalyptien.caelumpedion.entity.client.trochilidae.TrochilidaeModel;
 import com.kalyptien.caelumpedion.entity.custom.bird.accipitriforme.AccipitridaeEntity;
@@ -19,6 +20,7 @@ import com.kalyptien.caelumpedion.entity.custom.bird.apodiforme.TrochilidaeEntit
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.CorvidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.HirundininaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
+import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.PiciformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -37,6 +39,7 @@ public class ModEventBusEvents {
 
         event.registerLayerDefinition(AccipitridaeModel.LAYER_LOCATION, AccipitridaeModel::createBodyLayer);
 
+        event.registerLayerDefinition(PiciformeModel.LAYER_LOCATION, PiciformeModel::createBodyLayer);
         event.registerLayerDefinition(RamphastidaeModel.LAYER_LOCATION, RamphastidaeModel::createBodyLayer);
 
         event.registerLayerDefinition(GruiformeModel.LAYER_LOCATION, GruiformeModel::createBodyLayer);
@@ -56,6 +59,7 @@ public class ModEventBusEvents {
 
         event.put(ModEntities.ACCIPITRIFORME.get(), AccipitridaeEntity.createAttributes().build());
 
+        event.put(ModEntities.PICIFORME.get(), PiciformeEntity.createAttributes().build());
         event.put(ModEntities.RAMPHASTIDAE.get(), RamphastidaeEntity.createAttributes().build());
 
         event.put(ModEntities.GRUIFORME.get(), GruiformeEntity.createAttributes().build());

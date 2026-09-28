@@ -2,6 +2,7 @@ package com.kalyptien.caelumpedion.entity.client.ramphastidae;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
+import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeAnimation;
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -113,7 +114,7 @@ public class RamphastidaeModel<T extends RamphastidaeEntity> extends FlyingBirdH
         this.animateWalk(RamphastidaeAnimation.RAMPHASTIDAE_FLY, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
-    protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(RamphastidaeAnimation.RAMPHASTIDAE_FALL, limbSwing, limbSwingAmount, 3f, 3f);
+    protected void setupSlowFallAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
+        this.animate(entity.fallAnimationState, RamphastidaeAnimation.RAMPHASTIDAE_FALL, ageInTicks, 1f);
     }
 }
