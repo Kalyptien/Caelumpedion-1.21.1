@@ -135,8 +135,9 @@ public abstract class BirdEntity extends Animal {
         super.aiStep();
 
         if (!this.level().isClientSide && this.isAlive() && !this.isBaby() && --this.featherTime <= 0) {
-            Item item = BuiltInRegistries.ITEM.get(
-                    ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, this.getVariant().getFeatherColor(this.random.nextInt(10)).getFeatherItemId()));
+            FeatherColor featherColor = this.getVariant().getFeatherColor(this.random.nextInt(10));
+            String featherItemId = featherColor.getFeatherItemId();
+            Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(featherItemId.split(":")[0], featherItemId.split(":")[1]));
 
             this.spawnAtLocation(item);
             this.gameEvent(GameEvent.ENTITY_PLACE);
@@ -144,9 +145,25 @@ public abstract class BirdEntity extends Animal {
         }
     }
 
+    // Custom Loot
+
     @Override
     protected void dropCustomDeathLoot(ServerLevel level, DamageSource damageSource, boolean recentlyHit) {
         super.dropCustomDeathLoot(level, damageSource, recentlyHit);
+
+        int nbOfDrop = this.random.nextInt(5);
+        for (int i = 0; i < nbOfDrop; i++) {
+            FeatherColor featherColor = this.getVariant().getFeatherColor(this.random.nextInt(10));
+            String featherItemId = featherColor.getFeatherItemId();
+            Item item = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(featherItemId.split(":")[0], featherItemId.split(":")[1]));
+
+            this.spawnAtLocation(item);
+        }
+    }
+
+    @Override
+    protected void dropFromLootTable(DamageSource damageSource, boolean attackedRecently) {
+        super.dropFromLootTable(damageSource, attackedRecently);
     }
 
     //Tick
@@ -366,6 +383,7 @@ public abstract class BirdEntity extends Animal {
         FeatherColor getFeatherColor(int id);
         FeatherColor getChildFeatherColor();
         BiomeRegion[] getBiomeRegion();
+        static int lenght(){return 0;};
     }
 
     public static enum AquaticBirdType {

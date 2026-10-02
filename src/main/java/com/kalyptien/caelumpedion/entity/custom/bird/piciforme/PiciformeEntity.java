@@ -74,7 +74,7 @@ public class PiciformeEntity extends FlyingBirdEntity {
     // Variant
 
     public static enum PiciformeVariant implements BirdVariant {
-        PicusViridis(0, "picus_viridis", 1.0f, false, new FeatherColor[]{FeatherColor.Green, FeatherColor.White}, FeatherColor.Green, new BiomeRegion[]{BiomeRegion.Europe}),
+        PicusViridis(0, "picus_viridis", 1.0f, false, new FeatherColor[]{FeatherColor.Lime, FeatherColor.White}, FeatherColor.Green, new BiomeRegion[]{BiomeRegion.Europe}),
         ;
 
         private static final PiciformeVariant[] BY_ID = Arrays.stream(values()).sorted(

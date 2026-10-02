@@ -35,9 +35,9 @@ public class ColumbiformeRenderer extends MobRenderer<ColumbiformeEntity, Columb
 
     @Override
     public void render(ColumbiformeEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-        poseStack.scale(1.0f,
-                1.0f,
-                1.0f);
+        poseStack.scale(entity.getVariant().getSize(),
+                entity.getVariant().getSize(),
+                entity.getVariant().getSize());
 
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }

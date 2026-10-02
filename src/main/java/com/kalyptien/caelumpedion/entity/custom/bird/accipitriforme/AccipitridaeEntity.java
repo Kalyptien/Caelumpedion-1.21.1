@@ -220,7 +220,7 @@ public class AccipitridaeEntity extends FlyingBirdEntity implements NeutralMob, 
     // Variant
 
     public static enum AccipitridaeVariant implements BirdVariant {
-        GypaetusBarbatus(0, "gypaetus_barbatus", 1.0f, false, new FeatherColor[]{FeatherColor.Red}, FeatherColor.Brown, new BiomeRegion[]{BiomeRegion.Europe, BiomeRegion.Asia, BiomeRegion.NorthAfrica, BiomeRegion.SouthAfrica}),
+        GypaetusBarbatus(0, "gypaetus_barbatus", 1.0f, false, new FeatherColor[]{FeatherColor.Orange}, FeatherColor.Brown, new BiomeRegion[]{BiomeRegion.Europe, BiomeRegion.Asia, BiomeRegion.NorthAfrica, BiomeRegion.SouthAfrica}),
         ;
 
         private static final AccipitridaeVariant[] BY_ID = Arrays.stream(values()).sorted(

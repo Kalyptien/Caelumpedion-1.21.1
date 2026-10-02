@@ -78,8 +78,8 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
 
     public enum PasseriformeVariant implements BirdVariant {
         CardinalisCardinalis(0, "cardinalis_cardinalis", 1.0f, false, new FeatherColor[]{FeatherColor.Red}, FeatherColor.Brown, new BiomeRegion[]{BiomeRegion.NorthAmerica}),
-        CyanistesCaeruleus(1, "cyanistes_caeruleus", 1.0f, false, new FeatherColor[]{FeatherColor.Blue, FeatherColor.Yellow}, FeatherColor.Yellow, new BiomeRegion[]{BiomeRegion.Europe}),
-        CyanocittaCristata(2, "cyanocitta_cristata", 1.0f, false, new FeatherColor[]{FeatherColor.Blue}, FeatherColor.Blue, new BiomeRegion[]{BiomeRegion.NorthAmerica}),
+        CyanistesCaeruleus(1, "cyanistes_caeruleus", 1.0f, false, new FeatherColor[]{FeatherColor.LightBlue, FeatherColor.Yellow}, FeatherColor.Yellow, new BiomeRegion[]{BiomeRegion.Europe}),
+        CyanocittaCristata(2, "cyanocitta_cristata", 1.0f, false, new FeatherColor[]{FeatherColor.Cyan, FeatherColor.White}, FeatherColor.Blue, new BiomeRegion[]{BiomeRegion.NorthAmerica}),
         ErithacusRubecula(3, "erithacus_rubecula", 1.0f, false, new FeatherColor[]{FeatherColor.Orange, FeatherColor.Gray, FeatherColor.Brown}, FeatherColor.Brown, new BiomeRegion[]{BiomeRegion.Europe}),
         LophophanesCristatus(4, "lophophanes_cristatus", 1.0f, false, new FeatherColor[]{FeatherColor.White, FeatherColor.Brown}, FeatherColor.Brown, new BiomeRegion[]{BiomeRegion.Europe}),
         PasserDomesticus(5, "passer_domesticus", 1.0f, false, new FeatherColor[]{FeatherColor.Gray, FeatherColor.Brown}, FeatherColor.Gray, new BiomeRegion[]{BiomeRegion.Europe, BiomeRegion.NorthAmerica, BiomeRegion.SouthAmerica, BiomeRegion.SouthAfrica, BiomeRegion.Oceania, BiomeRegion.Asia}),

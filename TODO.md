@@ -1,9 +1,12 @@
 V 1.0.0 :
 
+GENERAL :
+
+- add JEI
+
 OISEAUX :
 
 - Intégrations des chants pour chaques oiseaux
-- Faire le drop => Drop on hit et Drop on death
 - Faire le spawn
 - Iridescente systeme
 

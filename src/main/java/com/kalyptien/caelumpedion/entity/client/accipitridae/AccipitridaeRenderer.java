@@ -35,7 +35,9 @@ public class AccipitridaeRenderer extends MobRenderer<AccipitridaeEntity, Accipi
 
     @Override
     public void render(AccipitridaeEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-        poseStack.scale(1, 1, 1);
+        poseStack.scale(entity.getVariant().getSize(),
+                entity.getVariant().getSize(),
+                entity.getVariant().getSize());
 
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }

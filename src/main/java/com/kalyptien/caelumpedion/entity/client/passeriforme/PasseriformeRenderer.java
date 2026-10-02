@@ -35,7 +35,9 @@ public class PasseriformeRenderer extends MobRenderer<PasseriformeEntity, Passer
 
     @Override
     public void render(PasseriformeEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-        poseStack.scale(1f, 1f, 1f);
+        poseStack.scale(entity.getVariant().getSize(),
+                entity.getVariant().getSize(),
+                entity.getVariant().getSize());
 
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
