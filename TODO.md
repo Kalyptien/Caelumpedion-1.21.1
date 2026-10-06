@@ -8,9 +8,6 @@ OISEAUX :
 
 - Intégrations des chants pour chaques oiseaux
 - Faire le spawn
-- Iridescente systeme
-
-- Craft des plumes
 
 - Plus de textures pour certains oiseaux
 

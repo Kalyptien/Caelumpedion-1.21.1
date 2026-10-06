@@ -4,6 +4,7 @@ import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import com.kalyptien.caelumpedion.util.BiomeRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
+import net.minecraft.core.Holder;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -13,6 +14,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -70,6 +72,8 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
             PasseriformeVariant variant = Util.getRandom(PasseriformeVariant.values(), this.random);
             this.setVariant(variant);
         }
+
+        Holder<Biome> holder = level.getBiome(this.blockPosition());
 
         return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
     }

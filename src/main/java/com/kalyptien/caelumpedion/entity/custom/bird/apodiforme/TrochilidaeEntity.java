@@ -32,7 +32,7 @@ public class TrochilidaeEntity extends FlyingBirdEntity {
         this.setAquaticBirdType(AquaticBirdType.NONE);
         this.setFlyPathType(FlyPathType.CHAOS);
 
-        this.flyRange = 30;
+        this.flyRange = 50;
         this.flyHeight = 30;
     }
 

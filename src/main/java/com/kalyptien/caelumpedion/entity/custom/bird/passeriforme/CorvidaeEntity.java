@@ -75,6 +75,8 @@ public class CorvidaeEntity extends SocialFlyingBirdEntity {
 
     public static enum CorvidaeVariant implements BirdVariant {
         PicaPica(0, "pica_pica", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new BiomeRegion[]{BiomeRegion.Europe, BiomeRegion.Asia}),
+        CorvusCorax(1, "corvus_corax", 1.3f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new BiomeRegion[]{BiomeRegion.Europe, BiomeRegion.Asia, BiomeRegion.NorthAmerica}),
+        CorvusMellori(2, "corvus_mellori", 1.0f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new BiomeRegion[]{BiomeRegion.Oceania}),
         ;
 
         private static final CorvidaeVariant[] BY_ID = Arrays.stream(values()).sorted(

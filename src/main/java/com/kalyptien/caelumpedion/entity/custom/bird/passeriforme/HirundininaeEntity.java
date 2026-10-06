@@ -1,6 +1,6 @@
 package com.kalyptien.caelumpedion.entity.custom.bird.passeriforme;
 
-import com.kalyptien.caelumpedion.entity.custom.common.CircleAroundFlyingMob;
+import com.kalyptien.caelumpedion.entity.ai.CircleAroundFlyingMob;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import com.kalyptien.caelumpedion.util.BiomeRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;

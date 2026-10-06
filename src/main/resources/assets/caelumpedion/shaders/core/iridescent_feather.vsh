@@ -35,6 +35,6 @@ void main() {
     vertexColor = minecraft_mix_light(Light0_Direction, Light1_Direction, Normal, Color);
     lightMapColor = texelFetch(Sampler2, UV2 / 16, 0);
     overlayColor = texelFetch(Sampler1, UV1, 0);
-    vertexOpacity = noise(Normal) * clamp(((UV2.x + UV2.y)/256.0), 0.0, 0.3);
+    vertexOpacity = noise(Normal) * clamp(((UV2.x + UV2.y)/256.0), 0.0, 0.4);
     texCoord0 = UV0;
 }
