@@ -1,8 +1,8 @@
 package com.kalyptien.caelumpedion.screen.custom;
 
-import com.kalyptien.caelumpedion.block.ModBlocks;
+import com.kalyptien.caelumpedion.block.CaelumpedionBlocks;
 import com.kalyptien.caelumpedion.block.entity.BirdFeederBlockEntity;
-import com.kalyptien.caelumpedion.screen.ModMenuTypes;
+import com.kalyptien.caelumpedion.screen.CaelumpedionMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -23,7 +23,7 @@ public class BirdFeederMenu extends AbstractContainerMenu {
     }
 
     public BirdFeederMenu(int containerId, Inventory inv, BlockEntity blockEntity) {
-        super(ModMenuTypes.BIRD_FEEDER_MENU.get(), containerId);
+        super(CaelumpedionMenuTypes.BIRD_FEEDER_MENU.get(), containerId);
         this.blockEntity = ((BirdFeederBlockEntity) blockEntity);
         this.level = inv.player.level();
 
@@ -94,7 +94,7 @@ public class BirdFeederMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                player, ModBlocks.BIRD_FEEDER.get());
+                player, CaelumpedionBlocks.BIRD_FEEDER.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

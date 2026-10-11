@@ -1,6 +1,6 @@
 package com.kalyptien.caelumpedion.entity.ai.goal;
 
-import com.kalyptien.caelumpedion.block.ModBlocks;
+import com.kalyptien.caelumpedion.block.CaelumpedionBlocks;
 import com.kalyptien.caelumpedion.block.entity.BirdFeederBlockEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
@@ -148,6 +148,6 @@ public class BirdFoodNerbyGoal extends Goal {
 
     protected boolean isValidTarget(LevelReader level, BlockPos pos) {
         BlockState blockstate = level.getBlockState(pos);
-        return blockstate.is(ModBlocks.BIRD_FEEDER);
+        return blockstate.is(CaelumpedionBlocks.BIRD_FEEDER);
     }
 }

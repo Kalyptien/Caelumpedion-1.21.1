@@ -14,7 +14,6 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -33,7 +32,7 @@ public class BirdFeederBlockEntity extends BlockEntity implements MenuProvider {
     };
 
     public BirdFeederBlockEntity(BlockPos pos, BlockState blockState) {
-        super(ModBlockEntities.BIRD_FEEDER_BE.get(), pos, blockState);
+        super(CaelumpedionBlockEntities.BIRD_FEEDER_BE.get(), pos, blockState);
     }
 
     public void drops() {

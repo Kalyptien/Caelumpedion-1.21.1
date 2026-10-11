@@ -1,9 +1,9 @@
 package com.kalyptien.caelumpedion;
 
-import com.kalyptien.caelumpedion.block.ModBlocks;
-import com.kalyptien.caelumpedion.block.entity.ModBlockEntities;
+import com.kalyptien.caelumpedion.block.CaelumpedionBlocks;
+import com.kalyptien.caelumpedion.block.entity.CaelumpedionBlockEntities;
 import com.kalyptien.caelumpedion.block.entity.renderer.BirdFeederBlockEntityRenderer;
-import com.kalyptien.caelumpedion.entity.ModEntities;
+import com.kalyptien.caelumpedion.entity.CaelumpedionEntities;
 import com.kalyptien.caelumpedion.entity.client.accipitridae.AccipitridaeRenderer;
 import com.kalyptien.caelumpedion.entity.client.anseriforme.AnseriformeRenderer;
 import com.kalyptien.caelumpedion.entity.client.columbiforme.ColumbiformeRenderer;
@@ -13,13 +13,17 @@ import com.kalyptien.caelumpedion.entity.client.hirundininae.HirundininaeRendere
 import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeRenderer;
 import com.kalyptien.caelumpedion.entity.client.ramphastidae.RamphastidaeRenderer;
 import com.kalyptien.caelumpedion.entity.client.trochilidae.TrochilidaeRenderer;
-import com.kalyptien.caelumpedion.item.ModCreativeModTabs;
-import com.kalyptien.caelumpedion.item.ModItems;
-import com.kalyptien.caelumpedion.screen.ModMenuTypes;
+import com.kalyptien.caelumpedion.item.CaelumpedionCreativeModTabs;
+import com.kalyptien.caelumpedion.item.CaelumpedionItems;
+import com.kalyptien.caelumpedion.screen.CaelumpedionMenuTypes;
 import com.kalyptien.caelumpedion.screen.custom.BirdFeederScreen;
+import com.kalyptien.caelumpedion.util.InitializationHandler;
+import com.kalyptien.caelumpedion.worldgen.CaelumpedionDensityFunctionTypes;
+import com.kalyptien.caelumpedion.worldgen.CaelumpedionDensityFunctions;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.*;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -44,17 +48,21 @@ public class CaelumpedionMod {
 
         NeoForge.EVENT_BUS.register(this);
 
-        ModCreativeModTabs.register(modEventBus);
+        CaelumpedionDensityFunctionTypes.register(modEventBus);
 
-        ModItems.register(modEventBus);
-        ModBlocks.register(modEventBus);
-        ModBlockEntities.register(modEventBus);
+        CaelumpedionCreativeModTabs.register(modEventBus);
 
-        ModMenuTypes.register(modEventBus);
+        CaelumpedionItems.register(modEventBus);
+        CaelumpedionBlocks.register(modEventBus);
+        CaelumpedionBlockEntities.register(modEventBus);
 
-        ModEntities.register(modEventBus);
+        CaelumpedionMenuTypes.register(modEventBus);
+
+        CaelumpedionEntities.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
+
+        NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, InitializationHandler::onServerAboutToStart);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
@@ -77,25 +85,25 @@ public class CaelumpedionMod {
 
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            EntityRenderers.register(ModEntities.PASSERIFORME.get(), PasseriformeRenderer::new);
-            EntityRenderers.register(ModEntities.HIRUNDININAE.get(), HirundininaeRenderer::new);
-            EntityRenderers.register(ModEntities.CORVIDAE.get(), CorvidaeRenderer::new);
-            EntityRenderers.register(ModEntities.ANSERIFORME.get(), AnseriformeRenderer::new);
-            EntityRenderers.register(ModEntities.ACCIPITRIFORME.get(), AccipitridaeRenderer::new);
-            EntityRenderers.register(ModEntities.RAMPHASTIDAE.get(), RamphastidaeRenderer::new);
-            EntityRenderers.register(ModEntities.GRUIFORME.get(), GruiformeRenderer::new);
-            EntityRenderers.register(ModEntities.TROCHILIDAE.get(), TrochilidaeRenderer::new);
-            EntityRenderers.register(ModEntities.COLUMBIFORME.get(), ColumbiformeRenderer::new);
+            EntityRenderers.register(CaelumpedionEntities.PASSERIFORME.get(), PasseriformeRenderer::new);
+            EntityRenderers.register(CaelumpedionEntities.HIRUNDININAE.get(), HirundininaeRenderer::new);
+            EntityRenderers.register(CaelumpedionEntities.CORVIDAE.get(), CorvidaeRenderer::new);
+            EntityRenderers.register(CaelumpedionEntities.ANSERIFORME.get(), AnseriformeRenderer::new);
+            EntityRenderers.register(CaelumpedionEntities.ACCIPITRIFORME.get(), AccipitridaeRenderer::new);
+            EntityRenderers.register(CaelumpedionEntities.RAMPHASTIDAE.get(), RamphastidaeRenderer::new);
+            EntityRenderers.register(CaelumpedionEntities.GRUIFORME.get(), GruiformeRenderer::new);
+            EntityRenderers.register(CaelumpedionEntities.TROCHILIDAE.get(), TrochilidaeRenderer::new);
+            EntityRenderers.register(CaelumpedionEntities.COLUMBIFORME.get(), ColumbiformeRenderer::new);
         }
 
         @SubscribeEvent
         public static void registerScreens(RegisterMenuScreensEvent event) {
-            event.register(ModMenuTypes.BIRD_FEEDER_MENU.get(), BirdFeederScreen::new);
+            event.register(CaelumpedionMenuTypes.BIRD_FEEDER_MENU.get(), BirdFeederScreen::new);
         }
 
         @SubscribeEvent
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
-            event.registerBlockEntityRenderer(ModBlockEntities.BIRD_FEEDER_BE.get(), BirdFeederBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(CaelumpedionBlockEntities.BIRD_FEEDER_BE.get(), BirdFeederBlockEntityRenderer::new);
         }
     }
 }
