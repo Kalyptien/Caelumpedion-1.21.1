@@ -1,0 +1,43 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": [
+    "minecraft:forest",
+    "minecraft:flower_forest",
+    "minecraft:dark_forest",
+    "minecraft:birch_forest",
+    "minecraft:old_growth_birch_forest",
+    "minecraft:taiga",
+    "minecraft:desert",
+    "minecraft:mangrove_swamp",
+    "minecraft:swamp",
+    "minecraft:windswept_savanna",
+    "minecraft:savanna_plateau",
+    "minecraft:old_growth_spruce_taiga",
+    "minecraft:sparse_jungle",
+    "minecraft:bamboo_jungle",
+    "minecraft:savanna",
+    "minecraft:snowy_beach",
+    "minecraft:snowy_plains",
+    "minecraft:snowy_slopes",
+    "minecraft:snowy_taiga",
+    "minecraft:jungle",
+    "minecraft:beach",
+    "minecraft:badlands",
+    "minecraft:eroded_badlands",
+    "minecraft:wooded_badlands",
+    "minecraft:ice_spikes",
+    "minecraft:jagged_peaks",
+    "minecraft:river",
+    "minecraft:stony_peaks",
+    "minecraft:stony_shore",
+    "minecraft:sunflower_plains",
+    "minecraft:frozen_river",
+    "minecraft:cherry_grove"
+  ],
+  "spawners": {
+    "type": "caelumpedion:passeriforme",
+    "maxCount": 6,
+    "minCount": 2,
+    "weight": 10
+  }
+}

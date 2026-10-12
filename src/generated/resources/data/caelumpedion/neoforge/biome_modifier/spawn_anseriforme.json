@@ -1,0 +1,17 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": [
+    "minecraft:river",
+    "minecraft:frozen_river",
+    "minecraft:swamp",
+    "minecraft:mangrove_swamp",
+    "minecraft:plains",
+    "minecraft:snowy_plains"
+  ],
+  "spawners": {
+    "type": "caelumpedion:anseriforme",
+    "maxCount": 6,
+    "minCount": 2,
+    "weight": 5
+  }
+}
