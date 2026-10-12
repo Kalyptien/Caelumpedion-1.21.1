@@ -2,7 +2,7 @@ package com.kalyptien.caelumpedion.entity.custom.bird.piciforme;
 
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
-import com.kalyptien.caelumpedion.util.BiomeRegion;
+import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.world.DifficultyInstance;
@@ -69,22 +69,25 @@ public class RamphastidaeEntity extends  SocialFlyingBirdEntity{
 
     // SPAWN
 
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        //Variants
-        if(spawnType == MobSpawnType.SPAWN_EGG){
-            RamphastidaeEntity.RamphastidaeVariant variant = Util.getRandom(RamphastidaeEntity.RamphastidaeVariant.values(), this.random);
-            this.setVariant(variant);
-        }
+    protected void setRandomVariant(){
+        RamphastidaeVariant variant = Util.getRandom(RamphastidaeVariant.values(), this.random);
+        this.setVariant(variant);
+    }
 
-        return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+    protected void setVariantFromIrlRegion(IRLRegion IrlRegionKey){
+        RamphastidaeVariant variant = RamphastidaeVariant.byRegion(IrlRegionKey, random.nextInt(RamphastidaeVariant.values().length));
+        this.setVariant(variant);
+    }
+
+    protected void setVariantFromId(int id){
+        RamphastidaeVariant variant = RamphastidaeVariant.byId(id);
+        this.setVariant(variant);
     }
 
     // Variant
 
     public static enum RamphastidaeVariant implements BirdVariant {
-        RamphastosToco(0, "ramphastos_toco", 1.0f, false, new FeatherColor[]{FeatherColor.Black,FeatherColor.White}, FeatherColor.White, new BiomeRegion[]{BiomeRegion.SouthAmerica}),
+        RamphastosToco(0, "ramphastos_toco", 1.0f, false, new FeatherColor[]{FeatherColor.Black,FeatherColor.White}, FeatherColor.White, new IRLRegion[]{IRLRegion.SouthAmerica}),
         ;
 
         private static final RamphastidaeVariant[] BY_ID = Arrays.stream(values()).sorted(
@@ -96,16 +99,16 @@ public class RamphastidaeEntity extends  SocialFlyingBirdEntity{
         private final boolean isIridescent;
         private final FeatherColor[] featherColor;
         private final FeatherColor childFeatherColor;
-        private final BiomeRegion[] biomeRegions;
+        private final IRLRegion[] IRLRegions;
 
-        RamphastidaeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, BiomeRegion[] biomeRegions) {
+        RamphastidaeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, IRLRegion[] IRLRegions) {
             this.id = id;
             this.fileName = fileName;
             this.size = size;
             this.isIridescent = isIridescent;
             this.featherColor = featherColor;
             this.childFeatherColor = childFeatherColor;
-            this.biomeRegions = biomeRegions;
+            this.IRLRegions = IRLRegions;
         }
 
         public int getId() {
@@ -141,15 +144,15 @@ public class RamphastidaeEntity extends  SocialFlyingBirdEntity{
         }
 
         @Override
-        public BiomeRegion[] getBiomeRegion() {
-            return biomeRegions;
+        public IRLRegion[] getBiomeRegion() {
+            return IRLRegions;
         }
 
         public static RamphastidaeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
         }
 
-        public static RamphastidaeVariant byRegion(BiomeRegion region, int id) {
+        public static RamphastidaeVariant byRegion(IRLRegion region, int id) {
             RamphastidaeVariant[] BY_REGION = Arrays.stream(values())
                     .filter(variant -> Arrays.stream(variant.getBiomeRegion())
                             .anyMatch(biomeRegion -> biomeRegion == region)).toArray(RamphastidaeVariant[]::new);

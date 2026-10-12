@@ -1,7 +1,7 @@
 package com.kalyptien.caelumpedion.datagen;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
-import com.kalyptien.caelumpedion.worldgen.CaelumpedionDensityFunctions;
+import com.kalyptien.caelumpedion.worldgen.densityFunction.CaelumpedionDensityFunctions;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;

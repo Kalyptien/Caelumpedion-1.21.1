@@ -22,10 +22,14 @@ import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.HirundininaeEn
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.PiciformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
+import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 
 @EventBusSubscriber(modid = CaelumpedionMod.MOD_ID)
 public class CaelumpedionEventBusEvents {
@@ -67,5 +71,35 @@ public class CaelumpedionEventBusEvents {
         event.put(CaelumpedionEntities.TROCHILIDAE.get(), TrochilidaeEntity.createAttributes().build());
 
         event.put(CaelumpedionEntities.COLUMBIFORME.get(), ColumbiformeEntity.createAttributes().build());
+    }
+
+    @SubscribeEvent
+    public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
+        event.register(CaelumpedionEntities.PASSERIFORME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING,
+                Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(CaelumpedionEntities.HIRUNDININAE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING,
+                Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(CaelumpedionEntities.CORVIDAE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING,
+                Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+
+        event.register(CaelumpedionEntities.ANSERIFORME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING,
+                Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+
+        event.register(CaelumpedionEntities.ACCIPITRIFORME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING,
+                Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+
+        event.register(CaelumpedionEntities.PICIFORME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING,
+                Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+        event.register(CaelumpedionEntities.RAMPHASTIDAE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING,
+                Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+
+        event.register(CaelumpedionEntities.GRUIFORME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING,
+                Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+
+        event.register(CaelumpedionEntities.TROCHILIDAE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING,
+                Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+
+        event.register(CaelumpedionEntities.COLUMBIFORME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING,
+                Animal::checkAnimalSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 }

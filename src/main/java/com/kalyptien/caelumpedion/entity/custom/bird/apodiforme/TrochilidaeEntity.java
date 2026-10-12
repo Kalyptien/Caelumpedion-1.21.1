@@ -2,8 +2,7 @@ package com.kalyptien.caelumpedion.entity.custom.bird.apodiforme;
 
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
-import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
-import com.kalyptien.caelumpedion.util.BiomeRegion;
+import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.tags.ItemTags;
@@ -17,7 +16,6 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -66,22 +64,25 @@ public class TrochilidaeEntity extends FlyingBirdEntity {
 
     // SPAWN
 
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        //Variants
-        if(spawnType == MobSpawnType.SPAWN_EGG){
-            TrochilidaeVariant variant = Util.getRandom(TrochilidaeVariant.values(), this.random);
-            this.setVariant(variant);
-        }
+    protected void setRandomVariant(){
+        TrochilidaeVariant variant = Util.getRandom(TrochilidaeVariant.values(), this.random);
+        this.setVariant(variant);
+    }
 
-        return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+    protected void setVariantFromIrlRegion(IRLRegion IrlRegionKey){
+        TrochilidaeVariant variant = TrochilidaeVariant.byRegion(IrlRegionKey, random.nextInt(TrochilidaeVariant.values().length));
+        this.setVariant(variant);
+    }
+
+    protected void setVariantFromId(int id){
+        TrochilidaeVariant variant = TrochilidaeVariant.byId(id);
+        this.setVariant(variant);
     }
 
     // Variant
 
     public static enum TrochilidaeVariant implements BirdVariant {
-        ColibriDelphinae(0, "colibri_delphinae", 1.0f, true, new FeatherColor[]{FeatherColor.Brown}, FeatherColor.Brown, new BiomeRegion[]{BiomeRegion.SouthAmerica}),
+        ColibriDelphinae(0, "colibri_delphinae", 1.0f, true, new FeatherColor[]{FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.SouthAmerica}),
         ;
 
         private static final TrochilidaeVariant[] BY_ID = Arrays.stream(values()).sorted(
@@ -93,16 +94,16 @@ public class TrochilidaeEntity extends FlyingBirdEntity {
         private final boolean isIridescent;
         private final FeatherColor[] featherColor;
         private final FeatherColor childFeatherColor;
-        private final BiomeRegion[] biomeRegions;
+        private final IRLRegion[] IRLRegions;
 
-        TrochilidaeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, BiomeRegion[] biomeRegions) {
+        TrochilidaeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, IRLRegion[] IRLRegions) {
             this.id = id;
             this.fileName = fileName;
             this.size = size;
             this.isIridescent = isIridescent;
             this.featherColor = featherColor;
             this.childFeatherColor = childFeatherColor;
-            this.biomeRegions = biomeRegions;
+            this.IRLRegions = IRLRegions;
         }
 
         public int getId() {
@@ -138,15 +139,15 @@ public class TrochilidaeEntity extends FlyingBirdEntity {
         }
 
         @Override
-        public BiomeRegion[] getBiomeRegion() {
-            return biomeRegions;
+        public IRLRegion[] getBiomeRegion() {
+            return IRLRegions;
         }
 
         public static TrochilidaeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
         }
 
-        public static TrochilidaeVariant byRegion(BiomeRegion region, int id) {
+        public static TrochilidaeVariant byRegion(IRLRegion region, int id) {
             TrochilidaeVariant[] BY_REGION = Arrays.stream(values())
                     .filter(variant -> Arrays.stream(variant.getBiomeRegion())
                             .anyMatch(biomeRegion -> biomeRegion == region)).toArray(TrochilidaeVariant[]::new);

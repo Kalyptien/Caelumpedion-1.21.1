@@ -2,7 +2,7 @@ package com.kalyptien.caelumpedion.entity.custom.bird.passeriforme;
 
 import com.kalyptien.caelumpedion.entity.ai.CircleAroundFlyingMob;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
-import com.kalyptien.caelumpedion.util.BiomeRegion;
+import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -115,22 +115,27 @@ public class HirundininaeEntity extends SocialFlyingBirdEntity implements Circle
 
     // SPAWN
 
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        //Variants
-        if(spawnType == MobSpawnType.SPAWN_EGG){
-            HirundininaeVariant variant = Util.getRandom(HirundininaeVariant.values(), this.random);
-            this.setVariant(variant);
-        }
+    // SPAWN
 
-        return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+    protected void setRandomVariant(){
+        HirundininaeVariant variant = Util.getRandom(HirundininaeVariant.values(), this.random);
+        this.setVariant(variant);
+    }
+
+    protected void setVariantFromIrlRegion(IRLRegion IrlRegionKey){
+        HirundininaeVariant variant = HirundininaeVariant.byRegion(IrlRegionKey, random.nextInt(HirundininaeVariant.values().length));
+        this.setVariant(variant);
+    }
+
+    protected void setVariantFromId(int id){
+        HirundininaeVariant variant = HirundininaeVariant.byId(id);
+        this.setVariant(variant);
     }
 
     // Variant
 
     public static enum HirundininaeVariant implements BirdVariant {
-        DelichonUrbicum(0, "delichon_urbicum", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new BiomeRegion[]{BiomeRegion.Europe, BiomeRegion.Asia, BiomeRegion.SouthAfrica, BiomeRegion.NorthAfrica}),
+        DelichonUrbicum(0, "delichon_urbicum", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.SouthAfrica, IRLRegion.NorthAfrica}),
         ;
 
         private static final HirundininaeVariant[] BY_ID = Arrays.stream(values()).sorted(
@@ -142,16 +147,16 @@ public class HirundininaeEntity extends SocialFlyingBirdEntity implements Circle
         private final boolean isIridescent;
         private final FeatherColor[] featherColor;
         private final FeatherColor childFeatherColor;
-        private final BiomeRegion[] biomeRegions;
+        private final IRLRegion[] IRLRegions;
 
-        HirundininaeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, BiomeRegion[] biomeRegions) {
+        HirundininaeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, IRLRegion[] IRLRegions) {
             this.id = id;
             this.fileName = fileName;
             this.size = size;
             this.isIridescent = isIridescent;
             this.featherColor = featherColor;
             this.childFeatherColor = childFeatherColor;
-            this.biomeRegions = biomeRegions;
+            this.IRLRegions = IRLRegions;
         }
 
         public int getId() {
@@ -187,15 +192,15 @@ public class HirundininaeEntity extends SocialFlyingBirdEntity implements Circle
         }
 
         @Override
-        public BiomeRegion[] getBiomeRegion() {
-            return biomeRegions;
+        public IRLRegion[] getBiomeRegion() {
+            return IRLRegions;
         }
 
         public static HirundininaeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
         }
 
-        public static HirundininaeVariant byRegion(BiomeRegion region, int id) {
+        public static HirundininaeVariant byRegion(IRLRegion region, int id) {
             HirundininaeVariant[] BY_REGION = Arrays.stream(values())
                     .filter(variant -> Arrays.stream(variant.getBiomeRegion())
                             .anyMatch(biomeRegion -> biomeRegion == region)).toArray(HirundininaeVariant[]::new);

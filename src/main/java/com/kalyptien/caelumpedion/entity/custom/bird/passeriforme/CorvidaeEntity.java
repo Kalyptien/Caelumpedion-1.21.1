@@ -1,7 +1,7 @@
 package com.kalyptien.caelumpedion.entity.custom.bird.passeriforme;
 
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
-import com.kalyptien.caelumpedion.util.BiomeRegion;
+import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.world.DifficultyInstance;
@@ -59,24 +59,27 @@ public class CorvidaeEntity extends SocialFlyingBirdEntity {
 
     // SPAWN
 
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        //Variants
-        if(spawnType == MobSpawnType.SPAWN_EGG){
-            CorvidaeVariant variant = Util.getRandom(CorvidaeVariant.values(), this.random);
-            this.setVariant(variant);
-        }
+    protected void setRandomVariant(){
+        CorvidaeVariant variant = Util.getRandom(CorvidaeVariant.values(), this.random);
+        this.setVariant(variant);
+    }
 
-        return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+    protected void setVariantFromIrlRegion(IRLRegion IrlRegionKey){
+        CorvidaeVariant variant = CorvidaeVariant.byRegion(IrlRegionKey, random.nextInt(CorvidaeVariant.values().length));
+        this.setVariant(variant);
+    }
+
+    protected void setVariantFromId(int id){
+        CorvidaeVariant variant = CorvidaeVariant.byId(id);
+        this.setVariant(variant);
     }
 
     // Variant
 
     public static enum CorvidaeVariant implements BirdVariant {
-        PicaPica(0, "pica_pica", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new BiomeRegion[]{BiomeRegion.Europe, BiomeRegion.Asia}),
-        CorvusCorax(1, "corvus_corax", 1.3f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new BiomeRegion[]{BiomeRegion.Europe, BiomeRegion.Asia, BiomeRegion.NorthAmerica}),
-        CorvusMellori(2, "corvus_mellori", 1.0f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new BiomeRegion[]{BiomeRegion.Oceania}),
+        PicaPica(0, "pica_pica", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia}),
+        CorvusCorax(1, "corvus_corax", 1.3f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.NorthAmerica}),
+        CorvusMellori(2, "corvus_mellori", 1.0f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Oceania}),
         ;
 
         private static final CorvidaeVariant[] BY_ID = Arrays.stream(values()).sorted(
@@ -88,16 +91,16 @@ public class CorvidaeEntity extends SocialFlyingBirdEntity {
         private final boolean isIridescent;
         private final FeatherColor[] featherColor;
         private final FeatherColor childFeatherColor;
-        private final BiomeRegion[] biomeRegions;
+        private final IRLRegion[] IRLRegions;
 
-        CorvidaeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, BiomeRegion[] biomeRegions) {
+        CorvidaeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, IRLRegion[] IRLRegions) {
             this.id = id;
             this.fileName = fileName;
             this.size = size;
             this.isIridescent = isIridescent;
             this.featherColor = featherColor;
             this.childFeatherColor = childFeatherColor;
-            this.biomeRegions = biomeRegions;
+            this.IRLRegions = IRLRegions;
         }
 
         public int getId() {
@@ -133,15 +136,15 @@ public class CorvidaeEntity extends SocialFlyingBirdEntity {
         }
 
         @Override
-        public BiomeRegion[] getBiomeRegion() {
-            return biomeRegions;
+        public IRLRegion[] getBiomeRegion() {
+            return IRLRegions;
         }
 
         public static CorvidaeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
         }
 
-        public static CorvidaeVariant byRegion(BiomeRegion region, int id) {
+        public static CorvidaeVariant byRegion(IRLRegion region, int id) {
             CorvidaeVariant[] BY_REGION = Arrays.stream(values())
                     .filter(variant -> Arrays.stream(variant.getBiomeRegion())
                             .anyMatch(biomeRegion -> biomeRegion == region)).toArray(CorvidaeVariant[]::new);

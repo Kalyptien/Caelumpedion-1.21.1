@@ -1,4 +1,4 @@
-package com.kalyptien.caelumpedion.worldgen;
+package com.kalyptien.caelumpedion.worldgen.densityFunction;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.worldgen.voronoiNoise.VoronoiDF;

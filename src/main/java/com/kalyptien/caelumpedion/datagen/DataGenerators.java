@@ -41,9 +41,9 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), blockTagsProvider);
         generator.addProvider(event.includeServer(), new CaelumpedionItemTagProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
 
-        /*generator.addProvider(event.includeServer(), new ModDataMapProvider(packOutput, lookupProvider));
+        //generator.addProvider(event.includeServer(), new ModDataMapProvider(packOutput, lookupProvider));
 
-        generator.addProvider(event.includeServer(), new ModDatapackProvider(packOutput, lookupProvider));*/
+        generator.addProvider(event.includeServer(), new CaelumpedionDatapackProvider(packOutput, lookupProvider));
 
         generator.addProvider(event.includeClient(), new CaelumpedionBlockStateProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new CaelumpedionItemModelProvider(packOutput, existingFileHelper));

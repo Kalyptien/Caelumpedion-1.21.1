@@ -1,7 +1,6 @@
-package com.kalyptien.caelumpedion.worldgen;
+package com.kalyptien.caelumpedion.worldgen.densityFunction;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
-import com.kalyptien.caelumpedion.worldgen.voronoiNoise.VoronoiDF;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;

@@ -23,7 +23,11 @@ public class VoronoiPlate {
 
         this.hash = (int) ((seed ^ xPrime ^ zPrime ^ yPrime) * 0x27d4eb2d);
 
-        this.value = this.hash * (1 / 2147493648.0f);
+        //this.value = this.hash * (1 / 2147493648.0f);
+
+        //Caelumpedion code
+        this.value = (double)Math.round(((this.hash * (1 / 2147493648.0f) + 1.0f) / 2.0f)*100.0f);
+        //Caelumpedion code
 
         int id = hash & 0x1FE;
 

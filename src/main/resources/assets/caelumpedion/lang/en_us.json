@@ -61,5 +61,13 @@
   "entity.mccourse.trochilidae": "Trochilidae",
   "entity.mccourse.columbiforme": "Columbiforme",
 
-  "block.caelumpedion.bird_feeder": "Bird Feeder"
+  "block.caelumpedion.bird_feeder": "Bird Feeder",
+
+  "irlregion.caelumpedion.europe.name": "Europe",
+  "irlregion.caelumpedion.northamerica.name": "North America",
+  "irlregion.caelumpedion.southamerica.name": "South America",
+  "irlregion.caelumpedion.oceania.name": "Oceania",
+  "irlregion.caelumpedion.northafrica.name": "North Africa",
+  "irlregion.caelumpedion.southafrica.name": "South Africa",
+  "irlregion.caelumpedion.asia.name": "Asia"
 }

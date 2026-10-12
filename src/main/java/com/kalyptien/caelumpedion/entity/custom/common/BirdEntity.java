@@ -1,11 +1,14 @@
 package com.kalyptien.caelumpedion.entity.custom.common;
 
-import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.block.entity.BirdFeederBlockEntity;
 import com.kalyptien.caelumpedion.entity.ai.BirdGroundPathNavigation;
 import com.kalyptien.caelumpedion.entity.ai.goal.*;
-import com.kalyptien.caelumpedion.util.BiomeRegion;
+import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.PiciformeEntity;
+import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
+import com.kalyptien.caelumpedion.util.LevelUtils;
+import net.minecraft.Util;
+import net.minecraft.core.QuartPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -13,29 +16,25 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ColorRGBA;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 
@@ -372,6 +371,56 @@ public abstract class BirdEntity extends Animal {
         }
     }
 
+    // spawn
+
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
+                                        MobSpawnType spawnType, @javax.annotation.Nullable SpawnGroupData spawnGroupData) {
+        //Variants
+        if(spawnType == MobSpawnType.SPAWN_EGG || spawnType == MobSpawnType.SPAWNER || spawnType == MobSpawnType.TRIAL_SPAWNER){
+            this.setRandomVariant();
+        }
+        else{
+            if (spawnGroupData == null) {
+                int i = QuartPos.fromBlock(this.blockPosition().getX());
+                int j = QuartPos.fromBlock(this.blockPosition().getY());
+                int k = QuartPos.fromBlock(this.blockPosition().getZ());
+
+                DensityFunction voronoi = LevelUtils.getVoronoiDensityFunction();
+
+                double voronoiValue = voronoi.compute(new DensityFunction.SinglePointContext(i,j,k));
+
+                IRLRegion IrlRegionKey = IRLRegion.byID((int)voronoiValue);
+
+                this.setVariantFromIrlRegion(IrlRegionKey);
+
+                spawnGroupData = new BirdGroupData(this.getIdVariant());
+            } else {
+                if(spawnGroupData instanceof BirdGroupData birdGroupData)
+                    this.setVariantFromId(birdGroupData.variantId);
+            }
+        }
+
+        return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+    }
+
+    protected abstract void setRandomVariant();
+
+    protected abstract void setVariantFromIrlRegion(IRLRegion IrlRegionKey);
+
+    protected abstract void setVariantFromId(int id);
+
+    //SpawnGroup
+
+    public static class BirdGroupData extends AgeableMob.AgeableMobGroupData {
+        public final int variantId;
+
+        public BirdGroupData(int variantId) {
+            super(false);
+            this.variantId = variantId;
+        }
+    }
+
     //Enum
 
     public interface BirdVariant{
@@ -382,7 +431,7 @@ public abstract class BirdEntity extends Animal {
         FeatherColor[] getFeatherColors();
         FeatherColor getFeatherColor(int id);
         FeatherColor getChildFeatherColor();
-        BiomeRegion[] getBiomeRegion();
+        IRLRegion[] getBiomeRegion();
         static int lenght(){return 0;};
     }
 

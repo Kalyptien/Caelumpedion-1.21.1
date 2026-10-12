@@ -21,6 +21,10 @@ LIVRE
 - Ajouter
 - Moyen de scanner les piafs
 
+IRLREGION
+- Trouver un moyen d'adapter la région au biome
+- Refaire les tags des biomes (?) => Faire un système de variant région/biome/id
+
 CANARD
 - Vol en V
 - Peche

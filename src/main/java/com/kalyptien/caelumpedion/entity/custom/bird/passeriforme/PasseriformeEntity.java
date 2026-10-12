@@ -1,7 +1,7 @@
 package com.kalyptien.caelumpedion.entity.custom.bird.passeriforme;
 
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
-import com.kalyptien.caelumpedion.util.BiomeRegion;
+import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
@@ -19,9 +19,6 @@ import net.minecraft.world.level.biome.Biome;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class PasseriformeEntity extends SocialFlyingBirdEntity {
 
@@ -64,31 +61,32 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
 
     // SPAWN
 
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        //Variants
-        if(spawnType == MobSpawnType.SPAWN_EGG){
-            PasseriformeVariant variant = Util.getRandom(PasseriformeVariant.values(), this.random);
-            this.setVariant(variant);
-        }
+    protected void setRandomVariant(){
+        PasseriformeVariant variant = Util.getRandom(PasseriformeVariant.values(), this.random);
+        this.setVariant(variant);
+    }
 
-        Holder<Biome> holder = level.getBiome(this.blockPosition());
+    protected void setVariantFromIrlRegion(IRLRegion IrlRegionKey){
+        PasseriformeVariant variant = PasseriformeVariant.byRegion(IrlRegionKey, random.nextInt(PasseriformeVariant.values().length));
+        this.setVariant(variant);
+    }
 
-        return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+    protected void setVariantFromId(int id){
+        PasseriformeVariant variant = PasseriformeVariant.byId(id);
+        this.setVariant(variant);
     }
 
     // Variant
 
     public enum PasseriformeVariant implements BirdVariant {
-        CardinalisCardinalis(0, "cardinalis_cardinalis", 1.0f, false, new FeatherColor[]{FeatherColor.Red}, FeatherColor.Brown, new BiomeRegion[]{BiomeRegion.NorthAmerica}),
-        CyanistesCaeruleus(1, "cyanistes_caeruleus", 1.0f, false, new FeatherColor[]{FeatherColor.LightBlue, FeatherColor.Yellow}, FeatherColor.Yellow, new BiomeRegion[]{BiomeRegion.Europe}),
-        CyanocittaCristata(2, "cyanocitta_cristata", 1.0f, false, new FeatherColor[]{FeatherColor.Cyan, FeatherColor.White}, FeatherColor.Blue, new BiomeRegion[]{BiomeRegion.NorthAmerica}),
-        ErithacusRubecula(3, "erithacus_rubecula", 1.0f, false, new FeatherColor[]{FeatherColor.Orange, FeatherColor.Gray, FeatherColor.Brown}, FeatherColor.Brown, new BiomeRegion[]{BiomeRegion.Europe}),
-        LophophanesCristatus(4, "lophophanes_cristatus", 1.0f, false, new FeatherColor[]{FeatherColor.White, FeatherColor.Brown}, FeatherColor.Brown, new BiomeRegion[]{BiomeRegion.Europe}),
-        PasserDomesticus(5, "passer_domesticus", 1.0f, false, new FeatherColor[]{FeatherColor.Gray, FeatherColor.Brown}, FeatherColor.Gray, new BiomeRegion[]{BiomeRegion.Europe, BiomeRegion.NorthAmerica, BiomeRegion.SouthAmerica, BiomeRegion.SouthAfrica, BiomeRegion.Oceania, BiomeRegion.Asia}),
-        PeriparusAter(6, "periparus_ater", 1.0f, false, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new BiomeRegion[]{BiomeRegion.Europe, BiomeRegion.Asia}),
-        PhoenicurusOchruros(7, "phoenicurus_ochruros", 1.0f, false, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Gray, new BiomeRegion[]{BiomeRegion.Europe, BiomeRegion.NorthAfrica, BiomeRegion.Asia}),
+        CardinalisCardinalis(0, "cardinalis_cardinalis", 1.0f, false, new FeatherColor[]{FeatherColor.Red}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.NorthAmerica}),
+        CyanistesCaeruleus(1, "cyanistes_caeruleus", 1.0f, false, new FeatherColor[]{FeatherColor.LightBlue, FeatherColor.Yellow}, FeatherColor.Yellow, new IRLRegion[]{IRLRegion.Europe}),
+        CyanocittaCristata(2, "cyanocitta_cristata", 1.0f, false, new FeatherColor[]{FeatherColor.Cyan, FeatherColor.White}, FeatherColor.Blue, new IRLRegion[]{IRLRegion.NorthAmerica}),
+        ErithacusRubecula(3, "erithacus_rubecula", 1.0f, false, new FeatherColor[]{FeatherColor.Orange, FeatherColor.Gray, FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Europe}),
+        LophophanesCristatus(4, "lophophanes_cristatus", 1.0f, false, new FeatherColor[]{FeatherColor.White, FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Europe}),
+        PasserDomesticus(5, "passer_domesticus", 1.0f, false, new FeatherColor[]{FeatherColor.Gray, FeatherColor.Brown}, FeatherColor.Gray, new IRLRegion[]{IRLRegion.Europe, IRLRegion.NorthAmerica, IRLRegion.SouthAmerica, IRLRegion.SouthAfrica, IRLRegion.Oceania, IRLRegion.Asia}),
+        PeriparusAter(6, "periparus_ater", 1.0f, false, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia}),
+        PhoenicurusOchruros(7, "phoenicurus_ochruros", 1.0f, false, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Gray, new IRLRegion[]{IRLRegion.Europe, IRLRegion.NorthAfrica, IRLRegion.Asia}),
         ;
 
         private static final PasseriformeVariant[] BY_ID = Arrays.stream(values()).sorted(
@@ -100,16 +98,16 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
         private final boolean isIridescent;
         private final FeatherColor[] featherColor;
         private final FeatherColor childFeatherColor;
-        private final BiomeRegion[] biomeRegions;
+        private final IRLRegion[] IRLRegions;
 
-        PasseriformeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, BiomeRegion[] biomeRegions) {
+        PasseriformeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, IRLRegion[] IRLRegions) {
             this.id = id;
             this.fileName = fileName;
             this.size = size;
             this.isIridescent = isIridescent;
             this.featherColor = featherColor;
             this.childFeatherColor = childFeatherColor;
-            this.biomeRegions = biomeRegions;
+            this.IRLRegions = IRLRegions;
         }
 
         public int getId() {
@@ -145,15 +143,15 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
         }
 
         @Override
-        public BiomeRegion[] getBiomeRegion() {
-            return biomeRegions;
+        public IRLRegion[] getBiomeRegion() {
+            return IRLRegions;
         }
 
         public static PasseriformeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
         }
 
-        public static PasseriformeVariant byRegion(BiomeRegion region, int id) {
+        public static PasseriformeVariant byRegion(IRLRegion region, int id) {
             PasseriformeVariant[] BY_REGION = Arrays.stream(values())
                     .filter(variant -> Arrays.stream(variant.getBiomeRegion())
                             .anyMatch(biomeRegion -> biomeRegion == region)).toArray(PasseriformeVariant[]::new);

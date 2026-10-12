@@ -1,9 +1,8 @@
 package com.kalyptien.caelumpedion.util;
 
-import com.kalyptien.caelumpedion.worldgen.CaelumpedionDensityFunctions;
+import com.kalyptien.caelumpedion.worldgen.densityFunction.CaelumpedionDensityFunctions;
 import com.kalyptien.caelumpedion.worldgen.voronoiNoise.VoronoiDF;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.MinecraftServer;

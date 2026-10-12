@@ -1,5 +1,8 @@
 {
   "type": "caelumpedion:voronoi",
+  "jitter": 0.5,
+  "metric": 5,
   "mode": 1,
-  "scale": 10.0
+  "salt": 4206967,
+  "scale": 350.0
 }

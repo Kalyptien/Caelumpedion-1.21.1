@@ -3,8 +3,7 @@ package com.kalyptien.caelumpedion.entity.custom.bird.piciforme;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
-import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
-import com.kalyptien.caelumpedion.util.BiomeRegion;
+import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.world.DifficultyInstance;
@@ -59,22 +58,25 @@ public class PiciformeEntity extends FlyingBirdEntity {
 
     // SPAWN
 
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        //Variants
-        if(spawnType == MobSpawnType.SPAWN_EGG){
-            PiciformeVariant variant = Util.getRandom(PiciformeVariant.values(), this.random);
-            this.setVariant(variant);
-        }
+    protected void setRandomVariant(){
+        PiciformeVariant variant = Util.getRandom(PiciformeVariant.values(), this.random);
+        this.setVariant(variant);
+    }
 
-        return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+    protected void setVariantFromIrlRegion(IRLRegion IrlRegionKey){
+        PiciformeVariant variant = PiciformeVariant.byRegion(IrlRegionKey, random.nextInt(PiciformeVariant.values().length));
+        this.setVariant(variant);
+    }
+
+    protected void setVariantFromId(int id){
+        PiciformeVariant variant = PiciformeVariant.byId(id);
+        this.setVariant(variant);
     }
 
     // Variant
 
     public static enum PiciformeVariant implements BirdVariant {
-        PicusViridis(0, "picus_viridis", 1.0f, false, new FeatherColor[]{FeatherColor.Lime, FeatherColor.White}, FeatherColor.Green, new BiomeRegion[]{BiomeRegion.Europe}),
+        PicusViridis(0, "picus_viridis", 1.0f, false, new FeatherColor[]{FeatherColor.Lime, FeatherColor.White}, FeatherColor.Green, new IRLRegion[]{IRLRegion.Europe}),
         ;
 
         private static final PiciformeVariant[] BY_ID = Arrays.stream(values()).sorted(
@@ -86,16 +88,16 @@ public class PiciformeEntity extends FlyingBirdEntity {
         private final boolean isIridescent;
         private final FeatherColor[] featherColor;
         private final FeatherColor childFeatherColor;
-        private final BiomeRegion[] biomeRegions;
+        private final IRLRegion[] IRLRegions;
 
-        PiciformeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, BiomeRegion[] biomeRegions) {
+        PiciformeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, IRLRegion[] IRLRegions) {
             this.id = id;
             this.fileName = fileName;
             this.size = size;
             this.isIridescent = isIridescent;
             this.featherColor = featherColor;
             this.childFeatherColor = childFeatherColor;
-            this.biomeRegions = biomeRegions;
+            this.IRLRegions = IRLRegions;
         }
 
         public int getId() {
@@ -131,15 +133,15 @@ public class PiciformeEntity extends FlyingBirdEntity {
         }
 
         @Override
-        public BiomeRegion[] getBiomeRegion() {
-            return biomeRegions;
+        public IRLRegion[] getBiomeRegion() {
+            return IRLRegions;
         }
 
         public static PiciformeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
         }
 
-        public static PiciformeVariant byRegion(BiomeRegion region, int id) {
+        public static PiciformeVariant byRegion(IRLRegion region, int id) {
             PiciformeVariant[] BY_REGION = Arrays.stream(values())
                     .filter(variant -> Arrays.stream(variant.getBiomeRegion())
                             .anyMatch(biomeRegion -> biomeRegion == region)).toArray(PiciformeVariant[]::new);
