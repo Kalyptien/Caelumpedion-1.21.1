@@ -17,7 +17,6 @@ import com.kalyptien.caelumpedion.item.CaelumpedionCreativeModTabs;
 import com.kalyptien.caelumpedion.item.CaelumpedionItems;
 import com.kalyptien.caelumpedion.screen.CaelumpedionMenuTypes;
 import com.kalyptien.caelumpedion.screen.custom.BirdFeederScreen;
-import com.kalyptien.caelumpedion.util.InitializationHandler;
 import com.kalyptien.caelumpedion.worldgen.densityFunction.CaelumpedionDensityFunctionTypes;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.*;

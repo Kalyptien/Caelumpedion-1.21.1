@@ -40,6 +40,7 @@ public class DataGenerators {
         BlockTagsProvider blockTagsProvider = new CaelumpedionBlockTagProvider(packOutput, lookupProvider, existingFileHelper);
         generator.addProvider(event.includeServer(), blockTagsProvider);
         generator.addProvider(event.includeServer(), new CaelumpedionItemTagProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
+        generator.addProvider(event.includeServer(), new CaelumpedionBiomeTagProvider(packOutput, lookupProvider, existingFileHelper));
 
         //generator.addProvider(event.includeServer(), new ModDataMapProvider(packOutput, lookupProvider));
 

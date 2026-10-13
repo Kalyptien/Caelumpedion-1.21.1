@@ -2,7 +2,7 @@ package com.kalyptien.caelumpedion.datagen;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.item.CaelumpedionItems;
-import com.kalyptien.caelumpedion.util.ModTags;
+import com.kalyptien.caelumpedion.util.CaelumpedionTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -21,7 +21,7 @@ public class CaelumpedionItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(ModTags.Items.FEATHERS)
+        tag(CaelumpedionTags.Items.FEATHERS)
                 .add(CaelumpedionItems.LIGHT_GRAY_FEATHER.get())
                 .add(CaelumpedionItems.GRAY_FEATHER.get())
                 .add(CaelumpedionItems.BLACK_FEATHER.get())

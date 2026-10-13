@@ -1,14 +1,17 @@
 package com.kalyptien.caelumpedion.entity.custom.bird.anseriforme;
 
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
+import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
@@ -24,6 +27,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.Nullable;
@@ -113,18 +117,55 @@ public class AnseriformeEntity extends SocialFlyingBirdEntity implements Neutral
 
     protected void setRandomVariant(){
         AnseriformeVariant variant = Util.getRandom(AnseriformeVariant.values(), this.random);
+
         this.setVariant(variant);
     }
 
-    protected void setVariantFromIrlRegion(IRLRegion IrlRegionKey){
-        AnseriformeVariant variant = AnseriformeVariant.byRegion(IrlRegionKey, random.nextInt(AnseriformeVariant.values().length));
-        this.setVariant(variant);
+    protected boolean setVariantFromIrlRegionBiome(Holder<Biome> holder, IRLRegion IrlRegionKey, int randomInt){
+        AnseriformeVariant variant = AnseriformeVariant.byIrlRegionBiome(holder, IrlRegionKey, randomInt);
+
+        if(variant != null){
+            this.setVariant(variant);
+            return true;
+        }
+        else{
+            return false;
+        }
+    };
+
+    protected boolean setVariantFromBiome(Holder<Biome> holder, int randomInt){
+        AnseriformeVariant variant = AnseriformeVariant.byBiome(holder, randomInt);
+
+        if(variant != null){
+            this.setVariant(variant);
+            return true;
+        }
+        else{
+            return false;
+        }
+    };
+
+    protected boolean setVariantFromIrlRegion(IRLRegion IrlRegionKey, int randomInt){
+        AnseriformeVariant variant = AnseriformeVariant.byRegion(IrlRegionKey, randomInt);
+
+        if(variant != null){
+            this.setVariant(variant);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     protected void setVariantFromId(int id){
         AnseriformeVariant variant = AnseriformeVariant.byId(id);
+
         this.setVariant(variant);
     }
+
+    protected int getVariantLength(){
+        return AnseriformeVariant.lenght();
+    };
 
     //ANGER
 
@@ -180,21 +221,17 @@ public class AnseriformeEntity extends SocialFlyingBirdEntity implements Neutral
 
     public static enum AnseriformeVariant implements BirdVariant {
         // Duck
-        AnasErythrorhyncha(0, "anas_erythrorhyncha", 1.0f, false, new FeatherColor[]{FeatherColor.Brown, FeatherColor.White}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.SouthAfrica}),
-        AnasPlatyrhynchos(1, "anas_platyrhynchos", 1.0f, true, new FeatherColor[]{FeatherColor.Gray, FeatherColor.Brown, FeatherColor.Green}, FeatherColor.Yellow, new IRLRegion[]{IRLRegion.NorthAmerica, IRLRegion.Europe, IRLRegion.NorthAfrica, IRLRegion.Asia, IRLRegion.Oceania}),
-        CairinaMoschata(2, "cairina_moschata", 1.0f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new IRLRegion[]{IRLRegion.SouthAmerica}),
+        AnasErythrorhyncha(0, "anas_erythrorhyncha", 1.0f, false, new FeatherColor[]{FeatherColor.Brown, FeatherColor.White}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.SouthAfrica}, null),
+        AnasPlatyrhynchos(1, "anas_platyrhynchos", 1.0f, true, new FeatherColor[]{FeatherColor.Gray, FeatherColor.Brown, FeatherColor.Green}, FeatherColor.Yellow, new IRLRegion[]{IRLRegion.NorthAmerica, IRLRegion.Europe, IRLRegion.NorthAfrica, IRLRegion.Asia, IRLRegion.Oceania}, null),
+        CairinaMoschata(2, "cairina_moschata", 1.0f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new IRLRegion[]{IRLRegion.SouthAmerica}, null),
 
         // Goose
-        AnserAnser(3, "anser_anser", 1.3f, false, new FeatherColor[]{FeatherColor.LightGray, FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia}),
-        //AnserCaerulescens(x, "anser_caerulescens", 1.3f),
-        //AnserCanagicus(x, "anser_canagicus", 1.3f),
-        BrantaHutchinsii(4, "branta_hutchinsii", 1.3f, false, new FeatherColor[]{FeatherColor.Black,FeatherColor.White, FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.NorthAmerica}),
-        //BrantaRuficollis(x, "branta_ruficollis", 1.3f),
+        AnserAnser(3, "anser_anser", 1.3f, false, new FeatherColor[]{FeatherColor.LightGray, FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia}, null),
+        BrantaHutchinsii(4, "branta_hutchinsii", 1.3f, false, new FeatherColor[]{FeatherColor.Black,FeatherColor.White, FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.NorthAmerica}, null),
 
         // Swan
-        CygnusAtratus(5,"cygnus_atratus", 1.5f, false, new FeatherColor[]{FeatherColor.Black}, FeatherColor.White, new IRLRegion[]{IRLRegion.Oceania}),
-        CygnusOlor(6, "cygnus_olor", 1.5f, false, new FeatherColor[]{FeatherColor.White}, FeatherColor.White, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia}),
-        //CygnusBuccinator(x, "cygnus_buccinator", 1.5f),
+        CygnusAtratus(5,"cygnus_atratus", 1.5f, false, new FeatherColor[]{FeatherColor.Black}, FeatherColor.White, new IRLRegion[]{IRLRegion.Oceania}, null),
+        CygnusOlor(6, "cygnus_olor", 1.5f, false, new FeatherColor[]{FeatherColor.White}, FeatherColor.White, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia}, null),
         ;
 
         private static final AnseriformeVariant[] BY_ID = Arrays.stream(values()).sorted(
@@ -207,8 +244,10 @@ public class AnseriformeEntity extends SocialFlyingBirdEntity implements Neutral
         private final FeatherColor[] featherColor;
         private final FeatherColor childFeatherColor;
         private final IRLRegion[] IRLRegions;
+        @Nullable
+        private final TagKey<Biome> biomeTagKey;
 
-        AnseriformeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, IRLRegion[] IRLRegions) {
+        AnseriformeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, IRLRegion[] IRLRegions, TagKey<Biome> biomeTagKey) {
             this.id = id;
             this.fileName = fileName;
             this.size = size;
@@ -216,6 +255,7 @@ public class AnseriformeEntity extends SocialFlyingBirdEntity implements Neutral
             this.featherColor = featherColor;
             this.childFeatherColor = childFeatherColor;
             this.IRLRegions = IRLRegions;
+            this.biomeTagKey = biomeTagKey;
         }
 
         public int getId() {
@@ -255,16 +295,55 @@ public class AnseriformeEntity extends SocialFlyingBirdEntity implements Neutral
             return IRLRegions;
         }
 
+        @Override
+        public TagKey<Biome> getBiomeTagKey() {
+            return biomeTagKey;
+        }
+
         public static AnseriformeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
+        }
+
+        public static AnseriformeVariant byIrlRegionBiome(Holder<Biome> holder, IRLRegion region, int id) {
+            AnseriformeVariant[] BY_BIOME = Arrays.stream(values())
+                    .filter(variant -> variant.getBiomeTagKey() != null && holder.is(variant.getBiomeTagKey())).toArray(AnseriformeVariant[]::new);
+
+            AnseriformeVariant[] BY_BIOMEREGION = Arrays.stream(BY_BIOME)
+                    .filter(variant -> Arrays.stream(variant.getBiomeRegion())
+                            .anyMatch(irlRegion -> irlRegion == region)).toArray(AnseriformeVariant[]::new);
+
+            if(BY_BIOMEREGION.length != 0){
+                return BY_BIOMEREGION[id % BY_BIOMEREGION.length];
+            }
+            else{
+                return null;
+            }
         }
 
         public static AnseriformeVariant byRegion(IRLRegion region, int id) {
             AnseriformeVariant[] BY_REGION = Arrays.stream(values())
                     .filter(variant -> Arrays.stream(variant.getBiomeRegion())
-                            .anyMatch(biomeRegion -> biomeRegion == region)).toArray(AnseriformeVariant[]::new);
+                            .anyMatch(irlRegion -> irlRegion == region)).toArray(AnseriformeVariant[]::new);
 
-            return BY_REGION[id % BY_REGION.length];
+            if(BY_REGION.length != 0){
+                return BY_REGION[id % BY_REGION.length];
+
+            }
+            else{
+                return null;
+            }
+        }
+
+        public static AnseriformeVariant byBiome(Holder<Biome> holder, int id) {
+            AnseriformeVariant[] BY_BIOME = Arrays.stream(values())
+                    .filter(variant -> variant.getBiomeTagKey() != null && holder.is(variant.getBiomeTagKey())).toArray(AnseriformeVariant[]::new);
+
+            if(BY_BIOME.length != 0){
+                return BY_BIOME[id % BY_BIOME.length];
+            }
+            else{
+                return null;
+            }
         }
 
         public static int lenght(){

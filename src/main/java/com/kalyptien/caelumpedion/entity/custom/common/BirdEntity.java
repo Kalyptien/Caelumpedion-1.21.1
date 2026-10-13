@@ -3,11 +3,11 @@ package com.kalyptien.caelumpedion.entity.custom.common;
 import com.kalyptien.caelumpedion.block.entity.BirdFeederBlockEntity;
 import com.kalyptien.caelumpedion.entity.ai.BirdGroundPathNavigation;
 import com.kalyptien.caelumpedion.entity.ai.goal.*;
-import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.PiciformeEntity;
+import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
-import com.kalyptien.caelumpedion.util.LevelUtils;
-import net.minecraft.Util;
+import com.kalyptien.caelumpedion.util.VoronoiLevel;
+import net.minecraft.core.Holder;
 import net.minecraft.core.QuartPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,13 +26,13 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.material.FluidState;
@@ -382,17 +383,30 @@ public abstract class BirdEntity extends Animal {
         }
         else{
             if (spawnGroupData == null) {
-                int i = QuartPos.fromBlock(this.blockPosition().getX());
-                int j = QuartPos.fromBlock(this.blockPosition().getY());
-                int k = QuartPos.fromBlock(this.blockPosition().getZ());
 
-                DensityFunction voronoi = LevelUtils.getVoronoiDensityFunction();
+                Holder<Biome> holder = level.getBiome(this.blockPosition());
 
-                double voronoiValue = voronoi.compute(new DensityFunction.SinglePointContext(i,j,k));
+                IRLRegion IrlRegion = VoronoiLevel.getVoronoiIrlRegion(holder ,this.blockPosition());
 
-                IRLRegion IrlRegionKey = IRLRegion.byID((int)voronoiValue);
+                int randomInt = random.nextInt(this.getVariantLength());
 
-                this.setVariantFromIrlRegion(IrlRegionKey);
+                boolean isVariantApply = false;
+
+                //Check By IrlRegion/Biome
+
+                isVariantApply = this.setVariantFromIrlRegionBiome(holder, IrlRegion, randomInt);
+
+                //Check By Biome
+
+                if(!isVariantApply) isVariantApply = this.setVariantFromBiome(holder, randomInt);
+
+                //Check By IrlRegion
+
+                if(!isVariantApply) isVariantApply = this.setVariantFromIrlRegion(IrlRegion, randomInt);
+
+                //Go crazy
+
+                if(!isVariantApply) this.setRandomVariant();
 
                 spawnGroupData = new BirdGroupData(this.getIdVariant());
             } else {
@@ -406,9 +420,15 @@ public abstract class BirdEntity extends Animal {
 
     protected abstract void setRandomVariant();
 
-    protected abstract void setVariantFromIrlRegion(IRLRegion IrlRegionKey);
+    protected abstract boolean setVariantFromIrlRegionBiome(Holder<Biome> holder, IRLRegion IrlRegionKey, int randomInt);
+
+    protected abstract boolean setVariantFromBiome(Holder<Biome> holder, int randomInt);
+
+    protected abstract boolean setVariantFromIrlRegion(IRLRegion IrlRegionKey, int randomInt);
 
     protected abstract void setVariantFromId(int id);
+
+    protected abstract int getVariantLength();
 
     //SpawnGroup
 
@@ -432,6 +452,7 @@ public abstract class BirdEntity extends Animal {
         FeatherColor getFeatherColor(int id);
         FeatherColor getChildFeatherColor();
         IRLRegion[] getBiomeRegion();
+        TagKey<Biome> getBiomeTagKey();
         static int lenght(){return 0;};
     }
 

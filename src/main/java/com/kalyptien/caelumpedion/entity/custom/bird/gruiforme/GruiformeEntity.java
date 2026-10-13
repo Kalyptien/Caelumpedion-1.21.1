@@ -1,14 +1,17 @@
 package com.kalyptien.caelumpedion.entity.custom.bird.gruiforme;
 
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
+import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
@@ -24,6 +27,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.Tags;
 
 import javax.annotation.Nullable;
@@ -113,18 +117,55 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
 
     protected void setRandomVariant(){
         GruiformeVariant variant = Util.getRandom(GruiformeVariant.values(), this.random);
+
         this.setVariant(variant);
     }
 
-    protected void setVariantFromIrlRegion(IRLRegion IrlRegionKey){
-        GruiformeVariant variant = GruiformeVariant.byRegion(IrlRegionKey, random.nextInt(GruiformeVariant.values().length));
-        this.setVariant(variant);
+    protected boolean setVariantFromIrlRegionBiome(Holder<Biome> holder, IRLRegion IrlRegionKey, int randomInt){
+        GruiformeVariant variant = GruiformeVariant.byIrlRegionBiome(holder, IrlRegionKey, randomInt);
+
+        if(variant != null){
+            this.setVariant(variant);
+            return true;
+        }
+        else{
+            return false;
+        }
+    };
+
+    protected boolean setVariantFromBiome(Holder<Biome> holder, int randomInt){
+        GruiformeVariant variant = GruiformeVariant.byBiome(holder, randomInt);
+
+        if(variant != null){
+            this.setVariant(variant);
+            return true;
+        }
+        else{
+            return false;
+        }
+    };
+
+    protected boolean setVariantFromIrlRegion(IRLRegion IrlRegionKey, int randomInt){
+        GruiformeVariant variant = GruiformeVariant.byRegion(IrlRegionKey, randomInt);
+
+        if(variant != null){
+            this.setVariant(variant);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     protected void setVariantFromId(int id){
         GruiformeVariant variant = GruiformeVariant.byId(id);
+
         this.setVariant(variant);
     }
+
+    protected int getVariantLength(){
+        return GruiformeVariant.lenght();
+    };
 
     //ANGER
 
@@ -179,7 +220,7 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
     // Variant
 
     public static enum GruiformeVariant implements BirdVariant {
-        GrusJaponensis(0, "grus_japonensis", 1.0f, false, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Asia}),
+        GrusJaponensis(0, "grus_japonensis", 1.0f, false, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Asia}, null),
         ;
 
         private static final GruiformeVariant[] BY_ID = Arrays.stream(values()).sorted(
@@ -192,8 +233,10 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
         private final FeatherColor[] featherColor;
         private final FeatherColor childFeatherColor;
         private final IRLRegion[] IRLRegions;
+        @Nullable
+        private final TagKey<Biome> biomeTagKey;
 
-        GruiformeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, IRLRegion[] IRLRegions) {
+        GruiformeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, IRLRegion[] IRLRegions, TagKey<Biome> biomeTagKey) {
             this.id = id;
             this.fileName = fileName;
             this.size = size;
@@ -201,6 +244,7 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
             this.featherColor = featherColor;
             this.childFeatherColor = childFeatherColor;
             this.IRLRegions = IRLRegions;
+            this.biomeTagKey = biomeTagKey;
         }
 
         public int getId() {
@@ -240,16 +284,55 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
             return IRLRegions;
         }
 
+        @Override
+        public TagKey<Biome> getBiomeTagKey() {
+            return biomeTagKey;
+        }
+
         public static GruiformeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
+        }
+
+        public static GruiformeVariant byIrlRegionBiome(Holder<Biome> holder, IRLRegion region, int id) {
+            GruiformeVariant[] BY_BIOME = Arrays.stream(values())
+                    .filter(variant -> variant.getBiomeTagKey() != null && holder.is(variant.getBiomeTagKey())).toArray(GruiformeVariant[]::new);
+
+            GruiformeVariant[] BY_BIOMEREGION = Arrays.stream(BY_BIOME)
+                    .filter(variant -> Arrays.stream(variant.getBiomeRegion())
+                            .anyMatch(irlRegion -> irlRegion == region)).toArray(GruiformeVariant[]::new);
+
+            if(BY_BIOMEREGION.length != 0){
+                return BY_BIOMEREGION[id % BY_BIOMEREGION.length];
+            }
+            else{
+                return null;
+            }
         }
 
         public static GruiformeVariant byRegion(IRLRegion region, int id) {
             GruiformeVariant[] BY_REGION = Arrays.stream(values())
                     .filter(variant -> Arrays.stream(variant.getBiomeRegion())
-                            .anyMatch(biomeRegion -> biomeRegion == region)).toArray(GruiformeVariant[]::new);
+                            .anyMatch(irlRegion -> irlRegion == region)).toArray(GruiformeVariant[]::new);
 
-            return BY_REGION[id % BY_REGION.length];
+            if(BY_REGION.length != 0){
+                return BY_REGION[id % BY_REGION.length];
+
+            }
+            else{
+                return null;
+            }
+        }
+
+        public static GruiformeVariant byBiome(Holder<Biome> holder, int id) {
+            GruiformeVariant[] BY_BIOME = Arrays.stream(values())
+                    .filter(variant -> variant.getBiomeTagKey() != null && holder.is(variant.getBiomeTagKey())).toArray(GruiformeVariant[]::new);
+
+            if(BY_BIOME.length != 0){
+                return BY_BIOME[id % BY_BIOME.length];
+            }
+            else{
+                return null;
+            }
         }
 
         public static int lenght(){

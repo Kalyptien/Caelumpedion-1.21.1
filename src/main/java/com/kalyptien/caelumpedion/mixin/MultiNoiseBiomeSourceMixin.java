@@ -1,7 +1,6 @@
 package com.kalyptien.caelumpedion.mixin;
 
-import com.kalyptien.caelumpedion.util.IRLRegion;
-import com.kalyptien.caelumpedion.util.LevelUtils;
+import com.kalyptien.caelumpedion.util.VoronoiLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.QuartPos;
@@ -9,7 +8,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
-import net.minecraft.world.level.levelgen.DensityFunction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,12 +28,8 @@ public abstract class MultiNoiseBiomeSourceMixin {
         int j = QuartPos.fromBlock(pos.getY());
         int k = QuartPos.fromBlock(pos.getZ());
 
-        DensityFunction voronoi = LevelUtils.getVoronoiDensityFunction();
+        Holder<Biome> holderBiome = this.getNoiseBiome(i,j,k,sampler);
 
-        double voronoiValue = voronoi.compute(new DensityFunction.SinglePointContext(i,j,k));
-
-        String IrlRegionKey = IRLRegion.byID((int)voronoiValue).getName();
-
-        debugLines.add("IRL Region: " + Component.translatable(IrlRegionKey).getString() + " (" + voronoiValue + ")");
+        debugLines.add("IRL Region: " + Component.translatable(VoronoiLevel.getVoronoiIrlRegion(holderBiome, pos).getName()).getString() + " (" + VoronoiLevel.getVoronoiValue(pos) + ")");
     }
 }

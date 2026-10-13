@@ -4,10 +4,13 @@ GENERAL :
 
 - add JEI
 
+IRL REGION :
+
+- Vérifier que tt est ok + le spawn des piafs
+
 OISEAUX :
 
 - Intégrations des chants pour chaques oiseaux
-- Faire le spawn
 
 - Plus de textures pour certains oiseaux
 
@@ -20,10 +23,6 @@ VOL :
 LIVRE
 - Ajouter
 - Moyen de scanner les piafs
-
-IRLREGION
-- Trouver un moyen d'adapter la région au biome
-- Refaire les tags des biomes (?) => Faire un système de variant région/biome/id
 
 CANARD
 - Vol en V
@@ -39,10 +38,12 @@ GRUE
 
 PIC VERT
 - Picpic les arbres et le metal
+- Pic troglodite
 
 COLIBRI
 - Comportement spécifique
 - Vol spécifique
+- Colibri troglodite
 
 AJOUTS :
 

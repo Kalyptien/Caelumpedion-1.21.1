@@ -34,6 +34,10 @@ public enum IRLRegion {
         return name;
     }
 
+    public static IRLRegion bySpecificRangeID(IRLRegion[] specificRange, int id){
+        return specificRange[id % specificRange.length];
+    }
+
     public static IRLRegion byID(int id){
         return BY_ID[id % BY_ID.length];
     }

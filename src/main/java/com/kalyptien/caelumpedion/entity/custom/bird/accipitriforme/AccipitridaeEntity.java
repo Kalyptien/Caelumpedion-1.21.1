@@ -2,15 +2,18 @@ package com.kalyptien.caelumpedion.entity.custom.bird.accipitriforme;
 
 import com.kalyptien.caelumpedion.entity.ai.CircleAroundFlyingMob;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
+import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
@@ -24,6 +27,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
 
@@ -162,18 +166,55 @@ public class AccipitridaeEntity extends FlyingBirdEntity implements NeutralMob, 
 
     protected void setRandomVariant(){
         AccipitridaeVariant variant = Util.getRandom(AccipitridaeVariant.values(), this.random);
+
         this.setVariant(variant);
     }
 
-    protected void setVariantFromIrlRegion(IRLRegion IrlRegionKey){
-        AccipitridaeVariant variant = AccipitridaeVariant.byRegion(IrlRegionKey, random.nextInt(AccipitridaeVariant.values().length));
-        this.setVariant(variant);
+    protected boolean setVariantFromIrlRegionBiome(Holder<Biome> holder, IRLRegion IrlRegionKey, int randomInt){
+        AccipitridaeVariant variant = AccipitridaeVariant.byIrlRegionBiome(holder, IrlRegionKey, randomInt);
+
+        if(variant != null){
+            this.setVariant(variant);
+            return true;
+        }
+        else{
+            return false;
+        }
+    };
+
+    protected boolean setVariantFromBiome(Holder<Biome> holder, int randomInt){
+        AccipitridaeVariant variant = AccipitridaeVariant.byBiome(holder, randomInt);
+
+        if(variant != null){
+            this.setVariant(variant);
+            return true;
+        }
+        else{
+            return false;
+        }
+    };
+
+    protected boolean setVariantFromIrlRegion(IRLRegion IrlRegionKey, int randomInt){
+        AccipitridaeVariant variant = AccipitridaeVariant.byRegion(IrlRegionKey, randomInt);
+
+        if(variant != null){
+            this.setVariant(variant);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     protected void setVariantFromId(int id){
         AccipitridaeVariant variant = AccipitridaeVariant.byId(id);
+
         this.setVariant(variant);
     }
+
+    protected int getVariantLength(){
+        return AccipitridaeVariant.lenght();
+    };
 
     //ANGER
 
@@ -223,7 +264,7 @@ public class AccipitridaeEntity extends FlyingBirdEntity implements NeutralMob, 
     // Variant
 
     public static enum AccipitridaeVariant implements BirdVariant {
-        GypaetusBarbatus(0, "gypaetus_barbatus", 1.0f, false, new FeatherColor[]{FeatherColor.Orange}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.NorthAfrica, IRLRegion.SouthAfrica}),
+        GypaetusBarbatus(0, "gypaetus_barbatus", 1.0f, false, new FeatherColor[]{FeatherColor.Orange}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.NorthAfrica, IRLRegion.SouthAfrica}, null),
         ;
 
         private static final AccipitridaeVariant[] BY_ID = Arrays.stream(values()).sorted(
@@ -236,8 +277,10 @@ public class AccipitridaeEntity extends FlyingBirdEntity implements NeutralMob, 
         private final FeatherColor[] featherColor;
         private final FeatherColor childFeatherColor;
         private final IRLRegion[] IRLRegions;
+        @Nullable
+        private final TagKey<Biome> biomeTagKey;
 
-        AccipitridaeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, IRLRegion[] IRLRegions) {
+        AccipitridaeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, IRLRegion[] IRLRegions, TagKey<Biome> biomeTagKey) {
             this.id = id;
             this.fileName = fileName;
             this.size = size;
@@ -245,6 +288,7 @@ public class AccipitridaeEntity extends FlyingBirdEntity implements NeutralMob, 
             this.featherColor = featherColor;
             this.childFeatherColor = childFeatherColor;
             this.IRLRegions = IRLRegions;
+            this.biomeTagKey = biomeTagKey;
         }
 
         public int getId() {
@@ -284,16 +328,55 @@ public class AccipitridaeEntity extends FlyingBirdEntity implements NeutralMob, 
             return IRLRegions;
         }
 
+        @Override
+        public TagKey<Biome> getBiomeTagKey() {
+            return biomeTagKey;
+        }
+
         public static AccipitridaeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
+        }
+
+        public static AccipitridaeVariant byIrlRegionBiome(Holder<Biome> holder, IRLRegion region, int id) {
+            AccipitridaeVariant[] BY_BIOME = Arrays.stream(values())
+                    .filter(variant -> variant.getBiomeTagKey() != null && holder.is(variant.getBiomeTagKey())).toArray(AccipitridaeVariant[]::new);
+
+            AccipitridaeVariant[] BY_BIOMEREGION = Arrays.stream(BY_BIOME)
+                    .filter(variant -> Arrays.stream(variant.getBiomeRegion())
+                            .anyMatch(irlRegion -> irlRegion == region)).toArray(AccipitridaeVariant[]::new);
+
+            if(BY_BIOMEREGION.length != 0){
+                return BY_BIOMEREGION[id % BY_BIOMEREGION.length];
+            }
+            else{
+                return null;
+            }
         }
 
         public static AccipitridaeVariant byRegion(IRLRegion region, int id) {
             AccipitridaeVariant[] BY_REGION = Arrays.stream(values())
                     .filter(variant -> Arrays.stream(variant.getBiomeRegion())
-                            .anyMatch(biomeRegion -> biomeRegion == region)).toArray(AccipitridaeVariant[]::new);
+                            .anyMatch(irlRegion -> irlRegion == region)).toArray(AccipitridaeVariant[]::new);
 
-            return BY_REGION[id % BY_REGION.length];
+            if(BY_REGION.length != 0){
+                return BY_REGION[id % BY_REGION.length];
+
+            }
+            else{
+                return null;
+            }
+        }
+
+        public static AccipitridaeVariant byBiome(Holder<Biome> holder, int id) {
+            AccipitridaeVariant[] BY_BIOME = Arrays.stream(values())
+                    .filter(variant -> variant.getBiomeTagKey() != null && holder.is(variant.getBiomeTagKey())).toArray(AccipitridaeVariant[]::new);
+
+            if(BY_BIOME.length != 0){
+                return BY_BIOME[id % BY_BIOME.length];
+            }
+            else{
+                return null;
+            }
         }
 
         public static int lenght(){

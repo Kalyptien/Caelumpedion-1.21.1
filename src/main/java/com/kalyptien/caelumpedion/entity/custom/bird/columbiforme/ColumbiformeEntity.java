@@ -1,10 +1,13 @@
 package com.kalyptien.caelumpedion.entity.custom.bird.columbiforme;
 
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
+import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
+import net.minecraft.core.Holder;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -14,6 +17,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -62,23 +66,60 @@ public class ColumbiformeEntity extends SocialFlyingBirdEntity {
 
     protected void setRandomVariant(){
         ColumbiformeVariant variant = Util.getRandom(ColumbiformeVariant.values(), this.random);
+
         this.setVariant(variant);
     }
 
-    protected void setVariantFromIrlRegion(IRLRegion IrlRegionKey){
-        ColumbiformeVariant variant = ColumbiformeVariant.byRegion(IrlRegionKey, random.nextInt(ColumbiformeVariant.values().length));
-        this.setVariant(variant);
+    protected boolean setVariantFromIrlRegionBiome(Holder<Biome> holder, IRLRegion IrlRegionKey, int randomInt){
+        ColumbiformeVariant variant = ColumbiformeVariant.byIrlRegionBiome(holder, IrlRegionKey, randomInt);
+
+        if(variant != null){
+            this.setVariant(variant);
+            return true;
+        }
+        else{
+            return false;
+        }
+    };
+
+    protected boolean setVariantFromBiome(Holder<Biome> holder, int randomInt){
+        ColumbiformeVariant variant = ColumbiformeVariant.byBiome(holder, randomInt);
+
+        if(variant != null){
+            this.setVariant(variant);
+            return true;
+        }
+        else{
+            return false;
+        }
+    };
+
+    protected boolean setVariantFromIrlRegion(IRLRegion IrlRegionKey, int randomInt){
+        ColumbiformeVariant variant = ColumbiformeVariant.byRegion(IrlRegionKey, randomInt);
+
+        if(variant != null){
+            this.setVariant(variant);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     protected void setVariantFromId(int id){
         ColumbiformeVariant variant = ColumbiformeVariant.byId(id);
+
         this.setVariant(variant);
     }
+
+    protected int getVariantLength(){
+        return ColumbiformeVariant.lenght();
+    };
 
     // Variant
 
     public static enum ColumbiformeVariant implements BirdVariant {
-        ColumbaLivia(0, "columba_livia", 1.0f, true, new FeatherColor[]{FeatherColor.Gray, FeatherColor.LightGray}, FeatherColor.LightGray, new IRLRegion[]{IRLRegion.NorthAmerica, IRLRegion.Europe, IRLRegion.Asia, IRLRegion.NorthAfrica, IRLRegion.Oceania}),
+        ColumbaLivia(0, "columba_livia", 1.0f, true, new FeatherColor[]{FeatherColor.Gray, FeatherColor.LightGray}, FeatherColor.LightGray, new IRLRegion[]{IRLRegion.NorthAmerica, IRLRegion.Europe, IRLRegion.Asia, IRLRegion.NorthAfrica, IRLRegion.Oceania}, null),
         ;
 
         private static final ColumbiformeVariant[] BY_ID = Arrays.stream(values()).sorted(
@@ -91,8 +132,10 @@ public class ColumbiformeEntity extends SocialFlyingBirdEntity {
         private final FeatherColor[] featherColor;
         private final FeatherColor childFeatherColor;
         private final IRLRegion[] IRLRegions;
+        @Nullable
+        private final TagKey<Biome> biomeTagKey;
 
-        ColumbiformeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, IRLRegion[] IRLRegions) {
+        ColumbiformeVariant(int id, String fileName, float size,boolean isIridescent, FeatherColor[] featherColor, FeatherColor childFeatherColor, IRLRegion[] IRLRegions, TagKey<Biome> biomeTagKey) {
             this.id = id;
             this.fileName = fileName;
             this.size = size;
@@ -100,6 +143,7 @@ public class ColumbiformeEntity extends SocialFlyingBirdEntity {
             this.featherColor = featherColor;
             this.childFeatherColor = childFeatherColor;
             this.IRLRegions = IRLRegions;
+            this.biomeTagKey = biomeTagKey;
         }
 
         public int getId() {
@@ -139,16 +183,55 @@ public class ColumbiformeEntity extends SocialFlyingBirdEntity {
             return IRLRegions;
         }
 
+        @Override
+        public TagKey<Biome> getBiomeTagKey() {
+            return biomeTagKey;
+        }
+
         public static ColumbiformeVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
+        }
+
+        public static ColumbiformeVariant byIrlRegionBiome(Holder<Biome> holder, IRLRegion region, int id) {
+            ColumbiformeVariant[] BY_BIOME = Arrays.stream(values())
+                    .filter(variant -> variant.getBiomeTagKey() != null && holder.is(variant.getBiomeTagKey())).toArray(ColumbiformeVariant[]::new);
+
+            ColumbiformeVariant[] BY_BIOMEREGION = Arrays.stream(BY_BIOME)
+                    .filter(variant -> Arrays.stream(variant.getBiomeRegion())
+                            .anyMatch(irlRegion -> irlRegion == region)).toArray(ColumbiformeVariant[]::new);
+
+            if(BY_BIOMEREGION.length != 0){
+                return BY_BIOMEREGION[id % BY_BIOMEREGION.length];
+            }
+            else{
+                return null;
+            }
         }
 
         public static ColumbiformeVariant byRegion(IRLRegion region, int id) {
             ColumbiformeVariant[] BY_REGION = Arrays.stream(values())
                     .filter(variant -> Arrays.stream(variant.getBiomeRegion())
-                            .anyMatch(biomeRegion -> biomeRegion == region)).toArray(ColumbiformeVariant[]::new);
+                            .anyMatch(irlRegion -> irlRegion == region)).toArray(ColumbiformeVariant[]::new);
 
-            return BY_REGION[id % BY_REGION.length];
+            if(BY_REGION.length != 0){
+                return BY_REGION[id % BY_REGION.length];
+
+            }
+            else{
+                return null;
+            }
+        }
+
+        public static ColumbiformeVariant byBiome(Holder<Biome> holder, int id) {
+            ColumbiformeVariant[] BY_BIOME = Arrays.stream(values())
+                    .filter(variant -> variant.getBiomeTagKey() != null && holder.is(variant.getBiomeTagKey())).toArray(ColumbiformeVariant[]::new);
+
+            if(BY_BIOME.length != 0){
+                return BY_BIOME[id % BY_BIOME.length];
+            }
+            else{
+                return null;
+            }
         }
 
         public static int lenght(){
