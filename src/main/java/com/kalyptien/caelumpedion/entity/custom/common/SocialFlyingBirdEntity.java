@@ -32,13 +32,6 @@ public abstract class SocialFlyingBirdEntity extends FlyingBirdEntity {
         this.goalSelector.addGoal(8, new OrganizeBOIDGoal(this));
     }
 
-    //Tick
-
-    @Override
-    public void tick() {
-        super.tick();
-    }
-
     //BOIDS Getter/Setter
 
     public int getMaxSchoolSize() {

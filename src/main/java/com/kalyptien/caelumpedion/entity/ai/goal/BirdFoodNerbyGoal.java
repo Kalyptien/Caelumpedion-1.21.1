@@ -83,24 +83,18 @@ public class BirdFoodNerbyGoal extends Goal {
     }
 
     public void tick() {
-
-        ItemStack itemstack = bird.getItemBySlot(EquipmentSlot.MAINHAND);
-
-        if (itemstack.isEmpty()) {
-
-            if(itemToFollow != null && bird.distanceTo(itemToFollow) <= 1.0f){
-                bird.pickUpItemFromGround(itemToFollow);
-                if(bird instanceof FlyingBirdEntity flyingBird && flyingBird.isFlying()) flyingBird.setFlying(false);
-                itemToFollow = null;
-            }
-            else if(blockPosToFollow != null && bird.distanceToSqr(blockPosToFollow.getX(), blockPosToFollow.getY(), blockPosToFollow.getZ()) <= 1.0f) {
-                bird.pickUpItemFromFeeder((BirdFeederBlockEntity) bird.level().getBlockEntity(blockPosToFollow), slotToPickup);
-                if(bird instanceof FlyingBirdEntity flyingBird && flyingBird.isFlying()) flyingBird.setFlying(false);
-                blockPosToFollow = null;
-            }
-            else {
-                this.goToFollow();
-            }
+        if(itemToFollow != null && bird.distanceTo(itemToFollow) <= 1.0f){
+            bird.pickUpItemFromGround(itemToFollow);
+            if(bird instanceof FlyingBirdEntity flyingBird && flyingBird.isFlying()) flyingBird.setFlying(false);
+            itemToFollow = null;
+        }
+        else if(blockPosToFollow != null && bird.distanceToSqr(blockPosToFollow.getX(), blockPosToFollow.getY(), blockPosToFollow.getZ()) <= 1.0f) {
+            bird.pickUpItemFromFeeder((BirdFeederBlockEntity) bird.level().getBlockEntity(blockPosToFollow), slotToPickup);
+            if(bird instanceof FlyingBirdEntity flyingBird && flyingBird.isFlying()) flyingBird.setFlying(false);
+            blockPosToFollow = null;
+        }
+        else {
+            this.goToFollow();
         }
     }
 
@@ -139,10 +133,10 @@ public class BirdFoodNerbyGoal extends Goal {
 
     private void goToFollow(){
         if(itemToFollow != null){
-            bird.getNavigation().moveTo((Entity)itemToFollow, bird.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) + 1f);
+            bird.getNavigation().moveTo((Entity)itemToFollow, bird.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) + 0.5f);
         }
         else {
-            bird.getNavigation().moveTo(blockPosToFollow.getX(), blockPosToFollow.getY(), blockPosToFollow.getZ(), bird.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) + 1f);
+            bird.getNavigation().moveTo(blockPosToFollow.getX(), blockPosToFollow.getY(), blockPosToFollow.getZ(), bird.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) + 0.5f);
         }
     }
 

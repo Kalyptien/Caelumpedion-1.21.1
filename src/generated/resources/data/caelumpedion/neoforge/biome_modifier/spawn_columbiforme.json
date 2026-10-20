@@ -38,6 +38,6 @@
     "type": "caelumpedion:columbiforme",
     "maxCount": 4,
     "minCount": 1,
-    "weight": 5
+    "weight": 10
   }
 }

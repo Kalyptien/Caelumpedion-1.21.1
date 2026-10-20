@@ -6,7 +6,7 @@
       "item": "minecraft:light_gray_dye"
     },
     {
-      "item": "minecraft:feather"
+      "tag": "caelumpedion:feathers"
     }
   ],
   "result": {

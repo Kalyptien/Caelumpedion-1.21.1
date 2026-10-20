@@ -1,5 +1,8 @@
 package com.kalyptien.caelumpedion.entity.custom.bird.apodiforme;
 
+import com.kalyptien.caelumpedion.entity.ai.goal.*;
+import com.kalyptien.caelumpedion.entity.ai.trochilidaeGoal.TrochilidaeFoodNerbyGoal;
+import com.kalyptien.caelumpedion.entity.ai.trochilidaeGoal.TrochilidaeRandomStrollGoal;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
@@ -8,15 +11,15 @@ import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -28,15 +31,17 @@ import java.util.Comparator;
 
 public class TrochilidaeEntity extends FlyingBirdEntity {
 
+    public final AnimationState flyAnimationState = new AnimationState();
+
     public TrochilidaeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
-        this.setFlyingBirdType(FlyingBirdType.SHORT_FlYER);
         this.setAquaticBirdType(AquaticBirdType.NONE);
-        this.setFlyPathType(FlyPathType.CHAOS);
 
         this.flyRange = 50;
         this.flyHeight = 30;
+
+        this.setFlying(true);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -49,11 +54,94 @@ public class TrochilidaeEntity extends FlyingBirdEntity {
     }
 
     @Override
+    protected void registerGoals() {
+        // Goal
+        this.goalSelector.addGoal(0, new BirdFloatGoal(this));
+
+        this.goalSelector.addGoal(1, new BirdPanicGoal(this, 2.0f, (bird) -> {
+            return bird instanceof NeutralMob ? DamageTypeTags.PANIC_ENVIRONMENTAL_CAUSES : DamageTypeTags.PANIC_CAUSES;
+        }));
+
+        this.goalSelector.addGoal(5, new BirdTemptGoal(this, 1.25f, this::isFood, false));
+
+        this.goalSelector.addGoal(6, new TrochilidaeFoodNerbyGoal(this));
+
+        this.goalSelector.addGoal(8, new TrochilidaeRandomStrollGoal(this, 1.0));
+
+        this.goalSelector.addGoal(10, new BirdLookAtPlayerGoal(this, Player.class, this.getViewRange()));
+        this.goalSelector.addGoal(10, new BirdRandomLookAroundGoal(this));
+    }
+
+    @Override
     public boolean isFood(ItemStack itemStack) {
         return itemStack.is(ItemTags.BEE_FOOD);
     }
 
+    //Animation
+
+    @Override
+    protected void setupAnimationStates() {
+        if(this.isNeedEatAnimation()){
+            if(!this.eatAnimationState.isStarted()){
+                this.eatAnimationState.start(this.tickCount);
+                this.setOnAnimation(true);
+                this.eatAnimationTimein = 0;
+            }
+            else{
+                this.eatAnimationTimein++;
+
+                if(eatAnimationTimein >= 95){
+                    this.resetAnimations();
+                    this.setOnAnimation(false);
+                    this.setNeedEatAnimation(false);
+                }
+            }
+        }
+        else{
+            if (this.idleAnimationTimeout <= 0) {
+                this.idleAnimationTimeout = this.random.nextInt(500) + 1000;
+                this.idleAnimationTimein = 0;
+
+                double seed = this.random.nextInt(100)/100.0f;
+
+                if(seed > 0.5f){
+                    this.idleAnimationState.start(this.tickCount);
+                }
+                else{
+                    this.eatAnimationState.start(this.tickCount);
+                }
+
+                this.setOnAnimation(true);
+            } else {
+                --this.idleAnimationTimeout;
+                ++this.idleAnimationTimein;
+            }
+
+
+            if(this.idleAnimationTimein >= 95){
+                this.resetAnimations();
+                this.setOnAnimation(false);
+            }
+        }
+
+        this.flyAnimationState.animateWhen(!this.isOnAnimation() , this.tickCount);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        System.out.println(this.isOnAnimation());
+
+    }
+
     //Getter / Setter
+
+
+    @Override
+    public boolean isFlying() {
+        return true;
+    }
 
     public int getIdVariant() {
         return this.entityData.get(VARIANT);

@@ -11,6 +11,7 @@ import com.kalyptien.caelumpedion.entity.client.corvidae.CorvidaeRenderer;
 import com.kalyptien.caelumpedion.entity.client.gruiforme.GruiformeRenderer;
 import com.kalyptien.caelumpedion.entity.client.hirundininae.HirundininaeRenderer;
 import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeRenderer;
+import com.kalyptien.caelumpedion.entity.client.piciforme.PiciformeRenderer;
 import com.kalyptien.caelumpedion.entity.client.ramphastidae.RamphastidaeRenderer;
 import com.kalyptien.caelumpedion.entity.client.trochilidae.TrochilidaeRenderer;
 import com.kalyptien.caelumpedion.item.CaelumpedionCreativeModTabs;
@@ -92,6 +93,7 @@ public class CaelumpedionMod {
             EntityRenderers.register(CaelumpedionEntities.GRUIFORME.get(), GruiformeRenderer::new);
             EntityRenderers.register(CaelumpedionEntities.TROCHILIDAE.get(), TrochilidaeRenderer::new);
             EntityRenderers.register(CaelumpedionEntities.COLUMBIFORME.get(), ColumbiformeRenderer::new);
+            EntityRenderers.register(CaelumpedionEntities.PICIFORME.get(), PiciformeRenderer::new);
         }
 
         @SubscribeEvent

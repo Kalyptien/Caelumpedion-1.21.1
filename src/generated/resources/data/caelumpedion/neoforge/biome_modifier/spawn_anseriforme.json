@@ -12,6 +12,6 @@
     "type": "caelumpedion:anseriforme",
     "maxCount": 6,
     "minCount": 2,
-    "weight": 5
+    "weight": 10
   }
 }

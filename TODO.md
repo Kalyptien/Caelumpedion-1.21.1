@@ -4,10 +4,6 @@ GENERAL :
 
 - add JEI
 
-IRL REGION :
-
-- Vérifier que tt est ok + le spawn des piafs
-
 OISEAUX :
 
 - Intégrations des chants pour chaques oiseaux
@@ -26,30 +22,28 @@ LIVRE
 
 CANARD
 - Vol en V
-- Peche
 - Animation dans l'eau
 
 AIGLE
 - Refaire le modele / texture / animation
 - S'assruer que les aigles retombent une fois le vol en cercle est fini
 
-GRUE
-- Peche
-
 PIC VERT
 - Picpic les arbres et le metal
 - Pic troglodite
 
 COLIBRI
-- Comportement spécifique
-- Vol spécifique
+
 - Colibri troglodite
+
+HIRRONDEL :
+
+- Re-étudier leurs comportements
 
 AJOUTS :
 
 - Ajouter buse & aigle
 - Ajouter Vautour
-- Ajouter chouette
 
 V.1.1.0
 
@@ -66,6 +60,11 @@ AJOUTS :
 - Upupa Epops
 - Mouette
 - Pelican
+- chouette
+
+CANARD & GRUE :
+
+- Pêche
 
 =====
 

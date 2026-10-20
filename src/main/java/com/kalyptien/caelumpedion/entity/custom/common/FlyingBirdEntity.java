@@ -78,7 +78,7 @@ public abstract class FlyingBirdEntity extends BirdEntity {
         this.goalSelector.addGoal(9, new BirdRandomFlyingGoal(this, 1.0));
     }
 
-    private void switchNavigator(boolean onLand) {
+    protected void switchNavigator(boolean onLand) {
         if (onLand) {
             this.moveControl = new MoveControl(this);
             this.navigation = new BirdGroundPathNavigation(this, level());
@@ -115,7 +115,7 @@ public abstract class FlyingBirdEntity extends BirdEntity {
         super.aiStep();
 
         Vec3 vec3 = this.getDeltaMovement();
-        if (!this.onGround() && vec3.y < 0.0 && this.isTooHight(1)) {
+        if (!this.onGround() && !this.isFlying() && vec3.y < 0.0 && this.isTooHight(1)) {
             this.setDeltaMovement(vec3.multiply(1.0, 0.6, 1.0));
         }
     }

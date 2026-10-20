@@ -3,19 +3,25 @@ package com.kalyptien.caelumpedion.entity.client.trochilidae;
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
 import com.kalyptien.caelumpedion.entity.custom.bird.apodiforme.TrochilidaeEntity;
+import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class TrochilidaeModel<T extends TrochilidaeEntity> extends FlyingBirdHierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "trochilidae"), "main");
 
+    protected ModelPart global;
+
     public TrochilidaeModel(ModelPart root) {
         this.root = root.getChild("trochilidae");
-        this.body = this.root.getChild("body");
-        this.head = this.root.getChild("head");
+        this.global = this.root.getChild("global");
+        this.body = this.global.getChild("body");
+        this.head = this.global.getChild("head");
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -24,7 +30,9 @@ public class TrochilidaeModel<T extends TrochilidaeEntity> extends FlyingBirdHie
 
         PartDefinition trochilidae = partdefinition.addOrReplaceChild("trochilidae", CubeListBuilder.create(), PartPose.offset(0.0F, 20.416F, -0.075F));
 
-        PartDefinition body = trochilidae.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 0.716F, 0.625F));
+        PartDefinition global = trochilidae.addOrReplaceChild("global", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition body = global.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 0.716F, 0.625F));
 
         PartDefinition wingL = body.addOrReplaceChild("wingL", CubeListBuilder.create(), PartPose.offsetAndRotation(1.0F, -2.132F, -0.6501F, -0.7854F, 0.0F, 0.0F));
 
@@ -68,13 +76,32 @@ public class TrochilidaeModel<T extends TrochilidaeEntity> extends FlyingBirdHie
 
         PartDefinition flyingTail = tail.addOrReplaceChild("flyingTail", CubeListBuilder.create(), PartPose.offset(0.0F, -0.1414F, -0.1414F));
 
-        PartDefinition head = trochilidae.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, -0.716F, -0.625F));
+        PartDefinition head = global.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, -0.716F, -0.625F));
 
         PartDefinition mainHead = head.addOrReplaceChild("mainHead", CubeListBuilder.create().texOffs(7, 10).addBox(-1.0F, -2.5F, -1.5F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition beck = head.addOrReplaceChild("beck", CubeListBuilder.create().texOffs(0, 6).addBox(-0.5F, -0.5F, -3.1F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -1.0F, -1.4F));
 
         return LayerDefinition.create(meshdefinition, 32, 32);
+    }
+
+    @Override
+    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        this.root().getAllParts().forEach(ModelPart::resetPose);
+
+        this.applyHeadRotation(netHeadYaw, headPitch);
+
+        this.animate(entity.flyAnimationState, TrochilidaeAnimation.TROCHILIDAE_FLY, ageInTicks, 1f);
+        this.setupIdleAnimation(entity, limbSwing, limbSwingAmount, ageInTicks);
+        this.setupEatAnimation(entity, limbSwing, limbSwingAmount, ageInTicks);
+
+        float partialTick = ageInTicks - entity.tickCount;
+        float flyProgress = entity.getFlyProgress(partialTick);
+        float rollAmount = entity.getFlightRoll(partialTick) / 57.295776F * flyProgress;
+        float pitchAmount = entity.getFlightPitch(partialTick) / 57.295776F * flyProgress;
+
+        root.xRot += pitchAmount;
+        root.zRot += rollAmount;
     }
 
     protected void setupWalkAnimation(float limbSwing, float limbSwingAmount){
@@ -92,11 +119,9 @@ public class TrochilidaeModel<T extends TrochilidaeEntity> extends FlyingBirdHie
     }
 
     protected void setupFlyAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(TrochilidaeAnimation.TROCHILIDAE_FLY, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
-    protected void setupSlowFallAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(TrochilidaeAnimation.TROCHILIDAE_FLY, limbSwing, limbSwingAmount, 3f, 3f);
+    protected void setupSlowFallAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
     }
 
     protected void showFlyingPart(boolean show){

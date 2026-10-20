@@ -227,7 +227,7 @@ public class RamphastidaeAnimation {
                 .build();
 
         public static final AnimationDefinition RAMPHASTIDAE_WALK = AnimationDefinition.Builder.withLength(0.5F).looping()
-                .addAnimation("ramphastidae", new AnimationChannel(AnimationChannel.Targets.POSITION,
+                .addAnimation("body", new AnimationChannel(AnimationChannel.Targets.POSITION,
                         new Keyframe(0.0F, KeyframeAnimations.posVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
                         new Keyframe(0.125F, KeyframeAnimations.posVec(0.0F, 1.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
                         new Keyframe(0.25F, KeyframeAnimations.posVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
@@ -297,9 +297,9 @@ public class RamphastidaeAnimation {
                 ))
                 .addAnimation("head", new AnimationChannel(AnimationChannel.Targets.POSITION,
                         new Keyframe(0.0F, KeyframeAnimations.posVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
-                        new Keyframe(0.125F, KeyframeAnimations.posVec(0.5F, 0.5F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
+                        new Keyframe(0.125F, KeyframeAnimations.posVec(0.5F, 2.5F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
                         new Keyframe(0.25F, KeyframeAnimations.posVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
-                        new Keyframe(0.375F, KeyframeAnimations.posVec(-0.5F, 0.5F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
+                        new Keyframe(0.375F, KeyframeAnimations.posVec(-0.5F, 2.5F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
                         new Keyframe(0.5F, KeyframeAnimations.posVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM)
                 ))
                 .build();

@@ -1,5 +1,6 @@
 package com.kalyptien.caelumpedion.entity.ai.goal;
 
+import com.kalyptien.caelumpedion.entity.custom.bird.apodiforme.TrochilidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -18,6 +19,9 @@ public class BirdTemptGoal extends TemptGoal {
     }
 
     public boolean canUse() {
+        if (bird instanceof TrochilidaeEntity){
+            return super.canUse();
+        }
 
         if (bird instanceof FlyingBirdEntity flyingBird &&  flyingBird.isFlying()){
             return false;

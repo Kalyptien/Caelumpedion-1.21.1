@@ -65,7 +65,7 @@ public interface CircleAroundFlyingMob {
             } else if (this.bird.getTarget() != null) {
                 return true;
             } else {
-                if (this.bird.getRandom().nextInt(reducedTickDelay(this.interval)) != 0) {
+                if (this.bird.getRandom().nextInt(reducedTickDelay(this.interval) + 200) != 0) {
                     return false;
                 }
                 return true;

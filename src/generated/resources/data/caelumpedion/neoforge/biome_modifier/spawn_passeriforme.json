@@ -38,6 +38,6 @@
     "type": "caelumpedion:passeriforme",
     "maxCount": 6,
     "minCount": 2,
-    "weight": 10
+    "weight": 15
   }
 }

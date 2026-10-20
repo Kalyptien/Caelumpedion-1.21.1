@@ -43,7 +43,6 @@ public class FlyingBirdHierarchicalModel<T extends FlyingBirdEntity> extends Bir
             root.xRot += pitchAmount;
             root.zRot += rollAmount;
         }
-
     }
 
     protected void showFlyingPart(boolean show){

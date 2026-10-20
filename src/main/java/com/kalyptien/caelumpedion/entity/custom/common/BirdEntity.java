@@ -57,10 +57,10 @@ public abstract class BirdEntity extends Animal {
     protected static final EntityDataAccessor<Boolean> NEED_EAT_ANIM =
             SynchedEntityData.defineId(BirdEntity.class, EntityDataSerializers.BOOLEAN);
 
-    private int idleAnimationTimeout = 0;
-    private int idleAnimationTimein = 0;
+    protected int idleAnimationTimeout = 0;
+    protected int idleAnimationTimein = 0;
 
-    private int eatAnimationTimein = 0;
+    protected int eatAnimationTimein = 0;
 
     public final AnimationState eatAnimationState = new AnimationState();
     public final AnimationState idleAnimationState = new AnimationState();
@@ -103,7 +103,7 @@ public abstract class BirdEntity extends Animal {
             return bird instanceof NeutralMob ? DamageTypeTags.PANIC_ENVIRONMENTAL_CAUSES : DamageTypeTags.PANIC_CAUSES;
         }));
 
-        this.goalSelector.addGoal(5, new BirdTemptGoal(this, 1.5f, this::isFood, false));
+        this.goalSelector.addGoal(5, new BirdTemptGoal(this, 1.25f, this::isFood, false));
 
         this.goalSelector.addGoal(6, new BirdFoodNerbyGoal(this));
 
@@ -171,7 +171,10 @@ public abstract class BirdEntity extends Animal {
     @Override
     public void tick(){
         super.tick();
-        this.setupAnimationStates();
+
+        if (this.level().isClientSide()){
+            this.setupAnimationStates();
+        }
     }
 
     //Animation
@@ -344,10 +347,6 @@ public abstract class BirdEntity extends Animal {
 
     public double getGroundSpeed() {
         return this.getAttributeValue(Attributes.MOVEMENT_SPEED);
-    }
-
-    public double getFollowRange(){
-        return this.getViewRange();
     }
 
     public int getViewRange() {
