@@ -1,23 +1,21 @@
 package com.kalyptien.caelumpedion.entity.custom.common;
 
-import com.kalyptien.caelumpedion.entity.ai.BirdFlyPathNavigator;
+import com.kalyptien.caelumpedion.entity.ai.BirdFlyPathNavigation;
 import com.kalyptien.caelumpedion.entity.ai.BirdGroundPathNavigation;
 import com.kalyptien.caelumpedion.entity.ai.FlyMoveController;
+import com.kalyptien.caelumpedion.entity.ai.GroundMoveController;
 import com.kalyptien.caelumpedion.entity.ai.goal.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 
 
@@ -80,12 +78,12 @@ public abstract class FlyingBirdEntity extends BirdEntity {
 
     protected void switchNavigator(boolean onLand) {
         if (onLand) {
-            this.moveControl = new MoveControl(this);
+            this.moveControl = new GroundMoveController(this);
             this.navigation = new BirdGroundPathNavigation(this, level());
             this.isLandNavigator = true;
         } else {
             this.moveControl = new FlyMoveController(this);
-            this.navigation = new BirdFlyPathNavigator(this, level(), 1.0F);
+            this.navigation = new BirdFlyPathNavigation(this, level(), 1.0F);
             this.isLandNavigator = false;
         }
     }

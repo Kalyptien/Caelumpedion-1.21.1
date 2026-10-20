@@ -73,11 +73,11 @@ public class CaelumpedionBiomeModifiers {
                 biomes.getOrThrow(Biomes.CHERRY_GROVE));
 
         context.register(SPAWN_PASSERIFORME, new BiomeModifiers.AddSpawnsBiomeModifier(
-                allBiomes, List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.PASSERIFORME.get(), 15, 2, 6))));
+                allBiomes, List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.PASSERIFORME.get(), 15, 2, 12))));
         context.register(SPAWN_HIRUNDINIAE, new BiomeModifiers.AddSpawnsBiomeModifier(
-                allBiomes, List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.HIRUNDININAE.get(), 5, 2, 6))));
+                allBiomes, List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.HIRUNDININAE.get(), 5, 4, 24))));
         context.register(SPAWN_CORVIDAE, new BiomeModifiers.AddSpawnsBiomeModifier(
-                allBiomes, List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.CORVIDAE.get(), 10, 2, 6))));
+                allBiomes, List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.CORVIDAE.get(), 10, 2, 12))));
 
         context.register(SPAWN_ANSERIFORME, new BiomeModifiers.AddSpawnsBiomeModifier(
                 HolderSet.direct(
@@ -139,7 +139,7 @@ public class CaelumpedionBiomeModifiers {
                         biomes.getOrThrow(Biomes.FLOWER_FOREST),
                         biomes.getOrThrow(Biomes.SUNFLOWER_PLAINS),
                         biomes.getOrThrow(Biomes.LUSH_CAVES)
-                ), List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.TROCHILIDAE.get(), 5, 1, 4))));
+                ), List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.TROCHILIDAE.get(), 3, 4, 12))));
 
         context.register(SPAWN_COLUMBIFORME, new BiomeModifiers.AddSpawnsBiomeModifier(
                 allBiomes, List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.COLUMBIFORME.get(), 10, 1, 4))));

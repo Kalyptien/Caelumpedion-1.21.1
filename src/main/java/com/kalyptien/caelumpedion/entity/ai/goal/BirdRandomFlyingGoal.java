@@ -99,6 +99,17 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
                     this.wantedZ = vec3.z;
                 }
             }
+            else{
+                if(bird.isTooHight(3)){
+                    Vec3 vec3 = new Vec3(bird.getX(), bird.getY() - 2, bird.getZ());
+
+                    this.destinationNodeArray.add(vec3);
+
+                    this.wantedX = vec3.x;
+                    this.wantedY = vec3.y;
+                    this.wantedZ = vec3.z;
+                }
+            }
         }
 
         //Dynamic speed

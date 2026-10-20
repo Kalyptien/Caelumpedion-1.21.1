@@ -73,7 +73,7 @@ public class TrochilidaeFoodNerbyGoal extends Goal {
     }
 
     public void tick() {
-        Vec3 vec3 = Vec3.atBottomCenterOf(this.flowerPos).add(0.0, 0.5, 0.0);
+        Vec3 vec3 = Vec3.atBottomCenterOf(this.flowerPos).add(0.0, 0.7, 0.0);
 
         if(flowerPos != null && vec3.distanceTo(this.bird.position()) <= 1.0f){
             this.bird.setNeedEatAnimation(true);

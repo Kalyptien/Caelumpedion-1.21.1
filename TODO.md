@@ -2,7 +2,7 @@ V 1.0.0 :
 
 GENERAL :
 
-- add JEI
+- add JEI (AU BESOIN)
 
 OISEAUX :
 
@@ -10,23 +10,25 @@ OISEAUX :
 
 - Plus de textures pour certains oiseaux
 
+BOID :
+
+- Vol en V
+- Remodifier un poil le BOID (tous)
+- BOIS : Uniquement ceux qui ont la mm variante
+
 VOL :
 
-- BOIS : Uniquement ceux qui ont la mm variante
 - Vol migratoire
-- S'assurer que les piafs replaquent une fois le vol fini
 
 LIVRE
 - Ajouter
 - Moyen de scanner les piafs
 
 CANARD
-- Vol en V
 - Animation dans l'eau
 
 AIGLE
-- Refaire le modele / texture / animation
-- S'assruer que les aigles retombent une fois le vol en cercle est fini
+- Refaire le model / texture / animation
 
 PIC VERT
 - Picpic les arbres et le metal
@@ -35,10 +37,6 @@ PIC VERT
 COLIBRI
 
 - Colibri troglodite
-
-HIRRONDEL :
-
-- Re-étudier leurs comportements
 
 AJOUTS :
 

@@ -2,6 +2,8 @@ package com.kalyptien.caelumpedion.entity.custom.common;
 
 import com.kalyptien.caelumpedion.block.entity.BirdFeederBlockEntity;
 import com.kalyptien.caelumpedion.entity.ai.BirdGroundPathNavigation;
+import com.kalyptien.caelumpedion.entity.ai.BirdLookController;
+import com.kalyptien.caelumpedion.entity.ai.GroundMoveController;
 import com.kalyptien.caelumpedion.entity.ai.goal.*;
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.util.IRLRegion;
@@ -26,6 +28,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.camel.Camel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -82,7 +85,8 @@ public abstract class BirdEntity extends Animal {
     public BirdEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
         this.featherTime = this.random.nextInt(8000) + 8000;
-        this.moveControl = new MoveControl(this);
+        this.moveControl = new GroundMoveController(this);
+        this.lookControl = new BirdLookController(this);
         this.navigation = new BirdGroundPathNavigation(this, level());
     }
 

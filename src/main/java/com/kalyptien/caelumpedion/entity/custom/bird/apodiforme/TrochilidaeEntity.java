@@ -90,7 +90,7 @@ public class TrochilidaeEntity extends FlyingBirdEntity {
             else{
                 this.eatAnimationTimein++;
 
-                if(eatAnimationTimein >= 95){
+                if(eatAnimationTimein >= 90){
                     this.resetAnimations();
                     this.setOnAnimation(false);
                     this.setNeedEatAnimation(false);
@@ -125,14 +125,6 @@ public class TrochilidaeEntity extends FlyingBirdEntity {
         }
 
         this.flyAnimationState.animateWhen(!this.isOnAnimation() , this.tickCount);
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-
-        System.out.println(this.isOnAnimation());
-
     }
 
     //Getter / Setter

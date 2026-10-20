@@ -49,6 +49,8 @@ public interface CircleAroundFlyingMob {
 
         private double speedModifier;
 
+        private boolean needToStop = false;
+
         public CircleAroundFlyingGoal(FlyingBirdEntity bird) {
             this.bird = bird;
             if(bird instanceof CircleAroundFlyingMob mob){
@@ -60,12 +62,16 @@ public interface CircleAroundFlyingMob {
         public boolean canUse() {
             if (this.bird.hasControllingPassenger()) {
                 return false;
-            } else if(this.bird.isFlying() && !this.mob.isCyclingAround()){
+            }
+            else if (!this.bird.onGround()) {
+                return false;
+            }
+            else if(this.bird.isFlying() && !this.mob.isCyclingAround()){
                 return false;
             } else if (this.bird.getTarget() != null) {
                 return true;
             } else {
-                if (this.bird.getRandom().nextInt(reducedTickDelay(this.interval) + 200) != 0) {
+                if (this.bird.getRandom().nextInt(reducedTickDelay(this.interval) + 500) != 0) {
                     return false;
                 }
                 return true;
@@ -90,15 +96,22 @@ public interface CircleAroundFlyingMob {
             this.setInterval(2000);
             this.bird.setFlying(false);
             this.mob.setCyclingAround(false);
+            this.needToStop = false;
         }
 
         public boolean canContinueToUse() {
-            if(this.bird.getTarget() == null){
-                return this.bird.getRandom().nextInt(1000) != 0;
+
+            if(needToStop){
+                return bird.position().distanceTo(mob.getAnchorPoint().getCenter()) <= 1.0f;
             }
             else{
-                if(!this.bird.getTarget().isAlive()){
-                    return false;
+                if(this.bird.getTarget() == null){
+                    needToStop = this.bird.getRandom().nextInt(1000) == 0;
+                }
+                else{
+                    if(!this.bird.getTarget().isAlive()){
+                        needToStop = true;
+                    }
                 }
 
                 return true;
@@ -107,18 +120,23 @@ public interface CircleAroundFlyingMob {
 
         @Override
         public void tick() {
-            if(bird.getTarget() != null && mob.getAttackPhase() == AttackPhase.SWOOP){
-                this.sweepAttack();
-            } else if (bird.getTarget() == null || mob.getAttackPhase() == AttackPhase.CIRCLE) {
-                circleAround();
+            if(needToStop){
+                this.bird.getNavigation().moveTo(mob.getAnchorPoint().getX(), mob.getAnchorPoint().getY(), mob.getAnchorPoint().getZ(), this.bird.getFlySpeed() + this.speedModifier);
             }
+            else{
+                if(bird.getTarget() != null && mob.getAttackPhase() == AttackPhase.SWOOP){
+                    this.sweepAttack();
+                } else if (bird.getTarget() == null || mob.getAttackPhase() == AttackPhase.CIRCLE) {
+                    circleAround();
+                }
 
-            //Dynamic speed
-            int sign = this.bird.getEyePosition().y < mob.getMoveTargetPoint().y ? -1 : 1;
-            double speedPercent = Math.min(1, Math.abs((this.bird.getEyePosition().y - this.mob.getMoveTargetPoint().y) / 100.0f));
-            this.speedModifier = (bird.getFlySpeed()/1.1f) * speedPercent * sign;
+                //Dynamic speed
+                int sign = this.bird.getEyePosition().y < mob.getMoveTargetPoint().y ? -1 : 1;
+                double speedPercent = Math.min(1, Math.abs((this.bird.getEyePosition().y - this.mob.getMoveTargetPoint().y) / 100.0f));
+                this.speedModifier = (bird.getFlySpeed()/1.1f) * speedPercent * sign;
 
-            this.bird.getNavigation().moveTo(mob.getMoveTargetPoint().x, mob.getMoveTargetPoint().y, mob.getMoveTargetPoint().z, this.bird.getFlySpeed() + this.speedModifier);
+                this.bird.getNavigation().moveTo(mob.getMoveTargetPoint().x, mob.getMoveTargetPoint().y, mob.getMoveTargetPoint().z, this.bird.getFlySpeed() + this.speedModifier);
+            }
         }
 
         protected void sweepAttack(){
