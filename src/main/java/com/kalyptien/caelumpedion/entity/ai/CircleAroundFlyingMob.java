@@ -85,7 +85,7 @@ public interface CircleAroundFlyingMob {
             this.mob.setCyclingAround(true);
 
             this.distance = 5.0F + bird.getRandom().nextFloat() * 10.0F;
-            this.height = (-bird.getRandom().nextFloat() * 9.0F) + (this.bird.getFlyHeight());
+            this.height = (this.bird.getFlyHeight() * bird.getRandom().nextFloat()) + 5.0f;
             this.clockwise = bird.getRandom().nextBoolean() ? 1.0F : -1.0F;
             this.selectNext();
         }
@@ -102,7 +102,7 @@ public interface CircleAroundFlyingMob {
         public boolean canContinueToUse() {
 
             if(needToStop){
-                return bird.position().distanceTo(mob.getAnchorPoint().getCenter()) <= 1.0f;
+                return bird.position().distanceTo(mob.getAnchorPoint().getCenter()) >= 1.0f;
             }
             else{
                 if(this.bird.getTarget() == null){
@@ -176,7 +176,7 @@ public interface CircleAroundFlyingMob {
 
         protected void circleAround(){
             if (bird.getRandom().nextInt(this.adjustedTickDelay(350)) == 0) {
-                this.height = (-bird.getRandom().nextFloat() * 9.0F) + (this.bird.getFlyHeight());
+                this.height = (this.bird.getFlyHeight() * bird.getRandom().nextFloat()) + 5.0f;
             }
 
             if (bird.getRandom().nextInt(this.adjustedTickDelay(250)) == 0) {

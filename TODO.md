@@ -12,17 +12,11 @@ OISEAUX :
 
 BOID :
 
-- Vol en V
-- Remodifier un poil le BOID (tous)
-- BOIS : Uniquement ceux qui ont la mm variante
+- Vol en V => A revérifier
 
 VOL :
 
-- Vol migratoire
-
-LIVRE
-- Ajouter
-- Moyen de scanner les piafs
+- Vol migratoire => A test au complet
 
 CANARD
 - Animation dans l'eau
@@ -59,6 +53,12 @@ AJOUTS :
 - Mouette
 - Pelican
 - chouette
+- Mixin poulet
+- Mixin Perroquet
+
+LIVRE
+- Ajouter
+- Moyen de scanner les piafs
 
 CANARD & GRUE :
 

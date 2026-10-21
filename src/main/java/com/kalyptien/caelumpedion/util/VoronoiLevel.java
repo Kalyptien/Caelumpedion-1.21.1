@@ -61,7 +61,7 @@ public class VoronoiLevel {
             specificRange = new IRLRegion[]{IRLRegion.NorthAfrica, IRLRegion.SouthAfrica, IRLRegion.Oceania, IRLRegion.Asia};
         }
         else if(holder.is(CaelumpedionTags.Biomes.IS_COLD)){
-            specificRange = new IRLRegion[]{IRLRegion.NorthAfrica, IRLRegion.Europe, IRLRegion.Asia};
+            specificRange = new IRLRegion[]{IRLRegion.NorthAmerica, IRLRegion.Europe, IRLRegion.Asia};
         }
         else if(holder.is(CaelumpedionTags.Biomes.IS_ASIAN)){
             specificRange = new IRLRegion[]{IRLRegion.Asia};

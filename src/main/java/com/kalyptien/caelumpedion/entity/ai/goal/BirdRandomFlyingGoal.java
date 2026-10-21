@@ -95,7 +95,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
                 Vec3 vec3 = this.destinationNodeArray.getFirst();
                 if(vec3 != null){
                     this.wantedX = vec3.x;
-                    this.wantedY = vec3.y;
+                    this.wantedY = vec3.y + 1;
                     this.wantedZ = vec3.z;
                 }
             }
@@ -187,7 +187,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
         Vec3 finalPos = LandRandomPos.getPos(this.bird, range, height);
 
         if(finalPos == null){
-            finalPos = new Vec3(((range * (this.randomNumber() / 100))) * randomSign(), ((height * (this.randomNumber() / 100))), ((range * (this.randomNumber() / 100))) * randomSign());
+            finalPos = new Vec3((range * this.randomPercent()) * randomSign(), (height * this.randomPercent()), (range * this.randomPercent()) * randomSign());
 
         }
 
@@ -294,7 +294,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     }
 
     protected double randomNumber(){
-        return bird.getRandom().nextInt(10);
+        return bird.getRandom().nextInt(100);
     }
 
     protected double randomPercent(){

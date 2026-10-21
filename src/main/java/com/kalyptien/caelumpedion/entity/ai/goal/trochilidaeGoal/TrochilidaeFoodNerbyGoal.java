@@ -1,13 +1,10 @@
-package com.kalyptien.caelumpedion.entity.ai.trochilidaeGoal;
+package com.kalyptien.caelumpedion.entity.ai.goal.trochilidaeGoal;
 
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -51,7 +48,6 @@ public class TrochilidaeFoodNerbyGoal extends Goal {
             Optional<BlockPos> optional = this.findNearbyFlower();
             if (optional.isPresent()) {
                 this.flowerPos  = (BlockPos) optional.get();
-                this.bird.getNavigation().moveTo((double) this.flowerPos.getX() + 0.5, (double) this.flowerPos.getY() + 0.5, (double) this.flowerPos.getZ() + 0.5, bird.getAttributeBaseValue(Attributes.FLYING_SPEED) + 0.5f);
                 return true;
             } else {
                 return false;
@@ -73,7 +69,7 @@ public class TrochilidaeFoodNerbyGoal extends Goal {
     }
 
     public void tick() {
-        Vec3 vec3 = Vec3.atBottomCenterOf(this.flowerPos).add(0.0, 0.7, 0.0);
+        Vec3 vec3 = Vec3.atBottomCenterOf(this.flowerPos).add(0.0, 0.5, 0.0);
 
         if(flowerPos != null && vec3.distanceTo(this.bird.position()) <= 1.0f){
             this.bird.setNeedEatAnimation(true);
@@ -81,7 +77,7 @@ public class TrochilidaeFoodNerbyGoal extends Goal {
         }
         else{
             this.bird.getLookControl().setLookAt(vec3.x(), vec3.y(), vec3.z());
-            this.bird.getNavigation().moveTo((double) this.flowerPos.getX() + 0.5, (double) this.flowerPos.getY() + 0.5, (double) this.flowerPos.getZ() + 0.5, bird.getAttributeBaseValue(Attributes.FLYING_SPEED) + 0.5f);
+            this.bird.getNavigation().moveTo((double) this.flowerPos.getX(), (double) this.flowerPos.getY() + 0.5, (double) this.flowerPos.getZ(), bird.getAttributeBaseValue(Attributes.FLYING_SPEED)/2.0f);
         }
     }
 

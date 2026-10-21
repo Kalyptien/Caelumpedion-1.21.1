@@ -132,6 +132,10 @@ public abstract class BirdEntity extends Animal {
         return this.getIdAquaticBirdType() == FlyingBirdEntity.AquaticBirdType.FULL.getId() ? fluidState.is(FluidTags.WATER) : false;
     }
 
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return distanceToClosestPlayer >= 1000 && this.tickCount > 3200;
+    }
+
     //AiStep
 
     @Override

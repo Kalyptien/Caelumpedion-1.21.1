@@ -24,7 +24,9 @@ public class OrganizeBOIDGoal extends Goal {
         Predicate<SocialFlyingBirdEntity> predicate = abstractSchoolingSocialBird -> (abstractSchoolingSocialBird.canBeFollowed() || !abstractSchoolingSocialBird.isFollower());
         List<? extends SocialFlyingBirdEntity> list = this.socialBird.level().getEntitiesOfClass(this.socialBird.getClass(), this.socialBird.getBoundingBox().inflate(socialBird.getViewRange(), socialBird.getViewRange(), socialBird.getViewRange()), predicate);
         SocialFlyingBirdEntity abstractSchoolingSocialBird2 = DataFixUtils.orElse(list.stream().filter(SocialFlyingBirdEntity::canBeFollowed).findAny(), this.socialBird);
-        abstractSchoolingSocialBird2.addFollowers(list.stream().filter(abstractSchoolingSocialBird -> !abstractSchoolingSocialBird.isFollower()));
+        if(abstractSchoolingSocialBird2.getIdVariant() == this.socialBird.getIdVariant()){
+            abstractSchoolingSocialBird2.addFollowers(list.stream().filter(abstractSchoolingSocialBird -> !abstractSchoolingSocialBird.isFollower()));
+        }
         return this.socialBird.isFollower();
     }
 

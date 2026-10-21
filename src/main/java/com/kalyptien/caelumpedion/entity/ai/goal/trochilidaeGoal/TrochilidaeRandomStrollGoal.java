@@ -1,12 +1,9 @@
-package com.kalyptien.caelumpedion.entity.ai.trochilidaeGoal;
+package com.kalyptien.caelumpedion.entity.ai.goal.trochilidaeGoal;
 
-import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
 import net.minecraft.world.entity.ai.util.HoverRandomPos;
-import net.minecraft.world.entity.ai.util.LandRandomPos;
-import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;

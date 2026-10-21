@@ -31,6 +31,7 @@ public class CaelumpedionBiomeTagProvider extends BiomeTagsProvider {
                 .add(Biomes.SNOWY_PLAINS)
                 .add(Biomes.SNOWY_SLOPES)
                 .add(Biomes.FROZEN_RIVER)
+                .add(Biomes.GROVE)
                 .add(Biomes.ICE_SPIKES);
 
         tag(CaelumpedionTags.Biomes.IS_CAVE)

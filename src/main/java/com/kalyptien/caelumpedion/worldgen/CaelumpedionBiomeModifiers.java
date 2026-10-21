@@ -39,6 +39,7 @@ public class CaelumpedionBiomeModifiers {
         HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
 
         HolderSet<Biome> allBiomes = HolderSet.direct(
+                biomes.getOrThrow(Biomes.PLAINS),
                 biomes.getOrThrow(Biomes.FOREST),
                 biomes.getOrThrow(Biomes.FLOWER_FOREST),
                 biomes.getOrThrow(Biomes.DARK_FOREST),
@@ -73,11 +74,11 @@ public class CaelumpedionBiomeModifiers {
                 biomes.getOrThrow(Biomes.CHERRY_GROVE));
 
         context.register(SPAWN_PASSERIFORME, new BiomeModifiers.AddSpawnsBiomeModifier(
-                allBiomes, List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.PASSERIFORME.get(), 15, 2, 12))));
+                allBiomes, List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.PASSERIFORME.get(), 10, 2, 12))));
         context.register(SPAWN_HIRUNDINIAE, new BiomeModifiers.AddSpawnsBiomeModifier(
                 allBiomes, List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.HIRUNDININAE.get(), 5, 4, 24))));
         context.register(SPAWN_CORVIDAE, new BiomeModifiers.AddSpawnsBiomeModifier(
-                allBiomes, List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.CORVIDAE.get(), 10, 2, 12))));
+                allBiomes, List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.CORVIDAE.get(), 7, 2, 12))));
 
         context.register(SPAWN_ANSERIFORME, new BiomeModifiers.AddSpawnsBiomeModifier(
                 HolderSet.direct(
@@ -87,7 +88,7 @@ public class CaelumpedionBiomeModifiers {
                         biomes.getOrThrow(Biomes.MANGROVE_SWAMP),
                         biomes.getOrThrow(Biomes.PLAINS),
                         biomes.getOrThrow(Biomes.SNOWY_PLAINS)
-                ), List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.ANSERIFORME.get(), 10, 2, 6))));
+                ), List.of(new MobSpawnSettings.SpawnerData(CaelumpedionEntities.ANSERIFORME.get(), 7, 2, 6))));
 
         context.register(SPAWN_ACCIPITRIFORME, new BiomeModifiers.AddSpawnsBiomeModifier(
                 HolderSet.direct(

@@ -1,10 +1,8 @@
 package com.kalyptien.caelumpedion.entity.custom.bird.apodiforme;
 
 import com.kalyptien.caelumpedion.entity.ai.goal.*;
-import com.kalyptien.caelumpedion.entity.ai.trochilidaeGoal.TrochilidaeFoodNerbyGoal;
-import com.kalyptien.caelumpedion.entity.ai.trochilidaeGoal.TrochilidaeRandomStrollGoal;
-import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
-import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
+import com.kalyptien.caelumpedion.entity.ai.goal.trochilidaeGoal.TrochilidaeFoodNerbyGoal;
+import com.kalyptien.caelumpedion.entity.ai.goal.trochilidaeGoal.TrochilidaeRandomStrollGoal;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
@@ -14,7 +12,6 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -22,7 +19,6 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 
 import javax.annotation.Nullable;

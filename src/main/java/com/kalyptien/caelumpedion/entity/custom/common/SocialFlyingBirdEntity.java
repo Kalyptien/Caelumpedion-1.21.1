@@ -2,9 +2,17 @@ package com.kalyptien.caelumpedion.entity.custom.common;
 
 import com.kalyptien.caelumpedion.entity.ai.goal.boidGoal.OrganizeBOIDGoal;
 import com.kalyptien.caelumpedion.entity.ai.goal.boidGoal.BirdBOIDFlyGoal;
+import com.kalyptien.caelumpedion.util.CaelumpedionTags;
+import net.minecraft.core.Holder;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +37,7 @@ public abstract class SocialFlyingBirdEntity extends FlyingBirdEntity {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(2, new BirdBOIDFlyGoal(this));
-        this.goalSelector.addGoal(8, new OrganizeBOIDGoal(this));
+        this.goalSelector.addGoal(6, new OrganizeBOIDGoal(this));
     }
 
     //BOIDS Getter/Setter
@@ -100,6 +108,40 @@ public abstract class SocialFlyingBirdEntity extends FlyingBirdEntity {
 
         if(this.leader != null && !this.leader.isNeedToFlyAway() && needToFlyAway){
             this.leader.setNeedToFlyAway(true);
+        }
+    }
+
+    //Spawn
+
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
+                                        MobSpawnType spawnType, @javax.annotation.Nullable SpawnGroupData spawnGroupData) {
+        super.finalizeSpawn(level,difficulty,spawnType,spawnGroupData);
+
+        //BOID
+
+        //If there is no leader
+        if(!(spawnGroupData instanceof SocialFlyingBirdGroupData) && spawnGroupData instanceof FlyingBirdGroupData flyingBirdGroupData){
+            spawnGroupData = new SocialFlyingBirdGroupData(flyingBirdGroupData.variantId, flyingBirdGroupData.onMigration, this);
+        }
+        else{
+            //If there is a leader
+            if(spawnGroupData instanceof SocialFlyingBirdGroupData socialFlyingBirdGroupData){
+                this.startFollowing(socialFlyingBirdGroupData.leader);
+            }
+        }
+
+        return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+    }
+
+    //SpawnGroup
+
+    public static class SocialFlyingBirdGroupData extends FlyingBirdGroupData {
+        public SocialFlyingBirdEntity leader;
+
+        public SocialFlyingBirdGroupData(int variantId, boolean onMigration, SocialFlyingBirdEntity leader) {
+            super(variantId, onMigration);
+            this.leader = leader;
         }
     }
 

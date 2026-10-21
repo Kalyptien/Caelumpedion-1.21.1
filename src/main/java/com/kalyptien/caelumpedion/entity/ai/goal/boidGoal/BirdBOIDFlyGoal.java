@@ -10,10 +10,10 @@ import java.util.EnumSet;
 
 public class BirdBOIDFlyGoal extends Goal {
 
-    public final float separationInfluence = 0.2f;
+    public final float separationInfluence = 0.15f;
     public final float boidRange = 1f;
     public final float alignmentInfluence= 0.5f;
-    public final float cohesionInfluence = 0.15f;
+    public final float cohesionInfluence = 0.2f;
 
     private int timeoutBeforeFlying;
 
@@ -99,9 +99,9 @@ public class BirdBOIDFlyGoal extends Goal {
             Vec3 followerDelta = socialBird.getEyePosition().vectorTo(leaderDestinationBlockPos.getCenter());
 
             Vec3 followerDestination = socialBird.position().add(
-                    leaderDelta.x + (followerDelta.x * influenceFromTheLeader * 0.5)
-                    ,leaderDelta.y + (followerDelta.y * influenceFromTheLeader * 0.5)
-                    ,leaderDelta.z + (followerDelta.z * influenceFromTheLeader  * 0.5)
+                    leaderDelta.x + (followerDelta.x * influenceFromTheLeader * 0.1)
+                    ,leaderDelta.y + (followerDelta.y * influenceFromTheLeader * 0.1)
+                    ,leaderDelta.z + (followerDelta.z * influenceFromTheLeader  * 0.1)
             );
 
             socialBird.getNavigation().moveTo(followerDestination.x, followerDestination.y, followerDestination.z, speed);
