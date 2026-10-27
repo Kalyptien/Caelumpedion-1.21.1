@@ -30,7 +30,6 @@ public class PiciformeEntity extends FlyingBirdEntity {
 
         this.setFlyingBirdType(FlyingBirdType.SHORT_FlYER);
         this.setAquaticBirdType(BirdEntity.AquaticBirdType.NONE);
-        this.setFlyPathType(FlyingBirdEntity.FlyPathType.NORMAL);
 
         this.flyRange = 100;
         this.flyHeight = 30;

@@ -9,6 +9,7 @@ import com.kalyptien.caelumpedion.entity.ai.goal.*;
 import com.kalyptien.caelumpedion.util.CaelumpedionTags;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.VoronoiLevel;
+import com.sun.jna.platform.win32.WinNT;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
@@ -19,7 +20,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
@@ -36,7 +40,6 @@ public abstract class FlyingBirdEntity extends BirdEntity {
     //Enum var
 
     FlyingBirdType flyingBirdType = FlyingBirdType.WALKER;
-    FlyPathType flyPathType = FlyPathType.NORMAL;
 
     //Flying Var
 
@@ -62,6 +65,10 @@ public abstract class FlyingBirdEntity extends BirdEntity {
     private float flyProgress;
     private float prevFlyProgress;
 
+    private boolean needToUpdateGoal = false;
+
+    private BirdRandomFlyingGoal randomFlyingGoal;
+
     public FlyingBirdEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
         switchNavigator(true);
@@ -80,8 +87,18 @@ public abstract class FlyingBirdEntity extends BirdEntity {
         super.registerGoals();
 
         // Goal
+        this.randomFlyingGoal = new BirdRandomFlyingGoal(this, 1.0);
+        this.goalSelector.addGoal(8, randomFlyingGoal);
+    }
 
-        this.goalSelector.addGoal(9, new BirdRandomFlyingGoal(this, 1.0));
+    protected void updateGoals(){
+        this.goalSelector.removeGoal(this.randomFlyingGoal);
+        if(this.isNeedToFlyAway()){
+            this.goalSelector.addGoal(0, this.randomFlyingGoal);
+        }
+        else{
+            this.goalSelector.addGoal(8, this.randomFlyingGoal);
+        }
     }
 
     protected void switchNavigator(boolean onLand) {
@@ -91,7 +108,7 @@ public abstract class FlyingBirdEntity extends BirdEntity {
             this.isLandNavigator = true;
         } else {
             this.moveControl = new FlyMoveController(this);
-            this.navigation = new BirdFlyPathNavigation(this, level(), 1.0F);
+            this.navigation = new FlyingPathNavigation(this, level());
             this.isLandNavigator = false;
         }
     }
@@ -150,6 +167,10 @@ public abstract class FlyingBirdEntity extends BirdEntity {
         }
 
         if (!level().isClientSide) {
+            if(needToUpdateGoal){
+                this.updateGoals();
+            }
+
             if (this.isFlying()) {
                 this.setNoGravity(true);
                 if (this.isLandNavigator) {
@@ -250,23 +271,15 @@ public abstract class FlyingBirdEntity extends BirdEntity {
         this.flyingBirdType = flyingBirdType;
     }
 
-    public FlyPathType getFlyPathType() {
-        return this.flyPathType;
-    }
-
-    public int getIdFlyPathType() {
-        return this.flyPathType.getId();
-    }
-
-    public void setFlyPathType(FlyPathType flypathType) {
-        this.flyPathType = flypathType;
-    }
-
     public boolean isNeedToFlyAway() {
         return this.entityData.get(NEED_TO_FLY_AWAY);
     }
 
     public void setNeedToFlyAway(boolean needToFlyAway) {
+        if(this.isNeedToFlyAway() != needToFlyAway){
+            this.needToUpdateGoal = true;
+        }
+
         this.entityData.set(NEED_TO_FLY_AWAY, needToFlyAway);
     }
 
@@ -295,56 +308,40 @@ public abstract class FlyingBirdEntity extends BirdEntity {
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
                                         MobSpawnType spawnType, @javax.annotation.Nullable SpawnGroupData spawnGroupData) {
-        super.finalizeSpawn(level,difficulty,spawnType,spawnGroupData);
-
-        //Migration
-        if(!(spawnGroupData instanceof FlyingBirdGroupData) && spawnGroupData instanceof BirdGroupData birdGroupData){
-            Holder<Biome> holder = level.getBiome(this.blockPosition());
-
-            //If not in cave
-            if (!holder.is(CaelumpedionTags.Biomes.IS_CAVE)) {
-                //Small chance to happen
-                if((100.0f * this.random.nextFloat()) <= 0.1f){
-                    spawnGroupData = new FlyingBirdGroupData(birdGroupData.variantId, true);
-                }
-                else{
-                    spawnGroupData = new FlyingBirdGroupData(birdGroupData.variantId, false);
-                }
-            }
-            else{
-                spawnGroupData = new FlyingBirdGroupData(birdGroupData.variantId, false);
-            }
+        if(!(spawnGroupData instanceof BirdGroupData)){
+            spawnGroupData = new BirdGroupData();
         }
 
-        if(spawnGroupData instanceof FlyingBirdGroupData flyingBirdGroupData){
-            //If on Migration & not a follower
-            if(flyingBirdGroupData.onMigration && (this instanceof SocialFlyingBirdEntity socialFlyingBirdEntity ? !socialFlyingBirdEntity.isFollower() : true)){
-                //Set the bird up
-                this.setPos(this.position().x, this.position().y + this.getFlyHeight(), this.position().z);
-                //Make it fly
-                this.setOnMigration(flyingBirdGroupData.onMigration);
-                this.setFlying(true);
-                this.setNeedToFlyAway(true);
+        //Migration
+        if(!(spawnType == MobSpawnType.SPAWN_EGG || spawnType == MobSpawnType.SPAWNER || spawnType == MobSpawnType.TRIAL_SPAWNER)){
+            if(spawnGroupData instanceof BirdGroupData birdGroupData){
+                if(!birdGroupData.onMigrationSet){
+                    Holder<Biome> holder = level.getBiome(this.blockPosition());
 
-                //Fly far away
-                Vec3 finalPos = new Vec3(((this.getFlyRange() * 4) * (this.random.nextFloat() * 100.0f)) * (this.getRandom().nextBoolean() ? -1 : 1), 0, ((this.getFlyRange() * 4) * (this.random.nextFloat() * 100.0f)) * (this.getRandom().nextBoolean() ? -1 : 1));
-                finalPos = this.position().add(finalPos);
-                this.navigation.moveTo(finalPos.x, finalPos.y, finalPos.z, this.getFlySpeed());
+                    //If not in cave
+                    if (!holder.is(CaelumpedionTags.Biomes.IS_CAVE)) {
+                        //Small chance to happen
+                        if(this.random.nextFloat() <= 0.9f){
+                            birdGroupData.setOnMigration(true);
+                        }
+                        else{
+                            birdGroupData.setOnMigration(false);
+                        }
+                    }
+                    else{
+                        birdGroupData.setOnMigration(false);
+                    }
+                }
+
+                this.setOnMigration(birdGroupData.onMigration);
+
+                if(birdGroupData.onMigration){
+                    this.setNeedToFlyAway(true);
+                }
             }
         }
 
         return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
-    }
-
-    //SpawnGroup
-
-    public static class FlyingBirdGroupData extends BirdGroupData {
-        public boolean onMigration;
-
-        public FlyingBirdGroupData(int variantId, boolean onMigration) {
-            super(variantId);
-            this.onMigration = onMigration;
-        }
     }
 
     //Save Data
@@ -381,28 +378,6 @@ public abstract class FlyingBirdEntity extends BirdEntity {
         }
 
         public static FlyingBirdType byId(int id) {
-            return BY_ID[id % BY_ID.length];
-        }
-    }
-
-    public static enum FlyPathType {
-        NORMAL(0),
-        CHAOS(1),
-        NEAR_GROUND(2);
-
-        private static final FlyPathType[] BY_ID = Arrays.stream(values()).sorted(
-                Comparator.comparingInt(FlyPathType::getId)).toArray(FlyPathType[]::new);
-        private final int id;
-
-        FlyPathType(int id) {
-            this.id = id;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public static FlyPathType byId(int id) {
             return BY_ID[id % BY_ID.length];
         }
     }

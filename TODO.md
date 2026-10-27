@@ -1,18 +1,10 @@
 V 1.0.0 :
 
-GENERAL :
-
-- add JEI (AU BESOIN)
-
 OISEAUX :
 
 - Intégrations des chants pour chaques oiseaux
 
 - Plus de textures pour certains oiseaux
-
-BOID :
-
-- Vol en V => A revérifier
 
 VOL :
 
@@ -56,9 +48,19 @@ AJOUTS :
 - Mixin poulet
 - Mixin Perroquet
 
+GENERAL :
+
+- Différence entre serveur et client tj présente
+- add JEI (AU BESOIN)
+
 LIVRE
 - Ajouter
 - Moyen de scanner les piafs
+
+VOL : 
+
+- Refaire le système de vol : Voir si il n'est pas possible d'utiliser le MoveController ou le PathFinder pour définir plus proprement le vol
+- Problème avec le NeedToFlyAway : Différence entre client et serveur
 
 CANARD & GRUE :
 

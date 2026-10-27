@@ -1,6 +1,7 @@
 {
   "type": "neoforge:add_spawns",
   "biomes": [
+    "minecraft:plains",
     "minecraft:forest",
     "minecraft:flower_forest",
     "minecraft:dark_forest",

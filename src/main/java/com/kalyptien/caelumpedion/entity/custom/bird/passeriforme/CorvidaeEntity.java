@@ -30,7 +30,6 @@ public class CorvidaeEntity extends SocialFlyingBirdEntity {
         this.setFlyingBirdType(FlyingBirdType.LONG_FLYER);
         this.setAquaticBirdType(AquaticBirdType.NONE);
         this.setBOIDBirdType(BOIDType.FOLLOW);
-        this.setFlyPathType(FlyPathType.NORMAL);
 
         this.flyRange = 100;
         this.flyHeight = 30;

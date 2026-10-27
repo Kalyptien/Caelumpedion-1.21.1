@@ -41,7 +41,11 @@ public class TrochilidaeFoodNerbyGoal extends Goal {
     public boolean canUse() {
         if (bird.isOnAnimation()) {
             return false;
-        } else if (bird.getRandom().nextInt(reducedTickDelay(1000) + 500) != 0) {
+        }
+        if(bird.isOnMigration()){
+            return false;
+        }
+        else if (bird.getRandom().nextInt(reducedTickDelay(1000) + 500) != 0) {
             return false;
         } else {
 

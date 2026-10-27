@@ -58,7 +58,6 @@ public class AccipitridaeEntity extends FlyingBirdEntity implements NeutralMob, 
 
         this.setFlyingBirdType(FlyingBirdType.LONG_FLYER);
         this.setAquaticBirdType(AquaticBirdType.NONE);
-        this.setFlyPathType(FlyPathType.NEAR_GROUND);
 
         this.flyRange = 200;
         this.flyHeight = 60;

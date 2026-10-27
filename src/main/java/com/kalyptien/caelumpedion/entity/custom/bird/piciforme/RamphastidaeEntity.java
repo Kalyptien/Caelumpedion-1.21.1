@@ -32,7 +32,6 @@ public class RamphastidaeEntity extends  SocialFlyingBirdEntity{
         this.setFlyingBirdType(FlyingBirdType.LONG_FLYER);
         this.setAquaticBirdType(AquaticBirdType.NONE);
         this.setBOIDBirdType(BOIDType.FOLLOW);
-        this.setFlyPathType(FlyPathType.NORMAL);
 
         this.flyRange = 150;
         this.flyHeight = 50;

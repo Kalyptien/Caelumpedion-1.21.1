@@ -384,41 +384,47 @@ public abstract class BirdEntity extends Animal {
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
                                         MobSpawnType spawnType, @javax.annotation.Nullable SpawnGroupData spawnGroupData) {
+
+        if(!(spawnGroupData instanceof BirdGroupData)){
+            spawnGroupData = new BirdGroupData();
+        }
+
         //Variants
         if(spawnType == MobSpawnType.SPAWN_EGG || spawnType == MobSpawnType.SPAWNER || spawnType == MobSpawnType.TRIAL_SPAWNER){
             this.setRandomVariant();
         }
         else{
-            if (spawnGroupData == null) {
+            if(spawnGroupData instanceof BirdGroupData birdGroupData){
+                if(!birdGroupData.variantIdSet){
+                    Holder<Biome> holder = level.getBiome(this.blockPosition());
 
-                Holder<Biome> holder = level.getBiome(this.blockPosition());
+                    IRLRegion IrlRegion = VoronoiLevel.getVoronoiIrlRegion(holder ,this.blockPosition());
 
-                IRLRegion IrlRegion = VoronoiLevel.getVoronoiIrlRegion(holder ,this.blockPosition());
+                    int randomInt = random.nextInt(this.getVariantLength());
 
-                int randomInt = random.nextInt(this.getVariantLength());
+                    boolean isVariantApply = false;
 
-                boolean isVariantApply = false;
+                    //Check By IrlRegion/Biome
 
-                //Check By IrlRegion/Biome
+                    isVariantApply = this.setVariantFromIrlRegionBiome(holder, IrlRegion, randomInt);
 
-                isVariantApply = this.setVariantFromIrlRegionBiome(holder, IrlRegion, randomInt);
+                    //Check By Biome
 
-                //Check By Biome
+                    if(!isVariantApply) isVariantApply = this.setVariantFromBiome(holder, randomInt);
 
-                if(!isVariantApply) isVariantApply = this.setVariantFromBiome(holder, randomInt);
+                    //Check By IrlRegion
 
-                //Check By IrlRegion
+                    if(!isVariantApply) isVariantApply = this.setVariantFromIrlRegion(IrlRegion, randomInt);
 
-                if(!isVariantApply) isVariantApply = this.setVariantFromIrlRegion(IrlRegion, randomInt);
+                    //Go crazy
 
-                //Go crazy
+                    if(!isVariantApply) this.setRandomVariant();
 
-                if(!isVariantApply) this.setRandomVariant();
-
-                spawnGroupData = new BirdGroupData(this.getIdVariant());
-            } else {
-                if(spawnGroupData instanceof BirdGroupData birdGroupData)
+                    ((BirdGroupData) spawnGroupData).setVariantId(this.getIdVariant());
+                }
+                else{
                     this.setVariantFromId(birdGroupData.variantId);
+                }
             }
         }
 
@@ -440,11 +446,31 @@ public abstract class BirdEntity extends Animal {
     //SpawnGroup
 
     public static class BirdGroupData extends AgeableMob.AgeableMobGroupData {
-        public final int variantId;
+        public int variantId = 0;
+        public SocialFlyingBirdEntity leader = null;
+        public boolean onMigration = false;
 
-        public BirdGroupData(int variantId) {
+        public boolean variantIdSet = false;
+        public boolean leaderSet = false;
+        public boolean onMigrationSet = false;
+
+        public BirdGroupData() {
             super(false);
+        }
+
+        public void setVariantId(int variantId) {
             this.variantId = variantId;
+            this.variantIdSet = true;
+        }
+
+        public void setLeader(SocialFlyingBirdEntity leader) {
+            this.leader = leader;
+            this.leaderSet = true;
+        }
+
+        public void setOnMigration(boolean onMigration) {
+            this.onMigration = onMigration;
+            this.onMigrationSet = true;
         }
     }
 

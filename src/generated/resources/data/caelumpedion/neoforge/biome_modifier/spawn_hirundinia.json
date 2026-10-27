@@ -1,6 +1,7 @@
 {
   "type": "neoforge:add_spawns",
   "biomes": [
+    "minecraft:plains",
     "minecraft:forest",
     "minecraft:flower_forest",
     "minecraft:dark_forest",
@@ -36,8 +37,8 @@
   ],
   "spawners": {
     "type": "caelumpedion:hirundininae",
-    "maxCount": 6,
-    "minCount": 2,
+    "maxCount": 24,
+    "minCount": 4,
     "weight": 5
   }
 }

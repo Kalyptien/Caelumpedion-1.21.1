@@ -124,9 +124,9 @@ public class BirdBOIDFlyGoal extends Goal {
     }
 
     private void shareFormationPath(){
-        int posInFormation = socialBird.leader.ownSchool.indexOf(socialBird) + 1;
+        double posInFormation = socialBird.leader.ownSchool.indexOf(socialBird) + 1.0f;
 
-        int sign = posInFormation % 2 == 0 ? 1 : -1;
+        double sign = posInFormation % 2 == 0 ? 1.0 : -1.0;
 
         Vec3 followerDestination = socialBird.leader.getEyePosition().subtract(sign * 3 * Math.round(posInFormation/2.0), 0, sign * 3 * Math.round(posInFormation/2.0));
 

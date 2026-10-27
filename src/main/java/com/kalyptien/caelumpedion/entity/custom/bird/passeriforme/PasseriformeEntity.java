@@ -30,7 +30,6 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
         this.setFlyingBirdType(FlyingBirdType.SHORT_FlYER);
         this.setAquaticBirdType(AquaticBirdType.NONE);
         this.setBOIDBirdType(BOIDType.FOLLOW);
-        this.setFlyPathType(FlyPathType.CHAOS);
 
         this.flyRange = 100;
         this.flyHeight = 30;

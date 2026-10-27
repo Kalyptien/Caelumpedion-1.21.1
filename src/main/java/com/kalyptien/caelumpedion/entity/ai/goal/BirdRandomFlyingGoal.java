@@ -3,12 +3,18 @@ package com.kalyptien.caelumpedion.entity.ai.goal;
 import com.kalyptien.caelumpedion.entity.ai.CircleAroundFlyingMob;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
@@ -198,7 +204,17 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
 
         //Get final destination
 
-        Vec3 finalDestination = getFinalDestination();
+        Vec3 finalDestination;
+        if (this.mob.getRandom().nextFloat() >= 0.75) {
+            finalDestination = this.getTreePos();
+        }
+        else{
+            finalDestination = getFinalDestination();
+        }
+
+        if(finalDestination == null){
+            finalDestination = getFinalDestination();
+        }
 
         double finalX = finalDestination.x;
         double finalZ = finalDestination.z;
@@ -211,15 +227,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
         stepZ = finalZ / numberOfMiddleDestination;
 
         for (double i = 1.0; i < (numberOfMiddleDestination + 1); i++) {
-            Vec3 middleDestination;
-
-            if(bird.getIdFlyPathType() == FlyingBirdEntity.FlyPathType.CHAOS.getId()){
-                middleDestination = this.generateInBetweenChaosDestination(i);
-            } else if (bird.getIdFlyPathType() == FlyingBirdEntity.FlyPathType.NEAR_GROUND.getId()) {
-                middleDestination = this.generateInBetweenNearGroundDestination(i);
-            } else{
-                middleDestination = this.generateInBetweenDestination(i);
-            }
+            Vec3 middleDestination = this.generateInBetweenDestination(i);
             this.destinationNodeArray.add(new Vec3(middleDestination.x, middleDestination.y, middleDestination.z));
         }
 
@@ -272,14 +280,44 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
 
     //Utils
 
-    protected Vec3 groundPosition(Vec3 airPosition) {
+    public Vec3 groundPosition(Vec3 airPosition) {
         BlockPos.MutableBlockPos ground = new BlockPos.MutableBlockPos();
         ground.set(airPosition.x, airPosition.y, airPosition.z);
+        boolean flag = false;
+        while (ground.getY() < bird.level().getMaxBuildHeight() && !bird.level().getBlockState(ground).isSolid() && bird.level().getFluidState(ground).isEmpty()){
+            ground.move(0, 1, 0);
+            flag = true;
+        }
         ground.move(0, -1, 0);
         while (ground.getY() > bird.level().getMinBuildHeight() && !bird.level().getBlockState(ground).isSolid() && bird.level().getFluidState(ground).isEmpty()) {
             ground.move(0, -1, 0);
         }
-        return Vec3.atCenterOf(ground.below());
+        return Vec3.atCenterOf(flag ? ground.above() : ground.below());
+    }
+
+    @Nullable
+    private Vec3 getTreePos() {
+        BlockPos blockpos = this.mob.blockPosition();
+        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+        BlockPos.MutableBlockPos blockpos$mutableblockpos1 = new BlockPos.MutableBlockPos();
+        Iterator var4 = BlockPos.betweenClosed(Mth.floor(this.mob.getX() - 3.0), Mth.floor(this.mob.getY() - 6.0), Mth.floor(this.mob.getZ() - 3.0), Mth.floor(this.mob.getX() + 3.0), Mth.floor(this.mob.getY() + 6.0), Mth.floor(this.mob.getZ() + 3.0)).iterator();
+
+        BlockPos blockpos1;
+        boolean flag;
+        do {
+            do {
+                if (!var4.hasNext()) {
+                    return null;
+                }
+
+                blockpos1 = (BlockPos)var4.next();
+            } while(blockpos.equals(blockpos1));
+
+            BlockState blockstate = this.mob.level().getBlockState(blockpos$mutableblockpos1.setWithOffset(blockpos1, Direction.DOWN));
+            flag = blockstate.getBlock() instanceof LeavesBlock || blockstate.is(BlockTags.LOGS);
+        } while(!flag || !this.mob.level().isEmptyBlock(blockpos1) || !this.mob.level().isEmptyBlock(blockpos$mutableblockpos.setWithOffset(blockpos1, Direction.UP)));
+
+        return Vec3.atBottomCenterOf(blockpos1);
     }
 
     protected double Nth ( int number, int index ) {

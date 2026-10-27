@@ -94,9 +94,9 @@ public interface CircleAroundFlyingMob {
         public void stop() {
             this.speedModifier = 0;
             this.setInterval(2000);
-            this.bird.setFlying(false);
             this.mob.setCyclingAround(false);
             this.needToStop = false;
+            bird.setFlying(false);
         }
 
         public boolean canContinueToUse() {

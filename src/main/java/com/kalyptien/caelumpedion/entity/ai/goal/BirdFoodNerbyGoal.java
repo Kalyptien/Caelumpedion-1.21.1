@@ -39,7 +39,11 @@ public class BirdFoodNerbyGoal extends Goal {
     public boolean canUse() {
         if (bird.isOnAnimation()) {
             return false;
-        } else if (bird.getRandom().nextInt(reducedTickDelay(1000)) != 0) {
+        }
+        if(bird instanceof FlyingBirdEntity flyingBird && (flyingBird.isFlying() || flyingBird.isOnMigration())){
+            return false;
+        }
+        else if (bird.getRandom().nextInt(reducedTickDelay(1000)) != 0) {
             return false;
         } else {
             List<ItemEntity> list = bird.level().getEntitiesOfClass(ItemEntity.class, bird.getBoundingBox().inflate(bird.getViewRange(), bird.getViewRange(), bird.getViewRange()), this.foodPredicate);
@@ -99,6 +103,12 @@ public class BirdFoodNerbyGoal extends Goal {
     }
 
     public void start() {
+        if(bird instanceof FlyingBirdEntity flyingBird){
+            if(this.bird.getRandom().nextFloat() <= 0.5){
+                flyingBird.setFlying(true);
+            }
+        }
+
         this.goToFollow();
     }
 
@@ -107,6 +117,10 @@ public class BirdFoodNerbyGoal extends Goal {
         super.stop();
         this.itemToFollow = null;
         this.blockPosToFollow = null;
+
+        if(bird instanceof FlyingBirdEntity flyingBird){
+            flyingBird.setFlying(false);
+        }
     }
 
     protected BlockPos findNearbyFeederWithSpace() {

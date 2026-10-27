@@ -51,7 +51,6 @@ public class AnseriformeEntity extends SocialFlyingBirdEntity implements Neutral
         this.setFlyingBirdType(FlyingBirdType.WALKER);
         this.setAquaticBirdType(AquaticBirdType.FULL);
         this.setBOIDBirdType(BOIDType.FORMATION);
-        this.setFlyPathType(FlyPathType.NORMAL);
 
         this.flyRange = 150;
         this.flyHeight = 40;

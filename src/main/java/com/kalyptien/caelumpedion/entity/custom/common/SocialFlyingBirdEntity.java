@@ -116,33 +116,24 @@ public abstract class SocialFlyingBirdEntity extends FlyingBirdEntity {
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
                                         MobSpawnType spawnType, @javax.annotation.Nullable SpawnGroupData spawnGroupData) {
-        super.finalizeSpawn(level,difficulty,spawnType,spawnGroupData);
+
+        if(!(spawnGroupData instanceof BirdGroupData)){
+            spawnGroupData = new BirdGroupData();
+        }
 
         //BOID
-
-        //If there is no leader
-        if(!(spawnGroupData instanceof SocialFlyingBirdGroupData) && spawnGroupData instanceof FlyingBirdGroupData flyingBirdGroupData){
-            spawnGroupData = new SocialFlyingBirdGroupData(flyingBirdGroupData.variantId, flyingBirdGroupData.onMigration, this);
-        }
-        else{
-            //If there is a leader
-            if(spawnGroupData instanceof SocialFlyingBirdGroupData socialFlyingBirdGroupData){
-                this.startFollowing(socialFlyingBirdGroupData.leader);
+        if(!(spawnType == MobSpawnType.SPAWN_EGG || spawnType == MobSpawnType.SPAWNER || spawnType == MobSpawnType.TRIAL_SPAWNER)){
+            if(spawnGroupData instanceof BirdGroupData birdGroupData){
+                if(!birdGroupData.leaderSet){
+                    birdGroupData.setLeader(this);
+                }
+                else{
+                    this.startFollowing(birdGroupData.leader);
+                }
             }
         }
 
         return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
-    }
-
-    //SpawnGroup
-
-    public static class SocialFlyingBirdGroupData extends FlyingBirdGroupData {
-        public SocialFlyingBirdEntity leader;
-
-        public SocialFlyingBirdGroupData(int variantId, boolean onMigration, SocialFlyingBirdEntity leader) {
-            super(variantId, onMigration);
-            this.leader = leader;
-        }
     }
 
     //Enum
