@@ -107,9 +107,6 @@ public class TrochilidaeModel<T extends TrochilidaeEntity> extends FlyingBirdHie
     protected void setupWalkAnimation(float limbSwing, float limbSwingAmount){
     }
 
-    protected void setupRunAnimation(float limbSwing, float limbSwingAmount){
-    }
-
     protected void setupIdleAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
         this.animate(entity.idleAnimationState, TrochilidaeAnimation.TROCHILIDAE_IDLE, ageInTicks, 1f);
     }

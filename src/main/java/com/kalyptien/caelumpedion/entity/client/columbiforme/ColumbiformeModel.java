@@ -97,10 +97,6 @@ public class ColumbiformeModel<T extends ColumbiformeEntity> extends FlyingBirdH
         this.animateWalk(ColumbiformeAnimation.COLUMBIFORME_WALK, limbSwing, limbSwingAmount, 2f, 10f);
     }
 
-    protected void setupRunAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(ColumbiformeAnimation.COLUMBIFORME_RUN, limbSwing, limbSwingAmount, 2f, 2f);
-    }
-
     protected void setupIdleAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
         this.animate(entity.idleAnimationState, ColumbiformeAnimation.COLUMBIFORME_IDLE, ageInTicks, 1f);
     }

@@ -126,7 +126,10 @@ public class RamphastidaeEntity extends  SocialFlyingBirdEntity{
     // Variant
 
     public static enum RamphastidaeVariant implements BirdVariant {
-        RamphastosToco(0, "ramphastos_toco", 1.0f, false, new FeatherColor[]{FeatherColor.Black,FeatherColor.White}, FeatherColor.White, new IRLRegion[]{IRLRegion.SouthAmerica}, null),
+        RamphastosAmbiguus(0, "ramphastos_ambiguus", 1.0f, false, new FeatherColor[]{FeatherColor.Black,FeatherColor.Yellow}, FeatherColor.Black, new IRLRegion[]{IRLRegion.SouthAmerica}, null),
+        RamphastosSulfuratus(1, "ramphastos_sulfuratus", 1.0f, false, new FeatherColor[]{FeatherColor.Black,FeatherColor.Yellow}, FeatherColor.Black, new IRLRegion[]{IRLRegion.SouthAmerica}, null),
+        RamphastosToco(2, "ramphastos_toco", 1.0f, false, new FeatherColor[]{FeatherColor.Black,FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.SouthAmerica}, null),
+        RamphastosTucanus(3, "ramphastos_tucanus", 1.0f, false, new FeatherColor[]{FeatherColor.Black,FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.SouthAmerica}, null),
         ;
 
         private static final RamphastidaeVariant[] BY_ID = Arrays.stream(values()).sorted(

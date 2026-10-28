@@ -97,10 +97,6 @@ public class CorvidaeModel<T extends CorvidaeEntity> extends FlyingBirdHierarchi
         this.animateWalk(CorvidaeAnimation.CORVIDAE_WALK, limbSwing, limbSwingAmount, 2f, 10f);
     }
 
-    protected void setupRunAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(CorvidaeAnimation.CORVIDAE_RUN, limbSwing, limbSwingAmount, 2f, 2f);
-    }
-
     protected void setupIdleAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
         this.animate(entity.idleAnimationState, CorvidaeAnimation.CORVIDAE_IDLE, ageInTicks, 1f);
     }

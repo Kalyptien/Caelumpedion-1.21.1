@@ -35,15 +35,7 @@ public class BirdHierarchicalModel <T extends BirdEntity> extends HierarchicalMo
 
         //> WALK
         if(entity.onGround() && (entity instanceof FlyingBirdEntity flyingBird ? !flyingBird.isFlying() : true)){
-            if(
-                    this.getCurrentBirdSpeed(entity) >= (entity.getAttributeValue(Attributes.MOVEMENT_SPEED))
-                    || (entity instanceof NeutralMob neutralMob ? neutralMob.isAngry() : false)
-            ){
-                this.setupRunAnimation(limbSwing, limbSwingAmount);
-            }
-            else{
-                this.setupWalkAnimation(limbSwing, limbSwingAmount);
-            }
+            this.setupWalkAnimation(limbSwing, limbSwingAmount);
         }
 
         //> IDLE
@@ -65,9 +57,6 @@ public class BirdHierarchicalModel <T extends BirdEntity> extends HierarchicalMo
     }
 
     protected void setupWalkAnimation(float limbSwing, float limbSwingAmount){
-    }
-
-    protected void setupRunAnimation(float limbSwing, float limbSwingAmount){
     }
 
     protected void setupIdleAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){

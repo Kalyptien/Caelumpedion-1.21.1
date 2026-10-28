@@ -98,10 +98,6 @@ public class RamphastidaeModel<T extends RamphastidaeEntity> extends FlyingBirdH
         this.animateWalk(RamphastidaeAnimation.RAMPHASTIDAE_WALK, limbSwing, limbSwingAmount, 2f, 10f);
     }
 
-    protected void setupRunAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(RamphastidaeAnimation.RAMPHASTIDAE_RUN, limbSwing, limbSwingAmount, 2f, 2f);
-    }
-
     protected void setupIdleAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
         this.animate(entity.idleAnimationState, RamphastidaeAnimation.RAMPHASTIDAE_IDLE, ageInTicks, 1f);
     }

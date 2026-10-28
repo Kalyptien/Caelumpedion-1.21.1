@@ -110,10 +110,6 @@ public class GruiformeModel<T extends GruiformeEntity> extends FlyingBirdHierarc
         this.animateWalk(GruiformeAnimation.GRUIFORME_WALK, limbSwing, limbSwingAmount, 2f, 10f);
     }
 
-    protected void setupRunAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(GruiformeAnimation.GRUIFORME_RUN, limbSwing, limbSwingAmount, 2f, 2f);
-    }
-
     protected void setupIdleAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
         this.animate(entity.idleAnimationState, GruiformeAnimation.GRUIFORME_IDLE, ageInTicks, 1f);
     }

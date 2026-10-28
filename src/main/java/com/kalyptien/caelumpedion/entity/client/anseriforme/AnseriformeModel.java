@@ -90,10 +90,6 @@ public class AnseriformeModel<T extends AnseriformeEntity> extends FlyingBirdHie
         this.animateWalk(AnseriformeAnimation.ANSERIFORME_WALK, limbSwing, limbSwingAmount, 2f, 10f);
     }
 
-    protected void setupRunAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(AnseriformeAnimation.ANSERIFORME_RUN, limbSwing, limbSwingAmount, 2f, 2f);
-    }
-
     protected void setupIdleAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
         this.animate(entity.idleAnimationState, AnseriformeAnimation.ANSERIFORME_IDLE, ageInTicks, 1f);
     }

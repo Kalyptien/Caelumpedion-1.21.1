@@ -3,6 +3,7 @@ V 1.0.0 :
 OISEAUX :
 
 - Intégrations des chants pour chaques oiseaux
+- Flap, Hurt and Death sound
 
 - Plus de textures pour certains oiseaux
 
@@ -12,9 +13,6 @@ VOL :
 
 CANARD
 - Animation dans l'eau
-
-AIGLE
-- Refaire le model / texture / animation
 
 PIC VERT
 - Picpic les arbres et le metal
@@ -27,7 +25,6 @@ COLIBRI
 AJOUTS :
 
 - Ajouter buse & aigle
-- Ajouter Vautour
 
 V.1.1.0
 

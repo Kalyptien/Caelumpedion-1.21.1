@@ -98,10 +98,6 @@ public class PiciformeModel<T extends PiciformeEntity> extends FlyingBirdHierarc
         this.animateWalk(PiciformeAnimation.PICIFORME_WALK, limbSwing, limbSwingAmount, 2f, 10f);
     }
 
-    protected void setupRunAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(PiciformeAnimation.PICIFORME_RUN, limbSwing, limbSwingAmount, 2f, 2f);
-    }
-
     protected void setupIdleAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
         this.animate(entity.idleAnimationState, PiciformeAnimation.PICIFORME_IDLE, ageInTicks, 1f);
     }
