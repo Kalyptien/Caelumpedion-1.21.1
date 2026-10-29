@@ -174,6 +174,8 @@ public class HirundininaeEntity extends SocialFlyingBirdEntity implements Circle
 
     public static enum HirundininaeVariant implements BirdVariant {
         DelichonUrbicum(0, "delichon_urbicum", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.SouthAfrica, IRLRegion.NorthAfrica}, null),
+        HirundonRustica(1, "hirundon_rustica", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.Oceania, IRLRegion.SouthAmerica, IRLRegion.NorthAmerica, IRLRegion.SouthAfrica}, null),
+        PetrochelidonNigricans(2, "petrochelidon_nigricans", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Oceania}, null),
         ;
 
         private static final HirundininaeVariant[] BY_ID = Arrays.stream(values()).sorted(

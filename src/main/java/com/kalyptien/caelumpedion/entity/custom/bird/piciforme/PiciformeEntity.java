@@ -3,10 +3,12 @@ package com.kalyptien.caelumpedion.entity.custom.bird.piciforme;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
+import com.kalyptien.caelumpedion.util.CaelumpedionTags;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
@@ -115,7 +117,11 @@ public class PiciformeEntity extends FlyingBirdEntity {
     // Variant
 
     public static enum PiciformeVariant implements BirdVariant {
-        PicusViridis(0, "picus_viridis", 1.0f, false, new FeatherColor[]{FeatherColor.Lime, FeatherColor.White}, FeatherColor.Green, new IRLRegion[]{IRLRegion.Europe}, null),
+        ColaptesAuratus(0, "colaptes_auratus", 1.0f, false, new FeatherColor[]{FeatherColor.Brown, FeatherColor.Black}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.NorthAmerica}, null),
+        DendrocoposMajor(1, "dendrocopos_major", 1.0f, false, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.NorthAfrica}, null),
+        DendrocoposMedius(2, "dendrocopos_medius", 1.0f, false, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe}, null),
+        PicusPhantasiaTroglodyta(3, "picus_phantasia_troglodyta", 1.0f, false, new FeatherColor[]{FeatherColor.Brown, FeatherColor.Gray}, FeatherColor.Gray, new IRLRegion[]{IRLRegion.Europe, IRLRegion.NorthAmerica, IRLRegion.SouthAmerica, IRLRegion.Oceania, IRLRegion.Asia, IRLRegion.SouthAfrica, IRLRegion.NorthAfrica}, CaelumpedionTags.Biomes.IS_CAVE),
+        PicusViridis(4, "picus_viridis", 1.0f, false, new FeatherColor[]{FeatherColor.Lime, FeatherColor.White}, FeatherColor.Green, new IRLRegion[]{IRLRegion.Europe}, null),
         ;
 
         private static final PiciformeVariant[] BY_ID = Arrays.stream(values()).sorted(
