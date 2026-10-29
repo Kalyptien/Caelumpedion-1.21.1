@@ -219,6 +219,9 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
     // Variant
 
     public static enum GruiformeVariant implements BirdVariant {
+        AntigoneAntigone(0, "antigone_antigone", 1.2f, false, new FeatherColor[]{FeatherColor.White}, FeatherColor.White, new IRLRegion[]{IRLRegion.Asia, IRLRegion.Oceania}, null),
+        AntigoneCanadensis(0, "antigone_canadensis", 1.0f, false, new FeatherColor[]{FeatherColor.LightGray, FeatherColor.White}, FeatherColor.LightGray, new IRLRegion[]{IRLRegion.NorthAmerica}, null),
+        GrusGrus(0, "grus_grus", 1.0f, false, new FeatherColor[]{FeatherColor.LightGray, FeatherColor.Gray}, FeatherColor.LightGray, new IRLRegion[]{IRLRegion.Asia, IRLRegion.Europe, IRLRegion.NorthAfrica}, null),
         GrusJaponensis(0, "grus_japonensis", 1.0f, false, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Asia}, null),
         ;
 

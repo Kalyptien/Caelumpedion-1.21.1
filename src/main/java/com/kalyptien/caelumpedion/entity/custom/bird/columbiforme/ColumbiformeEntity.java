@@ -119,6 +119,9 @@ public class ColumbiformeEntity extends SocialFlyingBirdEntity {
 
     public static enum ColumbiformeVariant implements BirdVariant {
         ColumbaLivia(0, "columba_livia", 1.0f, true, new FeatherColor[]{FeatherColor.Gray, FeatherColor.LightGray}, FeatherColor.LightGray, new IRLRegion[]{IRLRegion.NorthAmerica, IRLRegion.Europe, IRLRegion.Asia, IRLRegion.NorthAfrica, IRLRegion.Oceania}, null),
+        ColumbaPalumbus(0, "columba_palumbus", 1.0f, true, new FeatherColor[]{FeatherColor.Gray, FeatherColor.LightGray}, FeatherColor.LightGray, new IRLRegion[]{IRLRegion.Europe}, null),
+        StreptopeliaDecaocto(0, "streptopelia_decaocto", 1.0f, true, new FeatherColor[]{FeatherColor.LightGray}, FeatherColor.LightGray, new IRLRegion[]{IRLRegion.NorthAmerica, IRLRegion.Europe, IRLRegion.Asia}, null),
+        ZenaidaMacroura(0, "zenaida_macroura", 1.0f, true, new FeatherColor[]{FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.NorthAmerica}, null),
         ;
 
         private static final ColumbiformeVariant[] BY_ID = Arrays.stream(values()).sorted(
