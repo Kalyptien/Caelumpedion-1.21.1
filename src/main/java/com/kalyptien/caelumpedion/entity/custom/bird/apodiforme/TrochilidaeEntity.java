@@ -198,7 +198,10 @@ public class TrochilidaeEntity extends FlyingBirdEntity {
     // Variant
 
     public static enum TrochilidaeVariant implements BirdVariant {
+        ArchilochusColubris(0, "archilodus_colubris", 1.0f, true, new FeatherColor[]{FeatherColor.Green, FeatherColor.White}, FeatherColor.Green, new IRLRegion[]{IRLRegion.NorthAmerica}, null),
+        ColibriCoruscans(0, "colibri_coruscans", 1.0f, true, new FeatherColor[]{FeatherColor.Green, FeatherColor.Black}, FeatherColor.Green, new IRLRegion[]{IRLRegion.SouthAmerica}, null),
         ColibriDelphinae(0, "colibri_delphinae", 1.0f, true, new FeatherColor[]{FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.SouthAmerica}, BiomeTags.IS_JUNGLE),
+        MellisugaHelenae(0, "mellisuga_helenae", 1.0f, true, new FeatherColor[]{FeatherColor.White, FeatherColor.Gray}, FeatherColor.Gray, new IRLRegion[]{IRLRegion.SouthAmerica, IRLRegion.NorthAmerica}, null),
         ;
 
         private static final TrochilidaeVariant[] BY_ID = Arrays.stream(values()).sorted(
