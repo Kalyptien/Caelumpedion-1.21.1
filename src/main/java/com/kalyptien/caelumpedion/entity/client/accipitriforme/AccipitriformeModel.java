@@ -1,8 +1,7 @@
-package com.kalyptien.caelumpedion.entity.client.accipitridae;
+package com.kalyptien.caelumpedion.entity.client.accipitriforme;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
-import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeAnimation;
 import com.kalyptien.caelumpedion.entity.custom.bird.accipitriforme.AccipitridaeEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -10,18 +9,17 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 
-public class AccipitridaeModel<T extends AccipitridaeEntity> extends FlyingBirdHierarchicalModel<T> {
+public class AccipitriformeModel<T extends AccipitridaeEntity> extends FlyingBirdHierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "accipitriforme"), "main");
 
     protected ModelPart global;
 
-    public AccipitridaeModel(ModelPart root) {
+    public AccipitriformeModel(ModelPart root) {
         this.root = root.getChild("accipitriforme");
-        this.root = root.getChild("trochilidae");
         this.global = this.root.getChild("global");
         this.body = this.global.getChild("body");
         this.head = this.global.getChild("head");
-        
+
         this.wingR = this.body.getChild("wingR");
         this.normalWingR = this.wingR.getChild("normalWingR");
         this.flyingWingR = this.wingR.getChild("flyingWingR");
@@ -61,7 +59,7 @@ public class AccipitridaeModel<T extends AccipitridaeEntity> extends FlyingBirdH
 
         PartDefinition backWingR = normalWingR.addOrReplaceChild("backWingR", CubeListBuilder.create().texOffs(0, 16).addBox(-1.0F, -4.5F, -2.5F, 2.0F, 8.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.0F, 4.5F, 2.5F));
 
-        PartDefinition flyginWingR = wingR.addOrReplaceChild("flyginWingR", CubeListBuilder.create().texOffs(0, 26).addBox(0.0F, 0.0F, 0.0F, 0.0F, 12.0F, 19.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition flyginWingR = wingR.addOrReplaceChild("flyingWingR", CubeListBuilder.create().texOffs(0, 26).addBox(0.0F, 0.0F, 0.0F, 0.0F, 12.0F, 19.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition mainBody = body.addOrReplaceChild("mainBody", CubeListBuilder.create(), PartPose.offset(-0.5F, -10.9635F, -6.5097F));
 
@@ -93,7 +91,7 @@ public class AccipitridaeModel<T extends AccipitridaeEntity> extends FlyingBirdH
 
         PartDefinition frontLegR = legR.addOrReplaceChild("frontLegR", CubeListBuilder.create().texOffs(-3, 3).addBox(-1.0F, 0.0F, -3.0F, 2.0F, 0.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.1F, 5.8F, 0.1F));
 
-        PartDefinition Tail = body.addOrReplaceChild("Tail", CubeListBuilder.create(), PartPose.offsetAndRotation(-0.5F, -10.7F, 2.0F, -0.3927F, 0.0F, 0.0F));
+        PartDefinition Tail = body.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.offsetAndRotation(-0.5F, -10.7F, 2.0F, -0.3927F, 0.0F, 0.0F));
 
         PartDefinition normalTail = Tail.addOrReplaceChild("normalTail", CubeListBuilder.create(), PartPose.offset(0.0F, -0.7F, 0.0F));
 
@@ -124,24 +122,22 @@ public class AccipitridaeModel<T extends AccipitridaeEntity> extends FlyingBirdH
     }
 
     protected void setupWalkAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(AccipitridaeAnimation.ACCIPITRIFORME_WALK, limbSwing, limbSwingAmount, 2f, 10f);
-    }
-
-    protected void setupRunAnimation(float limbSwing, float limbSwingAmount){
+        this.animateWalk(AccipitriformeAnimation.ACCIPITRIFORME_WALK, limbSwing, limbSwingAmount, 2f, 10f);
     }
 
     protected void setupIdleAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
-        this.animate(entity.idleAnimationState, AccipitridaeAnimation.ACCIPITRIFORME_IDLE, ageInTicks, 1f);
+        this.animate(entity.idleAnimationState, AccipitriformeAnimation.ACCIPITRIFORME_IDLE, ageInTicks, 1f);
     }
 
     protected void setupEatAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
-        this.animate(entity.eatAnimationState, AccipitridaeAnimation.ACCIPITRIFORME_EAT, ageInTicks, 1f);
+        this.animate(entity.eatAnimationState, AccipitriformeAnimation.ACCIPITRIFORME_EAT, ageInTicks, 1f);
     }
 
     protected void setupFlyAnimation(float limbSwing, float limbSwingAmount){
-        this.animateWalk(AccipitridaeAnimation.ACCIPITRIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
+        this.animateWalk(AccipitriformeAnimation.ACCIPITRIFORME_FLY, limbSwing, limbSwingAmount, 3f, 3f);
     }
 
     protected void setupSlowFallAnimation(T entity,float limbSwing, float limbSwingAmount, float ageInTicks){
+        this.animate(entity.fallAnimationState, AccipitriformeAnimation.ACCIPITRIFORME_FALL, ageInTicks, 1f);
     }
 }

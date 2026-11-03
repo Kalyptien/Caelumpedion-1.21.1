@@ -263,7 +263,11 @@ public class AccipitridaeEntity extends FlyingBirdEntity implements NeutralMob, 
     // Variant
 
     public static enum AccipitridaeVariant implements BirdVariant {
-        GypaetusBarbatus(0, "gypaetus_barbatus", 1.0f, false, new FeatherColor[]{FeatherColor.Orange}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.NorthAfrica, IRLRegion.SouthAfrica}, null),
+        AegypiusMonachus(0, "aegypius_monachus", 1.0f, false, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia}, null),
+        GypaetusBarbatus(1, "gypaetus_barbatus", 1.0f, false, new FeatherColor[]{FeatherColor.Orange, FeatherColor.Black}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.NorthAfrica, IRLRegion.SouthAfrica}, null),
+        GypsFulvus(2, "gyps_fulvus", 1.0f, false, new FeatherColor[]{FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.NorthAfrica}, null),
+        GypsHimalayensis(3, "gyps_himalayensis", 1.0f, false, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Asia}, null),
+        TorgosTracheliotos(4, "torgos_tracheliotos", 1.0f, false, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.NorthAfrica, IRLRegion.SouthAfrica}, null),
         ;
 
         private static final AccipitridaeVariant[] BY_ID = Arrays.stream(values()).sorted(

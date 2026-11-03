@@ -5,22 +5,11 @@ OISEAUX :
 - Intégrations des chants pour chaques oiseaux
 - Flap, Hurt and Death sound
 
-- Plus de textures pour certains oiseaux
-
-VOL :
-
-- Vol migratoire => A test au complet
-
 CANARD
 - Animation dans l'eau
 
 PIC VERT
 - Picpic les arbres et le metal
-- Pic troglodite
-
-COLIBRI
-
-- Colibri troglodite
 
 AJOUTS :
 

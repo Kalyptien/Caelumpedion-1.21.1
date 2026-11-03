@@ -4,7 +4,7 @@ import com.kalyptien.caelumpedion.block.CaelumpedionBlocks;
 import com.kalyptien.caelumpedion.block.entity.CaelumpedionBlockEntities;
 import com.kalyptien.caelumpedion.block.entity.renderer.BirdFeederBlockEntityRenderer;
 import com.kalyptien.caelumpedion.entity.CaelumpedionEntities;
-import com.kalyptien.caelumpedion.entity.client.accipitridae.AccipitridaeRenderer;
+import com.kalyptien.caelumpedion.entity.client.accipitriforme.AccipitriformeRenderer;
 import com.kalyptien.caelumpedion.entity.client.anseriforme.AnseriformeRenderer;
 import com.kalyptien.caelumpedion.entity.client.columbiforme.ColumbiformeRenderer;
 import com.kalyptien.caelumpedion.entity.client.corvidae.CorvidaeRenderer;
@@ -88,7 +88,7 @@ public class CaelumpedionMod {
             EntityRenderers.register(CaelumpedionEntities.HIRUNDININAE.get(), HirundininaeRenderer::new);
             EntityRenderers.register(CaelumpedionEntities.CORVIDAE.get(), CorvidaeRenderer::new);
             EntityRenderers.register(CaelumpedionEntities.ANSERIFORME.get(), AnseriformeRenderer::new);
-            EntityRenderers.register(CaelumpedionEntities.ACCIPITRIFORME.get(), AccipitridaeRenderer::new);
+            EntityRenderers.register(CaelumpedionEntities.ACCIPITRIFORME.get(), AccipitriformeRenderer::new);
             EntityRenderers.register(CaelumpedionEntities.RAMPHASTIDAE.get(), RamphastidaeRenderer::new);
             EntityRenderers.register(CaelumpedionEntities.GRUIFORME.get(), GruiformeRenderer::new);
             EntityRenderers.register(CaelumpedionEntities.TROCHILIDAE.get(), TrochilidaeRenderer::new);

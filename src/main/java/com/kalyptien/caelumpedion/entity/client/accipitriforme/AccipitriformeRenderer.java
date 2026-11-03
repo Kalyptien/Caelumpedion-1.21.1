@@ -1,4 +1,4 @@
-package com.kalyptien.caelumpedion.entity.client.accipitridae;
+package com.kalyptien.caelumpedion.entity.client.accipitriforme;
 
 import com.google.common.collect.Maps;
 import com.kalyptien.caelumpedion.CaelumpedionMod;
@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.Map;
 
-public class AccipitridaeRenderer extends MobRenderer<AccipitridaeEntity, AccipitridaeModel<AccipitridaeEntity>> {
+public class AccipitriformeRenderer extends MobRenderer<AccipitridaeEntity, AccipitriformeModel<AccipitridaeEntity>> {
 
     private static final Map<AccipitridaeEntity.AccipitridaeVariant, ResourceLocation> LOCATION_BY_VARIANT =
             Util.make(Maps.newEnumMap(AccipitridaeEntity.AccipitridaeVariant.class), map -> {
@@ -24,8 +24,8 @@ public class AccipitridaeRenderer extends MobRenderer<AccipitridaeEntity, Accipi
 
             });
 
-    public AccipitridaeRenderer(EntityRendererProvider.Context context) {
-        super(context, new AccipitridaeModel<>(context.bakeLayer(AccipitridaeModel.LAYER_LOCATION)), 0.5f);
+    public AccipitriformeRenderer(EntityRendererProvider.Context context) {
+        super(context, new AccipitriformeModel<>(context.bakeLayer(AccipitriformeModel.LAYER_LOCATION)), 0.5f);
     }
 
     @Override

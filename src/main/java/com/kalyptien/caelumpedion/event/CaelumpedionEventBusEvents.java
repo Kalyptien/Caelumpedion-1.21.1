@@ -2,7 +2,7 @@ package com.kalyptien.caelumpedion.event;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.CaelumpedionEntities;
-import com.kalyptien.caelumpedion.entity.client.accipitridae.AccipitridaeModel;
+import com.kalyptien.caelumpedion.entity.client.accipitriforme.AccipitriformeModel;
 import com.kalyptien.caelumpedion.entity.client.anseriforme.AnseriformeModel;
 import com.kalyptien.caelumpedion.entity.client.columbiforme.ColumbiformeModel;
 import com.kalyptien.caelumpedion.entity.client.corvidae.CorvidaeModel;
@@ -41,7 +41,7 @@ public class CaelumpedionEventBusEvents {
 
         event.registerLayerDefinition(AnseriformeModel.LAYER_LOCATION, AnseriformeModel::createBodyLayer);
 
-        event.registerLayerDefinition(AccipitridaeModel.LAYER_LOCATION, AccipitridaeModel::createBodyLayer);
+        event.registerLayerDefinition(AccipitriformeModel.LAYER_LOCATION, AccipitriformeModel::createBodyLayer);
 
         event.registerLayerDefinition(PiciformeModel.LAYER_LOCATION, PiciformeModel::createBodyLayer);
         event.registerLayerDefinition(RamphastidaeModel.LAYER_LOCATION, RamphastidaeModel::createBodyLayer);

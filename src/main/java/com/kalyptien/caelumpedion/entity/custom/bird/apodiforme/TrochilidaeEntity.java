@@ -4,6 +4,7 @@ import com.kalyptien.caelumpedion.entity.ai.goal.*;
 import com.kalyptien.caelumpedion.entity.ai.goal.trochilidaeGoal.TrochilidaeFoodNerbyGoal;
 import com.kalyptien.caelumpedion.entity.ai.goal.trochilidaeGoal.TrochilidaeRandomStrollGoal;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
+import com.kalyptien.caelumpedion.util.CaelumpedionTags;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
@@ -198,10 +199,11 @@ public class TrochilidaeEntity extends FlyingBirdEntity {
     // Variant
 
     public static enum TrochilidaeVariant implements BirdVariant {
-        ArchilochusColubris(0, "archilodus_colubris", 1.0f, true, new FeatherColor[]{FeatherColor.Green, FeatherColor.White}, FeatherColor.Green, new IRLRegion[]{IRLRegion.NorthAmerica}, null),
-        ColibriCoruscans(0, "colibri_coruscans", 1.0f, true, new FeatherColor[]{FeatherColor.Green, FeatherColor.Black}, FeatherColor.Green, new IRLRegion[]{IRLRegion.SouthAmerica}, null),
-        ColibriDelphinae(0, "colibri_delphinae", 1.0f, true, new FeatherColor[]{FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.SouthAmerica}, BiomeTags.IS_JUNGLE),
-        MellisugaHelenae(0, "mellisuga_helenae", 1.0f, true, new FeatherColor[]{FeatherColor.White, FeatherColor.Gray}, FeatherColor.Gray, new IRLRegion[]{IRLRegion.SouthAmerica, IRLRegion.NorthAmerica}, null),
+        ArchilochusColubris(0, "archilochus_colubris", 1.0f, true, new FeatherColor[]{FeatherColor.Green, FeatherColor.White}, FeatherColor.Green, new IRLRegion[]{IRLRegion.NorthAmerica}, null),
+        ColibriCoruscans(1, "colibri_coruscans", 1.0f, true, new FeatherColor[]{FeatherColor.Green, FeatherColor.Black}, FeatherColor.Green, new IRLRegion[]{IRLRegion.SouthAmerica}, null),
+        ColibriDelphinae(2, "colibri_delphinae", 1.0f, true, new FeatherColor[]{FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.SouthAmerica}, BiomeTags.IS_JUNGLE),
+        ColibriPhantasiaTroglodyta(3, "colibri_phantasia_troglodyta", 1.0f, true, new FeatherColor[]{FeatherColor.Green, FeatherColor.Gray}, FeatherColor.Gray, new IRLRegion[]{IRLRegion.Europe, IRLRegion.NorthAmerica, IRLRegion.SouthAmerica, IRLRegion.Oceania, IRLRegion.Asia, IRLRegion.SouthAfrica, IRLRegion.NorthAfrica}, CaelumpedionTags.Biomes.IS_CAVE),
+        MellisugaHelenae(4, "mellisuga_helenae", 1.0f, true, new FeatherColor[]{FeatherColor.White, FeatherColor.Gray}, FeatherColor.Gray, new IRLRegion[]{IRLRegion.SouthAmerica, IRLRegion.NorthAmerica}, null),
         ;
 
         private static final TrochilidaeVariant[] BY_ID = Arrays.stream(values()).sorted(
