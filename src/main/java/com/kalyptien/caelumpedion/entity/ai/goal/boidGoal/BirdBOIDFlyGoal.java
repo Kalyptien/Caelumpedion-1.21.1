@@ -128,7 +128,12 @@ public class BirdBOIDFlyGoal extends Goal {
 
         double sign = posInFormation % 2 == 0 ? 1.0 : -1.0;
 
-        Vec3 followerDestination = socialBird.leader.getEyePosition().subtract(sign * 3 * Math.round(posInFormation/2.0), 0, sign * 3 * Math.round(posInFormation/2.0));
+        Vec3 initialVec = new Vec3(sign * 1.5 * (posInFormation/2.0f), 0, -1.5 * (posInFormation/2.0f));
+
+        initialVec = initialVec.xRot(socialBird.leader.getFlightPitch(socialBird.tickCount));
+        initialVec = initialVec.zRot(socialBird.leader.getFlightRoll(socialBird.tickCount));
+
+        Vec3 followerDestination = socialBird.leader.getEyePosition().add(initialVec);
 
         socialBird.getNavigation().moveTo(followerDestination.x, followerDestination.y, followerDestination.z, speed);
     }
@@ -205,24 +210,5 @@ public class BirdBOIDFlyGoal extends Goal {
 
         c = c.subtract(socialBird.position());
         return c.scale(cohesionInfluence);
-    }
-
-    //Global functions
-
-    public Vec3 groundPosition(Vec3 airPosition) {
-        BlockPos.MutableBlockPos ground = new BlockPos.MutableBlockPos();
-        ground.set(airPosition.x, airPosition.y, airPosition.z);
-        ground.move(0, -1, 0);
-        while (ground.getY() > socialBird.level().getMinBuildHeight() && !socialBird.level().getBlockState(ground).isSolid() && socialBird.level().getFluidState(ground).isEmpty()) {
-            ground.move(0, -1, 0);
-        }
-        return Vec3.atCenterOf(ground.below());
-    }
-
-    private double Nth ( int number, int index ) {
-        if(number >= 10){
-            return ((int)number / java.lang.Math.pow(10, index)) % 10;
-        }
-        return number;
     }
 }

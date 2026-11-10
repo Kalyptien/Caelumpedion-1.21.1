@@ -91,6 +91,20 @@ public class AnseriformeEntity extends SocialFlyingBirdEntity implements Neutral
         builder.define(DATA_REMAINING_ANGER_TIME, 0);
     }
 
+    //Anim
+
+    protected void setupAnimationStates() {
+        if(this.isNeedEatAnimation()){
+            this.setEatAnimation();
+        }
+        else if(this.isInWater()) {
+            this.setWaterIdleAnimation();
+        }
+        else if (this.onGround()){
+            this.setIdleAnimation();
+        }
+    }
+
     //Food
 
     @Override

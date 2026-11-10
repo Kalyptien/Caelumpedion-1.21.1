@@ -188,69 +188,76 @@ public abstract class BirdEntity extends Animal {
     //Animation
 
     protected void setupAnimationStates() {
-
         if(this.isNeedEatAnimation()){
-            if(!this.eatAnimationState.isStarted()){
-                this.eatAnimationState.start(this.tickCount);
-                this.setOnAnimation(true);
-                this.eatAnimationTimein = 0;
-            }
-            else{
-                this.eatAnimationTimein++;
+            this.setEatAnimation();
+        }
+        else if (this.onGround()){
+            this.setIdleAnimation();
+        }
+    }
 
-                if(eatAnimationTimein >= 70){
-                    this.resetAnimations();
-                    this.setOnAnimation(false);
-                    this.setNeedEatAnimation(false);
-                }
-            }
+    protected void setEatAnimation(){
+        if(!this.eatAnimationState.isStarted()){
+            this.eatAnimationState.start(this.tickCount);
+            this.setOnAnimation(true);
+            this.eatAnimationTimein = 0;
         }
         else{
-            if(this.isInWater() && this.aquaticBirdType.getId() == AquaticBirdType.FULL.id){
-                if (this.idleAnimationTimeout <= 0) {
-                    this.idleAnimationTimeout = this.random.nextInt(500) + 500;
-                    this.idleAnimationTimein = 0;
+            this.eatAnimationTimein++;
 
-                    double seed = this.random.nextInt(100)/100.0f;
-
-                    if(seed > 0.5f){
-                        this.idleInWaterAnimationState.start(this.tickCount);
-                    }
-                    else{
-                        this.eatInWaterAnimationState.start(this.tickCount);
-                    }
-
-                    this.setOnAnimation(true);
-                } else {
-                    --this.idleAnimationTimeout;
-                    ++this.idleAnimationTimein;
-                }
-            }
-            else if (this.onGround()){
-                if (this.idleAnimationTimeout <= 0) {
-                    this.idleAnimationTimeout = this.random.nextInt(500) + 500;
-                    this.idleAnimationTimein = 0;
-
-                    double seed = this.random.nextInt(100)/100.0f;
-
-                    if(seed > 0.5f){
-                        this.idleAnimationState.start(this.tickCount);
-                    }
-                    else{
-                        this.eatAnimationState.start(this.tickCount);
-                    }
-
-                    this.setOnAnimation(true);
-                } else {
-                    --this.idleAnimationTimeout;
-                    ++this.idleAnimationTimein;
-                }
-            }
-
-            if(this.idleAnimationTimein >= 70){
+            if(eatAnimationTimein >= 70){
                 this.resetAnimations();
-                this.setOnAnimation(false);
             }
+        }
+    }
+
+    protected void setIdleAnimation(){
+        if (this.idleAnimationTimeout <= 0) {
+            this.idleAnimationTimeout = this.random.nextInt(500) + 500;
+            this.idleAnimationTimein = 0;
+
+            double seed = this.random.nextInt(100)/100.0f;
+
+            if(seed > 0.5f){
+                this.idleAnimationState.start(this.tickCount);
+            }
+            else{
+                this.eatAnimationState.start(this.tickCount);
+            }
+
+            this.setOnAnimation(true);
+        } else {
+            --this.idleAnimationTimeout;
+            ++this.idleAnimationTimein;
+        }
+
+        if(this.idleAnimationTimein >= 70){
+            this.resetAnimations();
+        }
+    }
+
+    protected void setWaterIdleAnimation(){
+        if (this.idleAnimationTimeout <= 0) {
+            this.idleAnimationTimeout = this.random.nextInt(500) + 500;
+            this.idleAnimationTimein = 0;
+
+            double seed = this.random.nextInt(100)/100.0f;
+
+            if(seed > 0.5f){
+                this.idleInWaterAnimationState.start(this.tickCount);
+            }
+            else{
+                this.eatInWaterAnimationState.start(this.tickCount);
+            }
+
+            this.setOnAnimation(true);
+        } else {
+            --this.idleAnimationTimeout;
+            ++this.idleAnimationTimein;
+        }
+
+        if(this.idleAnimationTimein >= 70){
+            this.resetAnimations();
         }
     }
 

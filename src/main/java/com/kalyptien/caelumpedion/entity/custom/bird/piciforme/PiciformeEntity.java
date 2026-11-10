@@ -1,5 +1,7 @@
 package com.kalyptien.caelumpedion.entity.custom.bird.piciforme;
 
+import com.kalyptien.caelumpedion.entity.ai.goal.*;
+import com.kalyptien.caelumpedion.entity.ai.goal.piciformeGoal.PiciformePeckNerbyGoal;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
@@ -7,25 +9,43 @@ import com.kalyptien.caelumpedion.util.CaelumpedionTags;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.registries.datamaps.builtin.Strippable;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Comparator;
 
 public class PiciformeEntity extends FlyingBirdEntity {
+
+    protected static final EntityDataAccessor<Boolean> NEED_PECK_ANIM =
+            SynchedEntityData.defineId(PiciformeEntity.class, EntityDataSerializers.BOOLEAN);
+
+    public final AnimationState peckAnimationState = new AnimationState();
+    protected int peckAnimationTimein = 0;
+
+    protected BlockPos blockPosPecked;
 
     public PiciformeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -46,6 +66,96 @@ public class PiciformeEntity extends FlyingBirdEntity {
                 .add(Attributes.FOLLOW_RANGE, 16D);
     }
 
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+
+        // Goal
+        // this.goalSelector.addGoal(10, new PiciformePeckNerbyGoal(this));
+    }
+
+    @Override
+    protected void updateGravity(){
+        super.updateGravity();
+        /*if (this.isFlying()) {
+            this.setNoGravity(true);
+            if (this.isLandNavigator) {
+                switchNavigator(false);
+            }
+        } else {
+            if(this.isNeedPeckAnimation()){
+                this.setNoGravity(true);
+                if (!this.isLandNavigator) {
+                    switchNavigator(true);
+                }
+            }
+            else{
+                this.setNoGravity(false);
+                if (!this.isLandNavigator) {
+                    switchNavigator(true);
+                }
+            }
+        }*/
+    }
+
+    //Anim
+
+    @Override
+    protected void setupAnimationStates() {
+        /*if (this.isNeedPeckAnimation() && blockPosPecked != null) {
+            this.setPeckAnimation();
+        }*/
+
+        super.setupAnimationStates();
+    }
+
+    protected void setPeckAnimation(){
+        if(!this.peckAnimationState.isStarted()){
+            this.peckAnimationState.start(this.tickCount);
+            this.setOnAnimation(true);
+            this.peckAnimationTimein = 0;
+        }
+        else{
+            this.peckAnimationTimein++;
+            this.getLookControl().setLookAt(blockPosPecked.getX(), blockPosPecked.getY(), blockPosPecked.getZ());
+
+            if(peckAnimationTimein % 70 == 0){
+                if((this.random.nextInt(100)/100.0f) <= 0.25){
+                    BlockState blockState = this.level().getBlockState(blockPosPecked);
+                    if (blockState.is(Blocks.POINTED_DRIPSTONE)){
+                        this.level().removeBlock(this.blockPosPecked, false);
+                    }
+                    else if(blockState.is(BlockTags.LOGS)){
+                        BlockState strippedBlockState = AxeItem.getAxeStrippingState(blockState);
+
+                        if(strippedBlockState != null){
+                            this.level().setBlock(this.blockPosPecked, strippedBlockState, 11);
+                        }
+                    }
+
+                    this.resetAnimations();
+                    this.setNeedToFlyAway(true);
+                }
+                else{
+                    //Son en fonction du block
+                }
+            }
+        }
+    }
+
+    @Override
+    public void resetAnimations() {
+        /*if(this.peckAnimationState.isStarted()){
+            this.peckAnimationState.stop();
+        }
+
+        this.peckAnimationTimein = 0;
+        this.blockPosPecked = null;
+        this.setNeedPeckAnimation(false);*/
+
+        super.resetAnimations();
+    }
+
     //Getter / Setter
 
     public int getIdVariant() {
@@ -58,6 +168,28 @@ public class PiciformeEntity extends FlyingBirdEntity {
 
     public void setVariant(PiciformeVariant variant) {
         this.entityData.set(VARIANT, variant.getId());
+    }
+
+    public boolean isNeedPeckAnimation() {
+        return this.entityData.get(NEED_PECK_ANIM);
+    }
+
+    public void setNeedPeckAnimation(boolean needPeckAnimation) {
+        this.entityData.set(NEED_PECK_ANIM, needPeckAnimation);
+    }
+
+    public BlockPos getBlockPosPecked() {
+        return blockPosPecked;
+    }
+
+    public void setBlockPosPecked(BlockPos blockPosPecked) {
+        this.blockPosPecked = blockPosPecked;
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(NEED_PECK_ANIM, false);
     }
 
     // SPAWN

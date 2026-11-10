@@ -174,7 +174,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
 
     protected void defineFlySize(){
         if(this.flyType == FlyType.MIGRATION){
-            range = bird.getFlyRange() * 5;
+            range = bird.getFlyRange() * 4;
             height = bird.getFlyHeight() * 2;
         } else if (this.flyType == FlyType.LONG) {
             range = bird.getFlyRange() * 2;
@@ -190,12 +190,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     }
 
     protected Vec3 getFinalDestination(){
-        Vec3 finalPos = LandRandomPos.getPos(this.bird, range, height);
-
-        if(finalPos == null){
-            finalPos = new Vec3((range * this.randomPercent()) * randomSign(), (height * this.randomPercent()), (range * this.randomPercent()) * randomSign());
-
-        }
+        Vec3 finalPos = new Vec3((range * this.randomPercent()) * randomSign(), bird.level().getMaxBuildHeight() / 2.0f, (range * this.randomPercent()) * randomSign());
 
         return bird.position().add(groundPosition(finalPos));
     }
@@ -209,11 +204,11 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
             finalDestination = this.getTreePos();
         }
         else{
-            finalDestination = getFinalDestination();
+            finalDestination = this.getFinalDestination();
         }
 
         if(finalDestination == null){
-            finalDestination = getFinalDestination();
+            finalDestination = this.getFinalDestination();
         }
 
         double finalX = finalDestination.x;
@@ -247,50 +242,20 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
         return new Vec3(destination.x, y, destination.z);
     }
 
-    protected Vec3 generateInBetweenChaosDestination(double iteration){
-
-        Vec3 destination = bird.position().add(stepX * iteration, 0, stepZ * iteration);
-
-        double ground = groundPosition(destination).y;
-
-        double y = (Math.sin((Math.PI / numberOfMiddleDestination) * iteration) * height) + ground;
-
-        return new Vec3(
-                destination.x + this.randomModifier()
-                , y  + this.randomModifier()
-                , destination.z + this.randomModifier());
-    }
-
-    protected Vec3 generateInBetweenNearGroundDestination(double iteration){
-
-        Vec3 destination = bird.position().add(stepX * iteration, 0, stepZ * iteration);
-
-        double ground = groundPosition(destination).y;
-
-        double y;
-        if(iteration == 1){
-            y = (height * 1.5) + ground;
-        }
-        else {
-            y = ground + 5;
-        }
-
-        return new Vec3(destination.x,y,destination.z);
-    }
-
     //Utils
 
     public Vec3 groundPosition(Vec3 airPosition) {
         BlockPos.MutableBlockPos ground = new BlockPos.MutableBlockPos();
         ground.set(airPosition.x, airPosition.y, airPosition.z);
         boolean flag = false;
-        while (ground.getY() < bird.level().getMaxBuildHeight() && !bird.level().getBlockState(ground).isSolid() && bird.level().getFluidState(ground).isEmpty()){
-            ground.move(0, 1, 0);
-            flag = true;
-        }
         ground.move(0, -1, 0);
         while (ground.getY() > bird.level().getMinBuildHeight() && !bird.level().getBlockState(ground).isSolid() && bird.level().getFluidState(ground).isEmpty()) {
             ground.move(0, -1, 0);
+        }
+
+        while (ground.getY() < bird.level().getMaxBuildHeight() && !bird.level().getBlockState(ground).isSolid() && bird.level().getFluidState(ground).isEmpty()){
+            ground.move(0, 1, 0);
+            flag = true;
         }
         return Vec3.atCenterOf(flag ? ground.above() : ground.below());
     }

@@ -5,15 +5,12 @@ OISEAUX :
 - Intégrations des chants pour chaques oiseaux
 - Flap, Hurt and Death sound
 
+- Vol en formation KO => Test et corriger
+
+- Intégrer le mod de bouquin
+
 CANARD
 - Animation dans l'eau
-
-PIC VERT
-- Picpic les arbres et le metal
-
-AJOUTS :
-
-- Ajouter buse & aigle
 
 V.1.1.0
 
@@ -31,6 +28,8 @@ AJOUTS :
 - Mouette
 - Pelican
 - chouette
+- Buses
+- Aigles
 - Mixin poulet
 - Mixin Perroquet
 
@@ -38,10 +37,6 @@ GENERAL :
 
 - Différence entre serveur et client tj présente
 - add JEI (AU BESOIN)
-
-LIVRE
-- Ajouter
-- Moyen de scanner les piafs
 
 VOL : 
 
@@ -52,5 +47,17 @@ CANARD & GRUE :
 
 - Pêche
 
+PICIFORME :
+
+- Animation picpic
+- Picpic les arbres et le metal => Les fichiers existent mais a corriger pour devenir fonctionnel
+
 =====
+
+Know issues : 
+
+- Hirondelle volent parfois trop bas
+- Quelques problèmes sur les animations
+- Quelques problèmes entre le lien serveur/client
+- Too many birds => lag
 

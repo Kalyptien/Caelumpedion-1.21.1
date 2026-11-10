@@ -71,7 +71,7 @@ public interface CircleAroundFlyingMob {
             } else if (this.bird.getTarget() != null) {
                 return true;
             } else {
-                if (this.bird.getRandom().nextInt(reducedTickDelay(this.interval) + 500) != 0) {
+                if (this.bird.getRandom().nextInt(reducedTickDelay(this.interval) + 1000) != 0) {
                     return false;
                 }
                 return true;
@@ -84,8 +84,8 @@ public interface CircleAroundFlyingMob {
             this.bird.setFlying(true);
             this.mob.setCyclingAround(true);
 
-            this.distance = 5.0F + bird.getRandom().nextFloat() * 10.0F;
-            this.height = (this.bird.getFlyHeight() * bird.getRandom().nextFloat()) + 5.0f;
+            this.distance = 5.0F + bird.getRandom().nextFloat() * 10.0F + this.bird.getFlyRange()/2.0f;
+            this.height = (this.bird.getFlyHeight() * bird.getRandom().nextFloat()) + this.bird.getFlyHeight()/2.0f;
             this.clockwise = bird.getRandom().nextBoolean() ? 1.0F : -1.0F;
             this.selectNext();
         }
@@ -176,7 +176,7 @@ public interface CircleAroundFlyingMob {
 
         protected void circleAround(){
             if (bird.getRandom().nextInt(this.adjustedTickDelay(350)) == 0) {
-                this.height = (this.bird.getFlyHeight() * bird.getRandom().nextFloat()) + 5.0f;
+                this.height = (this.bird.getFlyHeight() * bird.getRandom().nextFloat()) + this.bird.getFlyHeight()/2.0f;
             }
 
             if (bird.getRandom().nextInt(this.adjustedTickDelay(250)) == 0) {

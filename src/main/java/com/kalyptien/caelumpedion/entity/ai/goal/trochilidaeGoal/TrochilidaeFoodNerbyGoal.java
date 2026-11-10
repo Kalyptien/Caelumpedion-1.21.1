@@ -18,11 +18,11 @@ import java.util.function.Predicate;
 
 public class TrochilidaeFoodNerbyGoal extends Goal {
 
-    private final Predicate<BlockState> VALID_POLLINATION_BLOCKS = (p_28074_) -> {
-        if (p_28074_.hasProperty(BlockStateProperties.WATERLOGGED) && (Boolean)p_28074_.getValue(BlockStateProperties.WATERLOGGED)) {
+    private final Predicate<BlockState> VALID_POLLINATION_BLOCKS = (block) -> {
+        if (block.hasProperty(BlockStateProperties.WATERLOGGED) && (Boolean)block.getValue(BlockStateProperties.WATERLOGGED)) {
             return false;
-        } else if (p_28074_.is(BlockTags.FLOWERS)) {
-            return p_28074_.is(Blocks.SUNFLOWER) ? p_28074_.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER : true;
+        } else if (block.is(BlockTags.FLOWERS)) {
+            return block.is(Blocks.SUNFLOWER) ? block.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER : true;
         } else {
             return false;
         }

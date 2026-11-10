@@ -65,7 +65,7 @@ public abstract class FlyingBirdEntity extends BirdEntity {
     private float flyProgress;
     private float prevFlyProgress;
 
-    private boolean needToUpdateGoal = false;
+    protected boolean needToUpdateGoal = false;
 
     private BirdRandomFlyingGoal randomFlyingGoal;
 
@@ -92,12 +92,14 @@ public abstract class FlyingBirdEntity extends BirdEntity {
     }
 
     protected void updateGoals(){
-        this.goalSelector.removeGoal(this.randomFlyingGoal);
-        if(this.isNeedToFlyAway()){
-            this.goalSelector.addGoal(0, this.randomFlyingGoal);
-        }
-        else{
-            this.goalSelector.addGoal(8, this.randomFlyingGoal);
+        if(needToUpdateGoal) {
+            this.goalSelector.removeGoal(this.randomFlyingGoal);
+            if (this.isNeedToFlyAway()) {
+                this.goalSelector.addGoal(0, this.randomFlyingGoal);
+            } else {
+                this.goalSelector.addGoal(8, this.randomFlyingGoal);
+            }
+            this.needToUpdateGoal = false;
         }
     }
 
@@ -167,25 +169,26 @@ public abstract class FlyingBirdEntity extends BirdEntity {
         }
 
         if (!level().isClientSide) {
-            if(needToUpdateGoal){
-                this.updateGoals();
-            }
-
-            if (this.isFlying()) {
-                this.setNoGravity(true);
-                if (this.isLandNavigator) {
-                    switchNavigator(false);
-                }
-            } else {
-                this.setNoGravity(false);
-                if (!this.isLandNavigator) {
-                    switchNavigator(true);
-                }
-            }
+            this.updateGoals();
+            this.updateGravity();
         }
 
         if(this.isFlying()){
             tickRotation((float) this.getDeltaMovement().y * 2 * -(float) (180F / (float) Math.PI));
+        }
+    }
+
+    protected void updateGravity(){
+        if (this.isFlying()) {
+            this.setNoGravity(true);
+            if (this.isLandNavigator) {
+                switchNavigator(false);
+            }
+        } else {
+            this.setNoGravity(false);
+            if (!this.isLandNavigator) {
+                switchNavigator(true);
+            }
         }
     }
 

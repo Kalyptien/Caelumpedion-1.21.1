@@ -115,7 +115,7 @@ public class TrochilidaeEntity extends FlyingBirdEntity {
             }
 
 
-            if(this.idleAnimationTimein >= 95){
+            if(this.idleAnimationTimein >= 85){
                 this.resetAnimations();
                 this.setOnAnimation(false);
             }
@@ -195,6 +195,14 @@ public class TrochilidaeEntity extends FlyingBirdEntity {
     protected int getVariantLength(){
         return TrochilidaeVariant.lenght();
     };
+
+    protected void updateGoals(){
+        this.needToUpdateGoal = false;
+    }
+
+    public void setNeedToFlyAway(boolean needToFlyAway) {
+        this.entityData.set(NEED_TO_FLY_AWAY, needToFlyAway);
+    }
 
     // Variant
 

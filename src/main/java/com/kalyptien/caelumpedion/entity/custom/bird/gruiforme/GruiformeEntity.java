@@ -73,7 +73,7 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
         super.registerGoals();
         //Goal
 
-        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.5, true));
+        this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 2.0f, true));
 
         // Target
 
