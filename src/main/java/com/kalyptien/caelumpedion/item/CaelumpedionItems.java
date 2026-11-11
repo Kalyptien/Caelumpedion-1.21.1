@@ -18,6 +18,9 @@ import java.util.List;
 public class CaelumpedionItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(CaelumpedionMod.MOD_ID);
 
+    public static final DeferredItem<Item> CAELUMPEDION_TOKEN = ITEMS.register("caelumpedion_token",
+            () -> new Item(new Item.Properties()));
+
     // Color Feathers
     public static final DeferredItem<Item> LIGHT_GRAY_FEATHER = ITEMS.register("light_gray_feather",
             () -> new FeatherItem(new Item.Properties(), FeatherColor.LightGray));

@@ -17,7 +17,7 @@ public class CaelumpedionCreativeModTabs {
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, CaelumpedionMod.MOD_ID);
 
     public static final Supplier<CreativeModeTab> CAELUMPEDION_ITEMS_TAB = CREATIVE_MODE_TAB.register("caelumpedion_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(Items.WHEAT_SEEDS))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(CaelumpedionItems.CAELUMPEDION_TOKEN.get()))
                     .title(Component.translatable("creativetab.caelumpedion.mod_tab"))
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(CaelumpedionItems.PASSERIFORME_SPAWN_EGG.get());

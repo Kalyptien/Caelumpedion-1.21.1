@@ -17,7 +17,9 @@ public class CaelumpedionItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        
+
+        basicItem(CaelumpedionItems.CAELUMPEDION_TOKEN.get());
+
         featherBuild(CaelumpedionItems.LIGHT_GRAY_FEATHER.get());
         featherBuild(CaelumpedionItems.GRAY_FEATHER.get());
         featherBuild(CaelumpedionItems.BLACK_FEATHER.get());

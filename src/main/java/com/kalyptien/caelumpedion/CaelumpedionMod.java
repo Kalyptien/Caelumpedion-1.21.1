@@ -59,7 +59,7 @@ public class CaelumpedionMod {
 
         CaelumpedionEntities.register(modEventBus);
 
-        modEventBus.addListener(this::addCreative);
+        //modEventBus.addListener(this::addCreative);
 
         NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, InitializationHandler::onServerAboutToStart);
     }
@@ -68,11 +68,10 @@ public class CaelumpedionMod {
     }
 
     // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
+    /*private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
-            event.accept(Items.WHEAT_SEEDS);
         }
-    }
+    }*/
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent

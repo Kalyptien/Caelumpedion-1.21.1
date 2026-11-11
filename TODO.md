@@ -29,7 +29,7 @@ AJOUTS :
 GENERAL :
 
 - Différence entre serveur et client tj présente
-- add JEI (AU BESOIN)
+- add JEI => Empêcher certains items d'apparaitre dans JEI
 - https://www.curseforge.com/minecraft/mc-mods/field-guide
 
 VOL : 
