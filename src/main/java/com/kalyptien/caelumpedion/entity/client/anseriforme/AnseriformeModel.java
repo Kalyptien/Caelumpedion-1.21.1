@@ -4,6 +4,7 @@ import com.kalyptien.caelumpedion.CaelumpedionMod;
 import com.kalyptien.caelumpedion.entity.client.FlyingBirdHierarchicalModel;
 import com.kalyptien.caelumpedion.entity.client.passeriforme.PasseriformeAnimation;
 import com.kalyptien.caelumpedion.entity.custom.bird.anseriforme.AnseriformeEntity;
+import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -84,6 +85,14 @@ public class AnseriformeModel<T extends AnseriformeEntity> extends FlyingBirdHie
         PartDefinition beck = head.addOrReplaceChild("beck", CubeListBuilder.create().texOffs(8, 1).addBox(-1.5F, -0.5F, -2.0F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -5.0F, -1.5F));
 
         return LayerDefinition.create(meshdefinition, 32, 32);
+    }
+
+    @Override
+    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+
+        this.animate(entity.idleInWaterAnimationState, AnseriformeAnimation.ANSERIFORME_WATER_IDLE, ageInTicks, 1f);
+        this.animate(entity.eatInWaterAnimationState, AnseriformeAnimation.ANSERIFORME_WATER_EAT, ageInTicks, 1f);
     }
 
     protected void setupWalkAnimation(float limbSwing, float limbSwingAmount){

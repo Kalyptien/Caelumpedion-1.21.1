@@ -9,6 +9,7 @@ import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntit
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import com.kalyptien.caelumpedion.util.VoronoiLevel;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.QuartPos;
 import net.minecraft.core.registries.BuiltInRegistries;

@@ -39,7 +39,7 @@ public class HirundininaeEntity extends SocialFlyingBirdEntity implements Circle
 
         this.setFlyingBirdType(FlyingBirdType.LONG_FLYER);
         this.setAquaticBirdType(AquaticBirdType.NONE);
-        this.setBOIDBirdType(BOIDType.FORMATION);
+        this.setBOIDBirdType(BOIDType.SWARM);
 
         this.flyRange = 150;
         this.flyHeight = 40;

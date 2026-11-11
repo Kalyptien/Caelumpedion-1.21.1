@@ -51,7 +51,7 @@ public class BirdBOIDFlyGoal extends Goal {
 
     @Override
     public void tick() {
-        if(this.canContinueToUse()){
+        if(this.canContinueToUse() && this.socialBird.getNavigation().isDone()){
             SocialFlyingBirdEntity.BOIDType boidType = socialBird.getBOIDBirdType();
 
             influenceFromTheLeader = socialBird.distanceTo(socialBird.leader) / 100;

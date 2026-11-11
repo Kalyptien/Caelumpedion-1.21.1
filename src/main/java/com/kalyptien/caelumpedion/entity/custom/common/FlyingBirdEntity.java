@@ -324,7 +324,8 @@ public abstract class FlyingBirdEntity extends BirdEntity {
                     //If not in cave
                     if (!holder.is(CaelumpedionTags.Biomes.IS_CAVE)) {
                         //Small chance to happen
-                        if(this.random.nextFloat() <= 0.9f){
+                        //TODO : When Client / Server Link is OK => Check if the Migration is OK
+                        if(this.random.nextFloat() <= 0.1f){
                             birdGroupData.setOnMigration(true);
                         }
                         else{
@@ -340,6 +341,7 @@ public abstract class FlyingBirdEntity extends BirdEntity {
 
                 if(birdGroupData.onMigration){
                     this.setNeedToFlyAway(true);
+                    this.setPos(this.getX(), this.getY() + this.getFlyHeight(), this.getZ());
                 }
             }
         }

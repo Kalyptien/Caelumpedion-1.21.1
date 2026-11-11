@@ -5,13 +5,6 @@ OISEAUX :
 - Intégrations des chants pour chaques oiseaux
 - Flap, Hurt and Death sound
 
-- Vol en formation KO => Test et corriger
-
-- Intégrer le mod de bouquin
-
-CANARD
-- Animation dans l'eau
-
 V.1.1.0
 
 AJOUTS :
@@ -37,11 +30,13 @@ GENERAL :
 
 - Différence entre serveur et client tj présente
 - add JEI (AU BESOIN)
+- https://www.curseforge.com/minecraft/mc-mods/field-guide
 
 VOL : 
 
 - Refaire le système de vol : Voir si il n'est pas possible d'utiliser le MoveController ou le PathFinder pour définir plus proprement le vol
 - Problème avec le NeedToFlyAway : Différence entre client et serveur
+- Vol en BOID à rebosser / retest quand il y aura plus de piafs pour test
 
 CANARD & GRUE :
 
@@ -57,7 +52,7 @@ PICIFORME :
 Know issues : 
 
 - Hirondelle volent parfois trop bas
-- Quelques problèmes sur les animations
+- Quelques problèmes sur les animations (slowfall, ...)
 - Quelques problèmes entre le lien serveur/client
 - Too many birds => lag
 

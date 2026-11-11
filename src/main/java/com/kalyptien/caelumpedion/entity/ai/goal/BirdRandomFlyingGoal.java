@@ -26,13 +26,15 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     private double speedModifier;
 
     //Destination Calcul
-    protected int range;
-    protected int height;
+    private int range;
+    private int height;
 
-    protected double numberOfMiddleDestination;
+    private double numberOfMiddleDestination;
 
-    protected double stepX;
-    protected double stepZ;
+    private double stepX;
+    private double stepZ;
+
+    private double averageHeight;
 
     protected FlyType flyType;
 
@@ -190,7 +192,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     }
 
     protected Vec3 getFinalDestination(){
-        Vec3 finalPos = new Vec3((range * this.randomPercent()) * randomSign(), bird.level().getMaxBuildHeight() / 2.0f, (range * this.randomPercent()) * randomSign());
+        Vec3 finalPos = new Vec3((range * this.randomPercent()) * randomSign(), bird.getY(), (range * this.randomPercent()) * randomSign());
 
         return bird.position().add(groundPosition(finalPos));
     }
@@ -213,6 +215,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
 
         double finalX = finalDestination.x;
         double finalZ = finalDestination.z;
+        this.averageHeight = (finalDestination.y + this.bird.getEyePosition().y)/2.0f;
 
         //Generate in between positions
 
@@ -221,7 +224,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
         stepX = finalX /numberOfMiddleDestination;
         stepZ = finalZ / numberOfMiddleDestination;
 
-        for (double i = 1.0; i < (numberOfMiddleDestination + 1); i++) {
+        for (double i = 1.0; i <= numberOfMiddleDestination; i++) {
             Vec3 middleDestination = this.generateInBetweenDestination(i);
             this.destinationNodeArray.add(new Vec3(middleDestination.x, middleDestination.y, middleDestination.z));
         }
@@ -235,9 +238,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
 
         Vec3 destination = bird.position().add(stepX * iteration, 0, stepZ * iteration);
 
-        double ground = groundPosition(destination).y;
-
-        double y = (Math.sin((Math.PI / numberOfMiddleDestination) * iteration) * height) + ground;
+        double y = (Math.sin((Math.PI / numberOfMiddleDestination) * iteration) * height) + this.averageHeight;
 
         return new Vec3(destination.x, y, destination.z);
     }
@@ -249,11 +250,11 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
         ground.set(airPosition.x, airPosition.y, airPosition.z);
         boolean flag = false;
         ground.move(0, -1, 0);
-        while (ground.getY() > bird.level().getMinBuildHeight() && !bird.level().getBlockState(ground).isSolid() && bird.level().getFluidState(ground).isEmpty()) {
+        while (!bird.level().getBlockState(ground).isSolid() && ground.getY() > bird.level().getMinBuildHeight()) {
             ground.move(0, -1, 0);
         }
 
-        while (ground.getY() < bird.level().getMaxBuildHeight() && !bird.level().getBlockState(ground).isSolid() && bird.level().getFluidState(ground).isEmpty()){
+        while (!bird.level().getBlockState(ground).isSolid() && ground.getY() < bird.level().getMaxBuildHeight()){
             ground.move(0, 1, 0);
             flag = true;
         }
