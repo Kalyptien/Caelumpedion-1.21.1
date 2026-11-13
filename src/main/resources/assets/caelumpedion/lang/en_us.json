@@ -71,5 +71,11 @@
   "irlregion.caelumpedion.oceania.name": "Oceania",
   "irlregion.caelumpedion.northafrica.name": "North Africa",
   "irlregion.caelumpedion.southafrica.name": "South Africa",
-  "irlregion.caelumpedion.asia.name": "Asia"
+  "irlregion.caelumpedion.asia.name": "Asia",
+
+  "caelumpedion.sound.subtitle.piciforme.chant" : "Piciforme Chatting",
+  "caelumpedion.sound.subtitle.piciforme.call" : "Piciforme Calling",
+
+  "caelumpedion.sound.subtitle.ramphastidae.chant" : "Ramphastidae Chatting",
+  "caelumpedion.sound.subtitle.ramphastidae.call" : "Ramphastidae Chatting"
 }

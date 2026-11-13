@@ -5,13 +5,10 @@ import com.kalyptien.caelumpedion.entity.ai.BirdGroundPathNavigation;
 import com.kalyptien.caelumpedion.entity.ai.BirdLookController;
 import com.kalyptien.caelumpedion.entity.ai.GroundMoveController;
 import com.kalyptien.caelumpedion.entity.ai.goal.*;
-import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import com.kalyptien.caelumpedion.util.VoronoiLevel;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
-import net.minecraft.core.QuartPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -19,6 +16,9 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
@@ -27,9 +27,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.camel.Camel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -38,7 +36,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.material.FluidState;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
@@ -77,7 +74,10 @@ public abstract class BirdEntity extends Animal {
 
     //Enum var
 
-    FlyingBirdEntity.AquaticBirdType aquaticBirdType = AquaticBirdType.NONE;
+    protected boolean isAllowOnWater = false;
+
+    protected TimeBehaviorBirdType timeBehaviorBirdType = TimeBehaviorBirdType.DIURNAL;
+    protected SizeBirdType sizeBirdType = SizeBirdType.MEDIUM;
 
     //Global var
 
@@ -130,7 +130,7 @@ public abstract class BirdEntity extends Animal {
 
     @Override
     public boolean canStandOnFluid(FluidState fluidState) {
-        return this.getIdAquaticBirdType() == FlyingBirdEntity.AquaticBirdType.FULL.getId() ? fluidState.is(FluidTags.WATER) : false;
+        return this.isAllowOnWater ? fluidState.is(FluidTags.WATER) : false;
     }
 
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
@@ -329,18 +329,6 @@ public abstract class BirdEntity extends Animal {
 
     public abstract BirdVariant getVariant();
 
-    public FlyingBirdEntity.AquaticBirdType getAquaticBirdType() {
-        return this.aquaticBirdType;
-    }
-
-    public int getIdAquaticBirdType() {
-        return this.aquaticBirdType.getId();
-    }
-
-    public void setAquaticBirdType(FlyingBirdEntity.AquaticBirdType aquaticBirdType) {
-        this.aquaticBirdType = aquaticBirdType;
-    }
-
     public boolean isOnAnimation() {
         return this.entityData.get(ON_ANIMATION);
     }
@@ -355,6 +343,22 @@ public abstract class BirdEntity extends Animal {
 
     public void setNeedEatAnimation(boolean needEatAnimation) {
         this.entityData.set(NEED_EAT_ANIM, needEatAnimation);
+    }
+
+    public TimeBehaviorBirdType getTimeBehaviorBirdType() {
+        return timeBehaviorBirdType;
+    }
+
+    public SizeBirdType getSizeBirdType() {
+        return sizeBirdType;
+    }
+
+    public void setSizeBirdType(SizeBirdType sizeBirdType) {
+        this.sizeBirdType = sizeBirdType;
+    }
+
+    public boolean isAllowOnWater() {
+        return isAllowOnWater;
     }
 
     public double getFlySpeed() {
@@ -385,6 +389,55 @@ public abstract class BirdEntity extends Animal {
         if (compound.contains("FeatherFallTime")) {
             this.featherTime = compound.getInt("FeatherFallTime");
         }
+    }
+
+    //Sound
+
+    @Override
+    @javax.annotation.Nullable
+    public SoundEvent getAmbientSound() {
+
+        TimeBehaviorBirdType timeBehaviorBirdType = this.getTimeBehaviorBirdType();
+        if(
+                (this.level().isNight() && timeBehaviorBirdType == TimeBehaviorBirdType.NOCTURNAL)
+                || (this.level().isDay() && timeBehaviorBirdType == TimeBehaviorBirdType.DIURNAL)
+                || (timeBehaviorBirdType == TimeBehaviorBirdType.METATURNAL)
+        ){
+            if(this.random.nextFloat() < 0.25F) {
+                return this.getChantSound();
+            }
+            else{
+                return this.getCallSound();
+            }
+        }
+
+        return null;
+    }
+
+    public void makeSound(@javax.annotation.Nullable SoundEvent sound) {
+        if (sound != null) {
+            if(sound == SoundEvents.GENERIC_HURT){
+                this.playSound(this.getCallSound(), this.getSoundVolume(), this.getVoicePitch() - 0.5f);
+            }
+            else if(sound == SoundEvents.GENERIC_DEATH){
+                this.playSound(this.getCallSound(), this.getSoundVolume() - 0.5f, this.getVoicePitch() - 0.8f);
+            }
+            else{
+                this.playSound(sound, this.getSoundVolume(), this.getVoicePitch());
+            }
+        }
+    }
+
+    protected SoundEvent getCallSound(){
+        return null;
+    };
+    protected SoundEvent getChantSound(){
+        return null;
+    };
+
+    @Override
+    public SoundSource getSoundSource() {
+        return SoundSource.NEUTRAL;
     }
 
     // spawn
@@ -497,16 +550,16 @@ public abstract class BirdEntity extends Animal {
         static int lenght(){return 0;};
     }
 
-    public static enum AquaticBirdType {
-        NONE(0),
-        TALL(1),
-        FULL(2);
+    public static enum TimeBehaviorBirdType {
+        DIURNAL(0),
+        NOCTURNAL(1),
+        METATURNAL(2);
 
-        private static final AquaticBirdType[] BY_ID = Arrays.stream(values()).sorted(
-                Comparator.comparingInt(AquaticBirdType::getId)).toArray(AquaticBirdType[]::new);
+        private static final TimeBehaviorBirdType[] BY_ID = Arrays.stream(values()).sorted(
+                Comparator.comparingInt(TimeBehaviorBirdType::getId)).toArray(TimeBehaviorBirdType[]::new);
         private final int id;
 
-        AquaticBirdType(int id) {
+        TimeBehaviorBirdType(int id) {
             this.id = id;
         }
 
@@ -514,7 +567,36 @@ public abstract class BirdEntity extends Animal {
             return id;
         }
 
-        public static AquaticBirdType byId(int id) {
+        public static TimeBehaviorBirdType byId(int id) {
+            return BY_ID[id % BY_ID.length];
+        }
+    }
+
+    public static enum SizeBirdType {
+        SMALL(0, 1.2f),
+        MEDIUM(1, 1.0f),
+        BIG(2, 0.7f),
+        TALL(3, 0.9f);
+
+        private static final SizeBirdType[] BY_ID = Arrays.stream(values()).sorted(
+                Comparator.comparingInt(SizeBirdType::getId)).toArray(SizeBirdType[]::new);
+        private final int id;
+        private final float pitch;
+
+        SizeBirdType(int id, float pitch) {
+            this.id = id;
+            this.pitch = pitch;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public float getPitch(){
+            return pitch;
+        }
+
+        public static SizeBirdType byId(int id) {
             return BY_ID[id % BY_ID.length];
         }
     }

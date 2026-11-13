@@ -1,5 +1,6 @@
 package com.kalyptien.caelumpedion.util;
 
+import com.kalyptien.caelumpedion.misc.CaelumpedionTags;
 import com.kalyptien.caelumpedion.worldgen.densityFunction.CaelumpedionDensityFunctions;
 import com.kalyptien.caelumpedion.worldgen.voronoiNoise.VoronoiDF;
 import net.minecraft.core.*;
@@ -7,7 +8,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
 import net.minecraft.world.level.levelgen.DensityFunction;
 
 public class VoronoiLevel {

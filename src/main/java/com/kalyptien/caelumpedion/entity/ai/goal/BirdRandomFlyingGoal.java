@@ -54,7 +54,6 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
         } else {
             if (!this.forceTrigger
                     || !bird.isNeedToFlyAway()
-                    || (bird.getIdAquaticBirdType() != FlyingBirdEntity.AquaticBirdType.FULL.getId() && !bird.isInWaterOrBubble())
             ) {
                 if(this.bird.isOnAnimation()){
                     return false;
@@ -64,7 +63,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
                     return false;
                 }
 
-                if (this.bird.getRandom().nextInt((bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.WALKER ? 1500 : 0) + reducedTickDelay(this.interval)) != 0) {
+                if (this.bird.getRandom().nextInt((bird.isWalker() ? 1500 : 0) + reducedTickDelay(this.interval)) != 0) {
                     return false;
                 }
             }
@@ -152,25 +151,15 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     protected void defineFlyType(){
         if(this.bird.isOnMigration()){
             this.flyType = FlyType.MIGRATION;
-        } else if (bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.WALKER) {
+        } else if (bird.isWalker()) {
             this.flyType = FlyType.LONG;
-        } else if (this.bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.LONG_FLYER) {
-            if(this.randomPercent() <= 0.25){
-                this.flyType = FlyType.SHORT;
-            }
-            else{
-                this.flyType = FlyType.LONG;
-            }
-        } else if (this.bird.getFlyingBirdType() == FlyingBirdEntity.FlyingBirdType.SHORT_FlYER) {
-            if(this.randomPercent() <= 0.25){
+        } else {
+            if(this.randomPercent() <= 0.5){
                 this.flyType = FlyType.LONG;
             }
             else{
                 this.flyType = FlyType.SHORT;
             }
-        }
-        else {
-            this.flyType = FlyType.LONG;
         }
     }
 

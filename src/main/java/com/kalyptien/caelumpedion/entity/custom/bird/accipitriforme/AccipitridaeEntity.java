@@ -56,8 +56,7 @@ public class AccipitridaeEntity extends FlyingBirdEntity implements NeutralMob, 
     public AccipitridaeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
-        this.setFlyingBirdType(FlyingBirdType.LONG_FLYER);
-        this.setAquaticBirdType(AquaticBirdType.NONE);
+        this.setSizeBirdType(SizeBirdType.BIG);
 
         this.flyRange = 200;
         this.flyHeight = 60;

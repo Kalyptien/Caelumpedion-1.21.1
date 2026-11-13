@@ -1,22 +1,19 @@
 package com.kalyptien.caelumpedion.entity.custom.bird.piciforme;
 
-import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
+import com.kalyptien.caelumpedion.misc.CaelumpedionSounds;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.neoforged.neoforge.common.Tags;
 
@@ -29,8 +26,7 @@ public class RamphastidaeEntity extends  SocialFlyingBirdEntity{
     public RamphastidaeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
-        this.setFlyingBirdType(FlyingBirdType.LONG_FLYER);
-        this.setAquaticBirdType(AquaticBirdType.NONE);
+        this.setSizeBirdType(SizeBirdType.MEDIUM);
         this.setBOIDBirdType(BOIDType.FOLLOW);
 
         this.flyRange = 150;
@@ -122,6 +118,32 @@ public class RamphastidaeEntity extends  SocialFlyingBirdEntity{
     protected int getVariantLength(){
         return RamphastidaeVariant.lenght();
     };
+
+    // Sound
+
+    protected SoundEvent getCallSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            //case 0: No sound found
+            case 1:
+                sound = CaelumpedionSounds.RAMPHASTOS_SULFURATUS_CALL.get();
+                break;
+            case 2:
+                sound = CaelumpedionSounds.RAMPHASTOS_TOCO_CALL.get();
+                break;
+            //case 3: No sound found
+            default:
+                sound = CaelumpedionSounds.RAMPHASTOS_TOCO_CALL.get();
+        }
+
+        return sound;
+    }
+
+    protected SoundEvent getChantSound(){
+        return this.getCallSound();
+    }
 
     // Variant
 

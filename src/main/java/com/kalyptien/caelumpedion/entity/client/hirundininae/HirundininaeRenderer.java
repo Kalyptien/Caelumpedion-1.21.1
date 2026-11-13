@@ -60,7 +60,7 @@ public class HirundininaeRenderer extends MobRenderer<HirundininaeEntity, Hirund
                         HirundininaeEntity.HirundininaeVariant currentVariant = HirundininaeEntity.HirundininaeVariant.byId(i);
                         if(currentVariant.isIridescent()){
                             map.put(currentVariant,
-                                    ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "textures/entity/passeriforme/corvidae/" + currentVariant.getFileName() + "_iridescent.png"));
+                                    ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "textures/entity/passeriforme/hirundininae/" + currentVariant.getFileName() + "_iridescent.png"));
                         }
                     }
 

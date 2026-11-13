@@ -1,4 +1,4 @@
-package com.kalyptien.caelumpedion.util;
+package com.kalyptien.caelumpedion.misc;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
 import net.minecraft.core.registries.Registries;

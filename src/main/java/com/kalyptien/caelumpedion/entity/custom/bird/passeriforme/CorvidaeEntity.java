@@ -27,8 +27,7 @@ public class CorvidaeEntity extends SocialFlyingBirdEntity {
     public CorvidaeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
-        this.setFlyingBirdType(FlyingBirdType.LONG_FLYER);
-        this.setAquaticBirdType(AquaticBirdType.NONE);
+        this.setSizeBirdType(SizeBirdType.SMALL);
         this.setBOIDBirdType(BOIDType.FOLLOW);
 
         this.flyRange = 100;

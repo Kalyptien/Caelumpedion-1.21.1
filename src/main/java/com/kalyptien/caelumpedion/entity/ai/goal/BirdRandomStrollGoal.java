@@ -34,7 +34,7 @@ public class BirdRandomStrollGoal extends RandomStrollGoal {
 
     @Nullable
     protected Vec3 getPosition() {
-        if(this.bird.getAquaticBirdType() == BirdEntity.AquaticBirdType.FULL){
+        if(this.bird.isAllowOnWater()){
             return super.getPosition();
         }
         else{

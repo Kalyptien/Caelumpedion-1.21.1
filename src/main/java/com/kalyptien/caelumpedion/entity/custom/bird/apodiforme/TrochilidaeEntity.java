@@ -4,7 +4,7 @@ import com.kalyptien.caelumpedion.entity.ai.goal.*;
 import com.kalyptien.caelumpedion.entity.ai.goal.trochilidaeGoal.TrochilidaeFoodNerbyGoal;
 import com.kalyptien.caelumpedion.entity.ai.goal.trochilidaeGoal.TrochilidaeRandomStrollGoal;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
-import com.kalyptien.caelumpedion.util.CaelumpedionTags;
+import com.kalyptien.caelumpedion.misc.CaelumpedionTags;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
@@ -33,7 +33,7 @@ public class TrochilidaeEntity extends FlyingBirdEntity {
     public TrochilidaeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
-        this.setAquaticBirdType(AquaticBirdType.NONE);
+        this.setSizeBirdType(SizeBirdType.SMALL);
 
         this.flyRange = 50;
         this.flyHeight = 30;

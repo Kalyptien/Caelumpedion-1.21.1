@@ -37,8 +37,7 @@ public class HirundininaeEntity extends SocialFlyingBirdEntity implements Circle
     public HirundininaeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
-        this.setFlyingBirdType(FlyingBirdType.LONG_FLYER);
-        this.setAquaticBirdType(AquaticBirdType.NONE);
+        this.setSizeBirdType(SizeBirdType.SMALL);
         this.setBOIDBirdType(BOIDType.SWARM);
 
         this.flyRange = 150;

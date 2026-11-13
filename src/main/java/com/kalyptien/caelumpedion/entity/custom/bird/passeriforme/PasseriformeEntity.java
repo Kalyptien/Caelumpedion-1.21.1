@@ -27,8 +27,7 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
     public PasseriformeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
-        this.setFlyingBirdType(FlyingBirdType.SHORT_FlYER);
-        this.setAquaticBirdType(AquaticBirdType.NONE);
+        this.setSizeBirdType(SizeBirdType.SMALL);
         this.setBOIDBirdType(BOIDType.FOLLOW);
 
         this.flyRange = 100;

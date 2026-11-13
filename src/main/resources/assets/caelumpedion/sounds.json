@@ -1,0 +1,110 @@
+{
+  "entity.colaptes_auratus.chant": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/colaptes_auratus_chant_0",
+      "caelumpedion:entity/colaptes_auratus_chant_1",
+      "caelumpedion:entity/colaptes_auratus_chant_2"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.piciforme.chant"
+  },
+  "entity.colaptes_auratus.call": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/colaptes_auratus_call_0",
+      "caelumpedion:entity/colaptes_auratus_call_1",
+      "caelumpedion:entity/colaptes_auratus_call_2",
+      "caelumpedion:entity/colaptes_auratus_call_3"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.piciforme.call"
+  },
+
+  "entity.dendrocoptes_medius.chant": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/dendrocoptes_medius_chant_0",
+      "caelumpedion:entity/dendrocoptes_medius_chant_1",
+      "caelumpedion:entity/dendrocoptes_medius_chant_2"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.piciforme.call"
+  },
+  "entity.dendrocoptes_medius.call": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/dendrocoptes_medius_call_0",
+      "caelumpedion:entity/dendrocoptes_medius_call_1",
+      "caelumpedion:entity/dendrocoptes_medius_call_2",
+      "caelumpedion:entity/dendrocoptes_medius_call_3"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.piciforme.call"
+  },
+
+  "entity.dendrocopos_major.call": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/dendrocopos_major_call_0",
+      "caelumpedion:entity/dendrocopos_major_call_1",
+      "caelumpedion:entity/dendrocopos_major_call_2"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.piciforme.call"
+  },
+
+  "entity.picus_phantasia_troglodyta.chant": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/picus_phantasia_troglodyta_chant_0",
+      "caelumpedion:entity/picus_phantasia_troglodyta_chant_1",
+      "caelumpedion:entity/picus_phantasia_troglodyta_chant_2"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.piciforme.call"
+  },
+  "entity.picus_phantasia_troglodyta.call": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/picus_phantasia_troglodyta_call_0",
+      "caelumpedion:entity/picus_phantasia_troglodyta_call_1",
+      "caelumpedion:entity/picus_phantasia_troglodyta_call_2"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.piciforme.call"
+  },
+
+  "entity.picus_viridis.chant": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/picus_viridis_chant_0",
+      "caelumpedion:entity/picus_viridis_chant_1",
+      "caelumpedion:entity/picus_viridis_chant_2"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.piciforme.call"
+  },
+  "entity.picus_viridis.call": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/picus_viridis_call_0",
+      "caelumpedion:entity/picus_viridis_call_1",
+      "caelumpedion:entity/picus_viridis_call_2"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.piciforme.call"
+  },
+
+  "entity.ramphastos_toco.call": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/ramphastos_toco_call_0",
+      "caelumpedion:entity/ramphastos_toco_call_1",
+      "caelumpedion:entity/ramphastos_toco_call_2",
+      "caelumpedion:entity/ramphastos_toco_call_3"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.ramphastidae.call"
+  },
+
+  "entity.ramphastos_sulfuratus.call": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/ramphastos_sulfuratus_call_0",
+      "caelumpedion:entity/ramphastos_sulfuratus_call_1",
+      "caelumpedion:entity/ramphastos_sulfuratus_call_2"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.ramphastidae.call"
+  }
+}

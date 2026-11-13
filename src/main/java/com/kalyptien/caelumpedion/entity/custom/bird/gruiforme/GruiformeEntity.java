@@ -48,8 +48,8 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
     public GruiformeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
-        this.setFlyingBirdType(FlyingBirdType.WALKER);
-        this.setAquaticBirdType(AquaticBirdType.TALL);
+        this.isWalker = true;
+        this.setSizeBirdType(SizeBirdType.TALL);
         this.setBOIDBirdType(BOIDType.FORMATION);
 
         this.flyRange = 200;

@@ -20,8 +20,8 @@ public class BirdFloatGoal extends FloatGoal {
 
     public boolean canUse() {
         if(
-                this.bird.getIdAquaticBirdType() == BirdEntity.AquaticBirdType.FULL.getId() ||
-                this.bird.getIdAquaticBirdType() == BirdEntity.AquaticBirdType.TALL.getId()
+                this.bird.getSizeBirdType() == BirdEntity.SizeBirdType.TALL
+                || this.bird.isAllowOnWater()
         ){
             return this.bird.isUnderWater() ? super.canUse() : false;
         }

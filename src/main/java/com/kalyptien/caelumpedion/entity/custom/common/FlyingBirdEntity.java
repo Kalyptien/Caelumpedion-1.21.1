@@ -1,37 +1,27 @@
 package com.kalyptien.caelumpedion.entity.custom.common;
 
-import com.kalyptien.caelumpedion.datagen.CaelumpedionBiomeTagProvider;
-import com.kalyptien.caelumpedion.entity.ai.BirdFlyPathNavigation;
 import com.kalyptien.caelumpedion.entity.ai.BirdGroundPathNavigation;
 import com.kalyptien.caelumpedion.entity.ai.FlyMoveController;
 import com.kalyptien.caelumpedion.entity.ai.GroundMoveController;
 import com.kalyptien.caelumpedion.entity.ai.goal.*;
-import com.kalyptien.caelumpedion.util.CaelumpedionTags;
-import com.kalyptien.caelumpedion.util.IRLRegion;
-import com.kalyptien.caelumpedion.util.VoronoiLevel;
-import com.sun.jna.platform.win32.WinNT;
+import com.kalyptien.caelumpedion.misc.CaelumpedionTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Cat;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-
-
-import java.util.*;
 
 public abstract class FlyingBirdEntity extends BirdEntity {
 
@@ -39,7 +29,7 @@ public abstract class FlyingBirdEntity extends BirdEntity {
 
     //Enum var
 
-    FlyingBirdType flyingBirdType = FlyingBirdType.WALKER;
+    protected boolean isWalker = false;
 
     //Flying Var
 
@@ -182,7 +172,8 @@ public abstract class FlyingBirdEntity extends BirdEntity {
         if (this.isFlying()) {
             this.setNoGravity(true);
             if (this.isLandNavigator) {
-                switchNavigator(false);
+                this.switchNavigator(false);
+                this.onTakeOff();
             }
         } else {
             this.setNoGravity(false);
@@ -262,18 +253,6 @@ public abstract class FlyingBirdEntity extends BirdEntity {
         this.entityData.set(ON_MIGRATION, onMigration);
     }
 
-    public FlyingBirdType getFlyingBirdType() {
-        return this.flyingBirdType;
-    }
-
-    public int getIdFlyingBirdType() {
-        return this.flyingBirdType.getId();
-    }
-
-    public void setFlyingBirdType(FlyingBirdType flyingBirdType) {
-        this.flyingBirdType = flyingBirdType;
-    }
-
     public boolean isNeedToFlyAway() {
         return this.entityData.get(NEED_TO_FLY_AWAY);
     }
@@ -284,6 +263,10 @@ public abstract class FlyingBirdEntity extends BirdEntity {
         }
 
         this.entityData.set(NEED_TO_FLY_AWAY, needToFlyAway);
+    }
+
+    public boolean isWalker() {
+        return isWalker;
     }
 
     public int getFlyHeight() {
@@ -304,6 +287,12 @@ public abstract class FlyingBirdEntity extends BirdEntity {
 
     public float getFlyProgress(float partialTick) {
         return (prevFlyProgress + (flyProgress - prevFlyProgress) * partialTick) * 0.2F;
+    }
+
+    //Sound
+
+    protected void onTakeOff() {
+        this.playSound(SoundEvents.PARROT_FLY, 0.15F, this.getSizeBirdType().getPitch());
     }
 
     //Spawn
@@ -361,29 +350,5 @@ public abstract class FlyingBirdEntity extends BirdEntity {
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.entityData.set(ON_MIGRATION, compound.getBoolean("OnMigration"));
-    }
-
-    //Enum
-
-    public static enum FlyingBirdType {
-        WALKER(0),
-        SHORT_FlYER(1),
-        LONG_FLYER(2);
-
-        private static final FlyingBirdType[] BY_ID = Arrays.stream(values()).sorted(
-                Comparator.comparingInt(FlyingBirdType::getId)).toArray(FlyingBirdType[]::new);
-        private final int id;
-
-        FlyingBirdType(int id) {
-            this.id = id;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public static FlyingBirdType byId(int id) {
-            return BY_ID[id % BY_ID.length];
-        }
     }
 }

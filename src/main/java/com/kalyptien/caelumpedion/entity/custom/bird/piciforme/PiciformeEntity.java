@@ -1,11 +1,8 @@
 package com.kalyptien.caelumpedion.entity.custom.bird.piciforme;
 
-import com.kalyptien.caelumpedion.entity.ai.goal.*;
-import com.kalyptien.caelumpedion.entity.ai.goal.piciformeGoal.PiciformePeckNerbyGoal;
-import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
-import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
-import com.kalyptien.caelumpedion.util.CaelumpedionTags;
+import com.kalyptien.caelumpedion.misc.CaelumpedionSounds;
+import com.kalyptien.caelumpedion.misc.CaelumpedionTags;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
@@ -14,24 +11,18 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.tags.BiomeTags;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.registries.datamaps.builtin.Strippable;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -50,8 +41,7 @@ public class PiciformeEntity extends FlyingBirdEntity {
     public PiciformeEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
 
-        this.setFlyingBirdType(FlyingBirdType.SHORT_FlYER);
-        this.setAquaticBirdType(BirdEntity.AquaticBirdType.NONE);
+        this.setSizeBirdType(SizeBirdType.SMALL);
 
         this.flyRange = 100;
         this.flyHeight = 30;
@@ -246,12 +236,66 @@ public class PiciformeEntity extends FlyingBirdEntity {
         return PiciformeVariant.lenght();
     };
 
+    // Sound
+
+    protected SoundEvent getCallSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            case 0:
+                sound = CaelumpedionSounds.COLAPTES_AURATUS_CALL.get();
+                break;
+            case 1:
+                sound = CaelumpedionSounds.DENDROCOPOS_MAJOR_CALL.get();
+                break;
+            case 2:
+                sound = CaelumpedionSounds.DENDROCOPTES_MEDIUS_CALL.get();
+                break;
+            case 3:
+                break;
+            case 4:
+                sound = CaelumpedionSounds.PICUS_VIRIDS_CALL.get();
+                break;
+            default:
+                sound = CaelumpedionSounds.PICUS_VIRIDS_CALL.get();
+        }
+
+        return sound;
+    }
+
+    protected SoundEvent getChantSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            case 0:
+                sound = CaelumpedionSounds.COLAPTES_AURATUS_CHANT.get();
+                break;
+            case 1:
+                sound = CaelumpedionSounds.DENDROCOPOS_MAJOR_CALL.get();
+                break;
+            case 2:
+                sound = CaelumpedionSounds.DENDROCOPTES_MEDIUS_CHANT.get();
+                break;
+            case 3:
+                break;
+            case 4:
+                sound = CaelumpedionSounds.PICUS_VIRIDS_CHANT.get();
+                break;
+            default:
+                sound = CaelumpedionSounds.PICUS_VIRIDS_CHANT.get();
+        }
+
+        return sound;
+    }
+
     // Variant
 
     public static enum PiciformeVariant implements BirdVariant {
         ColaptesAuratus(0, "colaptes_auratus", 1.0f, false, new FeatherColor[]{FeatherColor.Brown, FeatherColor.Black}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.NorthAmerica}, null),
         DendrocoposMajor(1, "dendrocopos_major", 1.0f, false, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.NorthAfrica}, null),
-        DendrocoposMedius(2, "dendrocopos_medius", 1.0f, false, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe}, null),
+        DendrocoptesMedius(2, "dendrocoptes_medius", 1.0f, false, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe}, null),
         PicusPhantasiaTroglodyta(3, "picus_phantasia_troglodyta", 1.0f, false, new FeatherColor[]{FeatherColor.Brown, FeatherColor.Gray}, FeatherColor.Gray, new IRLRegion[]{IRLRegion.Europe, IRLRegion.NorthAmerica, IRLRegion.SouthAmerica, IRLRegion.Oceania, IRLRegion.Asia, IRLRegion.SouthAfrica, IRLRegion.NorthAfrica}, CaelumpedionTags.Biomes.IS_CAVE),
         PicusViridis(4, "picus_viridis", 1.0f, false, new FeatherColor[]{FeatherColor.Lime, FeatherColor.White}, FeatherColor.Green, new IRLRegion[]{IRLRegion.Europe}, null),
         ;

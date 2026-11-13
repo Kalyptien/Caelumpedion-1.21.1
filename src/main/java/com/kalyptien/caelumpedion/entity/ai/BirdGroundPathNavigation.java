@@ -17,7 +17,7 @@ public class BirdGroundPathNavigation extends GroundPathNavigation {
     }
 
     protected boolean hasValidPathType(PathType pathType) {
-        if (pathType == PathType.WATER && this.bird.getIdAquaticBirdType() == BirdEntity.AquaticBirdType.FULL.getId()) {
+        if (pathType == PathType.WATER && this.bird.isAllowOnWater()) {
             return true;
         } else {
             return super.hasValidPathType(pathType);
@@ -25,7 +25,7 @@ public class BirdGroundPathNavigation extends GroundPathNavigation {
     }
 
     public boolean isStableDestination(BlockPos pos) {
-        return (this.level.getBlockState(pos).is(Blocks.WATER) && this.bird.getIdAquaticBirdType() == BirdEntity.AquaticBirdType.FULL.getId() )
+        return (this.level.getBlockState(pos).is(Blocks.WATER) && this.bird.isAllowOnWater())
                 || super.isStableDestination(pos);
     }
 }

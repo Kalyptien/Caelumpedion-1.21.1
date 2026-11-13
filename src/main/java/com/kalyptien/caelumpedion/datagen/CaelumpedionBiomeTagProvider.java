@@ -1,7 +1,7 @@
 package com.kalyptien.caelumpedion.datagen;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
-import com.kalyptien.caelumpedion.util.CaelumpedionTags;
+import com.kalyptien.caelumpedion.misc.CaelumpedionTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;

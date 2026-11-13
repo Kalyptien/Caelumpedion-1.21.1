@@ -16,6 +16,7 @@ import com.kalyptien.caelumpedion.entity.client.ramphastidae.RamphastidaeRendere
 import com.kalyptien.caelumpedion.entity.client.trochilidae.TrochilidaeRenderer;
 import com.kalyptien.caelumpedion.item.CaelumpedionCreativeModTabs;
 import com.kalyptien.caelumpedion.item.CaelumpedionItems;
+import com.kalyptien.caelumpedion.misc.CaelumpedionSounds;
 import com.kalyptien.caelumpedion.screen.CaelumpedionMenuTypes;
 import com.kalyptien.caelumpedion.screen.custom.BirdFeederScreen;
 import com.kalyptien.caelumpedion.worldgen.densityFunction.CaelumpedionDensityFunctionTypes;
@@ -48,6 +49,8 @@ public class CaelumpedionMod {
         NeoForge.EVENT_BUS.register(this);
 
         CaelumpedionDensityFunctionTypes.register(modEventBus);
+
+        CaelumpedionSounds.register(modEventBus);
 
         CaelumpedionCreativeModTabs.register(modEventBus);
 

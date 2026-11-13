@@ -1,6 +1,8 @@
 Documentations
 ===
 
+[Creator(s) - Link - Usage]
+
 **Cappin & Squire - [Clinker](https://github.com/birsy/clinker-mod)** :
 - How implement Shaders in a Mod.
 
@@ -11,8 +13,10 @@ Documentations
 **Adubbz - [TerraBlender](https://github.com/Glitchfiend/TerraBlender)** :
 - How implement Mixin & Voronoi in Mod :
 
-Credits
+Credits (Code)
 ===
+
+[Creator(s) - Link - Usage]
 
 **AlexModGuy - [Alex's Caves](https://github.com/AlexModGuy/AlexsCaves)** :
 - Use of the Vesper flying system as a base for the Bird flying system.

@@ -2,8 +2,6 @@ package com.kalyptien.caelumpedion.entity.custom.common;
 
 import com.kalyptien.caelumpedion.entity.ai.goal.boidGoal.OrganizeBOIDGoal;
 import com.kalyptien.caelumpedion.entity.ai.goal.boidGoal.BirdBOIDFlyGoal;
-import com.kalyptien.caelumpedion.util.CaelumpedionTags;
-import net.minecraft.core.Holder;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -11,8 +9,6 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
