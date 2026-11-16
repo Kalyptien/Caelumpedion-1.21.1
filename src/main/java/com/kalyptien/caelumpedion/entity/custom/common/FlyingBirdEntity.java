@@ -173,7 +173,7 @@ public abstract class FlyingBirdEntity extends BirdEntity {
             this.setNoGravity(true);
             if (this.isLandNavigator) {
                 this.switchNavigator(false);
-                this.onTakeOff();
+                this.playFlapSound();
             }
         } else {
             this.setNoGravity(false);
@@ -291,8 +291,8 @@ public abstract class FlyingBirdEntity extends BirdEntity {
 
     //Sound
 
-    protected void onTakeOff() {
-        this.playSound(SoundEvents.PARROT_FLY, 0.15F, this.getSizeBirdType().getPitch());
+    protected void playFlapSound() {
+        this.playSound(SoundEvents.PARROT_FLY, 1F, this.getSizeBirdType().getPitch());
     }
 
     //Spawn

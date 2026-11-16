@@ -253,6 +253,7 @@ public class PiciformeEntity extends FlyingBirdEntity {
                 sound = CaelumpedionSounds.DENDROCOPTES_MEDIUS_CALL.get();
                 break;
             case 3:
+                sound = CaelumpedionSounds.PICUS_PHANTASIA_TROGLODYTA_CALL.get();
                 break;
             case 4:
                 sound = CaelumpedionSounds.PICUS_VIRIDS_CALL.get();
@@ -279,6 +280,7 @@ public class PiciformeEntity extends FlyingBirdEntity {
                 sound = CaelumpedionSounds.DENDROCOPTES_MEDIUS_CHANT.get();
                 break;
             case 3:
+                sound = CaelumpedionSounds.PICUS_PHANTASIA_TROGLODYTA_CHANT.get();
                 break;
             case 4:
                 sound = CaelumpedionSounds.PICUS_VIRIDS_CHANT.get();

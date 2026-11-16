@@ -169,6 +169,13 @@ public class HirundininaeEntity extends SocialFlyingBirdEntity implements Circle
         return HirundininaeVariant.lenght();
     };
 
+    //Sound
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 80;
+    }
+
     // Variant
 
     public static enum HirundininaeVariant implements BirdVariant {

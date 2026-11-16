@@ -4,6 +4,7 @@ import com.kalyptien.caelumpedion.entity.ai.CircleAroundFlyingMob;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
+import com.kalyptien.caelumpedion.misc.CaelumpedionSounds;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
@@ -13,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -257,6 +259,38 @@ public class AccipitridaeEntity extends FlyingBirdEntity implements NeutralMob, 
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.readPersistentAngerSaveData(this.level(), compound);
+    }
+
+    // Sound
+
+    protected SoundEvent getCallSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            //case 0:
+            case 1:
+                sound = CaelumpedionSounds.GYPAETUS_BARBATUS_CALL.get();
+                break;
+            case 2:
+                sound = CaelumpedionSounds.GYPS_FULVUS_CALL.get();
+                break;
+            //case 3:
+            //case 4:
+            default:
+                sound = CaelumpedionSounds.GYPAETUS_BARBATUS_CALL.get();
+        }
+
+        return sound;
+    }
+
+    protected SoundEvent getChantSound(){
+        return this.getCallSound();
+    }
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 240;
     }
 
     // Variant

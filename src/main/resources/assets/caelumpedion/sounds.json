@@ -1,4 +1,97 @@
 {
+  "entity.gypaetus_barbatus.call": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/gypaetus_barbatus_call_0",
+      "caelumpedion:entity/gypaetus_barbatus_call_1",
+      "caelumpedion:entity/gypaetus_barbatus_call_2",
+      "caelumpedion:entity/gypaetus_barbatus_call_3",
+      "caelumpedion:entity/gypaetus_barbatus_call_4",
+      "caelumpedion:entity/gypaetus_barbatus_call_5"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.accipitriforme.call"
+  },
+
+  "entity.gyps_fulvus.call": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/gyps_fulvus_call_0",
+      "caelumpedion:entity/gyps_fulvus_call_1",
+      "caelumpedion:entity/gyps_fulvus_call_2"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.accipitriforme.call"
+  },
+
+  "entity.anas_platyrhynchos.chant": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/anas_platyrhynchos_chant_0",
+      "caelumpedion:entity/anas_platyrhynchos_chant_1"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.anseriforme.duck.call"
+  },
+  "entity.anas_platyrhynchos.call": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/anas_platyrhynchos_call_0",
+      "caelumpedion:entity/anas_platyrhynchos_call_1",
+      "caelumpedion:entity/anas_platyrhynchos_call_2",
+      "caelumpedion:entity/anas_platyrhynchos_call_3",
+      "caelumpedion:entity/anas_platyrhynchos_call_4"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.anseriforme.duck.call"
+  },
+
+  "entity.anser_anser.chant": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/anser_anser_chant_0",
+      "caelumpedion:entity/anser_anser_chant_1"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.anseriforme.goose.call"
+  },
+  "entity.anser_anser.call": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/anser_anser_call_0",
+      "caelumpedion:entity/anser_anser_call_1",
+      "caelumpedion:entity/anser_anser_call_2",
+      "caelumpedion:entity/anser_anser_call_3"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.anseriforme.goose.call"
+  },
+
+  "entity.cygnus_atratus.call": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/cygnus_atratus_call_0",
+      "caelumpedion:entity/cygnus_atratus_call_1",
+      "caelumpedion:entity/cygnus_atratus_call_2",
+      "caelumpedion:entity/cygnus_atratus_call_3"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.anseriforme.swan.call"
+  },
+
+  "entity.cygnus_olor.chant": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/cygnus_olor_chant_0",
+      "caelumpedion:entity/cygnus_olor_chant_1",
+      "caelumpedion:entity/cygnus_olor_chant_2"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.anseriforme.swan.call"
+  },
+  "entity.cygnus_olor.call": {
+    "category": "neutral",
+    "sounds": [
+      "caelumpedion:entity/cygnus_olor_call_0",
+      "caelumpedion:entity/cygnus_olor_call_1",
+      "caelumpedion:entity/cygnus_olor_call_2",
+      "caelumpedion:entity/cygnus_olor_call_3"
+    ],
+    "subtitle": "caelumpedion.sound.subtitle.anseriforme.swan.call"
+  },
+
   "entity.colaptes_auratus.chant": {
     "category": "neutral",
     "sounds": [

@@ -113,12 +113,20 @@ public class CorvidaeEntity extends SocialFlyingBirdEntity {
         return CorvidaeVariant.lenght();
     };
 
+    //Sound
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 80;
+    }
+
     // Variant
 
     public static enum CorvidaeVariant implements BirdVariant {
         PicaPica(0, "pica_pica", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia}, null),
         CorvusCorax(1, "corvus_corax", 1.3f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.NorthAmerica}, null),
         CorvusMellori(2, "corvus_mellori", 1.0f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Oceania}, null),
+        TurdusMerula(2, "turdus_merula", 1.0f, false, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Oceania, IRLRegion.Europe,IRLRegion.Asia}, null),
         ;
 
         private static final CorvidaeVariant[] BY_ID = Arrays.stream(values()).sorted(

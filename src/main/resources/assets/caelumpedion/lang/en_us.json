@@ -73,9 +73,21 @@
   "irlregion.caelumpedion.southafrica.name": "South Africa",
   "irlregion.caelumpedion.asia.name": "Asia",
 
-  "caelumpedion.sound.subtitle.piciforme.chant" : "Piciforme Chatting",
-  "caelumpedion.sound.subtitle.piciforme.call" : "Piciforme Calling",
+  "caelumpedion.sound.subtitle.accipitriforme.chant" : "Vultur Screaming",
+  "caelumpedion.sound.subtitle.accipitriforme.call" : "Vultur Screaming",
 
-  "caelumpedion.sound.subtitle.ramphastidae.chant" : "Ramphastidae Chatting",
-  "caelumpedion.sound.subtitle.ramphastidae.call" : "Ramphastidae Chatting"
+  "caelumpedion.sound.subtitle.anseriforme.duck.chant" : "Duck Kwaking",
+  "caelumpedion.sound.subtitle.anseriforme.duck.call" : "Duck Kwaking",
+
+  "caelumpedion.sound.subtitle.anseriforme.goose.chant" : "Duck Kwaking",
+  "caelumpedion.sound.subtitle.anseriforme.goose.call" : "Duck Kwaking",
+
+  "caelumpedion.sound.subtitle.anseriforme.swan.chant" : "Snaw Kwaking",
+  "caelumpedion.sound.subtitle.anseriforme.swan.call" : "Snaw Kwaking",
+
+  "caelumpedion.sound.subtitle.piciforme.chant" : "WoodPecker Chatting",
+  "caelumpedion.sound.subtitle.piciforme.call" : "WoodPecker Calling",
+
+  "caelumpedion.sound.subtitle.ramphastidae.chant" : "Toucan Chatting",
+  "caelumpedion.sound.subtitle.ramphastidae.call" : "Toucan Chatting"
 }

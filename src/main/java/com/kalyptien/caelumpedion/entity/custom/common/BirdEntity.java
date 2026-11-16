@@ -440,6 +440,11 @@ public abstract class BirdEntity extends Animal {
         return SoundSource.NEUTRAL;
     }
 
+    @Override
+    public int getAmbientSoundInterval() {
+        return 120;
+    }
+
     // spawn
 
     @Override

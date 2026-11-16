@@ -3,6 +3,7 @@ package com.kalyptien.caelumpedion.entity.custom.bird.anseriforme;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
+import com.kalyptien.caelumpedion.misc.CaelumpedionSounds;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
@@ -11,6 +12,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -229,6 +231,71 @@ public class AnseriformeEntity extends SocialFlyingBirdEntity implements Neutral
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.readPersistentAngerSaveData(this.level(), compound);
+    }
+
+    // Sound
+
+    protected SoundEvent getCallSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            //case 0:
+            case 1:
+                sound = CaelumpedionSounds.ANAS_PLATYRHYNCHOS_CALL.get();
+                break;
+            //case 2:
+            case 3:
+                sound = CaelumpedionSounds.ANSER_ANSER_CALL.get();
+                break;
+            case 4:
+                sound = CaelumpedionSounds.ANSER_ANSER_CHANT.get();
+                break;
+            case 5:
+                sound = CaelumpedionSounds.CYGNUS_ATRATUS_CALL.get();
+                break;
+            case 6:
+                sound = CaelumpedionSounds.CYGNUS_OLOR_CALL.get();
+                break;
+            default:
+                sound = CaelumpedionSounds.ANAS_PLATYRHYNCHOS_CALL.get();
+        }
+
+        return sound;
+    }
+
+    protected SoundEvent getChantSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            //case 0:
+            case 1:
+                sound = CaelumpedionSounds.ANAS_PLATYRHYNCHOS_CHANT.get();
+                break;
+            //case 2:
+            case 3:
+                sound = CaelumpedionSounds.ANSER_ANSER_CHANT.get();
+                break;
+            case 4:
+                sound = CaelumpedionSounds.ANSER_ANSER_CHANT.get();
+                break;
+            case 5:
+                sound = CaelumpedionSounds.CYGNUS_ATRATUS_CALL.get();
+                break;
+            case 6:
+                sound = CaelumpedionSounds.CYGNUS_OLOR_CHANT.get();
+                break;
+            default:
+                sound = CaelumpedionSounds.ANAS_PLATYRHYNCHOS_CHANT.get();
+        }
+
+        return sound;
+    }
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 80;
     }
 
     // Variant

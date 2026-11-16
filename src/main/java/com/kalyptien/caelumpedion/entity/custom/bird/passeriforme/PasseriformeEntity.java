@@ -113,6 +113,13 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
         return PasseriformeVariant.lenght();
     };
 
+    //Sound
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 80;
+    }
+
     // Variant
 
     public enum PasseriformeVariant implements BirdVariant {
