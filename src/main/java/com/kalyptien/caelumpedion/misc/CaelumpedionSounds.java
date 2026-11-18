@@ -1,7 +1,6 @@
 package com.kalyptien.caelumpedion.misc;
 
 import com.kalyptien.caelumpedion.CaelumpedionMod;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -35,6 +34,29 @@ public class CaelumpedionSounds {
 
     // ==========
 
+    public static final Supplier<SoundEvent> ARCHILOCHUS_COLUBRIS_CHANT = registerSoundEvent("entity.archilochus_colubris.chant");
+    public static final Supplier<SoundEvent> ARCHILOCHUS_COLUBRIS_CALL = registerSoundEvent("entity.archilochus_colubris.call");
+
+    public static final Supplier<SoundEvent> COLIBRI_CORUSCANS_CHANT = registerSoundEvent("entity.colibri_coruscans.chant");
+    public static final Supplier<SoundEvent> COLIBRI_CORUSCANS_CALL = registerSoundEvent("entity.colibri_coruscans.call");
+
+    public static final Supplier<SoundEvent> MELLISUGA_HELENAE_CHANT = registerSoundEvent("entity.mellisuga_helenae.chant");
+    public static final Supplier<SoundEvent> MELLISUGA_HELENAE_CALL = registerSoundEvent("entity.mellisuga_helenae.call");
+
+    // ==========
+
+    public static final Supplier<SoundEvent> COLUMBA_LIVIA_CHANT = registerSoundEvent("entity.columba_livia.chant");
+    public static final Supplier<SoundEvent> COLUMBA_LIVIA_CALL = registerSoundEvent("entity.columba_livia.call");
+
+    public static final Supplier<SoundEvent> COLUMBA_PALUMBUS_CHANT = registerSoundEvent("entity.columba_palumbus.chant");
+
+    public static final Supplier<SoundEvent> STREPTOPELIA_DECAOCTO_CHANT = registerSoundEvent("entity.streptopelia_decaocto.chant");
+
+    public static final Supplier<SoundEvent> ZENAIDA_MACROURA_CHANT = registerSoundEvent("entity.zenaida_macroura.chant");
+    public static final Supplier<SoundEvent> ZENAIDA_MACROURA_CALL = registerSoundEvent("entity.zenaida_macroura.call");
+
+    // ==========
+
     public static final Supplier<SoundEvent> COLAPTES_AURATUS_CHANT = registerSoundEvent("entity.colaptes_auratus.chant");
     public static final Supplier<SoundEvent> COLAPTES_AURATUS_CALL = registerSoundEvent("entity.colaptes_auratus.call");
 
@@ -46,8 +68,8 @@ public class CaelumpedionSounds {
     public static final Supplier<SoundEvent> PICUS_PHANTASIA_TROGLODYTA_CHANT = registerSoundEvent("entity.picus_phantasia_troglodyta.chant");
     public static final Supplier<SoundEvent> PICUS_PHANTASIA_TROGLODYTA_CALL = registerSoundEvent("entity.picus_phantasia_troglodyta.call");
 
-    public static final Supplier<SoundEvent> PICUS_VIRIDS_CHANT = registerSoundEvent("entity.picus_viridis.chant");
-    public static final Supplier<SoundEvent> PICUS_VIRIDS_CALL = registerSoundEvent("entity.picus_viridis.call");
+    public static final Supplier<SoundEvent> PICUS_VIRIDIS_CHANT = registerSoundEvent("entity.picus_viridis.chant");
+    public static final Supplier<SoundEvent> PICUS_VIRIDIS_CALL = registerSoundEvent("entity.picus_viridis.call");
 
     // ==========
 

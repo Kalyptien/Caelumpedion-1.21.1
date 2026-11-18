@@ -253,13 +253,14 @@ public class PiciformeEntity extends FlyingBirdEntity {
                 sound = CaelumpedionSounds.DENDROCOPTES_MEDIUS_CALL.get();
                 break;
             case 3:
+                //TODO : Trouver un son plus original pour le Troglodyte
                 sound = CaelumpedionSounds.PICUS_PHANTASIA_TROGLODYTA_CALL.get();
                 break;
             case 4:
-                sound = CaelumpedionSounds.PICUS_VIRIDS_CALL.get();
+                sound = CaelumpedionSounds.PICUS_VIRIDIS_CALL.get();
                 break;
             default:
-                sound = CaelumpedionSounds.PICUS_VIRIDS_CALL.get();
+                sound = CaelumpedionSounds.PICUS_VIRIDIS_CALL.get();
         }
 
         return sound;
@@ -280,13 +281,14 @@ public class PiciformeEntity extends FlyingBirdEntity {
                 sound = CaelumpedionSounds.DENDROCOPTES_MEDIUS_CHANT.get();
                 break;
             case 3:
+                //TODO : Trouver un son plus original pour le Troglodyte
                 sound = CaelumpedionSounds.PICUS_PHANTASIA_TROGLODYTA_CHANT.get();
                 break;
             case 4:
-                sound = CaelumpedionSounds.PICUS_VIRIDS_CHANT.get();
+                sound = CaelumpedionSounds.PICUS_VIRIDIS_CHANT.get();
                 break;
             default:
-                sound = CaelumpedionSounds.PICUS_VIRIDS_CHANT.get();
+                sound = CaelumpedionSounds.PICUS_VIRIDIS_CHANT.get();
         }
 
         return sound;

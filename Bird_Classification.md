@@ -3,34 +3,52 @@ Classification
 
 **Accipitriforme** :
 
-- [Aegypius Monachus](https://www.oiseaux.net/en/oiseaux/cinereous.vulture.html)
-  - Not found
+- [Aegypius Monachus](https://www.oiseaux.net/en/oiseaux/cinereous.vulture.html) **ω**
 - [Gypaetus Barbatus](https://www.oiseaux.net/en/oiseaux/bearded.vulture.html)
   - Sound Author : Eduardo Realinho
 - [Gyps Fulvus](https://www.oiseaux.net/en/oiseaux/griffon.vulture.html)
   - Sound Author : Stanislas Wroza
-- [Gyps Himalayensis](https://www.oiseaux.net/en/oiseaux/himalayan.vulture.html)
-  - Not found
-- [Torgos Tracheliotos](https://www.oiseaux.net/en/oiseaux/lappet-faced.vulture.html)
-  - Not found
+- [Gyps Himalayensis](https://www.oiseaux.net/en/oiseaux/himalayan.vulture.html) **ω**
+- [Torgos Tracheliotos](https://www.oiseaux.net/en/oiseaux/lappet-faced.vulture.html) **ω**
 
 **Anseriforme** :
 
--[Anas Erythrorhyncha](https://www.oiseaux.net/en/oiseaux/red-billed.teal.html)
-  - Not found
+-[Anas Erythrorhyncha](https://www.oiseaux.net/en/oiseaux/red-billed.teal.html) **ω**
 - [Anas Platyrhynchos](https://www.oiseaux.net/en/oiseaux/mallard.html)
   -  Sound Author : Olivier Swift
 
 - [Anser Anser](https://www.oiseaux.net/en/oiseaux/greylag.goose.html)
   -  Sound Author : Olivier Swift
-- [Branta Hutchinsii](https://www.oiseaux.net/en/oiseaux/cackling.goose.html)
-  - Not found
+- [Branta Hutchinsii](https://www.oiseaux.net/en/oiseaux/cackling.goose.html) **ω**
 
 - [Cygnus Atratus](https://www.oiseaux.net/en/oiseaux/black.swan.html)
   - Sound Author : Ramit Singal
 - [Cygnus Olor](https://www.oiseaux.net/en/oiseaux/mute.swan.html)
   - Sound Author : Olivier Swift (Call) & Stanislas Wroza (Call & Chant)
 
+**Apodiforme**
+
+- [Archilochus Colubris](https://www.oiseaux.net/en/oiseaux/ruby-throated.hummingbird.html)
+  - Sound Author : Manuel Grosselet (call) & Russ Wigh (chant)
+- [Colibri Coruscans](https://www.oiseaux.net/en/oiseaux/sparkling.violetear.html)
+  - Sound Author : Leonardo Ordóñez-Delgado
+- [Colibri Delphinae](https://www.oiseaux.net/en/oiseaux/brown.violetear.html)
+  - Too similar : Colibri Coruscans
+- Colibri Phantasia Troglodyta **α** **ω**
+- [Mellisuga Helenae](https://www.oiseaux.net/en/oiseaux/bee.hummingbird.html)
+  - Sound Author : Matt Slaymaker
+
+**Columbiforme**
+
+- [Columba Livia](https://www.oiseaux.net/en/oiseaux/rock.dove.html)
+  - Sound Author : Patrik Åberg (chant) & Timo Tschentscher (call)
+- [Columba Palumbus](https://www.oiseaux.net/en/oiseaux/common.wood.pigeon.html)
+  - Sound Author : Stanislas Wroza
+- [Streptopelia Decaocto](https://www.oiseaux.net/en/oiseaux/eurasian.collared.dove.html)
+  - Sound Author : Olivier Swift
+- [Zenaida Macroura](https://www.oiseaux.net/en/oiseaux/mourning.dove.html)
+  - Sound Author : Manuel Grosselet (chant) & Thomas Ryder Payne (call)
+  
 **Piciforme** :
 
 - [Colaptes Auratus](https://www.oiseaux.net/en/oiseaux/northern.flicker.html)
@@ -39,20 +57,30 @@ Classification
   - Sound Author : Vincent Palomares
 - [Dendrocoptes Medius](https://www.oiseaux.net/en/oiseaux/middle.spotted.woodpecker.html)
   - Sound Author : Benjamin Drillat (chant) & Olivier Swift (call)
+- Picus Phantasia Troglodyta **α**
+  - Sound Origin : Picus Viridis (reverse)
 - [Picus Viridis](https://www.oiseaux.net/en/oiseaux/european.green.woodpecker.html)
   - Sound Author : R. Martin
 
 - **Ramphastidae** :
 
   - [Ramphastos Ambiguus](https://www.oiseaux.net/en/oiseaux/yellow-throated.toucan.html) :
-    - Not found
   - [Ramphastos Sulfuratus](https://www.oiseaux.net/en/oiseaux/keel-billed.toucan.html) :
     - Sound Author : Bernabe Lopez-Lanus
   - [Ramphastos Toco](https://www.oiseaux.net/en/oiseaux/toco.toucan.html)
     - Sound Author : Olivier Swift
-  - [Ramphastos Tucanus](https://www.oiseaux.net/en/oiseaux/white-throated.toucan.html)
-    - Not found
+  - [Ramphastos Tucanus](https://www.oiseaux.net/en/oiseaux/white-throated.toucan.html) **ω**
   
+---
+
+**Notes**
+
+**α** : Original / Fantastic / Non-existring Bird
+
+**ω** : 
+- No sound found with a good quality and/or the good license. This bird use an other bird sound.
+- If the bird is noted as **α** : I just need to work on it.
+
 ---
 <details>
   <summary><b>Legal Information</b></summary>
@@ -69,13 +97,13 @@ Classification
 
   - The originals samples of each bird can be found in the section *"Voice song and calls"* of the website linked with each bird (Click on the name of the bird)
 
-- Textures :
+- Texture :
 
   - All textures are based on photos form [Oiseaux.net](www.oiseaux.net). There are only use for inspiration and color pick.
 
 - Other information :
 
-  - [Oiseaux.net](www.oiseaux.net) have more information in is French version.
+  - [Oiseaux.net](www.oiseaux.net) have more information in his French version.
 
   - Fuck IA
 </details>

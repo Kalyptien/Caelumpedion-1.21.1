@@ -3,10 +3,12 @@ package com.kalyptien.caelumpedion.entity.custom.bird.columbiforme;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
+import com.kalyptien.caelumpedion.misc.CaelumpedionSounds;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
@@ -113,6 +115,54 @@ public class ColumbiformeEntity extends SocialFlyingBirdEntity {
     protected int getVariantLength(){
         return ColumbiformeVariant.lenght();
     };
+
+    //Sound
+
+    protected SoundEvent getCallSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            case 0:
+                sound = CaelumpedionSounds.COLUMBA_LIVIA_CALL.get();
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                sound = CaelumpedionSounds.ZENAIDA_MACROURA_CALL.get();
+                break;
+            default:
+                sound = CaelumpedionSounds.COLUMBA_LIVIA_CALL.get();
+        }
+
+        return sound;
+    }
+
+    protected SoundEvent getChantSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            case 0:
+                sound = CaelumpedionSounds.COLUMBA_LIVIA_CHANT.get();
+                break;
+            case 1:
+                sound  = CaelumpedionSounds.COLUMBA_PALUMBUS_CHANT.get();
+                break;
+            case 2:
+                sound  = CaelumpedionSounds.STREPTOPELIA_DECAOCTO_CHANT.get();
+                break;
+            case 3:
+                sound  = CaelumpedionSounds.ZENAIDA_MACROURA_CHANT.get();
+                break;
+            default:
+                sound = CaelumpedionSounds.COLUMBA_LIVIA_CHANT.get();
+        }
+
+        return sound;
+    }
 
     // Variant
 

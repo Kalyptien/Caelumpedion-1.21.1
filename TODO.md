@@ -3,7 +3,7 @@ V 1.0.0 :
 OISEAUX :
 
 - Intégrations des chants pour chaques oiseaux
-- Flap, Hurt and Death sound
+- Voir pour rendre certains sons moins shape
 
 V.1.1.0
 

@@ -4,11 +4,13 @@ import com.kalyptien.caelumpedion.entity.ai.goal.*;
 import com.kalyptien.caelumpedion.entity.ai.goal.trochilidaeGoal.TrochilidaeFoodNerbyGoal;
 import com.kalyptien.caelumpedion.entity.ai.goal.trochilidaeGoal.TrochilidaeRandomStrollGoal;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
+import com.kalyptien.caelumpedion.misc.CaelumpedionSounds;
 import com.kalyptien.caelumpedion.misc.CaelumpedionTags;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.ItemTags;
@@ -202,6 +204,59 @@ public class TrochilidaeEntity extends FlyingBirdEntity {
 
     public void setNeedToFlyAway(boolean needToFlyAway) {
         this.entityData.set(NEED_TO_FLY_AWAY, needToFlyAway);
+    }
+
+    // Sound
+
+    protected SoundEvent getCallSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            case 0:
+                sound = CaelumpedionSounds.ARCHILOCHUS_COLUBRIS_CALL.get();
+                break;
+            case 1:
+                sound = CaelumpedionSounds.COLIBRI_CORUSCANS_CALL.get();
+                break;
+            //case 2:
+            //case 3: TODO : Trouver un son pour le Troglodyte
+            case 4:
+                sound = CaelumpedionSounds.MELLISUGA_HELENAE_CALL.get();
+                break;
+            default:
+                sound = CaelumpedionSounds.ARCHILOCHUS_COLUBRIS_CALL.get();
+        }
+
+        return sound;
+    }
+
+    protected SoundEvent getChantSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            case 0:
+                sound = CaelumpedionSounds.ARCHILOCHUS_COLUBRIS_CHANT.get();
+                break;
+            case 1:
+                sound = CaelumpedionSounds.COLIBRI_CORUSCANS_CHANT.get();
+                break;
+            //case 2:
+            //case 3: TODO : Trouver un son pour le Troglodyte
+            case 4:
+                sound = CaelumpedionSounds.MELLISUGA_HELENAE_CHANT.get();
+                break;
+            default:
+                sound = CaelumpedionSounds.ARCHILOCHUS_COLUBRIS_CHANT.get();
+        }
+
+        return sound;
+    }
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 80;
     }
 
     // Variant

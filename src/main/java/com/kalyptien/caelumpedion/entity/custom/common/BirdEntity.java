@@ -416,11 +416,14 @@ public abstract class BirdEntity extends Animal {
 
     public void makeSound(@javax.annotation.Nullable SoundEvent sound) {
         if (sound != null) {
-            if(sound == SoundEvents.GENERIC_HURT){
-                this.playSound(this.getCallSound(), this.getSoundVolume(), this.getVoicePitch() - 0.5f);
-            }
-            else if(sound == SoundEvents.GENERIC_DEATH){
-                this.playSound(this.getCallSound(), this.getSoundVolume() - 0.5f, this.getVoicePitch() - 0.8f);
+            if(sound == SoundEvents.GENERIC_HURT || sound == SoundEvents.GENERIC_DEATH){
+                SoundEvent callSound = this.getCallSound();
+                if(callSound == null){
+                    this.playSound(sound, this.getSoundVolume(), this.getVoicePitch());
+                }
+                else{
+                    this.playSound(callSound, this.getSoundVolume() - 0.3f, this.getVoicePitch() - 0.5f);
+                }
             }
             else{
                 this.playSound(sound, this.getSoundVolume(), this.getVoicePitch());

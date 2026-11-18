@@ -60,7 +60,7 @@ public class TrochilidaeRenderer extends MobRenderer<TrochilidaeEntity, Trochili
                         TrochilidaeEntity.TrochilidaeVariant currentVariant = TrochilidaeEntity.TrochilidaeVariant.byId(i);
                         if(currentVariant.isIridescent()){
                             map.put(currentVariant,
-                                    ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "textures/entity/passeriforme/corvidae/" + currentVariant.getFileName() + "_iridescent.png"));
+                                    ResourceLocation.fromNamespaceAndPath(CaelumpedionMod.MOD_ID, "textures/entity/apodiforme/trochilidae/" + currentVariant.getFileName() + "_iridescent.png"));
                         }
                     }
 

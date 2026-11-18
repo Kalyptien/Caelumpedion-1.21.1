@@ -46,6 +46,7 @@ public class DataGenerators {
 
         generator.addProvider(event.includeServer(), new CaelumpedionDatapackProvider(packOutput, lookupProvider));
 
+        generator.addProvider(event.includeClient(), new CaelumpedionSoundDefinitionsProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new CaelumpedionBlockStateProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new CaelumpedionItemModelProvider(packOutput, existingFileHelper));
     }

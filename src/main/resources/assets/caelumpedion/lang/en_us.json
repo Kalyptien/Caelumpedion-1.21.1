@@ -1,6 +1,21 @@
 {
   "creativetab.caelumpedion.mod_tab": "Caelumpedion",
 
+  "item.caelumpedion.accipitriforme_spawn_egg": "Accipitriforme Spawn Egg",
+  "tooltip.caelumpedion.accipitriforme_spawn_egg.tooltip": "§8Eagle & Vulture§r",
+
+  "item.caelumpedion.anseriforme_spawn_egg": "Anseriforme Spawn Egg",
+  "tooltip.caelumpedion.anseriforme_spawn_egg.tooltip": "§8Duck, Goose & Swan§r",
+
+  "item.caelumpedion.trochilidae_spawn_egg": "Apodiforme > Trochilidae Spawn Egg",
+  "tooltip.caelumpedion.trochilidae_spawn_egg.tooltip": "§8Hummingbird§r",
+
+  "item.caelumpedion.columbiforme_spawn_egg": "Columbiforme Spawn Egg",
+  "tooltip.caelumpedion.columbiforme_spawn_egg.tooltip": "§8Pigeon§r",
+
+  "item.caelumpedion.gruiforme_spawn_egg": "Gruiforme Spawn Egg",
+  "tooltip.caelumpedion.gruiforme_spawn_egg.tooltip": "§8Crane§r",
+
   "item.caelumpedion.passeriforme_spawn_egg": "Passeriforme Spawn Egg",
   "tooltip.caelumpedion.passeriforme_spawn_egg.tooltip": "§8Sparrow, Jay, Cardinal, ...§r",
 
@@ -10,26 +25,11 @@
   "item.caelumpedion.corvidae_spawn_egg": "Passeriforme > Corvidae Spawn Egg",
   "tooltip.caelumpedion.corvidae_spawn_egg.tooltip": "§8Raven, Crow & Magpie§r",
 
-  "item.caelumpedion.anseriforme_spawn_egg": "Anseriforme Spawn Egg",
-  "tooltip.caelumpedion.anseriforme_spawn_egg.tooltip": "§8Duck, Goose & Swan§r",
-
-  "item.caelumpedion.accipitriforme_spawn_egg": "Accipitriforme Spawn Egg",
-  "tooltip.caelumpedion.accipitriforme_spawn_egg.tooltip": "§8Eagle & Vultur§r",
-
   "item.caelumpedion.piciforme_spawn_egg": "Piciforme Spawn Egg",
   "tooltip.caelumpedion.piciforme_spawn_egg.tooltip": "§8Woodpecker§r",
 
   "item.caelumpedion.ramphastidae_spawn_egg": "Piciforme > Ramphastidae Spawn Egg",
   "tooltip.caelumpedion.ramphastidae_spawn_egg.tooltip": "§8Toucan§r",
-
-  "item.caelumpedion.gruiforme_spawn_egg": "Gruiforme Spawn Egg",
-  "tooltip.caelumpedion.gruiforme_spawn_egg.tooltip": "§8Crane§r",
-
-  "item.caelumpedion.trochilidae_spawn_egg": "Apodiforme > Trochilidae Spawn Egg",
-  "tooltip.caelumpedion.trochilidae_spawn_egg.tooltip": "§8Hummingbird§r",
-
-  "item.caelumpedion.columbiforme_spawn_egg": "Columbiforme Spawn Egg",
-  "tooltip.caelumpedion.columbiforme_spawn_egg.tooltip": "§8Pigeon§r",
 
   "item.caelumpedion.caelumpedion_token": "Caelumpedion Token",
 
@@ -73,21 +73,27 @@
   "irlregion.caelumpedion.southafrica.name": "South Africa",
   "irlregion.caelumpedion.asia.name": "Asia",
 
-  "caelumpedion.sound.subtitle.accipitriforme.chant" : "Vultur Screaming",
-  "caelumpedion.sound.subtitle.accipitriforme.call" : "Vultur Screaming",
+  "caelumpedion.sound.subtitle.accipitriforme.chant" : "Vulture Screeching",
+  "caelumpedion.sound.subtitle.accipitriforme.call" : "Vulture Screeching",
 
-  "caelumpedion.sound.subtitle.anseriforme.duck.chant" : "Duck Kwaking",
-  "caelumpedion.sound.subtitle.anseriforme.duck.call" : "Duck Kwaking",
+  "caelumpedion.sound.subtitle.anseriforme.duck.chant" : "Duck Quacking",
+  "caelumpedion.sound.subtitle.anseriforme.duck.call" : "Duck Quacking",
 
-  "caelumpedion.sound.subtitle.anseriforme.goose.chant" : "Duck Kwaking",
-  "caelumpedion.sound.subtitle.anseriforme.goose.call" : "Duck Kwaking",
+  "caelumpedion.sound.subtitle.anseriforme.goose.chant" : "Goose Honking",
+  "caelumpedion.sound.subtitle.anseriforme.goose.call" : "Goose Honking",
 
-  "caelumpedion.sound.subtitle.anseriforme.swan.chant" : "Snaw Kwaking",
-  "caelumpedion.sound.subtitle.anseriforme.swan.call" : "Snaw Kwaking",
+  "caelumpedion.sound.subtitle.anseriforme.swan.chant" : "Swan Honking",
+  "caelumpedion.sound.subtitle.anseriforme.swan.call" : "Swan Honking",
 
-  "caelumpedion.sound.subtitle.piciforme.chant" : "WoodPecker Chatting",
-  "caelumpedion.sound.subtitle.piciforme.call" : "WoodPecker Calling",
+  "caelumpedion.sound.subtitle.trochilidae.chant" : "Hummingbird Chirping",
+  "caelumpedion.sound.subtitle.trochilidae.call" : "Hummingbird Chirping",
 
-  "caelumpedion.sound.subtitle.ramphastidae.chant" : "Toucan Chatting",
-  "caelumpedion.sound.subtitle.ramphastidae.call" : "Toucan Chatting"
+  "caelumpedion.sound.subtitle.columbiforme.chant" : "Pigeon Cooing",
+  "caelumpedion.sound.subtitle.columbiforme.call" : "Pigeon Cooing",
+
+  "caelumpedion.sound.subtitle.piciforme.chant" : "Woodpecker Rattling",
+  "caelumpedion.sound.subtitle.piciforme.call" : "Woodpecker Rattling",
+
+  "caelumpedion.sound.subtitle.ramphastidae.chant" : "Toucan Croaking",
+  "caelumpedion.sound.subtitle.ramphastidae.call" : "Toucan Croaking"
 }
