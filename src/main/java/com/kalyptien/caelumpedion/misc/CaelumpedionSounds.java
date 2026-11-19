@@ -57,6 +57,17 @@ public class CaelumpedionSounds {
 
     // ==========
 
+    public static final Supplier<SoundEvent> ANTIGONE_ANTIGONE_CHANT = registerSoundEvent("entity.antigone_antigone.chant");
+    public static final Supplier<SoundEvent> ANTIGONE_ANTIGONE_CALL = registerSoundEvent("entity.antigone_antigone.call");
+
+    public static final Supplier<SoundEvent> ANTIGONE_CANADENSIS_CHANT = registerSoundEvent("entity.antigone_canadensis.chant");
+    public static final Supplier<SoundEvent> ANTIGONE_CANADENSIS_CALL = registerSoundEvent("entity.antigone_canadensis.call");
+
+    public static final Supplier<SoundEvent> GRUS_JAPONENSIS_CALL = registerSoundEvent("entity.grus_japonensis.call");
+
+
+    // ==========
+
     public static final Supplier<SoundEvent> COLAPTES_AURATUS_CHANT = registerSoundEvent("entity.colaptes_auratus.chant");
     public static final Supplier<SoundEvent> COLAPTES_AURATUS_CALL = registerSoundEvent("entity.colaptes_auratus.call");
 

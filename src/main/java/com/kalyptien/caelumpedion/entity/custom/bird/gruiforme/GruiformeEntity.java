@@ -3,6 +3,7 @@ package com.kalyptien.caelumpedion.entity.custom.bird.gruiforme;
 import com.kalyptien.caelumpedion.entity.custom.bird.passeriforme.PasseriformeEntity;
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
+import com.kalyptien.caelumpedion.misc.CaelumpedionSounds;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
@@ -11,6 +12,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -214,6 +216,50 @@ public class GruiformeEntity extends SocialFlyingBirdEntity implements NeutralMo
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         this.readPersistentAngerSaveData(this.level(), compound);
+    }
+
+    //Sound
+
+    protected SoundEvent getCallSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            case 0:
+                sound = CaelumpedionSounds.ANTIGONE_ANTIGONE_CALL.get();
+                break;
+            case 1:
+                sound = CaelumpedionSounds.ANTIGONE_CANADENSIS_CALL.get();
+                break;
+            //case 2:
+            case 3:
+                sound = CaelumpedionSounds.GRUS_JAPONENSIS_CALL.get();
+                break;
+            default:
+                sound = CaelumpedionSounds.ANTIGONE_CANADENSIS_CALL.get();
+        }
+
+        return sound;
+    }
+
+    protected SoundEvent getChantSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            case 0:
+                sound = CaelumpedionSounds.ANTIGONE_ANTIGONE_CHANT.get();
+                break;
+            case 1:
+                sound  = CaelumpedionSounds.ANTIGONE_CANADENSIS_CHANT.get();
+                break;
+            //case 2:
+            //case 3:
+            default:
+                sound = CaelumpedionSounds.ANTIGONE_CANADENSIS_CHANT.get();
+        }
+
+        return sound;
     }
 
     // Variant

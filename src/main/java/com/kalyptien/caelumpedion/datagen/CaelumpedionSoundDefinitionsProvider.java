@@ -18,12 +18,12 @@ public class CaelumpedionSoundDefinitionsProvider extends SoundDefinitionsProvid
         // ========== ACCIPITRIFORME ==========
         add(CaelumpedionSounds.GYPAETUS_BARBATUS_CALL, SoundDefinition.definition()
                 .with(
-                    sound("caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_0"),
-                    sound("caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_1"),
-                    sound("caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_2"),
-                    sound("caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_3"),
-                    sound("caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_4"),
-                    sound("caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_5")
+                    sound("caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_0").attenuationDistance(32),
+                    sound("caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_1").attenuationDistance(32),
+                    sound("caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_2").attenuationDistance(32),
+                    sound("caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_3").attenuationDistance(32),
+                    sound("caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_4").attenuationDistance(32),
+                    sound("caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_5").attenuationDistance(32)
 
                 )
                 .subtitle("sound.subtitle.accipitriforme.call")
@@ -31,9 +31,9 @@ public class CaelumpedionSoundDefinitionsProvider extends SoundDefinitionsProvid
         //===
         add(CaelumpedionSounds.GYPS_FULVUS_CALL, SoundDefinition.definition()
                 .with(
-                        sound("caelumpedion:entity/accipitriforme/gyps_fulvus_call_0"),
-                        sound("caelumpedion:entity/accipitriforme/gyps_fulvus_call_1"),
-                        sound("caelumpedion:entity/accipitriforme/gyps_fulvus_call_2")
+                        sound("caelumpedion:entity/accipitriforme/gyps_fulvus_call_0").attenuationDistance(32),
+                        sound("caelumpedion:entity/accipitriforme/gyps_fulvus_call_1").attenuationDistance(32),
+                        sound("caelumpedion:entity/accipitriforme/gyps_fulvus_call_2").attenuationDistance(32)
                 )
                 .subtitle("sound.subtitle.accipitriforme.call")
         );
@@ -43,8 +43,8 @@ public class CaelumpedionSoundDefinitionsProvider extends SoundDefinitionsProvid
         // ===== DUCK =====
         add(CaelumpedionSounds.ANAS_PLATYRHYNCHOS_CHANT, SoundDefinition.definition()
                 .with(
-                        sound("caelumpedion:entity/anseriforme/anas_platyrhynchos_chant_0"),
-                        sound("caelumpedion:entity/anseriforme/anas_platyrhynchos_chant_1")
+                        sound("caelumpedion:entity/anseriforme/anas_platyrhynchos_chant_0").attenuationDistance(32),
+                        sound("caelumpedion:entity/anseriforme/anas_platyrhynchos_chant_1").attenuationDistance(32)
                 )
                 .subtitle("sound.subtitle.anseriforme.duck.chant")
         );
@@ -62,8 +62,8 @@ public class CaelumpedionSoundDefinitionsProvider extends SoundDefinitionsProvid
         // ===== GOOSE =====
         add(CaelumpedionSounds.ANSER_ANSER_CHANT, SoundDefinition.definition()
                 .with(
-                        sound("caelumpedion:entity/anseriforme/anser_anser_chant_0"),
-                        sound("caelumpedion:entity/anseriforme/anser_anser_chant_1")
+                        sound("caelumpedion:entity/anseriforme/anser_anser_chant_0").attenuationDistance(32),
+                        sound("caelumpedion:entity/anseriforme/anser_anser_chant_1").attenuationDistance(32)
                 )
                 .subtitle("sound.subtitle.anseriforme.goose.chant")
         );
@@ -90,9 +90,9 @@ public class CaelumpedionSoundDefinitionsProvider extends SoundDefinitionsProvid
         //===
         add(CaelumpedionSounds.CYGNUS_OLOR_CHANT, SoundDefinition.definition()
                 .with(
-                        sound("caelumpedion:entity/anseriforme/cygnus_olor_chant_0"),
-                        sound("caelumpedion:entity/anseriforme/cygnus_olor_chant_1"),
-                        sound("caelumpedion:entity/anseriforme/cygnus_olor_chant_2")
+                        sound("caelumpedion:entity/anseriforme/cygnus_olor_chant_0").attenuationDistance(32),
+                        sound("caelumpedion:entity/anseriforme/cygnus_olor_chant_1").attenuationDistance(32),
+                        sound("caelumpedion:entity/anseriforme/cygnus_olor_chant_2").attenuationDistance(32)
                 )
                 .subtitle("sound.subtitle.anseriforme.swan.chant")
         );
@@ -180,26 +180,26 @@ public class CaelumpedionSoundDefinitionsProvider extends SoundDefinitionsProvid
         //===
         add(CaelumpedionSounds.COLUMBA_PALUMBUS_CHANT, SoundDefinition.definition()
                 .with(
-                        sound("caelumpedion:entity/columbiforme/columba_palumbus_chant_0"),
-                        sound("caelumpedion:entity/columbiforme/columba_palumbus_chant_1")
+                        sound("caelumpedion:entity/columbiforme/columba_palumbus_chant_0").attenuationDistance(32),
+                        sound("caelumpedion:entity/columbiforme/columba_palumbus_chant_1").attenuationDistance(32)
                 )
                 .subtitle("sound.subtitle.columbiforme.chant")
         );
         //===
         add(CaelumpedionSounds.STREPTOPELIA_DECAOCTO_CHANT, SoundDefinition.definition()
                 .with(
-                        sound("caelumpedion:entity/columbiforme/streptopelia_decaocto_chant_0"),
-                        sound("caelumpedion:entity/columbiforme/streptopelia_decaocto_chant_1"),
-                        sound("caelumpedion:entity/columbiforme/streptopelia_decaocto_chant_2")
+                        sound("caelumpedion:entity/columbiforme/streptopelia_decaocto_chant_0").attenuationDistance(32),
+                        sound("caelumpedion:entity/columbiforme/streptopelia_decaocto_chant_1").attenuationDistance(32),
+                        sound("caelumpedion:entity/columbiforme/streptopelia_decaocto_chant_2").attenuationDistance(32)
                 )
                 .subtitle("sound.subtitle.columbiforme.chant")
         );
         //===
         add(CaelumpedionSounds.ZENAIDA_MACROURA_CHANT, SoundDefinition.definition()
                 .with(
-                        sound("caelumpedion:entity/columbiforme/zenaida_macroura_chant_0"),
-                        sound("caelumpedion:entity/columbiforme/zenaida_macroura_chant_1"),
-                        sound("caelumpedion:entity/columbiforme/zenaida_macroura_chant_2")
+                        sound("caelumpedion:entity/columbiforme/zenaida_macroura_chant_0").attenuationDistance(32),
+                        sound("caelumpedion:entity/columbiforme/zenaida_macroura_chant_1").attenuationDistance(32),
+                        sound("caelumpedion:entity/columbiforme/zenaida_macroura_chant_2").attenuationDistance(32)
                 )
                 .subtitle("sound.subtitle.columbiforme.chant")
         );
@@ -212,6 +212,57 @@ public class CaelumpedionSoundDefinitionsProvider extends SoundDefinitionsProvid
                 )
                 .subtitle("sound.subtitle.columbiforme.call")
         );
+
+        // ========== GRUIFORME ==========
+
+        add(CaelumpedionSounds.ANTIGONE_ANTIGONE_CHANT, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/gruiforme/antigone_antigone_chant_0").attenuationDistance(48),
+                        sound("caelumpedion:entity/gruiforme/antigone_antigone_chant_1").attenuationDistance(48)
+                )
+                .subtitle("sound.subtitle.gruiforme.chant")
+        );
+        add(CaelumpedionSounds.ANTIGONE_ANTIGONE_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/gruiforme/antigone_antigone_call_0").attenuationDistance(48),
+                        sound("caelumpedion:entity/gruiforme/antigone_antigone_call_1").attenuationDistance(48),
+                        sound("caelumpedion:entity/gruiforme/antigone_antigone_call_2").attenuationDistance(48),
+                        sound("caelumpedion:entity/gruiforme/antigone_antigone_call_3").attenuationDistance(48),
+                        sound("caelumpedion:entity/gruiforme/antigone_antigone_call_4").attenuationDistance(48)
+                )
+                .subtitle("sound.subtitle.gruiforme.call")
+        );
+        //===
+        add(CaelumpedionSounds.ANTIGONE_CANADENSIS_CHANT, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/gruiforme/antigone_canadensis_chant_0").attenuationDistance(48),
+                        sound("caelumpedion:entity/gruiforme/antigone_canadensis_chant_1").attenuationDistance(48)
+                )
+                .subtitle("sound.subtitle.gruiforme.chant")
+        );
+        add(CaelumpedionSounds.ANTIGONE_CANADENSIS_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/gruiforme/antigone_canadensis_call_0").attenuationDistance(48),
+                        sound("caelumpedion:entity/gruiforme/antigone_canadensis_call_1").attenuationDistance(48),
+                        sound("caelumpedion:entity/gruiforme/antigone_canadensis_call_2").attenuationDistance(48),
+                        sound("caelumpedion:entity/gruiforme/antigone_canadensis_call_3").attenuationDistance(48),
+                        sound("caelumpedion:entity/gruiforme/antigone_canadensis_call_4").attenuationDistance(48)
+                )
+                .subtitle("sound.subtitle.gruiforme.call")
+        );
+        //===
+        add(CaelumpedionSounds.GRUS_JAPONENSIS_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/gruiforme/grus_japonensis_call_0").attenuationDistance(48),
+                        sound("caelumpedion:entity/gruiforme/grus_japonensis_call_1").attenuationDistance(48),
+                        sound("caelumpedion:entity/gruiforme/grus_japonensis_call_2").attenuationDistance(48),
+                        sound("caelumpedion:entity/gruiforme/grus_japonensis_call_3").attenuationDistance(48),
+                        sound("caelumpedion:entity/gruiforme/grus_japonensis_call_4").attenuationDistance(48)
+                )
+                .subtitle("sound.subtitle.gruiforme.call")
+        );
+
+        // ========== CORVIDAE ==========
 
         // ========== PICIFORME ==========
 

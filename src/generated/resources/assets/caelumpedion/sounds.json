@@ -11,8 +11,14 @@
   },
   "entity.anas_platyrhynchos.chant": {
     "sounds": [
-      "caelumpedion:entity/anseriforme/anas_platyrhynchos_chant_0",
-      "caelumpedion:entity/anseriforme/anas_platyrhynchos_chant_1"
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/anseriforme/anas_platyrhynchos_chant_0"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/anseriforme/anas_platyrhynchos_chant_1"
+      }
     ],
     "subtitle": "sound.subtitle.anseriforme.duck.chant"
   },
@@ -27,10 +33,92 @@
   },
   "entity.anser_anser.chant": {
     "sounds": [
-      "caelumpedion:entity/anseriforme/anser_anser_chant_0",
-      "caelumpedion:entity/anseriforme/anser_anser_chant_1"
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/anseriforme/anser_anser_chant_0"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/anseriforme/anser_anser_chant_1"
+      }
     ],
     "subtitle": "sound.subtitle.anseriforme.goose.chant"
+  },
+  "entity.antigone_antigone.call": {
+    "sounds": [
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/antigone_antigone_call_0"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/antigone_antigone_call_1"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/antigone_antigone_call_2"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/antigone_antigone_call_3"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/antigone_antigone_call_4"
+      }
+    ],
+    "subtitle": "sound.subtitle.gruiforme.call"
+  },
+  "entity.antigone_antigone.chant": {
+    "sounds": [
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/antigone_antigone_chant_0"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/antigone_antigone_chant_1"
+      }
+    ],
+    "subtitle": "sound.subtitle.gruiforme.chant"
+  },
+  "entity.antigone_canadensis.call": {
+    "sounds": [
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/antigone_canadensis_call_0"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/antigone_canadensis_call_1"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/antigone_canadensis_call_2"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/antigone_canadensis_call_3"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/antigone_canadensis_call_4"
+      }
+    ],
+    "subtitle": "sound.subtitle.gruiforme.call"
+  },
+  "entity.antigone_canadensis.chant": {
+    "sounds": [
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/antigone_canadensis_chant_0"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/antigone_canadensis_chant_1"
+      }
+    ],
+    "subtitle": "sound.subtitle.gruiforme.chant"
   },
   "entity.archilochus_colubris.call": {
     "sounds": [
@@ -99,8 +187,14 @@
   },
   "entity.columba_palumbus.chant": {
     "sounds": [
-      "caelumpedion:entity/columbiforme/columba_palumbus_chant_0",
-      "caelumpedion:entity/columbiforme/columba_palumbus_chant_1"
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/columbiforme/columba_palumbus_chant_0"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/columbiforme/columba_palumbus_chant_1"
+      }
     ],
     "subtitle": "sound.subtitle.columbiforme.chant"
   },
@@ -124,9 +218,18 @@
   },
   "entity.cygnus_olor.chant": {
     "sounds": [
-      "caelumpedion:entity/anseriforme/cygnus_olor_chant_0",
-      "caelumpedion:entity/anseriforme/cygnus_olor_chant_1",
-      "caelumpedion:entity/anseriforme/cygnus_olor_chant_2"
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/anseriforme/cygnus_olor_chant_0"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/anseriforme/cygnus_olor_chant_1"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/anseriforme/cygnus_olor_chant_2"
+      }
     ],
     "subtitle": "sound.subtitle.anseriforme.swan.chant"
   },
@@ -155,22 +258,74 @@
     ],
     "subtitle": "sound.subtitle.piciforme.chant"
   },
+  "entity.grus_japonensis.call": {
+    "sounds": [
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/grus_japonensis_call_0"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/grus_japonensis_call_1"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/grus_japonensis_call_2"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/grus_japonensis_call_3"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/gruiforme/grus_japonensis_call_4"
+      }
+    ],
+    "subtitle": "sound.subtitle.gruiforme.call"
+  },
   "entity.gypaetus_barbatus.call": {
     "sounds": [
-      "caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_0",
-      "caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_1",
-      "caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_2",
-      "caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_3",
-      "caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_4",
-      "caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_5"
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_0"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_1"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_2"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_3"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_4"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/accipitriforme/gypaetus_barbatus_call_5"
+      }
     ],
     "subtitle": "sound.subtitle.accipitriforme.call"
   },
   "entity.gyps_fulvus.call": {
     "sounds": [
-      "caelumpedion:entity/accipitriforme/gyps_fulvus_call_0",
-      "caelumpedion:entity/accipitriforme/gyps_fulvus_call_1",
-      "caelumpedion:entity/accipitriforme/gyps_fulvus_call_2"
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/accipitriforme/gyps_fulvus_call_0"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/accipitriforme/gyps_fulvus_call_1"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/accipitriforme/gyps_fulvus_call_2"
+      }
     ],
     "subtitle": "sound.subtitle.accipitriforme.call"
   },
@@ -241,9 +396,18 @@
   },
   "entity.streptopelia_decaocto.chant": {
     "sounds": [
-      "caelumpedion:entity/columbiforme/streptopelia_decaocto_chant_0",
-      "caelumpedion:entity/columbiforme/streptopelia_decaocto_chant_1",
-      "caelumpedion:entity/columbiforme/streptopelia_decaocto_chant_2"
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/columbiforme/streptopelia_decaocto_chant_0"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/columbiforme/streptopelia_decaocto_chant_1"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/columbiforme/streptopelia_decaocto_chant_2"
+      }
     ],
     "subtitle": "sound.subtitle.columbiforme.chant"
   },
@@ -258,9 +422,18 @@
   },
   "entity.zenaida_macroura.chant": {
     "sounds": [
-      "caelumpedion:entity/columbiforme/zenaida_macroura_chant_0",
-      "caelumpedion:entity/columbiforme/zenaida_macroura_chant_1",
-      "caelumpedion:entity/columbiforme/zenaida_macroura_chant_2"
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/columbiforme/zenaida_macroura_chant_0"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/columbiforme/zenaida_macroura_chant_1"
+      },
+      {
+        "attenuation_distance": 32,
+        "name": "caelumpedion:entity/columbiforme/zenaida_macroura_chant_2"
+      }
     ],
     "subtitle": "sound.subtitle.columbiforme.chant"
   }

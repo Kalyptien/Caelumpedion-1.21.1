@@ -13,20 +13,21 @@ Classification
 
 **Anseriforme** :
 
--[Anas Erythrorhyncha](https://www.oiseaux.net/en/oiseaux/red-billed.teal.html) **ω**
-- [Anas Platyrhynchos](https://www.oiseaux.net/en/oiseaux/mallard.html)
-  -  Sound Author : Olivier Swift
+- **Duck**
+  - [Anas Erythrorhyncha](https://www.oiseaux.net/en/oiseaux/red-billed.teal.html) **ω**
+  - [Anas Platyrhynchos](https://www.oiseaux.net/en/oiseaux/mallard.html)
+    -  Sound Author : Olivier Swift
+- **Goose**
+  - [Anser Anser](https://www.oiseaux.net/en/oiseaux/greylag.goose.html)
+    -  Sound Author : Olivier Swift
+  - [Branta Hutchinsii](https://www.oiseaux.net/en/oiseaux/cackling.goose.html) **ω**
+- **Swan**
+  - [Cygnus Atratus](https://www.oiseaux.net/en/oiseaux/black.swan.html)
+    - Sound Author : Ramit Singal
+  - [Cygnus Olor](https://www.oiseaux.net/en/oiseaux/mute.swan.html)
+    - Sound Author : Olivier Swift (Call) & Stanislas Wroza (Call & Chant)
 
-- [Anser Anser](https://www.oiseaux.net/en/oiseaux/greylag.goose.html)
-  -  Sound Author : Olivier Swift
-- [Branta Hutchinsii](https://www.oiseaux.net/en/oiseaux/cackling.goose.html) **ω**
-
-- [Cygnus Atratus](https://www.oiseaux.net/en/oiseaux/black.swan.html)
-  - Sound Author : Ramit Singal
-- [Cygnus Olor](https://www.oiseaux.net/en/oiseaux/mute.swan.html)
-  - Sound Author : Olivier Swift (Call) & Stanislas Wroza (Call & Chant)
-
-**Apodiforme**
+**Apodiforme** :
 
 - [Archilochus Colubris](https://www.oiseaux.net/en/oiseaux/ruby-throated.hummingbird.html)
   - Sound Author : Manuel Grosselet (call) & Russ Wigh (chant)
@@ -38,7 +39,7 @@ Classification
 - [Mellisuga Helenae](https://www.oiseaux.net/en/oiseaux/bee.hummingbird.html)
   - Sound Author : Matt Slaymaker
 
-**Columbiforme**
+**Columbiforme** :
 
 - [Columba Livia](https://www.oiseaux.net/en/oiseaux/rock.dove.html)
   - Sound Author : Patrik Åberg (chant) & Timo Tschentscher (call)
@@ -49,6 +50,32 @@ Classification
 - [Zenaida Macroura](https://www.oiseaux.net/en/oiseaux/mourning.dove.html)
   - Sound Author : Manuel Grosselet (chant) & Thomas Ryder Payne (call)
   
+**Gruiforme** :
+
+- [Antigone Antigone](https://www.oiseaux.net/en/oiseaux/sarus.crane.html)
+  - Sound Author : Ross Gallardy (call) & Sudipto Roy (chant)
+- [Antigone Canadensis](https://www.oiseaux.net/en/oiseaux/sandhill.crane.html)
+  - Sound Author : Eric DeFonso (call) & Aurélien Audevard (chant)
+- [Grus Grus](https://www.oiseaux.net/en/oiseaux/common.crane.html) **ω**
+- [Grus Japonensis](https://www.oiseaux.net/en/oiseaux/red-crowned.crane.html)
+  - Sound Author : Tom Wulf (call)
+  - Sound Origin : Antigone Canadensis (chant) (similar)
+
+**Passeriforme** :
+
+- **Corvidae** :
+
+  - [Pica Pica](https://www.oiseaux.net/en/oiseaux/eurasian.magpie.html)
+    - Sound Author : 
+  - [Corvus Corax](https://www.oiseaux.net/en/oiseaux/northern.raven.html)
+    - Sound Author :
+  - [Corvus Mellori](https://www.oiseaux.net/en/oiseaux/little.raven.html)
+    - Sound Author :
+  - [Turdus Merula](https://www.oiseaux.net/en/oiseaux/common.blackbird.html)
+    - Sound Author :
+
+- **Hirundininae** :
+
 **Piciforme** :
 
 - [Colaptes Auratus](https://www.oiseaux.net/en/oiseaux/northern.flicker.html)
@@ -62,26 +89,26 @@ Classification
 - [Picus Viridis](https://www.oiseaux.net/en/oiseaux/european.green.woodpecker.html)
   - Sound Author : R. Martin
 
-- **Ramphastidae** :
+**Ramphastidae** :
 
-  - [Ramphastos Ambiguus](https://www.oiseaux.net/en/oiseaux/yellow-throated.toucan.html) :
-  - [Ramphastos Sulfuratus](https://www.oiseaux.net/en/oiseaux/keel-billed.toucan.html) :
+  - [Ramphastos Ambiguus](https://www.oiseaux.net/en/oiseaux/yellow-throated.toucan.html) **ω**
+  - [Ramphastos Sulfuratus](https://www.oiseaux.net/en/oiseaux/keel-billed.toucan.html)
     - Sound Author : Bernabe Lopez-Lanus
   - [Ramphastos Toco](https://www.oiseaux.net/en/oiseaux/toco.toucan.html)
     - Sound Author : Olivier Swift
   - [Ramphastos Tucanus](https://www.oiseaux.net/en/oiseaux/white-throated.toucan.html) **ω**
   
 ---
-
-**Notes**
+<details>
+<summary><b>Classification Key</b></summary>
 
 **α** : Original / Fantastic / Non-existring Bird
 
 **ω** : 
 - No sound found with a good quality and/or the good license. This bird use an other bird sound.
 - If the bird is noted as **α** : I just need to work on it.
+</details>
 
----
 <details>
   <summary><b>Legal Information</b></summary>
 
