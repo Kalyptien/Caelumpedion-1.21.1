@@ -65,6 +65,19 @@ public class CaelumpedionSounds {
 
     public static final Supplier<SoundEvent> GRUS_JAPONENSIS_CALL = registerSoundEvent("entity.grus_japonensis.call");
 
+    // ==========
+
+    public static final Supplier<SoundEvent> PICA_PICA_CHANT = registerSoundEvent("entity.pica_pica.chant");
+    public static final Supplier<SoundEvent> PICA_PICA_CALL = registerSoundEvent("entity.pica_pica.call");
+
+    public static final Supplier<SoundEvent> CORVUS_CORVAX_CHANT = registerSoundEvent("entity.corvus_corax.chant");
+    public static final Supplier<SoundEvent> CORVUS_CORVAX_CALL = registerSoundEvent("entity.corvus_corax.call");
+
+    public static final Supplier<SoundEvent> CORVUS_MELLORI_CHANT = registerSoundEvent("entity.corvus_mellori.chant");
+    public static final Supplier<SoundEvent> CORVUS_MELLORI_CALL = registerSoundEvent("entity.corvus_mellori.call");
+
+    public static final Supplier<SoundEvent> TURDUS_MERULA_CHANT = registerSoundEvent("entity.turdus_merula.chant");
+    public static final Supplier<SoundEvent> TURDUS_MERULA_CALL = registerSoundEvent("entity.turdus_merula.call");
 
     // ==========
 

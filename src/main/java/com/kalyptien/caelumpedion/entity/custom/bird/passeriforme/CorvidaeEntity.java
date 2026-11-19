@@ -2,10 +2,12 @@ package com.kalyptien.caelumpedion.entity.custom.bird.passeriforme;
 
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
+import com.kalyptien.caelumpedion.misc.CaelumpedionSounds;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
@@ -114,6 +116,54 @@ public class CorvidaeEntity extends SocialFlyingBirdEntity {
     };
 
     //Sound
+
+    protected SoundEvent getCallSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            case 0:
+                sound = CaelumpedionSounds.PICA_PICA_CALL.get();
+                break;
+            case 1:
+                sound = CaelumpedionSounds.CORVUS_CORVAX_CALL.get();
+                break;
+            case 2:
+                sound = CaelumpedionSounds.CORVUS_MELLORI_CALL.get();
+                break;
+            case 3:
+                sound = CaelumpedionSounds.TURDUS_MERULA_CALL.get();
+                break;
+            default:
+                sound = CaelumpedionSounds.CORVUS_CORVAX_CALL.get();
+        }
+
+        return sound;
+    }
+
+    protected SoundEvent getChantSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            case 0:
+                sound = CaelumpedionSounds.PICA_PICA_CHANT.get();
+                break;
+            case 1:
+                sound  = CaelumpedionSounds.CORVUS_CORVAX_CHANT.get();
+                break;
+            case 2:
+                sound = CaelumpedionSounds.CORVUS_MELLORI_CHANT.get();
+                break;
+            case 3:
+                sound = CaelumpedionSounds.TURDUS_MERULA_CHANT.get();
+                break;
+            default:
+                sound = CaelumpedionSounds.CORVUS_CORVAX_CHANT.get();
+        }
+
+        return sound;
+    }
 
     @Override
     public int getAmbientSoundInterval() {

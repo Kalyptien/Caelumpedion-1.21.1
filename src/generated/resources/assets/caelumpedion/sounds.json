@@ -198,6 +198,66 @@
     ],
     "subtitle": "sound.subtitle.columbiforme.chant"
   },
+  "entity.corvus_corax.call": {
+    "sounds": [
+      "caelumpedion:entity/corvidae/corvus_corax_call_0",
+      "caelumpedion:entity/corvidae/corvus_corax_call_1",
+      "caelumpedion:entity/corvidae/corvus_corax_call_2",
+      "caelumpedion:entity/corvidae/corvus_corax_call_3",
+      "caelumpedion:entity/corvidae/corvus_corax_call_4",
+      "caelumpedion:entity/corvidae/corvus_corax_call_5"
+    ],
+    "subtitle": "sound.subtitle.corvidae.call"
+  },
+  "entity.corvus_corax.chant": {
+    "sounds": [
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/corvus_corax_chant_0"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/corvus_corax_chant_1"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/corvus_corax_chant_2"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/corvus_corax_chant_3"
+      }
+    ],
+    "subtitle": "sound.subtitle.corvidae.chant"
+  },
+  "entity.corvus_mellori.call": {
+    "sounds": [
+      "caelumpedion:entity/corvidae/corvus_mellori_call_0",
+      "caelumpedion:entity/corvidae/corvus_mellori_call_1",
+      "caelumpedion:entity/corvidae/corvus_mellori_call_2",
+      "caelumpedion:entity/corvidae/corvus_mellori_call_3",
+      "caelumpedion:entity/corvidae/corvus_mellori_call_4",
+      "caelumpedion:entity/corvidae/corvus_mellori_call_5"
+    ],
+    "subtitle": "sound.subtitle.corvidae.call"
+  },
+  "entity.corvus_mellori.chant": {
+    "sounds": [
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/corvus_mellori_chant_0"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/corvus_mellori_chant_1"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/corvus_mellori_chant_2"
+      }
+    ],
+    "subtitle": "sound.subtitle.corvidae.chant"
+  },
   "entity.cygnus_atratus.call": {
     "sounds": [
       "caelumpedion:entity/anseriforme/cygnus_atratus_call_0",
@@ -345,6 +405,37 @@
     ],
     "subtitle": "sound.subtitle.trochilidae.chant"
   },
+  "entity.pica_pica.call": {
+    "sounds": [
+      "caelumpedion:entity/corvidae/pica_pica_call_0",
+      "caelumpedion:entity/corvidae/pica_pica_call_1",
+      "caelumpedion:entity/corvidae/pica_pica_call_2",
+      "caelumpedion:entity/corvidae/pica_pica_call_3",
+      "caelumpedion:entity/corvidae/pica_pica_call_4"
+    ],
+    "subtitle": "sound.subtitle.corvidae.call"
+  },
+  "entity.pica_pica.chant": {
+    "sounds": [
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/pica_pica_chant_0"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/pica_pica_chant_1"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/pica_pica_chant_2"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/pica_pica_chant_3"
+      }
+    ],
+    "subtitle": "sound.subtitle.corvidae.chant"
+  },
   "entity.picus_phantasia_troglodyta.call": {
     "sounds": [
       "caelumpedion:entity/piciforme/picus_phantasia_troglodyta_call_0",
@@ -410,6 +501,38 @@
       }
     ],
     "subtitle": "sound.subtitle.columbiforme.chant"
+  },
+  "entity.turdus_merula.call": {
+    "sounds": [
+      "caelumpedion:entity/corvidae/turdus_merula_call_0",
+      "caelumpedion:entity/corvidae/turdus_merula_call_1",
+      "caelumpedion:entity/corvidae/turdus_merula_call_2",
+      "caelumpedion:entity/corvidae/turdus_merula_call_3",
+      "caelumpedion:entity/corvidae/turdus_merula_call_4",
+      "caelumpedion:entity/corvidae/turdus_merula_call_5"
+    ],
+    "subtitle": "sound.subtitle.corvidae.call"
+  },
+  "entity.turdus_merula.chant": {
+    "sounds": [
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/turdus_merula_chant_0"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/turdus_merula_chant_1"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/turdus_merula_chant_2"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/turdus_merula_chant_3"
+      }
+    ],
+    "subtitle": "sound.subtitle.corvidae.chant"
   },
   "entity.zenaida_macroura.call": {
     "sounds": [

@@ -66,13 +66,13 @@ Classification
 - **Corvidae** :
 
   - [Pica Pica](https://www.oiseaux.net/en/oiseaux/eurasian.magpie.html)
-    - Sound Author : 
+    - Sound Author : Olivier Swift (chant) & Didier Collin (call)
   - [Corvus Corax](https://www.oiseaux.net/en/oiseaux/northern.raven.html)
-    - Sound Author :
+    - Sound Author : Manuel Grosselet (chant) & Patrik Åberg (call & chant)
   - [Corvus Mellori](https://www.oiseaux.net/en/oiseaux/little.raven.html)
-    - Sound Author :
+    - Sound Author : Eddy Smith (chant) & Patrik Åberg (call)
   - [Turdus Merula](https://www.oiseaux.net/en/oiseaux/common.blackbird.html)
-    - Sound Author :
+    - Sound Author : Didier Collin (chant) & Olivier Swift (call)
 
 - **Hirundininae** :
 

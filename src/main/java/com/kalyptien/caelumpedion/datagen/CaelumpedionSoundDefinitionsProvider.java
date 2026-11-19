@@ -264,6 +264,88 @@ public class CaelumpedionSoundDefinitionsProvider extends SoundDefinitionsProvid
 
         // ========== CORVIDAE ==========
 
+        add(CaelumpedionSounds.PICA_PICA_CHANT, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/corvidae/pica_pica_chant_0").attenuationDistance(48),
+                        sound("caelumpedion:entity/corvidae/pica_pica_chant_1").attenuationDistance(48),
+                        sound("caelumpedion:entity/corvidae/pica_pica_chant_2").attenuationDistance(48),
+                        sound("caelumpedion:entity/corvidae/pica_pica_chant_3").attenuationDistance(48)
+                )
+                .subtitle("sound.subtitle.corvidae.chant")
+        );
+        add(CaelumpedionSounds.PICA_PICA_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/corvidae/pica_pica_call_0"),
+                        sound("caelumpedion:entity/corvidae/pica_pica_call_1"),
+                        sound("caelumpedion:entity/corvidae/pica_pica_call_2"),
+                        sound("caelumpedion:entity/corvidae/pica_pica_call_3"),
+                        sound("caelumpedion:entity/corvidae/pica_pica_call_4")
+                )
+                .subtitle("sound.subtitle.corvidae.call")
+        );
+        //===
+        add(CaelumpedionSounds.CORVUS_CORVAX_CHANT, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/corvidae/corvus_corax_chant_0").attenuationDistance(48),
+                        sound("caelumpedion:entity/corvidae/corvus_corax_chant_1").attenuationDistance(48),
+                        sound("caelumpedion:entity/corvidae/corvus_corax_chant_2").attenuationDistance(48),
+                        sound("caelumpedion:entity/corvidae/corvus_corax_chant_3").attenuationDistance(48)
+                )
+                .subtitle("sound.subtitle.corvidae.chant")
+        );
+        add(CaelumpedionSounds.CORVUS_CORVAX_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/corvidae/corvus_corax_call_0"),
+                        sound("caelumpedion:entity/corvidae/corvus_corax_call_1"),
+                        sound("caelumpedion:entity/corvidae/corvus_corax_call_2"),
+                        sound("caelumpedion:entity/corvidae/corvus_corax_call_3"),
+                        sound("caelumpedion:entity/corvidae/corvus_corax_call_4"),
+                        sound("caelumpedion:entity/corvidae/corvus_corax_call_5")
+                )
+                .subtitle("sound.subtitle.corvidae.call")
+        );
+        //===
+        add(CaelumpedionSounds.CORVUS_MELLORI_CHANT, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/corvidae/corvus_mellori_chant_0").attenuationDistance(48),
+                        sound("caelumpedion:entity/corvidae/corvus_mellori_chant_1").attenuationDistance(48),
+                        sound("caelumpedion:entity/corvidae/corvus_mellori_chant_2").attenuationDistance(48)
+                )
+                .subtitle("sound.subtitle.corvidae.chant")
+        );
+        add(CaelumpedionSounds.CORVUS_MELLORI_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/corvidae/corvus_mellori_call_0"),
+                        sound("caelumpedion:entity/corvidae/corvus_mellori_call_1"),
+                        sound("caelumpedion:entity/corvidae/corvus_mellori_call_2"),
+                        sound("caelumpedion:entity/corvidae/corvus_mellori_call_3"),
+                        sound("caelumpedion:entity/corvidae/corvus_mellori_call_4"),
+                        sound("caelumpedion:entity/corvidae/corvus_mellori_call_5")
+                )
+                .subtitle("sound.subtitle.corvidae.call")
+        );
+        //===
+        add(CaelumpedionSounds.TURDUS_MERULA_CHANT, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/corvidae/turdus_merula_chant_0").attenuationDistance(48),
+                        sound("caelumpedion:entity/corvidae/turdus_merula_chant_1").attenuationDistance(48),
+                        sound("caelumpedion:entity/corvidae/turdus_merula_chant_2").attenuationDistance(48),
+                        sound("caelumpedion:entity/corvidae/turdus_merula_chant_3").attenuationDistance(48)
+                )
+                .subtitle("sound.subtitle.corvidae.chant")
+        );
+        add(CaelumpedionSounds.TURDUS_MERULA_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/corvidae/turdus_merula_call_0"),
+                        sound("caelumpedion:entity/corvidae/turdus_merula_call_1"),
+                        sound("caelumpedion:entity/corvidae/turdus_merula_call_2"),
+                        sound("caelumpedion:entity/corvidae/turdus_merula_call_3"),
+                        sound("caelumpedion:entity/corvidae/turdus_merula_call_4"),
+                        sound("caelumpedion:entity/corvidae/turdus_merula_call_5")
+                )
+                .subtitle("sound.subtitle.corvidae.call")
+        );
+
         // ========== PICIFORME ==========
 
         add(CaelumpedionSounds.COLAPTES_AURATUS_CHANT, SoundDefinition.definition()
