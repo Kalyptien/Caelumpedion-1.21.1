@@ -75,6 +75,12 @@ Classification
     - Sound Author : Didier Collin (chant) & Olivier Swift (call)
 
 - **Hirundininae** :
+  - [Delichon Urbicum](https://www.oiseaux.net/en/oiseaux/western.house.martin.html)
+    - Sound Author : Olivier Swift
+  - [Hirundo Rustica](https://www.oiseaux.net/en/oiseaux/barn.swallow.html)
+    - Sound Author : Olivier Swift
+  - [Petrochelidon Nigricans](https://www.oiseaux.net/en/oiseaux/tree.martin.html)
+    - Sound Origin : Delichon Urbicum (too similar)
 
 **Piciforme** :
 

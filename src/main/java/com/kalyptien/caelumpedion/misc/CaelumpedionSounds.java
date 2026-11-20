@@ -81,6 +81,12 @@ public class CaelumpedionSounds {
 
     // ==========
 
+    public static final Supplier<SoundEvent> DELICHON_URBICUM_CALL = registerSoundEvent("entity.delichon_urbicum.call");
+
+    public static final Supplier<SoundEvent> HIRUNDO_RUSTICA_CALL = registerSoundEvent("entity.hirundo_rustica.call");
+
+    // ==========
+
     public static final Supplier<SoundEvent> COLAPTES_AURATUS_CHANT = registerSoundEvent("entity.colaptes_auratus.chant");
     public static final Supplier<SoundEvent> COLAPTES_AURATUS_CALL = registerSoundEvent("entity.colaptes_auratus.call");
 

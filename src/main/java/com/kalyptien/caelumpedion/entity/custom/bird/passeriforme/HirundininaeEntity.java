@@ -3,11 +3,13 @@ package com.kalyptien.caelumpedion.entity.custom.bird.passeriforme;
 import com.kalyptien.caelumpedion.entity.ai.CircleAroundFlyingMob;
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
+import com.kalyptien.caelumpedion.misc.CaelumpedionSounds;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
@@ -171,16 +173,39 @@ public class HirundininaeEntity extends SocialFlyingBirdEntity implements Circle
 
     //Sound
 
+    protected SoundEvent getCallSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            case 0:
+                sound = CaelumpedionSounds.DELICHON_URBICUM_CALL.get();
+                break;
+            case 1:
+                sound = CaelumpedionSounds.HIRUNDO_RUSTICA_CALL.get();
+                break;
+            //case 2:
+            default:
+                sound = CaelumpedionSounds.DELICHON_URBICUM_CALL.get();
+        }
+
+        return sound;
+    }
+
+    protected SoundEvent getChantSound(){
+        return this.getCallSound();
+    }
+
     @Override
     public int getAmbientSoundInterval() {
-        return 80;
+        return 40;
     }
 
     // Variant
 
     public static enum HirundininaeVariant implements BirdVariant {
         DelichonUrbicum(0, "delichon_urbicum", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.SouthAfrica, IRLRegion.NorthAfrica}, null),
-        HirundonRustica(1, "hirundon_rustica", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.Oceania, IRLRegion.SouthAmerica, IRLRegion.NorthAmerica, IRLRegion.SouthAfrica}, null),
+        HirundoRustica(1, "hirundo_rustica", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.Oceania, IRLRegion.SouthAmerica, IRLRegion.NorthAmerica, IRLRegion.SouthAfrica}, null),
         PetrochelidonNigricans(2, "petrochelidon_nigricans", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Oceania}, null),
         ;
 

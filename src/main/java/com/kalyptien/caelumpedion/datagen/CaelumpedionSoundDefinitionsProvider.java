@@ -346,6 +346,36 @@ public class CaelumpedionSoundDefinitionsProvider extends SoundDefinitionsProvid
                 .subtitle("sound.subtitle.corvidae.call")
         );
 
+        // ========== HIRUNDININAE ==========
+
+        add(CaelumpedionSounds.DELICHON_URBICUM_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/hirundininae/delichon_urbicum_call_0").attenuationDistance(48),
+                        sound("caelumpedion:entity/hirundininae/delichon_urbicum_call_1").attenuationDistance(48),
+                        sound("caelumpedion:entity/hirundininae/delichon_urbicum_call_2").attenuationDistance(48),
+                        sound("caelumpedion:entity/hirundininae/delichon_urbicum_call_3").attenuationDistance(48),
+                        sound("caelumpedion:entity/hirundininae/delichon_urbicum_call_4").attenuationDistance(48),
+                        sound("caelumpedion:entity/hirundininae/delichon_urbicum_call_5").attenuationDistance(48),
+                        sound("caelumpedion:entity/hirundininae/delichon_urbicum_call_6").attenuationDistance(48),
+                        sound("caelumpedion:entity/hirundininae/delichon_urbicum_call_7").attenuationDistance(48),
+                        sound("caelumpedion:entity/hirundininae/delichon_urbicum_call_8").attenuationDistance(48)
+                )
+                .subtitle("sound.subtitle.hirundininae.call")
+        );
+        //===
+        add(CaelumpedionSounds.HIRUNDO_RUSTICA_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/hirundininae/hirundo_rustica_call_0").attenuationDistance(48),
+                        sound("caelumpedion:entity/hirundininae/hirundo_rustica_call_1").attenuationDistance(48),
+                        sound("caelumpedion:entity/hirundininae/hirundo_rustica_call_2").attenuationDistance(48),
+                        sound("caelumpedion:entity/hirundininae/hirundo_rustica_call_3").attenuationDistance(48),
+                        sound("caelumpedion:entity/hirundininae/hirundo_rustica_call_4").attenuationDistance(48),
+                        sound("caelumpedion:entity/hirundininae/hirundo_rustica_call_5").attenuationDistance(48),
+                        sound("caelumpedion:entity/hirundininae/hirundo_rustica_call_6").attenuationDistance(48)
+                )
+                .subtitle("sound.subtitle.hirundininae.call")
+        );
+
         // ========== PICIFORME ==========
 
         add(CaelumpedionSounds.COLAPTES_AURATUS_CHANT, SoundDefinition.definition()
