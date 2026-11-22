@@ -376,6 +376,141 @@ public class CaelumpedionSoundDefinitionsProvider extends SoundDefinitionsProvid
                 .subtitle("sound.subtitle.hirundininae.call")
         );
 
+        // ========== PASSERIFORME ==========
+
+        add(CaelumpedionSounds.CARDINALIS_CARDINALIS_CHANT, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/passeriforme/cardinalis_cardinalis_chant_0"),
+                        sound("caelumpedion:entity/passeriforme/cardinalis_cardinalis_chant_1"),
+                        sound("caelumpedion:entity/passeriforme/cardinalis_cardinalis_chant_2")
+                )
+                .subtitle("sound.subtitle.passeriforme.chant")
+        );
+        add(CaelumpedionSounds.CARDINALIS_CARDINALIS_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/passeriforme/cardinalis_cardinalis_call_0"),
+                        sound("caelumpedion:entity/passeriforme/cardinalis_cardinalis_call_1"),
+                        sound("caelumpedion:entity/passeriforme/cardinalis_cardinalis_call_2"),
+                        sound("caelumpedion:entity/passeriforme/cardinalis_cardinalis_call_3")
+                )
+                .subtitle("sound.subtitle.passeriforme.call")
+        );
+        //===
+        add(CaelumpedionSounds.CYANISTES_CAERULEUS_CHANT, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/passeriforme/cyanistes_caeruleus_chant_0"),
+                        sound("caelumpedion:entity/passeriforme/cyanistes_caeruleus_chant_1"),
+                        sound("caelumpedion:entity/passeriforme/cyanistes_caeruleus_chant_2")
+                )
+                .subtitle("sound.subtitle.passeriforme.chant")
+        );
+        add(CaelumpedionSounds.CYANISTES_CAERULEUS_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/passeriforme/cyanistes_caeruleus_call_0"),
+                        sound("caelumpedion:entity/passeriforme/cyanistes_caeruleus_call_1"),
+                        sound("caelumpedion:entity/passeriforme/cyanistes_caeruleus_call_2"),
+                        sound("caelumpedion:entity/passeriforme/cyanistes_caeruleus_call_3")
+                )
+                .subtitle("sound.subtitle.passeriforme.call")
+        );
+        //===
+        add(CaelumpedionSounds.ERITHACUS_RUBECULA_CHANT, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/passeriforme/erithacus_rubecula_chant_0"),
+                        sound("caelumpedion:entity/passeriforme/erithacus_rubecula_chant_1"),
+                        sound("caelumpedion:entity/passeriforme/erithacus_rubecula_chant_2"),
+                        sound("caelumpedion:entity/passeriforme/erithacus_rubecula_chant_3")
+                )
+                .subtitle("sound.subtitle.passeriforme.chant")
+        );
+        add(CaelumpedionSounds.ERITHACUS_RUBECULA_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/passeriforme/erithacus_rubecula_call_0"),
+                        sound("caelumpedion:entity/passeriforme/erithacus_rubecula_call_1"),
+                        sound("caelumpedion:entity/passeriforme/erithacus_rubecula_call_2"),
+                        sound("caelumpedion:entity/passeriforme/erithacus_rubecula_call_3")
+                )
+                .subtitle("sound.subtitle.passeriforme.call")
+        );
+        //===
+        add(CaelumpedionSounds.LOPHOPHANES_CRISTATUS_CHANT, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/passeriforme/lophophanes_cristatus_chant_0"),
+                        sound("caelumpedion:entity/passeriforme/lophophanes_cristatus_chant_1"),
+                        sound("caelumpedion:entity/passeriforme/lophophanes_cristatus_chant_2")
+                )
+                .subtitle("sound.subtitle.passeriforme.chant")
+        );
+        add(CaelumpedionSounds.LOPHOPHANES_CRISTATUS_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/passeriforme/lophophanes_cristatus_call_0"),
+                        sound("caelumpedion:entity/passeriforme/lophophanes_cristatus_call_1"),
+                        sound("caelumpedion:entity/passeriforme/lophophanes_cristatus_call_2"),
+                        sound("caelumpedion:entity/passeriforme/lophophanes_cristatus_call_3"),
+                        sound("caelumpedion:entity/passeriforme/lophophanes_cristatus_call_4")
+                )
+                .subtitle("sound.subtitle.passeriforme.call")
+        );
+        //===
+        add(CaelumpedionSounds.PASSER_DOMESTICUS_CHANT, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/passeriforme/passer_domesticus_chant_0"),
+                        sound("caelumpedion:entity/passeriforme/passer_domesticus_chant_1"),
+                        sound("caelumpedion:entity/passeriforme/passer_domesticus_chant_2")
+                )
+                .subtitle("sound.subtitle.passeriforme.chant")
+        );
+        add(CaelumpedionSounds.PASSER_DOMESTICUS_CALL, SoundDefinition.definition()
+                .with(
+                    sound("caelumpedion:entity/passeriforme/passer_domesticus_call_0"),
+                    sound("caelumpedion:entity/passeriforme/passer_domesticus_call_1"),
+                    sound("caelumpedion:entity/passeriforme/passer_domesticus_call_2"),
+                    sound("caelumpedion:entity/passeriforme/passer_domesticus_call_3"),
+                    sound("caelumpedion:entity/passeriforme/passer_domesticus_call_4")
+                )
+                .subtitle("sound.subtitle.passeriforme.call")
+        );
+        //===
+        add(CaelumpedionSounds.PERIPARUS_ATER_CHANT, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/passeriforme/periparus_ater_chant_0"),
+                        sound("caelumpedion:entity/passeriforme/periparus_ater_chant_1"),
+                        sound("caelumpedion:entity/passeriforme/periparus_ater_chant_2")
+                )
+                .subtitle("sound.subtitle.passeriforme.chant")
+        );
+        add(CaelumpedionSounds.PERIPARUS_ATER_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/passeriforme/periparus_ater_call_0"),
+                        sound("caelumpedion:entity/passeriforme/periparus_ater_call_1"),
+                        sound("caelumpedion:entity/passeriforme/periparus_ater_call_2"),
+                        sound("caelumpedion:entity/passeriforme/periparus_ater_call_3"),
+                        sound("caelumpedion:entity/passeriforme/periparus_ater_call_4")
+                )
+                .subtitle("sound.subtitle.passeriforme.call")
+        );
+        //===
+        add(CaelumpedionSounds.PHOENICURUS_OCHRUROS_CHANT, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/passeriforme/phoenicurus_ochruros_chant_0"),
+                        sound("caelumpedion:entity/passeriforme/phoenicurus_ochruros_chant_1"),
+                        sound("caelumpedion:entity/passeriforme/phoenicurus_ochruros_chant_2"),
+                        sound("caelumpedion:entity/passeriforme/phoenicurus_ochruros_chant_3"),
+                        sound("caelumpedion:entity/passeriforme/phoenicurus_ochruros_chant_4")
+                )
+                .subtitle("sound.subtitle.passeriforme.chant")
+        );
+        add(CaelumpedionSounds.PHOENICURUS_OCHRUROS_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/passeriforme/phoenicurus_ochruros_call_0"),
+                        sound("caelumpedion:entity/passeriforme/phoenicurus_ochruros_call_1"),
+                        sound("caelumpedion:entity/passeriforme/phoenicurus_ochruros_call_2"),
+                        sound("caelumpedion:entity/passeriforme/phoenicurus_ochruros_call_3"),
+                        sound("caelumpedion:entity/passeriforme/phoenicurus_ochruros_call_4")
+                )
+                .subtitle("sound.subtitle.passeriforme.call")
+        );
+
         // ========== PICIFORME ==========
 
         add(CaelumpedionSounds.COLAPTES_AURATUS_CHANT, SoundDefinition.definition()

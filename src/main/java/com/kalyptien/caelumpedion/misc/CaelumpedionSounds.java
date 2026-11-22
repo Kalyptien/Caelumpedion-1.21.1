@@ -81,6 +81,32 @@ public class CaelumpedionSounds {
 
     // ==========
 
+    public static final Supplier<SoundEvent> CARDINALIS_CARDINALIS_CHANT = registerSoundEvent("entity.cardinalis_cardinalis.chant");
+    public static final Supplier<SoundEvent> CARDINALIS_CARDINALIS_CALL = registerSoundEvent("entity.cardinalis_cardinalis.call");
+
+    public static final Supplier<SoundEvent> CYANISTES_CAERULEUS_CHANT = registerSoundEvent("entity.cyanistes_caeruleus.chant");
+    public static final Supplier<SoundEvent> CYANISTES_CAERULEUS_CALL = registerSoundEvent("entity.cyanistes_caeruleus.call");
+
+    public static final Supplier<SoundEvent> CYANOCITTA_CRISTATA_CHANT = registerSoundEvent("entity.cyanocitta_cristata.chant");
+    public static final Supplier<SoundEvent> CYANOCITTA_CRISTATA_CALL = registerSoundEvent("entity.cyanocitta_cristata.call");
+
+    public static final Supplier<SoundEvent> ERITHACUS_RUBECULA_CHANT = registerSoundEvent("entity.erithacus_rubecula.chant");
+    public static final Supplier<SoundEvent> ERITHACUS_RUBECULA_CALL = registerSoundEvent("entity.erithacus_rubecula.call");
+
+    public static final Supplier<SoundEvent> LOPHOPHANES_CRISTATUS_CHANT = registerSoundEvent("entity.lophophanes_cristatus.chant");
+    public static final Supplier<SoundEvent> LOPHOPHANES_CRISTATUS_CALL = registerSoundEvent("entity.lophophanes_cristatus.call");
+
+    public static final Supplier<SoundEvent> PASSER_DOMESTICUS_CHANT = registerSoundEvent("entity.passer_domesticus.chant");
+    public static final Supplier<SoundEvent> PASSER_DOMESTICUS_CALL = registerSoundEvent("entity.passer_domesticus.call");
+
+    public static final Supplier<SoundEvent> PERIPARUS_ATER_CHANT = registerSoundEvent("entity.periparus_ater.chant");
+    public static final Supplier<SoundEvent> PERIPARUS_ATER_CALL = registerSoundEvent("entity.periparus_ater.call");
+
+    public static final Supplier<SoundEvent> PHOENICURUS_OCHRUROS_CHANT = registerSoundEvent("entity.phoenicurus_ochruros.chant");
+    public static final Supplier<SoundEvent> PHOENICURUS_OCHRUROS_CALL = registerSoundEvent("entity.phoenicurus_ochruros.call");
+
+    // ==========
+
     public static final Supplier<SoundEvent> DELICHON_URBICUM_CALL = registerSoundEvent("entity.delichon_urbicum.call");
 
     public static final Supplier<SoundEvent> HIRUNDO_RUSTICA_CALL = registerSoundEvent("entity.hirundo_rustica.call");

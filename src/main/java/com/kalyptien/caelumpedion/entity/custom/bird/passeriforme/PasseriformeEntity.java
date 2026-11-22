@@ -2,10 +2,12 @@ package com.kalyptien.caelumpedion.entity.custom.bird.passeriforme;
 
 import com.kalyptien.caelumpedion.entity.custom.bird.piciforme.RamphastidaeEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
+import com.kalyptien.caelumpedion.misc.CaelumpedionSounds;
 import com.kalyptien.caelumpedion.util.IRLRegion;
 import com.kalyptien.caelumpedion.util.FeatherColor;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
@@ -114,6 +116,78 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
     };
 
     //Sound
+
+    protected SoundEvent getCallSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            case 0:
+                sound = CaelumpedionSounds.CARDINALIS_CARDINALIS_CALL.get();
+                break;
+            case 1:
+                sound = CaelumpedionSounds.CYANISTES_CAERULEUS_CALL.get();
+                break;
+            case 2:
+                sound = CaelumpedionSounds.CYANOCITTA_CRISTATA_CALL.get();
+                break;
+            case 3:
+                sound = CaelumpedionSounds.ERITHACUS_RUBECULA_CALL.get();
+                break;
+            case 4:
+                sound = CaelumpedionSounds.LOPHOPHANES_CRISTATUS_CALL.get();
+                break;
+            case 5:
+                sound = CaelumpedionSounds.PASSER_DOMESTICUS_CALL.get();
+                break;
+            case 6:
+                sound = CaelumpedionSounds.PERIPARUS_ATER_CALL.get();
+                break;
+            case 7:
+                sound = CaelumpedionSounds.PHOENICURUS_OCHRUROS_CALL.get();
+                break;
+            default:
+                sound = CaelumpedionSounds.PASSER_DOMESTICUS_CALL.get();
+        }
+
+        return sound;
+    }
+
+    protected SoundEvent getChantSound(){
+        int id = this.getIdVariant();
+        SoundEvent sound = null;
+
+        switch (id){
+            case 0:
+                sound = CaelumpedionSounds.CARDINALIS_CARDINALIS_CHANT.get();
+                break;
+            case 1:
+                sound = CaelumpedionSounds.CYANISTES_CAERULEUS_CHANT.get();
+                break;
+            case 2:
+                sound = CaelumpedionSounds.CYANOCITTA_CRISTATA_CHANT.get();
+                break;
+            case 3:
+                sound = CaelumpedionSounds.ERITHACUS_RUBECULA_CHANT.get();
+                break;
+            case 4:
+                sound = CaelumpedionSounds.LOPHOPHANES_CRISTATUS_CHANT.get();
+                break;
+            case 5:
+                sound = CaelumpedionSounds.PASSER_DOMESTICUS_CHANT.get();
+                break;
+            case 6:
+                sound = CaelumpedionSounds.PERIPARUS_ATER_CHANT.get();
+                break;
+            case 7:
+                sound = CaelumpedionSounds.PHOENICURUS_OCHRUROS_CHANT.get();
+                break;
+            default:
+                sound = CaelumpedionSounds.PASSER_DOMESTICUS_CHANT.get();
+        }
+
+        return sound;
+    }
 
     @Override
     public int getAmbientSoundInterval() {

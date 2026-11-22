@@ -63,6 +63,23 @@ Classification
 
 **Passeriforme** :
 
+- [Cardinalis Cardinalis](https://www.oiseaux.net/en/oiseaux/northern.cardinal.html)
+  - Sound Author : Manuel Grosselet
+- [Cyanistes Caeruleus](https://www.oiseaux.net/en/oiseaux/eurasian.blue.tit.html)
+  - Sound Author : Olivier Swift (chant) & Benjamin Drillat (call)
+- [Cyanocitta Cristata](https://www.oiseaux.net/en/oiseaux/blue.jay.html)
+  - Sound Author : 
+- [Erithacus Rubecula](https://www.oiseaux.net/en/oiseaux/european.robin.html)
+  - Sound Author : Olivier Swift
+- [Lophophanes Cristatus](https://www.oiseaux.net/en/oiseaux/crested.tit.html)
+  - Sound Author : Olivier Swift
+- [Passer Domesticus](https://www.oiseaux.net/en/oiseaux/house.sparrow.html)
+  - Sound Author : Olivier Swift
+- [Periparus Ater](https://www.oiseaux.net/en/oiseaux/coal.tit.html)
+  - Sound Author : Patrik Åberg
+- [Phoenicurus Ochruros](https://www.oiseaux.net/en/oiseaux/black.redstart.html)
+  - Sound Author : Vincent Palomares (call) & Olivier Swift (chant)
+
 - **Corvidae** :
 
   - [Pica Pica](https://www.oiseaux.net/en/oiseaux/eurasian.magpie.html)
@@ -129,6 +146,8 @@ Classification
   - For each bird, the author of the originals samples is precise.
 
   - The originals samples of each bird can be found in the section *"Voice song and calls"* of the website linked with each bird (Click on the name of the bird)
+
+  - If there is any problem of license : Contact me at **louppingetpro@gmail.com**
 
 - Texture :
 
