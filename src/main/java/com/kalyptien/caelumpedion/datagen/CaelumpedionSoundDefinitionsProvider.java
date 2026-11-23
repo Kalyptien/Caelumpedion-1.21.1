@@ -345,6 +345,25 @@ public class CaelumpedionSoundDefinitionsProvider extends SoundDefinitionsProvid
                 )
                 .subtitle("sound.subtitle.corvidae.call")
         );
+        //===
+        add(CaelumpedionSounds.CYANOCITTA_CRISTATA_CHANT, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/corvidae/cyanocitta_cristata_chant_0"),
+                        sound("caelumpedion:entity/corvidae/cyanocitta_cristata_chant_1"),
+                        sound("caelumpedion:entity/corvidae/cyanocitta_cristata_chant_2"),
+                        sound("caelumpedion:entity/corvidae/cyanocitta_cristata_chant_3")
+                )
+                .subtitle("sound.subtitle.corvidae.chant")
+        );
+        add(CaelumpedionSounds.CYANOCITTA_CRISTATA_CALL, SoundDefinition.definition()
+                .with(
+                        sound("caelumpedion:entity/corvidae/cyanocitta_cristata_call_0").attenuationDistance(48),
+                        sound("caelumpedion:entity/corvidae/cyanocitta_cristata_call_1").attenuationDistance(48),
+                        sound("caelumpedion:entity/corvidae/cyanocitta_cristata_call_2").attenuationDistance(48),
+                        sound("caelumpedion:entity/corvidae/cyanocitta_cristata_call_3").attenuationDistance(48)
+                )
+                .subtitle("sound.subtitle.corvidae.call")
+        );
 
         // ========== HIRUNDININAE ==========
 

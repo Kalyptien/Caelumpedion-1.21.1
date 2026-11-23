@@ -122,17 +122,20 @@ public class CorvidaeEntity extends SocialFlyingBirdEntity {
         SoundEvent sound = null;
 
         switch (id){
-            case 0:
+            case 3:
                 sound = CaelumpedionSounds.PICA_PICA_CALL.get();
                 break;
-            case 1:
+            case 0:
                 sound = CaelumpedionSounds.CORVUS_CORVAX_CALL.get();
                 break;
-            case 2:
+            case 1:
                 sound = CaelumpedionSounds.CORVUS_MELLORI_CALL.get();
                 break;
-            case 3:
+            case 4:
                 sound = CaelumpedionSounds.TURDUS_MERULA_CALL.get();
+                break;
+            case 2:
+                sound = CaelumpedionSounds.CYANOCITTA_CRISTATA_CALL.get();
                 break;
             default:
                 sound = CaelumpedionSounds.CORVUS_CORVAX_CALL.get();
@@ -146,17 +149,20 @@ public class CorvidaeEntity extends SocialFlyingBirdEntity {
         SoundEvent sound = null;
 
         switch (id){
-            case 0:
+            case 3:
                 sound = CaelumpedionSounds.PICA_PICA_CHANT.get();
                 break;
-            case 1:
+            case 0:
                 sound  = CaelumpedionSounds.CORVUS_CORVAX_CHANT.get();
                 break;
-            case 2:
+            case 1:
                 sound = CaelumpedionSounds.CORVUS_MELLORI_CHANT.get();
                 break;
-            case 3:
+            case 4:
                 sound = CaelumpedionSounds.TURDUS_MERULA_CHANT.get();
+                break;
+            case 2:
+                sound = CaelumpedionSounds.CYANOCITTA_CRISTATA_CHANT.get();
                 break;
             default:
                 sound = CaelumpedionSounds.CORVUS_CORVAX_CHANT.get();
@@ -173,10 +179,11 @@ public class CorvidaeEntity extends SocialFlyingBirdEntity {
     // Variant
 
     public static enum CorvidaeVariant implements BirdVariant {
-        PicaPica(0, "pica_pica", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia}, null),
-        CorvusCorax(1, "corvus_corax", 1.3f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.NorthAmerica}, null),
-        CorvusMellori(2, "corvus_mellori", 1.0f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Oceania}, null),
-        TurdusMerula(3, "turdus_merula", 1.0f, false, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Oceania, IRLRegion.Europe,IRLRegion.Asia}, null),
+        CorvusCorax(0, "corvus_corax", 1.3f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia, IRLRegion.NorthAmerica}, null),
+        CorvusMellori(1, "corvus_mellori", 1.0f, true, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Oceania}, null),
+        CyanocittaCristata(2, "cyanocitta_cristata", 1.0f, true, new FeatherColor[]{FeatherColor.Cyan, FeatherColor.White}, FeatherColor.Blue, new IRLRegion[]{IRLRegion.NorthAmerica}, null),
+        PicaPica(3, "pica_pica", 1.0f, true, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia}, null),
+        TurdusMerula(4, "turdus_merula", 1.0f, false, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Oceania, IRLRegion.Europe,IRLRegion.Asia}, null),
         ;
 
         private static final CorvidaeVariant[] BY_ID = Arrays.stream(values()).sorted(

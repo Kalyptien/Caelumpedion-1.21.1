@@ -79,6 +79,9 @@ public class CaelumpedionSounds {
     public static final Supplier<SoundEvent> TURDUS_MERULA_CHANT = registerSoundEvent("entity.turdus_merula.chant");
     public static final Supplier<SoundEvent> TURDUS_MERULA_CALL = registerSoundEvent("entity.turdus_merula.call");
 
+    public static final Supplier<SoundEvent> CYANOCITTA_CRISTATA_CHANT = registerSoundEvent("entity.cyanocitta_cristata.chant");
+    public static final Supplier<SoundEvent> CYANOCITTA_CRISTATA_CALL = registerSoundEvent("entity.cyanocitta_cristata.call");
+
     // ==========
 
     public static final Supplier<SoundEvent> CARDINALIS_CARDINALIS_CHANT = registerSoundEvent("entity.cardinalis_cardinalis.chant");
@@ -86,9 +89,6 @@ public class CaelumpedionSounds {
 
     public static final Supplier<SoundEvent> CYANISTES_CAERULEUS_CHANT = registerSoundEvent("entity.cyanistes_caeruleus.chant");
     public static final Supplier<SoundEvent> CYANISTES_CAERULEUS_CALL = registerSoundEvent("entity.cyanistes_caeruleus.call");
-
-    public static final Supplier<SoundEvent> CYANOCITTA_CRISTATA_CHANT = registerSoundEvent("entity.cyanocitta_cristata.chant");
-    public static final Supplier<SoundEvent> CYANOCITTA_CRISTATA_CALL = registerSoundEvent("entity.cyanocitta_cristata.call");
 
     public static final Supplier<SoundEvent> ERITHACUS_RUBECULA_CHANT = registerSoundEvent("entity.erithacus_rubecula.chant");
     public static final Supplier<SoundEvent> ERITHACUS_RUBECULA_CALL = registerSoundEvent("entity.erithacus_rubecula.call");

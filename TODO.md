@@ -2,9 +2,8 @@ V 0.1.0 :
 
 OISEAUX :
 
-- Intégrations des chants pour chaques oiseaux
-- Voir pour rendre certains sons moins shape
-- Bouger le Blue jay en corvidae
+- Toujours du lag quand les piafs volent (blockstate en boucle blablabla)
+- Les piafs volent parfois trop proche du sol ????
 
 V.0.2.0
 

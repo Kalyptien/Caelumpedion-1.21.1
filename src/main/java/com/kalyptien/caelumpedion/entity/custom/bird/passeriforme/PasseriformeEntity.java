@@ -129,21 +129,18 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
                 sound = CaelumpedionSounds.CYANISTES_CAERULEUS_CALL.get();
                 break;
             case 2:
-                sound = CaelumpedionSounds.CYANOCITTA_CRISTATA_CALL.get();
-                break;
-            case 3:
                 sound = CaelumpedionSounds.ERITHACUS_RUBECULA_CALL.get();
                 break;
-            case 4:
+            case 3:
                 sound = CaelumpedionSounds.LOPHOPHANES_CRISTATUS_CALL.get();
                 break;
-            case 5:
+            case 4:
                 sound = CaelumpedionSounds.PASSER_DOMESTICUS_CALL.get();
                 break;
-            case 6:
+            case 5:
                 sound = CaelumpedionSounds.PERIPARUS_ATER_CALL.get();
                 break;
-            case 7:
+            case 6:
                 sound = CaelumpedionSounds.PHOENICURUS_OCHRUROS_CALL.get();
                 break;
             default:
@@ -165,21 +162,18 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
                 sound = CaelumpedionSounds.CYANISTES_CAERULEUS_CHANT.get();
                 break;
             case 2:
-                sound = CaelumpedionSounds.CYANOCITTA_CRISTATA_CHANT.get();
-                break;
-            case 3:
                 sound = CaelumpedionSounds.ERITHACUS_RUBECULA_CHANT.get();
                 break;
-            case 4:
+            case 3:
                 sound = CaelumpedionSounds.LOPHOPHANES_CRISTATUS_CHANT.get();
                 break;
-            case 5:
+            case 4:
                 sound = CaelumpedionSounds.PASSER_DOMESTICUS_CHANT.get();
                 break;
-            case 6:
+            case 5:
                 sound = CaelumpedionSounds.PERIPARUS_ATER_CHANT.get();
                 break;
-            case 7:
+            case 6:
                 sound = CaelumpedionSounds.PHOENICURUS_OCHRUROS_CHANT.get();
                 break;
             default:
@@ -199,12 +193,11 @@ public class PasseriformeEntity extends SocialFlyingBirdEntity {
     public enum PasseriformeVariant implements BirdVariant {
         CardinalisCardinalis(0, "cardinalis_cardinalis", 1.0f, false, new FeatherColor[]{FeatherColor.Red}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.NorthAmerica}, null),
         CyanistesCaeruleus(1, "cyanistes_caeruleus", 1.0f, false, new FeatherColor[]{FeatherColor.LightBlue, FeatherColor.Yellow}, FeatherColor.Yellow, new IRLRegion[]{IRLRegion.Europe}, null),
-        CyanocittaCristata(2, "cyanocitta_cristata", 1.0f, false, new FeatherColor[]{FeatherColor.Cyan, FeatherColor.White}, FeatherColor.Blue, new IRLRegion[]{IRLRegion.NorthAmerica}, null),
-        ErithacusRubecula(3, "erithacus_rubecula", 1.0f, false, new FeatherColor[]{FeatherColor.Orange, FeatherColor.Gray, FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Europe}, null),
-        LophophanesCristatus(4, "lophophanes_cristatus", 1.0f, false, new FeatherColor[]{FeatherColor.White, FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Europe}, null),
-        PasserDomesticus(5, "passer_domesticus", 1.0f, false, new FeatherColor[]{FeatherColor.Gray, FeatherColor.Brown}, FeatherColor.Gray, new IRLRegion[]{IRLRegion.Europe, IRLRegion.NorthAmerica, IRLRegion.SouthAmerica, IRLRegion.SouthAfrica, IRLRegion.Oceania, IRLRegion.Asia}, null),
-        PeriparusAter(6, "periparus_ater", 1.0f, false, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia}, null),
-        PhoenicurusOchruros(7, "phoenicurus_ochruros", 1.0f, false, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Gray, new IRLRegion[]{IRLRegion.Europe, IRLRegion.NorthAfrica, IRLRegion.Asia}, null),
+        ErithacusRubecula(2, "erithacus_rubecula", 1.0f, false, new FeatherColor[]{FeatherColor.Orange, FeatherColor.Gray, FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Europe}, null),
+        LophophanesCristatus(3, "lophophanes_cristatus", 1.0f, false, new FeatherColor[]{FeatherColor.White, FeatherColor.Brown}, FeatherColor.Brown, new IRLRegion[]{IRLRegion.Europe}, null),
+        PasserDomesticus(4, "passer_domesticus", 1.0f, false, new FeatherColor[]{FeatherColor.Gray, FeatherColor.Brown}, FeatherColor.Gray, new IRLRegion[]{IRLRegion.Europe, IRLRegion.NorthAmerica, IRLRegion.SouthAmerica, IRLRegion.SouthAfrica, IRLRegion.Oceania, IRLRegion.Asia}, null),
+        PeriparusAter(5, "periparus_ater", 1.0f, false, new FeatherColor[]{FeatherColor.Black, FeatherColor.White}, FeatherColor.Black, new IRLRegion[]{IRLRegion.Europe, IRLRegion.Asia}, null),
+        PhoenicurusOchruros(6, "phoenicurus_ochruros", 1.0f, false, new FeatherColor[]{FeatherColor.Black}, FeatherColor.Gray, new IRLRegion[]{IRLRegion.Europe, IRLRegion.NorthAfrica, IRLRegion.Asia}, null),
         ;
 
         private static final PasseriformeVariant[] BY_ID = Arrays.stream(values()).sorted(

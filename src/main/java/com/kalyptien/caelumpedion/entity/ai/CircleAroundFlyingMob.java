@@ -47,8 +47,6 @@ public interface CircleAroundFlyingMob {
         private FlyingBirdEntity bird;
         private CircleAroundFlyingMob mob;
 
-        private double speedModifier;
-
         private boolean needToStop = false;
 
         public CircleAroundFlyingGoal(FlyingBirdEntity bird) {
@@ -92,7 +90,6 @@ public interface CircleAroundFlyingMob {
 
         @Override
         public void stop() {
-            this.speedModifier = 0;
             this.setInterval(2000);
             this.mob.setCyclingAround(false);
             this.needToStop = false;
@@ -121,7 +118,7 @@ public interface CircleAroundFlyingMob {
         @Override
         public void tick() {
             if(needToStop){
-                this.bird.getNavigation().moveTo(mob.getAnchorPoint().getX(), mob.getAnchorPoint().getY(), mob.getAnchorPoint().getZ(), this.bird.getFlySpeed() + this.speedModifier);
+                this.bird.getNavigation().moveTo(mob.getAnchorPoint().getX(), mob.getAnchorPoint().getY(), mob.getAnchorPoint().getZ(), this.bird.getFlySpeed() * 1.5f);
             }
             else{
                 if(bird.getTarget() != null && mob.getAttackPhase() == AttackPhase.SWOOP){
@@ -130,12 +127,7 @@ public interface CircleAroundFlyingMob {
                     circleAround();
                 }
 
-                //Dynamic speed
-                int sign = this.bird.getEyePosition().y < mob.getMoveTargetPoint().y ? -1 : 1;
-                double speedPercent = Math.min(1, Math.abs((this.bird.getEyePosition().y - this.mob.getMoveTargetPoint().y) / 100.0f));
-                this.speedModifier = (bird.getFlySpeed()/1.1f) * speedPercent * sign;
-
-                this.bird.getNavigation().moveTo(mob.getMoveTargetPoint().x, mob.getMoveTargetPoint().y, mob.getMoveTargetPoint().z, this.bird.getFlySpeed() + this.speedModifier);
+                this.bird.getNavigation().moveTo(mob.getMoveTargetPoint().x, mob.getMoveTargetPoint().y, mob.getMoveTargetPoint().z, this.bird.getFlySpeed());
             }
         }
 

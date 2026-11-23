@@ -38,6 +38,8 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
 
     protected FlyType flyType;
 
+    private boolean needToLand;
+
     public BirdRandomFlyingGoal(FlyingBirdEntity bird, double speed) {
         super(bird, speed);
         this.bird = bird;
@@ -102,13 +104,18 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
                 Vec3 vec3 = this.destinationNodeArray.getFirst();
                 if(vec3 != null){
                     this.wantedX = vec3.x;
-                    this.wantedY = vec3.y + 1;
+                    this.wantedY = vec3.y;
                     this.wantedZ = vec3.z;
                 }
             }
             else{
-                if(bird.isTooHight(3)){
-                    Vec3 vec3 = new Vec3(bird.getX(), bird.getY() - 2, bird.getZ());
+                this.needToLand = true;
+
+                if(this.bird.onGround()){
+                    this.stop();
+                }
+                else {
+                    Vec3 vec3 = new Vec3(bird.getX(), bird.getY() - 3, bird.getZ());
 
                     this.destinationNodeArray.add(vec3);
 
@@ -117,15 +124,19 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
                     this.wantedZ = vec3.z;
                 }
             }
+
+            //Dynamic speed
+            int sign = this.bird.getEyePosition().y < wantedY ? -1 : 1;
+            double speedPercent = Math.min(1, Math.abs((this.bird.getEyePosition().y - this.wantedY) / 100.0f));
+            this.speedModifier = (bird.getFlySpeed() * 0.5f) * speedPercent * sign;
+
+            //Go to
+            this.bird.getNavigation().moveTo(this.wantedX, this.wantedY, this.wantedZ, this.bird.getFlySpeed() + this.speedModifier);
         }
 
-        //Dynamic speed
-        int sign = this.bird.getEyePosition().y < wantedY ? -1 : 1;
-        double speedPercent = Math.min(1, Math.abs((this.bird.getEyePosition().y - this.wantedY) / 100.0f));
-        this.speedModifier = (bird.getFlySpeed()/1.1f) * speedPercent * sign;
-
-        //Go to
-        this.bird.getNavigation().moveTo(this.wantedX, this.wantedY, this.wantedZ, this.bird.getFlySpeed() + this.speedModifier);
+        if( this.needToLand && this.bird.onGround()){
+            this.stop();
+        }
     }
 
     public void stop() {
@@ -181,7 +192,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     }
 
     protected Vec3 getFinalDestination(){
-        Vec3 finalPos = new Vec3((range * this.randomPercent()) * randomSign(), bird.getY(), (range * this.randomPercent()) * randomSign());
+        Vec3 finalPos = new Vec3((range * this.randomPercent()) * randomSign(), bird.getY() + height, (range * this.randomPercent()) * randomSign());
 
         return bird.position().add(groundPosition(finalPos));
     }
@@ -208,7 +219,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
 
         //Generate in between positions
 
-        numberOfMiddleDestination = bird.getRandom().nextInt(1) + 1;
+        numberOfMiddleDestination = bird.getRandom().nextInt(2) + 1;
 
         stepX = finalX /numberOfMiddleDestination;
         stepZ = finalZ / numberOfMiddleDestination;
@@ -237,17 +248,10 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     public Vec3 groundPosition(Vec3 airPosition) {
         BlockPos.MutableBlockPos ground = new BlockPos.MutableBlockPos();
         ground.set(airPosition.x, airPosition.y, airPosition.z);
-        boolean flag = false;
-        ground.move(0, -1, 0);
-        while (!bird.level().getBlockState(ground).isSolid() && ground.getY() > bird.level().getMinBuildHeight()) {
-            ground.move(0, -1, 0);
+        while (ground.getY() > bird.level().getMinBuildHeight() && !bird.level().getBlockState(ground).blocksMotion()) {
+            ground.move(Direction.DOWN);
         }
-
-        while (!bird.level().getBlockState(ground).isSolid() && ground.getY() < bird.level().getMaxBuildHeight()){
-            ground.move(0, 1, 0);
-            flag = true;
-        }
-        return Vec3.atCenterOf(flag ? ground.above() : ground.below());
+        return Vec3.atCenterOf(ground.above());
     }
 
     @Nullable

@@ -136,6 +136,23 @@
     ],
     "subtitle": "sound.subtitle.trochilidae.chant"
   },
+  "entity.cardinalis_cardinalis.call": {
+    "sounds": [
+      "caelumpedion:entity/passeriforme/cardinalis_cardinalis_call_0",
+      "caelumpedion:entity/passeriforme/cardinalis_cardinalis_call_1",
+      "caelumpedion:entity/passeriforme/cardinalis_cardinalis_call_2",
+      "caelumpedion:entity/passeriforme/cardinalis_cardinalis_call_3"
+    ],
+    "subtitle": "sound.subtitle.passeriforme.call"
+  },
+  "entity.cardinalis_cardinalis.chant": {
+    "sounds": [
+      "caelumpedion:entity/passeriforme/cardinalis_cardinalis_chant_0",
+      "caelumpedion:entity/passeriforme/cardinalis_cardinalis_chant_1",
+      "caelumpedion:entity/passeriforme/cardinalis_cardinalis_chant_2"
+    ],
+    "subtitle": "sound.subtitle.passeriforme.chant"
+  },
   "entity.colaptes_auratus.call": {
     "sounds": [
       "caelumpedion:entity/piciforme/colaptes_auratus_call_0",
@@ -258,6 +275,53 @@
     ],
     "subtitle": "sound.subtitle.corvidae.chant"
   },
+  "entity.cyanistes_caeruleus.call": {
+    "sounds": [
+      "caelumpedion:entity/passeriforme/cyanistes_caeruleus_call_0",
+      "caelumpedion:entity/passeriforme/cyanistes_caeruleus_call_1",
+      "caelumpedion:entity/passeriforme/cyanistes_caeruleus_call_2",
+      "caelumpedion:entity/passeriforme/cyanistes_caeruleus_call_3"
+    ],
+    "subtitle": "sound.subtitle.passeriforme.call"
+  },
+  "entity.cyanistes_caeruleus.chant": {
+    "sounds": [
+      "caelumpedion:entity/passeriforme/cyanistes_caeruleus_chant_0",
+      "caelumpedion:entity/passeriforme/cyanistes_caeruleus_chant_1",
+      "caelumpedion:entity/passeriforme/cyanistes_caeruleus_chant_2"
+    ],
+    "subtitle": "sound.subtitle.passeriforme.chant"
+  },
+  "entity.cyanocitta_cristata.call": {
+    "sounds": [
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/cyanocitta_cristata_call_0"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/cyanocitta_cristata_call_1"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/cyanocitta_cristata_call_2"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/corvidae/cyanocitta_cristata_call_3"
+      }
+    ],
+    "subtitle": "sound.subtitle.corvidae.call"
+  },
+  "entity.cyanocitta_cristata.chant": {
+    "sounds": [
+      "caelumpedion:entity/corvidae/cyanocitta_cristata_chant_0",
+      "caelumpedion:entity/corvidae/cyanocitta_cristata_chant_1",
+      "caelumpedion:entity/corvidae/cyanocitta_cristata_chant_2",
+      "caelumpedion:entity/corvidae/cyanocitta_cristata_chant_3"
+    ],
+    "subtitle": "sound.subtitle.corvidae.chant"
+  },
   "entity.cygnus_atratus.call": {
     "sounds": [
       "caelumpedion:entity/anseriforme/cygnus_atratus_call_0",
@@ -293,6 +357,47 @@
     ],
     "subtitle": "sound.subtitle.anseriforme.swan.chant"
   },
+  "entity.delichon_urbicum.call": {
+    "sounds": [
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/delichon_urbicum_call_0"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/delichon_urbicum_call_1"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/delichon_urbicum_call_2"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/delichon_urbicum_call_3"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/delichon_urbicum_call_4"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/delichon_urbicum_call_5"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/delichon_urbicum_call_6"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/delichon_urbicum_call_7"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/delichon_urbicum_call_8"
+      }
+    ],
+    "subtitle": "sound.subtitle.hirundininae.call"
+  },
   "entity.dendrocopos_major.call": {
     "sounds": [
       "caelumpedion:entity/piciforme/dendrocopos_major_call_0",
@@ -317,6 +422,24 @@
       "caelumpedion:entity/piciforme/dendrocoptes_medius_call_2"
     ],
     "subtitle": "sound.subtitle.piciforme.chant"
+  },
+  "entity.erithacus_rubecula.call": {
+    "sounds": [
+      "caelumpedion:entity/passeriforme/erithacus_rubecula_call_0",
+      "caelumpedion:entity/passeriforme/erithacus_rubecula_call_1",
+      "caelumpedion:entity/passeriforme/erithacus_rubecula_call_2",
+      "caelumpedion:entity/passeriforme/erithacus_rubecula_call_3"
+    ],
+    "subtitle": "sound.subtitle.passeriforme.call"
+  },
+  "entity.erithacus_rubecula.chant": {
+    "sounds": [
+      "caelumpedion:entity/passeriforme/erithacus_rubecula_chant_0",
+      "caelumpedion:entity/passeriforme/erithacus_rubecula_chant_1",
+      "caelumpedion:entity/passeriforme/erithacus_rubecula_chant_2",
+      "caelumpedion:entity/passeriforme/erithacus_rubecula_chant_3"
+    ],
+    "subtitle": "sound.subtitle.passeriforme.chant"
   },
   "entity.grus_japonensis.call": {
     "sounds": [
@@ -389,6 +512,57 @@
     ],
     "subtitle": "sound.subtitle.accipitriforme.call"
   },
+  "entity.hirundo_rustica.call": {
+    "sounds": [
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/hirundo_rustica_call_0"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/hirundo_rustica_call_1"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/hirundo_rustica_call_2"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/hirundo_rustica_call_3"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/hirundo_rustica_call_4"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/hirundo_rustica_call_5"
+      },
+      {
+        "attenuation_distance": 48,
+        "name": "caelumpedion:entity/hirundininae/hirundo_rustica_call_6"
+      }
+    ],
+    "subtitle": "sound.subtitle.hirundininae.call"
+  },
+  "entity.lophophanes_cristatus.call": {
+    "sounds": [
+      "caelumpedion:entity/passeriforme/lophophanes_cristatus_call_0",
+      "caelumpedion:entity/passeriforme/lophophanes_cristatus_call_1",
+      "caelumpedion:entity/passeriforme/lophophanes_cristatus_call_2",
+      "caelumpedion:entity/passeriforme/lophophanes_cristatus_call_3",
+      "caelumpedion:entity/passeriforme/lophophanes_cristatus_call_4"
+    ],
+    "subtitle": "sound.subtitle.passeriforme.call"
+  },
+  "entity.lophophanes_cristatus.chant": {
+    "sounds": [
+      "caelumpedion:entity/passeriforme/lophophanes_cristatus_chant_0",
+      "caelumpedion:entity/passeriforme/lophophanes_cristatus_chant_1",
+      "caelumpedion:entity/passeriforme/lophophanes_cristatus_chant_2"
+    ],
+    "subtitle": "sound.subtitle.passeriforme.chant"
+  },
   "entity.mellisuga_helenae.call": {
     "sounds": [
       "caelumpedion:entity/trochilidae/mellisuga_helenae_call_0",
@@ -404,6 +578,62 @@
       "caelumpedion:entity/trochilidae/mellisuga_helenae_call_1"
     ],
     "subtitle": "sound.subtitle.trochilidae.chant"
+  },
+  "entity.passer_domesticus.call": {
+    "sounds": [
+      "caelumpedion:entity/passeriforme/passer_domesticus_call_0",
+      "caelumpedion:entity/passeriforme/passer_domesticus_call_1",
+      "caelumpedion:entity/passeriforme/passer_domesticus_call_2",
+      "caelumpedion:entity/passeriforme/passer_domesticus_call_3",
+      "caelumpedion:entity/passeriforme/passer_domesticus_call_4"
+    ],
+    "subtitle": "sound.subtitle.passeriforme.call"
+  },
+  "entity.passer_domesticus.chant": {
+    "sounds": [
+      "caelumpedion:entity/passeriforme/passer_domesticus_chant_0",
+      "caelumpedion:entity/passeriforme/passer_domesticus_chant_1",
+      "caelumpedion:entity/passeriforme/passer_domesticus_chant_2"
+    ],
+    "subtitle": "sound.subtitle.passeriforme.chant"
+  },
+  "entity.periparus_ater.call": {
+    "sounds": [
+      "caelumpedion:entity/passeriforme/periparus_ater_call_0",
+      "caelumpedion:entity/passeriforme/periparus_ater_call_1",
+      "caelumpedion:entity/passeriforme/periparus_ater_call_2",
+      "caelumpedion:entity/passeriforme/periparus_ater_call_3",
+      "caelumpedion:entity/passeriforme/periparus_ater_call_4"
+    ],
+    "subtitle": "sound.subtitle.passeriforme.call"
+  },
+  "entity.periparus_ater.chant": {
+    "sounds": [
+      "caelumpedion:entity/passeriforme/periparus_ater_chant_0",
+      "caelumpedion:entity/passeriforme/periparus_ater_chant_1",
+      "caelumpedion:entity/passeriforme/periparus_ater_chant_2"
+    ],
+    "subtitle": "sound.subtitle.passeriforme.chant"
+  },
+  "entity.phoenicurus_ochruros.call": {
+    "sounds": [
+      "caelumpedion:entity/passeriforme/phoenicurus_ochruros_call_0",
+      "caelumpedion:entity/passeriforme/phoenicurus_ochruros_call_1",
+      "caelumpedion:entity/passeriforme/phoenicurus_ochruros_call_2",
+      "caelumpedion:entity/passeriforme/phoenicurus_ochruros_call_3",
+      "caelumpedion:entity/passeriforme/phoenicurus_ochruros_call_4"
+    ],
+    "subtitle": "sound.subtitle.passeriforme.call"
+  },
+  "entity.phoenicurus_ochruros.chant": {
+    "sounds": [
+      "caelumpedion:entity/passeriforme/phoenicurus_ochruros_chant_0",
+      "caelumpedion:entity/passeriforme/phoenicurus_ochruros_chant_1",
+      "caelumpedion:entity/passeriforme/phoenicurus_ochruros_chant_2",
+      "caelumpedion:entity/passeriforme/phoenicurus_ochruros_chant_3",
+      "caelumpedion:entity/passeriforme/phoenicurus_ochruros_chant_4"
+    ],
+    "subtitle": "sound.subtitle.passeriforme.chant"
   },
   "entity.pica_pica.call": {
     "sounds": [

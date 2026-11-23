@@ -317,7 +317,7 @@ public abstract class BirdEntity extends Animal {
     public void pickUpItemFromFeeder(BirdFeederBlockEntity feeder, int slot) {
         ItemStack itemstack = feeder.inventory.getStackInSlot(slot);
         if (!itemstack.isEmpty()) {
-            itemstack.shrink(itemstack.getCount());
+            itemstack.shrink(1);
             feeder.inventory.setStackInSlot(slot, itemstack);
             this.setNeedEatAnimation(true);
         }
@@ -583,8 +583,8 @@ public abstract class BirdEntity extends Animal {
     public static enum SizeBirdType {
         SMALL(0, 1.2f),
         MEDIUM(1, 1.0f),
-        BIG(2, 0.7f),
-        TALL(3, 0.9f);
+        BIG(2, 0.8f),
+        TALL(3, 0.8f);
 
         private static final SizeBirdType[] BY_ID = Arrays.stream(values()).sorted(
                 Comparator.comparingInt(SizeBirdType::getId)).toArray(SizeBirdType[]::new);

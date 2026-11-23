@@ -67,8 +67,6 @@ Classification
   - Sound Author : Manuel Grosselet
 - [Cyanistes Caeruleus](https://www.oiseaux.net/en/oiseaux/eurasian.blue.tit.html)
   - Sound Author : Olivier Swift (chant) & Benjamin Drillat (call)
-- [Cyanocitta Cristata](https://www.oiseaux.net/en/oiseaux/blue.jay.html)
-  - Sound Author : 
 - [Erithacus Rubecula](https://www.oiseaux.net/en/oiseaux/european.robin.html)
   - Sound Author : Olivier Swift
 - [Lophophanes Cristatus](https://www.oiseaux.net/en/oiseaux/crested.tit.html)
@@ -90,6 +88,8 @@ Classification
     - Sound Author : Eddy Smith (chant) & Patrik Åberg (call)
   - [Turdus Merula](https://www.oiseaux.net/en/oiseaux/common.blackbird.html)
     - Sound Author : Didier Collin (chant) & Olivier Swift (call)
+  - [Cyanocitta Cristata](https://www.oiseaux.net/en/oiseaux/blue.jay.html)
+    - Sound Author : Kent Livezey
 
 - **Hirundininae** :
   - [Delichon Urbicum](https://www.oiseaux.net/en/oiseaux/western.house.martin.html)
