@@ -38,7 +38,7 @@ public class CaelumpedionEntities {
     public static final Supplier<EntityType<CorvidaeEntity>> CORVIDAE =
             ENTITY_TYPES.register("corvidae", () -> {
                 return EntityType.Builder.of(CorvidaeEntity::new, MobCategory.CREATURE)
-                        .sized(0.6f, 0.6f).build("corvidae");
+                        .sized(0.5f, 0.5f).build("corvidae");
             });
 
     // =====
@@ -60,7 +60,7 @@ public class CaelumpedionEntities {
     public static final Supplier<EntityType<AnseriformeEntity>> ANSERIFORME =
             ENTITY_TYPES.register("anseriforme", () -> {
                 return EntityType.Builder.of(AnseriformeEntity::new, MobCategory.CREATURE)
-                        .sized(0.6f, 0.7f).build("anseriforme");
+                        .sized(0.6f, 1.0f).build("anseriforme");
             });
 
     // =====
@@ -68,7 +68,7 @@ public class CaelumpedionEntities {
     public static final Supplier<EntityType<AccipitridaeEntity>> ACCIPITRIFORME =
             ENTITY_TYPES.register("accipitriforme", () -> {
                 return EntityType.Builder.of(AccipitridaeEntity::new, MobCategory.CREATURE)
-                        .sized(0.9f, 0.9f).build("accipitriforme");
+                        .sized(0.6f, 1.0f).build("accipitriforme");
             });
 
     // =====
@@ -76,7 +76,7 @@ public class CaelumpedionEntities {
     public static final Supplier<EntityType<GruiformeEntity>> GRUIFORME =
             ENTITY_TYPES.register("gruiforme", () -> {
                 return EntityType.Builder.of(GruiformeEntity::new, MobCategory.CREATURE)
-                        .sized(0.6f, 1.8f).build("gruiforme");
+                        .sized(0.7f, 1.6f).build("gruiforme");
             });
 
     // =====
@@ -92,7 +92,7 @@ public class CaelumpedionEntities {
     public static final Supplier<EntityType<ColumbiformeEntity>> COLUMBIFORME =
             ENTITY_TYPES.register("columbiforme", () -> {
                 return EntityType.Builder.of(ColumbiformeEntity::new, MobCategory.CREATURE)
-                        .sized(0.6f, 0.6f).build("columbiforme");
+                        .sized(0.4f, 0.6f).build("columbiforme");
             });
 
     // =====

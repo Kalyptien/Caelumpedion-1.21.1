@@ -1,10 +1,3 @@
-V 0.1.0 :
-
-OISEAUX :
-
-- Revoir pour boost un peu le BOID
-- Check bird hitbox
-
 V.0.2.0
 
 AJOUTS :

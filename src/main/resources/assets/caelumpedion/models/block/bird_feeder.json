@@ -3,7 +3,8 @@
 	"credit": "Kalyptien/Aifa",
 	"texture_size": [32, 32],
 	"textures": {
-		"1": "caelumpedion:block/bird_feeder"
+		"1": "caelumpedion:block/bird_feeder",
+		"particle": "#1"
 	},
 	"elements": [
 		{

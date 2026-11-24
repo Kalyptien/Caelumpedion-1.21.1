@@ -3,6 +3,7 @@ package com.kalyptien.caelumpedion.entity.ai.goal;
 import com.kalyptien.caelumpedion.entity.ai.CircleAroundFlyingMob;
 import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
+import com.kalyptien.caelumpedion.entity.custom.common.SocialFlyingBirdEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -69,6 +70,12 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
                 }
 
                 if (this.bird.getRandom().nextInt((bird.isWalker() ? 1500 : 0) + reducedTickDelay(this.interval)) != 0) {
+                    return false;
+                }
+            }
+
+            if(this.bird instanceof SocialFlyingBirdEntity mob && mob.isFollower()){
+                if(this.randomPercent() <= 0.50){
                     return false;
                 }
             }

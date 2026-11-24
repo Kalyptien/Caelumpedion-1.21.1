@@ -82,7 +82,7 @@ public abstract class SocialFlyingBirdEntity extends FlyingBirdEntity {
     }
 
     public boolean inRangeOfLeader() {
-        return Math.sqrt(this.distanceToSqr(this.leader)) <= (this.getViewRange()*2) * (this.getViewRange()*2);
+        return Math.sqrt(this.distanceToSqr(this.leader)) <= (this.getViewRange()*3) * (this.getViewRange()*3);
     }
 
     public BOIDType getBOIDBirdType() {
