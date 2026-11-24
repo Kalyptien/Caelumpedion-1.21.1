@@ -3,7 +3,7 @@
 Overview
 ===
 
-There is no bird in Minecraft ? Caelumpedion give you **BIRDS**
+There is no bird in Minecraft ? Caelumpedion gives you **BIRDS**
 
 In version 0.1.0 :
 
