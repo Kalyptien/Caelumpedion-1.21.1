@@ -2,7 +2,6 @@
 
 Overview
 ===
----
 
 There is no bird in Minecraft ? Caelumpedion give you **BIRDS**
 
@@ -14,8 +13,6 @@ In version 0.1.0 :
 - New color of feathers
 
 You want to know what bird are in this mod ? Check the [Classification](https://github.com/Kalyptien/Caelumpedion-1.21.1/wiki/Classification) page for further information.
-
----
 
 What next ?
 ===
