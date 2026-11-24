@@ -1,6 +1,7 @@
 package com.kalyptien.caelumpedion.entity.ai.goal;
 
 import com.kalyptien.caelumpedion.entity.ai.CircleAroundFlyingMob;
+import com.kalyptien.caelumpedion.entity.custom.common.BirdEntity;
 import com.kalyptien.caelumpedion.entity.custom.common.FlyingBirdEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,6 +11,7 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
@@ -39,6 +41,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     protected FlyType flyType;
 
     private boolean needToLand;
+    private boolean canSeeSky;
 
     public BirdRandomFlyingGoal(FlyingBirdEntity bird, double speed) {
         super(bird, speed);
@@ -112,7 +115,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
                 this.needToLand = true;
 
                 if(this.bird.onGround()){
-                    this.stop();
+                    this.preStop();
                 }
                 else {
                     Vec3 vec3 = new Vec3(bird.getX(), bird.getY() - 3, bird.getZ());
@@ -133,14 +136,22 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
             //Go to
             this.bird.getNavigation().moveTo(this.wantedX, this.wantedY, this.wantedZ, this.bird.getFlySpeed() + this.speedModifier);
         }
-
-        if( this.needToLand && this.bird.onGround()){
-            this.stop();
+        else{
+            if((this.needToLand && this.bird.onGround())
+                    || this.destinationNodeArray.isEmpty()){
+                this.preStop();
+            }
         }
+    }
+
+    public void preStop(){
+        destinationNodeArray.clear();
+        bird.getNavigation().stop();
     }
 
     public void stop() {
         this.speedModifier = 0;
+        this.needToLand = false;
         bird.setNeedToFlyAway(false);
         bird.setFlying(false);
         destinationNodeArray.clear();
@@ -152,6 +163,8 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     protected Vec3 getPosition() {
         this.destinationNodeArray.clear();
 
+        this.canSeeSky = this.bird.level().canSeeSky(BlockPos.containing(bird.getX(), bird.getEyeY(), bird.getZ()));
+
         this.defineFlyType();
         this.defineFlySize();
         this.createFlyPath();
@@ -160,11 +173,21 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     }
 
     protected void defineFlyType(){
-        if(this.bird.isOnMigration()){
-            this.flyType = FlyType.MIGRATION;
-        } else if (bird.isWalker()) {
-            this.flyType = FlyType.LONG;
-        } else {
+        if(canSeeSky){
+            if(this.bird.isOnMigration()){
+                this.flyType = FlyType.MIGRATION;
+            } else if (bird.isWalker()) {
+                this.flyType = FlyType.LONG;
+            } else {
+                if(this.randomPercent() <= 0.5){
+                    this.flyType = FlyType.LONG;
+                }
+                else{
+                    this.flyType = FlyType.SHORT;
+                }
+            }
+        }
+        else{
             if(this.randomPercent() <= 0.5){
                 this.flyType = FlyType.LONG;
             }
@@ -175,19 +198,34 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     }
 
     protected void defineFlySize(){
-        if(this.flyType == FlyType.MIGRATION){
-            range = bird.getFlyRange() * 4;
-            height = bird.getFlyHeight() * 2;
-        } else if (this.flyType == FlyType.LONG) {
-            range = bird.getFlyRange() * 2;
-            height = bird.getFlyHeight();
-        } else if(this.flyType == FlyType.SHORT){
-            range = bird.getFlyRange();
-            height = bird.getFlyHeight() / 2;
+        if(canSeeSky){
+            if(this.flyType == FlyType.MIGRATION){
+                range = bird.getFlyRange() * 4;
+                height = bird.getFlyHeight() * 2;
+            } else if (this.flyType == FlyType.LONG) {
+                range = bird.getFlyRange() * 2;
+                height = bird.getFlyHeight();
+            } else if(this.flyType == FlyType.SHORT){
+                range = bird.getFlyRange();
+                height = bird.getFlyHeight() / 2;
+            }
+            else{
+                range = bird.getFlyRange();
+                height = bird.getFlyHeight();
+            }
         }
         else{
-            range = bird.getFlyRange();
-            height = bird.getFlyHeight();
+            if (this.flyType == FlyType.LONG) {
+                range = bird.getFlyRange() * 2;
+                height = bird.getFlyHeight() / 2;
+            } else if(this.flyType == FlyType.SHORT){
+                range = bird.getFlyRange();
+                height = bird.getFlyHeight() / 2;
+            }
+            else{
+                range = bird.getFlyRange();
+                height = bird.getFlyHeight() / 2;
+            }
         }
     }
 
@@ -202,7 +240,7 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
         //Get final destination
 
         Vec3 finalDestination;
-        if (this.mob.getRandom().nextFloat() >= 0.75) {
+        if (this.bird.getSizeBirdType() != BirdEntity.SizeBirdType.TALL && this.mob.getRandom().nextFloat() >= 0.75) {
             finalDestination = this.getTreePos();
         }
         else{
@@ -246,12 +284,28 @@ public class BirdRandomFlyingGoal extends WaterAvoidingRandomFlyingGoal {
     //Utils
 
     public Vec3 groundPosition(Vec3 airPosition) {
-        BlockPos.MutableBlockPos ground = new BlockPos.MutableBlockPos();
-        ground.set(airPosition.x, airPosition.y, airPosition.z);
-        while (ground.getY() > bird.level().getMinBuildHeight() && !bird.level().getBlockState(ground).blocksMotion()) {
-            ground.move(Direction.DOWN);
+
+        if(this.canSeeSky){
+
+            double y = airPosition.y;
+
+            y = bird.level().getHeight(Heightmap.Types.WORLD_SURFACE, (int)Math.round(airPosition.x), (int)Math.round(airPosition.z));
+
+            return new Vec3(airPosition.x, y + 1, airPosition.z);
         }
-        return Vec3.atCenterOf(ground.above());
+        else{
+            BlockPos.MutableBlockPos ground = new BlockPos.MutableBlockPos();
+            ground.set(airPosition.x, airPosition.y, airPosition.z);
+            while (ground.getY() > bird.level().getMinBuildHeight() && !bird.level().getBlockState(ground).blocksMotion()) {
+                ground.move(Direction.DOWN);
+            }
+
+            while (!bird.level().getBlockState(ground).isSolid() && ground.getY() < bird.level().getMaxBuildHeight()) {
+                ground.move(Direction.UP);
+            }
+
+            return Vec3.atCenterOf(ground.above());
+        }
     }
 
     @Nullable

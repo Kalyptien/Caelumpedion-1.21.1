@@ -68,7 +68,7 @@ public class CaelumpedionEntities {
     public static final Supplier<EntityType<AccipitridaeEntity>> ACCIPITRIFORME =
             ENTITY_TYPES.register("accipitriforme", () -> {
                 return EntityType.Builder.of(AccipitridaeEntity::new, MobCategory.CREATURE)
-                        .sized(0.9f, 1f).build("accipitriforme");
+                        .sized(0.9f, 0.9f).build("accipitriforme");
             });
 
     // =====
@@ -76,7 +76,7 @@ public class CaelumpedionEntities {
     public static final Supplier<EntityType<GruiformeEntity>> GRUIFORME =
             ENTITY_TYPES.register("gruiforme", () -> {
                 return EntityType.Builder.of(GruiformeEntity::new, MobCategory.CREATURE)
-                        .sized(0.6f, 1.7f).build("gruiforme");
+                        .sized(0.6f, 1.8f).build("gruiforme");
             });
 
     // =====

@@ -92,7 +92,7 @@ public class BirdFoodNerbyGoal extends Goal {
             if(bird instanceof FlyingBirdEntity flyingBird && flyingBird.isFlying()) flyingBird.setFlying(false);
             itemToFollow = null;
         }
-        else if(blockPosToFollow != null && bird.distanceToSqr(blockPosToFollow.getX(), blockPosToFollow.getY(), blockPosToFollow.getZ()) <= 1.0f) {
+        else if(blockPosToFollow != null && bird.distanceToSqr(blockPosToFollow.getX(), blockPosToFollow.getY(), blockPosToFollow.getZ()) <= 1.5f) {
             bird.pickUpItemFromFeeder((BirdFeederBlockEntity) bird.level().getBlockEntity(blockPosToFollow), slotToPickup);
             if(bird instanceof FlyingBirdEntity flyingBird && flyingBird.isFlying()) flyingBird.setFlying(false);
             blockPosToFollow = null;
@@ -104,7 +104,7 @@ public class BirdFoodNerbyGoal extends Goal {
 
     public void start() {
         if(bird instanceof FlyingBirdEntity flyingBird){
-            if(this.bird.getRandom().nextFloat() <= 0.5){
+            if(!flyingBird.isWalker() && this.bird.getRandom().nextFloat() <= 0.5){
                 flyingBird.setFlying(true);
             }
         }
@@ -146,11 +146,13 @@ public class BirdFoodNerbyGoal extends Goal {
     }
 
     private void goToFollow(){
-        if(itemToFollow != null){
-            bird.getNavigation().moveTo((Entity)itemToFollow, bird.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) + 0.5f);
-        }
-        else {
-            bird.getNavigation().moveTo(blockPosToFollow.getX(), blockPosToFollow.getY(), blockPosToFollow.getZ(), bird.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) + 0.5f);
+        if(bird.getNavigation().isDone()){
+            if(itemToFollow != null){
+                bird.getNavigation().moveTo((Entity)itemToFollow, bird.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) + 0.5f);
+            }
+            else {
+                bird.getNavigation().moveTo(blockPosToFollow.getX(), blockPosToFollow.getY(), blockPosToFollow.getZ(), bird.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) + 0.5f);
+            }
         }
     }
 

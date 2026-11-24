@@ -11,9 +11,12 @@ import java.util.function.Supplier;
 
 public class CaelumpedionSounds {
 
-    // Assuming that your mod id is examplemod
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
             DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, CaelumpedionMod.MOD_ID);
+
+    public static final Supplier<SoundEvent> BIRD_FLY = registerSoundEvent("entity.flying_bird.fly");
+
+    // ==========
 
     public static final Supplier<SoundEvent> GYPAETUS_BARBATUS_CALL = registerSoundEvent("entity.gypaetus_barbatus.call");
 

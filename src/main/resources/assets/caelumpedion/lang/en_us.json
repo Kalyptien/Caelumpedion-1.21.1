@@ -107,5 +107,7 @@
   "caelumpedion.sound.subtitle.piciforme.call" : "Woodpecker Rattling",
 
   "caelumpedion.sound.subtitle.ramphastidae.chant" : "Toucan Croaking",
-  "caelumpedion.sound.subtitle.ramphastidae.call" : "Toucan Croaking"
+  "caelumpedion.sound.subtitle.ramphastidae.call" : "Toucan Croaking",
+
+  "caelumpedion.sound.subtitle.flying_bird.fly" : "Bird Flap"
 }

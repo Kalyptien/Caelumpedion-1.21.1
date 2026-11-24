@@ -2,8 +2,8 @@ V 0.1.0 :
 
 OISEAUX :
 
-- Toujours du lag quand les piafs volent (blockstate en boucle blablabla)
-- Les piafs volent parfois trop proche du sol ????
+- Revoir pour boost un peu le BOID
+- Check bird hitbox
 
 V.0.2.0
 

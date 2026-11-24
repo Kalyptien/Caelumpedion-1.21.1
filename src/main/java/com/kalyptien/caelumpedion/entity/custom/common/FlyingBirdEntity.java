@@ -4,6 +4,7 @@ import com.kalyptien.caelumpedion.entity.ai.BirdGroundPathNavigation;
 import com.kalyptien.caelumpedion.entity.ai.FlyMoveController;
 import com.kalyptien.caelumpedion.entity.ai.GroundMoveController;
 import com.kalyptien.caelumpedion.entity.ai.goal.*;
+import com.kalyptien.caelumpedion.misc.CaelumpedionSounds;
 import com.kalyptien.caelumpedion.misc.CaelumpedionTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -292,7 +293,7 @@ public abstract class FlyingBirdEntity extends BirdEntity {
     //Sound
 
     protected void playFlapSound() {
-        this.playSound(SoundEvents.PARROT_FLY, 1F, this.getSizeBirdType().getPitch());
+        this.playSound(CaelumpedionSounds.BIRD_FLY.get(), 1F, this.getSizeBirdType().getPitch());
     }
 
     //Spawn
