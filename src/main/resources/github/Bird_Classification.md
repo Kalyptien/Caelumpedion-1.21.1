@@ -1,7 +1,7 @@
 Classification
 ===
 
-**Accipitriforme** :
+**Accipitriforme** **γ** :
 
 - [Aegypius Monachus](https://www.oiseaux.net/en/oiseaux/cinereous.vulture.html) **ω**
 - [Gypaetus Barbatus](https://www.oiseaux.net/en/oiseaux/bearded.vulture.html)
@@ -11,7 +11,7 @@ Classification
 - [Gyps Himalayensis](https://www.oiseaux.net/en/oiseaux/himalayan.vulture.html) **ω**
 - [Torgos Tracheliotos](https://www.oiseaux.net/en/oiseaux/lappet-faced.vulture.html) **ω**
 
-**Anseriforme** :
+**Anseriforme** **γ** **π** :
 
 - **Duck**
   - [Anas Erythrorhyncha](https://www.oiseaux.net/en/oiseaux/red-billed.teal.html) **ω**
@@ -27,7 +27,7 @@ Classification
   - [Cygnus Olor](https://www.oiseaux.net/en/oiseaux/mute.swan.html)
     - Sound Author : Olivier Swift (Call) & Stanislas Wroza (Call & Chant)
 
-**Apodiforme** :
+**Apodiforme** **π** :
 
 - [Archilochus Colubris](https://www.oiseaux.net/en/oiseaux/ruby-throated.hummingbird.html)
   - Sound Author : Manuel Grosselet (call) & Russ Wigh (chant)
@@ -50,7 +50,7 @@ Classification
 - [Zenaida Macroura](https://www.oiseaux.net/en/oiseaux/mourning.dove.html)
   - Sound Author : Manuel Grosselet (chant) & Thomas Ryder Payne (call)
   
-**Gruiforme** :
+**Gruiforme** **γ** :
 
 - [Antigone Antigone](https://www.oiseaux.net/en/oiseaux/sarus.crane.html)
   - Sound Author : Ross Gallardy (call) & Sudipto Roy (chant)
@@ -91,7 +91,7 @@ Classification
   - [Cyanocitta Cristata](https://www.oiseaux.net/en/oiseaux/blue.jay.html)
     - Sound Author : Kent Livezey
 
-- **Hirundininae** :
+- **Hirundininae** **π** :
   - [Delichon Urbicum](https://www.oiseaux.net/en/oiseaux/western.house.martin.html)
     - Sound Author : Olivier Swift
   - [Hirundo Rustica](https://www.oiseaux.net/en/oiseaux/barn.swallow.html)
@@ -125,17 +125,48 @@ Classification
 <details>
 <summary><b>Classification Key</b></summary>
 
-**α** : Original / Fantastic / Non-existring Bird
+**α** : Original / Fantastic / Non-existing Bird
+
+**γ** : Can attack you in return
+
+**π** : Specific behavior
 
 **ω** : 
 - No sound found with a good quality and/or the good license. This bird use an other bird sound.
-- If the bird is noted as **α** : I just need to work on it.
+- If the bird is also noted as **α** : I just need to work on it.
 </details>
+<details>
+  <summary><b>FAQ</b></summary>
 
+- **Why Latin name ?**
+
+Birds name change a lot depending on your language. So, the easiest way to name bird is latin name.
+
+- **How work the classification of Caelumpedion**
+
+This classification is base on multiples factors :
+
+- The biological order of the bird
+- The behavior of the bird
+- The global shape of the bird
+
+For example :
+
+The Passeriforme order is break in 3 family : Regular Passeriforme, Huridininae (Swallow) and Corvidae (Crow, Raven, Magpie, ...)
+
+Regular Passeriforme and Huridininae have the same global shape, but don't have exactly the same behavior. So, it's separate groups in this mod.
+
+Regular Passeriforme and Corvidae don't have the same global shape. So, it's separate groups in this mod.
+
+- **I really want you to add a specific bird to this mod. How can i send you my proposition ?**
+
+For the moment, there is no way for you to propose your beloved bird. Keep an eye on future update or future announcement.
+
+</details>
 <details>
   <summary><b>Legal Information</b></summary>
 
-- Audio :
+- Audios :
 
   - All "call" and "chant" sounds used in this project are under [CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0/) license, except precise.
 
@@ -147,15 +178,15 @@ Classification
 
   - The originals samples of each bird can be found in the section *"Voice song and calls"* of the website linked with each bird (Click on the name of the bird)
 
-  - If there is any problem of license : Contact me at **louppingetpro@gmail.com**
+  - If there is any problem of license : Please open an issue on the [Caelumpedion Github](https://github.com/Kalyptien/Caelumpedion-1.21.1/issues).
 
-- Texture :
+- Textures :
 
-  - All textures are based on photos form [Oiseaux.net](www.oiseaux.net). There are only use for inspiration and color pick.
+  - All textures are based on photos from [Oiseaux.net](www.oiseaux.net). There are only use for inspiration and color pick.
 
-- Other information :
+- Other informations :
 
-  - [Oiseaux.net](www.oiseaux.net) have more information in his French version.
+  - [Oiseaux.net](www.oiseaux.net) have more data in his French version.
 
   - Fuck IA
 </details>
