@@ -28,8 +28,6 @@ A lot of content is missing from Caelumpedion :
 
 So, keep on eye on Modrinth or Github !
 
----
-
 Documentations
 ===
 
